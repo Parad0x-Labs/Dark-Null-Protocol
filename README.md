@@ -220,12 +220,18 @@ const tools = await import('@dark-null/mcp-tools');
 | **Devnet** | `33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4` | ✅ Live |
 | **Mainnet** | Coming after audit | ⏳ Pending |
 
-### Live Endpoints
+### Live API
 
-| Service | URL |
-|---------|-----|
-| Relayer API | https://relayer-falling-dust-5746.fly.dev/ |
-| Health Check | https://relayer-falling-dust-5746.fly.dev/health |
+| Service | URL | Status |
+|---------|-----|--------|
+| **API Base** | `https://api.parad0xlabs.com` | ✅ Live |
+| Health Check | `https://api.parad0xlabs.com/health` | ✅ Live |
+| Shield | `POST /v1/shield` | ✅ Live |
+| PIE Intent | `POST /v2/intent` | ✅ Live |
+| Pool Status | `GET /v2/pool` | ✅ Live |
+| Streaming | `POST /v2/stream` | ✅ Live |
+
+📖 **[Full API Documentation](./docs/API.md)**
 
 ---
 
@@ -302,9 +308,9 @@ See [SECURITY.md](./SECURITY.md) for reporting guidelines.
 | Document | Description |
 |----------|-------------|
 | [Getting Started](./docs/getting-started.md) | Quick start guide |
-| [API Reference](./docs/api-reference.md) | Full API documentation |
+| [**API Reference**](./docs/API.md) | **Full API documentation** |
 | [Integration Guide](./docs/integration-guide.md) | How to integrate Dark Null |
-| [Architecture](./docs/architecture.md) | Technical architecture |
+| [Live Test Results](./LIVE_TEST_RESULTS.md) | Real E2E test proofs |
 | [ZK Conventions](./docs/zk-conventions.md) | ZK proof encoding rules |
 
 ---

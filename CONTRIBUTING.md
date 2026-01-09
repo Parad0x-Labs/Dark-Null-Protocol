@@ -10,7 +10,7 @@ Thank you for your interest in contributing to Dark Null Protocol! 🌑
 
 Found a bug? Please report it!
 
-1. **Security bugs**: Email security@parad0x.io (see [SECURITY.md](./SECURITY.md))
+1. **Security bugs**: Email security@parad0xlabs.com (see [SECURITY.md](./SECURITY.md))
 2. **Other bugs**: Open a GitHub issue
 
 #### Bug Report Template
@@ -174,7 +174,7 @@ chore: update dependencies
 
 - **Discord**: [discord.gg/darknull](https://discord.gg/darknull)
 - **Twitter**: [@DarkNullProtocol](https://twitter.com/DarkNullProtocol)
-- **Email**: dev@parad0x.io
+- **Email**: hello@parad0xlabs.com
 
 ### Code of Conduct
 

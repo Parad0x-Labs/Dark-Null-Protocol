@@ -112,7 +112,7 @@ We're seeking auditors with:
 - [ ] Previous privacy protocol audits
 - [ ] Cryptographic background
 
-**Interested auditors**: Contact security@parad0x.io
+**Interested auditors**: Contact security@parad0xlabs.com
 
 ---
 
@@ -140,7 +140,7 @@ We're seeking auditors with:
 
 For audit-related inquiries:
 
-- **Email**: security@parad0x.io
+- **Email**: security@parad0xlabs.com
 - **Subject**: `[AUDIT] Your inquiry`
 
 ---

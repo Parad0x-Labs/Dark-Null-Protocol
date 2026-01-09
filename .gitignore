@@ -324,3 +324,40 @@ e2e_results.json
 package-lock.json
 tsconfig.json
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔒 DEPLOYMENT & INFRASTRUCTURE — NEVER COMMIT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Deployment blackbox (contains secrets, keypairs, Docker configs)
+deploy_blackbox/
+dark_null_blackbox.zip
+*.zip
+
+# Nginx configs (contain server IPs)
+nginx*.conf
+nginx_api.conf
+
+# Server configs
+server_config/
+vps_config/
+
+# SSH/Login credentials
+*credentials*
+*password*
+*login*
+ssh_*.txt
+server_*.txt
+
+# Wallet files (CRITICAL - contains private keys)
+*wallet*.json
+*keypair*.json
+*.pem
+*.key
+
+# Fly.io configs
+fly.toml
+
+# Enterprise/test folders with credentials
+Enterprise/
+enterprise/
+

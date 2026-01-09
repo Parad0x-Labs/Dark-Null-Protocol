@@ -13,7 +13,7 @@ We take security seriously. If you discover a vulnerability, please report it re
 
 ### How to Report
 
-1. **Email**: security@parad0x.io
+1. **Email**: hello@parad0xlabs.com
 2. **Subject**: `[SECURITY] Brief description`
 3. **Encrypt**: Use our PGP key (below) for sensitive reports
 
@@ -37,16 +37,20 @@ We take security seriously. If you discover a vulnerability, please report it re
 
 ## Bug Bounty Program
 
-We reward responsible disclosure of security vulnerabilities.
+**Status**: 🚧 Coming Soon (Post-Audit)
 
-### Reward Tiers
+We will offer rewards for responsible disclosure after our security audit is complete.
 
-| Severity | Description | Reward |
-|----------|-------------|--------|
-| **Critical** | Fund theft, protocol drain, ZK bypass | Up to **$50,000** |
-| **High** | Double-spend, unauthorized access, data leak | Up to **$10,000** |
-| **Medium** | DoS, griefing, minor fund lock | Up to **$2,500** |
-| **Low** | Information disclosure, best practice violations | Up to **$500** |
+### Planned Reward Tiers
+
+| Severity | Description | Planned Reward |
+|----------|-------------|----------------|
+| **Critical** | Fund theft, protocol drain, ZK bypass | TBD |
+| **High** | Double-spend, unauthorized access | TBD |
+| **Medium** | DoS, griefing, minor issues | TBD |
+| **Low** | Best practice violations | TBD |
+
+*Rewards will be announced after mainnet launch.*
 
 ### Scope
 
@@ -172,9 +176,9 @@ We will not pursue legal action against researchers who:
 
 ## Contact
 
-- **Security Issues**: security@parad0x.io
-- **General Questions**: hello@parad0x.io
-- **Discord**: [discord.gg/darknull](https://discord.gg/darknull)
+- **Security Issues**: hello@parad0xlabs.com
+- **General Questions**: hello@parad0xlabs.com
+- **Discord**: [discord.gg/Q7SCJfMJtr](https://discord.gg/Q7SCJfMJtr)
 
 ---
 

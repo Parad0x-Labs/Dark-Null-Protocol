@@ -1,0 +1,36 @@
+{
+  "name": "@dark-null/protocol",
+  "version": "1.0.0",
+  "description": "Zero-Knowledge Privacy Payments on Solana",
+  "homepage": "https://parad0xlabs.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Parad0x-Labs/Dark-Null-Protocol.git"
+  },
+  "keywords": [
+    "solana",
+    "zk-snark",
+    "privacy",
+    "groth16",
+    "zero-knowledge",
+    "payments",
+    "web3",
+    "defi",
+    "x402"
+  ],
+  "author": "Parad0x Labs <hello@parad0xlabs.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/Parad0x-Labs/Dark-Null-Protocol/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Tests run in private environment - see tests/README.md\"",
+    "docs": "echo \"Documentation at https://github.com/Parad0x-Labs/Dark-Null-Protocol/tree/main/docs\""
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

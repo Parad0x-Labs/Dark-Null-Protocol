@@ -1,0 +1,310 @@
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║  DARK NULL PROTOCOL — .gitignore                                              ║
+# ║  Parad0x Labs © 2026 — All Rights Reserved                                    ║
+# ║                                                                               ║
+# ║  ⚠️  CRITICAL: This file protects proprietary IP from commits                 ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔒 PROPRIETARY SOURCE CODE — NEVER COMMIT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Solana Programs (ALL source code)
+programs/
+!programs/README.md
+
+# ZK Circuits (ALL circuit files)
+circuits/
+circuits_clean/
+!circuits/README.md
+
+# Infrastructure source
+infra/
+!infra/README.md
+
+# Integration source code
+integrations/
+!integrations/README.md
+
+# Client applications
+client/
+clients/
+browser-extension/
+
+# SDKs source
+sdk/
+
+# Indexer
+indexer/
+v17_indexer/
+
+# Relayer
+relayer/
+
+# Audit tools
+audit/
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔒 INTERNAL DOCUMENTS — NEVER COMMIT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Master codex and internal docs
+*CODEX*.txt
+*CODEX*.md
+*_CODEX*
+PARAD0X_LABS_MASTER_CODEX.txt
+PARADOX_NULL_CODEX.txt
+PARADOX_EXECUTIVE_BRIEF.txt
+
+# Internal READMEs
+INTERNAL_*.md
+*_INTERNAL.md
+*_INTERNAL.txt
+README_AI_HANDOVER.md
+
+# Handover documents (keep private)
+*_HANDOVER*.md
+*HANDOVER*.md
+MASTER_HANDOVER.md
+V17_HANDOVER_DOCUMENT.md
+V18_HANDOVER_DOCUMENT.md
+NEXT_SESSION.md
+SKYSCRAPER.md
+
+# Production guides (internal)
+*_PRODUCTION_GUIDE.md
+DEVNET_PRODUCTION_GUIDE.md
+V17_PRODUCTION_GUIDE.md
+DARK_NULL_V18_DEPLOY.md
+DARK_NULL_PROTOCOL.md
+
+# Architecture docs (internal)
+ARCHITECTURE_INFINITE.md
+PARADOX_V17_WORKING_STATE.md
+README_V17_INFINITE.md
+
+# Build guides (internal)
+BUILD_QUICKREF.md
+QUICK_COMMANDS.md
+WINDOWS_BUILD_GUIDE.md
+
+# All codes file
+ALL_CODES.txt
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔒 OLDER VERSIONS — NEVER COMMIT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Version folders
+v10_paradox_pro/
+v11_paradox_recursive/
+v14_ghost_protocol/
+v15_*.ts
+v17_*.ts
+v18/
+
+# Parad0x NULL (old structure)
+Parad0x_NULL/
+
+# Backups
+backup*/
+backups/
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔒 BUILD ARTIFACTS & DEPENDENCIES — NEVER COMMIT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Node
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+
+# Anchor/Solana build
+target/
+deploy/
+.anchor/
+
+# ZK build artifacts
+*.wasm
+*.zkey
+*.wtns
+*.r1cs
+*.sym
+*_js/
+
+# Light groth16
+light_groth16/
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔐 SECRETS & CREDENTIALS — NEVER COMMIT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Environment files
+.env
+.env.*
+*.env
+!env.example.txt
+
+# Keypairs & Keys (ALL JSON that might be keys)
+*keypair*.json
+*-keypair.json
+*_keypair.json
+wallet.json
+admin.json
+deployer.json
+relayer-keypair.json
+arweave*.json
+ghost-fleet.json
+
+# Config with secrets
+.config/
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔒 SCRIPTS & UTILITIES — NEVER COMMIT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Scripts folder
+scripts/
+!scripts/README.md
+
+# PowerShell scripts
+*.ps1
+
+# Shell scripts
+*.sh
+
+# Debug scripts
+debug_*.js
+debug_*.py
+debug_*.ts
+
+# Test files (contain logic)
+test_*.js
+test_*.ts
+tests/
+*_test.ts
+*_test.js
+*.spec.ts
+
+# Utility scripts
+check_*.js
+check_*.ts
+find_*.js
+gen_*.js
+get_*.js
+decode_*.js
+reset_*.ts
+restore_*.ps1
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔒 REPORTS & LOGS — NEVER COMMIT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Error reports
+*_ERROR_REPORT.txt
+*_FAILURE_REPORT.txt
+DEPLOY_ERROR_REPORT.txt
+FINAL_FAILURE_REPORT.txt
+WINDOWS_ENV_REPORT.txt
+
+# Output files
+*_output.txt
+test_output.txt
+test_result.txt
+full_error_log.txt
+proof_err.txt
+proof_format.txt
+
+# Logs
+logs/
+*.log
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔒 MISCELLANEOUS — NEVER COMMIT  
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Constants files (contain crypto params)
+constants*.txt
+vkey_rust.txt
+
+# GPT/AI help files
+gpt*.txt
+"gpt help.txt"
+
+# Docker (internal)
+Dockerfile
+docker-compose*.yml
+
+# Solana install
+solana_install.sh
+
+# Nuclear deploy
+nuclear_deploy.ts
+
+# Diagnostic
+diagnostic_*.ts
+
+# Setup scripts
+setup-env.ps1
+
+# Anchor config
+Anchor.toml
+
+# Sym files
+*.sym
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 📝 OS & IDE — NEVER COMMIT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+*.code-workspace
+
+# Temp
+tmp/
+temp/
+.tmp/
+*.tmp
+*.swp
+*.swo
+*~
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ✅ EXPLICITLY ALLOWED — These ARE safe to commit
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Public documentation
+!README.md
+!SECURITY.md
+!AUDIT.md
+!VERIFICATION.md
+!LICENSE
+!CHANGELOG.md
+!CONTRIBUTING.md
+!CODE_OF_CONDUCT.md
+
+# Public docs folder
+!docs/
+!docs/**
+
+# IDL folder (interface only)
+!idl/
+!idl/**
+
+# Example config
+!env.example.txt
+
+# Package manifests (no secrets)
+!package.json
+!package-lock.json
+!tsconfig.json
+

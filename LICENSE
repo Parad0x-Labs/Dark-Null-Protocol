@@ -1,0 +1,89 @@
+DARK NULL PROTOCOL LICENSE
+
+Copyright (c) 2026 Parad0x Labs. All Rights Reserved.
+
+================================================================================
+PROPRIETARY SOFTWARE LICENSE
+================================================================================
+
+This software and associated documentation files (the "Software") are the
+proprietary and confidential property of Parad0x Labs.
+
+GRANT OF LICENSE
+----------------
+Subject to the terms of this License, Parad0x Labs grants you a limited,
+non-exclusive, non-transferable, revocable license to:
+
+1. USE the Software's public APIs and SDKs for integration purposes
+2. ACCESS the deployed protocol on supported networks
+3. BUILD applications that interact with the Dark Null Protocol
+
+RESTRICTIONS
+------------
+You may NOT:
+
+1. Copy, modify, or distribute the Software's source code
+2. Reverse engineer, decompile, or disassemble the Software
+3. Create derivative works based on the Software
+4. Remove or alter any proprietary notices or labels
+5. Use the Software for any unlawful purpose
+6. Sublicense, sell, or transfer the Software to third parties
+
+OPEN SOURCE COMPONENTS
+----------------------
+Certain components are licensed under open source licenses:
+
+- @dark-null/sdk: MIT License
+- @dark-null/x402-middleware: MIT License  
+- @dark-null/jupiter-hook: MIT License
+- @dark-null/mcp-tools: MIT License
+
+These components are provided "as is" under their respective licenses.
+See individual package LICENSE files for details.
+
+INTELLECTUAL PROPERTY
+---------------------
+The Software contains proprietary algorithms, designs, and implementations
+that are trade secrets of Parad0x Labs, including but not limited to:
+
+- Compression algorithms (Liquefy, Nebula)
+- Micropayment batching system (PIE+PIP+PAP+QIL)
+- Protocol design and architecture
+- ZK circuit implementations
+
+NO WARRANTY
+-----------
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+LIMITATION OF LIABILITY
+-----------------------
+IN NO EVENT SHALL PARAD0X LABS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+TERMINATION
+-----------
+This License is effective until terminated. Parad0x Labs may terminate this
+License at any time if you fail to comply with any term of this License.
+Upon termination, you must destroy all copies of the Software.
+
+GOVERNING LAW
+-------------
+This License shall be governed by and construed in accordance with the laws
+of the jurisdiction in which Parad0x Labs is incorporated.
+
+CONTACT
+-------
+For licensing inquiries: legal@parad0x.io
+For technical support: support@parad0x.io
+For security issues: security@parad0x.io
+
+================================================================================
+                         Parad0x Labs © 2026
+                        https://parad0x.io
+================================================================================
+
+

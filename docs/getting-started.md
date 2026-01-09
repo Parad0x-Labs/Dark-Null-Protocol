@@ -169,7 +169,7 @@ main().catch(console.error);
 
 - **Discord**: [discord.gg/darknull](https://discord.gg/darknull)
 - **Twitter**: [@DarkNullProtocol](https://twitter.com/DarkNullProtocol)
-- **Email**: support@parad0x.io
+- **Email**: hello@parad0xlabs.com
 
 ---
 

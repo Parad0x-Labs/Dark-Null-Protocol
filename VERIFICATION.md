@@ -285,8 +285,8 @@ See [SECURITY.md](./SECURITY.md) for our bug bounty program.
 
 ## Questions?
 
-- **Technical**: dev@parad0x.io
-- **Security**: security@parad0x.io
+- **Technical**: hello@parad0xlabs.com
+- **Security**: security@parad0xlabs.com
 - **Discord**: [discord.gg/darknull](https://discord.gg/darknull)
 
 ---

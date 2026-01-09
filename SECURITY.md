@@ -3,7 +3,7 @@
 ## Dark Null Protocol — Security & Bug Bounty
 
 **Effective Date**: January 9, 2026  
-**Contact**: security@parad0x.io
+**Contact**: security@parad0xlabs.com
 
 ---
 
@@ -176,7 +176,7 @@ We will not pursue legal action against researchers who:
 
 ## Contact
 
-- **Security Issues**: hello@parad0xlabs.com
+- **Security Issues**: security@parad0xlabs.com
 - **General Questions**: hello@parad0xlabs.com
 - **Discord**: [discord.gg/Q7SCJfMJtr](https://discord.gg/Q7SCJfMJtr)
 

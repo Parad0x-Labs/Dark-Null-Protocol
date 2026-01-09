@@ -374,7 +374,7 @@ cd infra/relayer && npm start
 ## Support
 
 - **Discord**: [discord.gg/darknull](https://discord.gg/darknull)
-- **Email**: dev@parad0x.io
+- **Email**: hello@parad0xlabs.com
 - **GitHub Issues**: For SDK bugs
 
 ---

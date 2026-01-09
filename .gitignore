@@ -314,8 +314,13 @@ temp/
 # Example config
 !env.example.txt
 
-# Package manifests (no secrets)
+# Package manifest (metadata only)
 !package.json
-!package-lock.json
-!tsconfig.json
+
+# BLOCK internal files
+artifacts/
+devnet_keys/
+e2e_results.json
+package-lock.json
+tsconfig.json
 

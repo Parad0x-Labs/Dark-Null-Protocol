@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="docs/assets/dark-null-logo.png" alt="Dark Null Protocol" width="200"/>
-</p>
-
 <h1 align="center">🌑 Dark Null Protocol</h1>
 
 <p align="center">
@@ -25,9 +21,45 @@
 
 ---
 
+## 🏆 Why Dark Null? (The Numbers)
+
+<table>
+<tr>
+<td align="center">
+<h3>144 Bytes</h3>
+<p>Smallest ZK proofs on Solana<br/><sub>Industry standard: 256+ bytes</sub></p>
+</td>
+<td align="center">
+<h3>~$0.0003</h3>
+<p>Cost per private transaction<br/><sub>Cheaper than a public TX on ETH</sub></p>
+</td>
+<td align="center">
+<h3>~400ms</h3>
+<p>Transaction finality<br/><sub>Solana speed, ZK privacy</sub></p>
+</td>
+<td align="center">
+<h3>10,000x</h3>
+<p>Micropayment cost savings<br/><sub>Batch 10K TXs into 1</sub></p>
+</td>
+</tr>
+</table>
+
+### 🚫 NOT a Mixer — Here's the Difference:
+
+| | Mixers (Tornado Cash) | Dark Null Protocol |
+|---|:---:|:---:|
+| Instant in/out | ✅ Yes | ❌ **Maturity delays required** |
+| Compliance options | ❌ None | ✅ **Audit tags for regulators** |
+| Legal status | 🚨 Sanctioned | ✅ **Compliance-first design** |
+| Use case | Obfuscation | **Legitimate privacy** |
+
+**Dark Null = "Maximum Legal Privacy"** — privacy you can defend in court.
+
+---
+
 ## What is Dark Null Protocol?
 
-**Dark Null Protocol** is a zero-knowledge privacy layer for Solana, enabling private transactions while maintaining regulatory compliance options. Built by [Parad0x Labs](https://parad0x.io) as part of the Web0 Superstack.
+**Dark Null Protocol** is a zero-knowledge privacy layer for Solana, enabling private transactions while maintaining regulatory compliance options. Built by [Parad0x Labs](https://parad0xlabs.com) as part of the Web0 Superstack.
 
 ### The Privacy Problem
 
@@ -42,7 +74,7 @@ On Solana, every transaction is public. Your wallet balance, transaction history
 │    │──── Shield (deposit) ───────▶│                         │   │
 │    │                              │ ┌─────────────────────┐ │   │
 │    │                              │ │  ZK Privacy Pool    │ │   │
-│    │                              │ │  • Funds mixed      │ │   │
+│    │                              │ │  • Funds shielded   │ │   │
 │    │                              │ │  • Maturity delay   │ │   │
 │    │                              │ │  • ZK proof gen     │ │   │
 │    │                              │ └─────────────────────┘ │   │
@@ -57,15 +89,47 @@ Result: No on-chain link between sender and receiver.
 
 ## Features
 
-| Feature | Description |
-|---------|-------------|
-| **ZK-SNARK Privacy** | Groth16 proofs verify transactions without revealing sender/receiver |
-| **Maturity Delays** | Configurable time delays prevent instant correlation attacks |
-| **Stealth Addresses** | One-time recipient addresses for enhanced privacy |
-| **Flex Denominations** | Fixed tiers or flexible amounts for API monetization |
-| **Relayed Withdrawals** | Fee sponsorship hides recipient's wallet from fee payments |
-| **Audit Tags** | Optional compliance — prove ownership to auditors without public disclosure |
-| **Micropayment Batching** | Aggregate thousands of payments into single on-chain transaction |
+### Core Technology
+| Feature | What It Means |
+|---------|---------------|
+| **144-Byte ZK Proofs** | Smallest proofs on Solana = cheapest private TXs |
+| **Groth16 Verification** | Battle-tested cryptography (same as Zcash) |
+| **Maturity Delays** | Forced waiting period = NOT instant mixing |
+| **Nullifier Tracking** | Cryptographic double-spend prevention |
+
+### Privacy Features
+| Feature | What It Means |
+|---------|---------------|
+| **Stealth Addresses** | One-time recipient keys, unlinkable to main wallet |
+| **Relayed Withdrawals** | Relayer pays fees, your wallet never visible |
+| **Shielded Balances** | Nobody can see how much you hold |
+
+### Compliance & Legal
+| Feature | What It Means |
+|---------|---------------|
+| **Audit Tags** | Prove ownership to regulators WITHOUT public disclosure |
+| **Maturity Enforcement** | On-chain delays prevent instant mixing |
+| **KYC Compatible** | Can integrate with identity solutions |
+
+### Cost Efficiency
+| Feature | What It Means |
+|---------|---------------|
+| **Micropayment Batching** | 10,000 payments → 1 on-chain TX (PIE+PIP+PAP) |
+| **Sub-cent Payments** | Finally economically viable on blockchain |
+| **Flex Denominations** | Fixed tiers OR any amount for APIs |
+
+---
+
+## 💡 Real-World Use Cases
+
+| Use Case | How Dark Null Helps |
+|----------|---------------------|
+| **Payroll** | Pay employees without revealing salaries publicly |
+| **Donations** | Donate to causes without doxxing yourself |
+| **API Payments** | Monetize APIs with privacy (x402 standard) |
+| **AI Agents** | Let Claude/GPT make payments without exposing wallets |
+| **DeFi Trading** | Swap tokens without revealing your strategy |
+| **Business Payments** | B2B transactions without competitor intelligence |
 
 ---
 
@@ -198,16 +262,9 @@ sha256sum dark_null.so
 
 ### Bug Bounty
 
-We offer rewards for responsible disclosure of security vulnerabilities.
+**Coming Soon** — We will offer rewards for responsible disclosure after security audit completion.
 
-| Severity | Reward |
-|----------|--------|
-| Critical | Up to $50,000 |
-| High | Up to $10,000 |
-| Medium | Up to $2,500 |
-| Low | Up to $500 |
-
-See [SECURITY.md](./SECURITY.md) for details.
+See [SECURITY.md](./SECURITY.md) for reporting guidelines.
 
 ### Security Features
 
@@ -308,10 +365,10 @@ See [LICENSE](./LICENSE) for details.
 
 ## Contact
 
-- **Website**: [darknull.io](https://darknull.io)
-- **Twitter**: [@DarkNullProtocol](https://twitter.com/DarkNullProtocol)
-- **Discord**: [discord.gg/darknull](https://discord.gg/darknull)
-- **Email**: security@parad0x.io (for security issues)
+- **Website**: [parad0xlabs.com](https://parad0xlabs.com/)
+- **Twitter**: [@Parad0x_Labs](https://x.com/Parad0x_Labs)
+- **Discord**: [discord.gg/Q7SCJfMJtr](https://discord.gg/Q7SCJfMJtr)
+- **Email**: hello@parad0xlabs.com
 
 ---
 

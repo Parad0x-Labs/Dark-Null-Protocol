@@ -291,6 +291,7 @@ temp/
 !CHANGELOG.md
 !CONTRIBUTING.md
 !CODE_OF_CONDUCT.md
+!LIVE_TEST_RESULTS.md
 
 # Public docs folder
 !docs/
@@ -299,6 +300,16 @@ temp/
 # IDL folder (interface only)
 !idl/
 !idl/**
+
+# Test examples (public SDK usage)
+!tests/
+!tests/README.md
+!tests/examples/
+!tests/examples/*.ts
+
+# GitHub workflows
+!.github/
+!.github/**
 
 # Example config
 !env.example.txt

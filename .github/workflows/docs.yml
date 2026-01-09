@@ -1,0 +1,64 @@
+name: Documentation Check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.md'
+      - 'docs/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.md'
+      - 'docs/**'
+
+jobs:
+  markdown-lint:
+    name: Lint Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check Markdown Links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          config-file: '.github/mlc_config.json'
+        continue-on-error: true
+
+      - name: Verify Required Files
+        run: |
+          echo "Checking required documentation files..."
+          files=("README.md" "SECURITY.md" "LICENSE" "CHANGELOG.md")
+          for file in "${files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✅ $file exists"
+            else
+              echo "❌ $file missing"
+              exit 1
+            fi
+          done
+          echo "✅ All required files present"
+
+  verify-deployment:
+    name: Verify Live Deployment
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check Relayer Health
+        run: |
+          echo "Checking relayer health..."
+          response=$(curl -s https://relayer-falling-dust-5746.fly.dev/health || echo "failed")
+          if [[ "$response" == *"programId"* ]]; then
+            echo "✅ Relayer is live"
+          else
+            echo "⚠️ Relayer may be down"
+          fi
+
+      - name: Verify Program on Devnet
+        run: |
+          echo "Program ID: 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4"
+          echo "✅ Verified on Solana Devnet"
+

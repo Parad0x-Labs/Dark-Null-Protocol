@@ -1,0 +1,134 @@
+{
+  "timestamp": "2026-01-10T20:47:53.976Z",
+  "apiUrl": "http://207.180.199.56:4000",
+  "tests": {
+    "health": {
+      "status": "PASS",
+      "data": {
+        "ok": true,
+        "cluster": "devnet",
+        "programId": "33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4",
+        "relayerPubkey": "CsfAbvMGrYK4Ex9rKA5vFEbRR2hMBdbzjVyjjExds2d2",
+        "relayerBalance": 488430960,
+        "version": "1.0.0",
+        "uptime": 36.656373024
+      }
+    },
+    "info": {
+      "status": "PASS",
+      "data": {
+        "protocol": "dark-null",
+        "version": "1.0.0",
+        "programId": "33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4",
+        "treasury": "9vDnXsPonRJa7yAmvwRGMAdxt8W13Qbm7HZuvauM3Ya3",
+        "relayerPubkey": "CsfAbvMGrYK4Ex9rKA5vFEbRR2hMBdbzjVyjjExds2d2",
+        "relayerBalanceLamports": 488430960,
+        "relayerBalanceSol": 0.48843096,
+        "relayerFeeBps": 10,
+        "protocolFeeBps": 20,
+        "minDelaySlots": 40,
+        "programLoaded": true,
+        "supportedDenoms": [
+          {
+            "id": 0,
+            "lamports": 1000000,
+            "sol": 0.001,
+            "name": "micro"
+          },
+          {
+            "id": 1,
+            "lamports": 10000000,
+            "sol": 0.01,
+            "name": "small"
+          },
+          {
+            "id": 2,
+            "lamports": 100000000,
+            "sol": 0.1,
+            "name": "medium"
+          },
+          {
+            "id": 3,
+            "lamports": 500000000,
+            "sol": 0.5,
+            "name": "sweet"
+          },
+          {
+            "id": 4,
+            "lamports": 1000000000,
+            "sol": 1,
+            "name": "large"
+          },
+          {
+            "id": 5,
+            "lamports": 10000000000,
+            "sol": 10,
+            "name": "whale"
+          }
+        ],
+        "cluster": "devnet",
+        "currentSlot": 434281133,
+        "receiptApiUrl": "http://localhost:3002",
+        "timestamp": "2026-01-10T20:47:55.149Z"
+      }
+    },
+    "denominations": {
+      "status": "PASS",
+      "data": [
+        {
+          "id": 0,
+          "lamports": 1000000,
+          "sol": 0.001,
+          "name": "micro"
+        },
+        {
+          "id": 1,
+          "lamports": 10000000,
+          "sol": 0.01,
+          "name": "small"
+        },
+        {
+          "id": 2,
+          "lamports": 100000000,
+          "sol": 0.1,
+          "name": "medium"
+        },
+        {
+          "id": 3,
+          "lamports": 500000000,
+          "sol": 0.5,
+          "name": "sweet"
+        },
+        {
+          "id": 4,
+          "lamports": 1000000000,
+          "sol": 1,
+          "name": "large"
+        },
+        {
+          "id": 5,
+          "lamports": 10000000000,
+          "sol": 10,
+          "name": "whale"
+        }
+      ]
+    },
+    "feeEstimate": {
+      "status": "PASS",
+      "data": {
+        "message": "Route GET:/v1/estimate?amount=100000000 not found",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    "shield": {
+      "status": "PASS",
+      "data": {
+        "success": true,
+        "sig": "3ZtpxsKVQcDvuYPWSVnka25YGhStm9Cq8AECZzLJyKYRBjoSi75uVeiLMpssWC64Fkc1nTj5TrZMiXqgYiF7u5oH",
+        "explorerUrl": "https://explorer.solana.com/tx/3ZtpxsKVQcDvuYPWSVnka25YGhStm9Cq8AECZzLJyKYRBjoSi75uVeiLMpssWC64Fkc1nTj5TrZMiXqgYiF7u5oH?cluster=devnet",
+        "slot": 434281136
+      }
+    }
+  }
+}

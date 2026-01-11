@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-01-11T09:04:59.633Z",
+  "cluster": "devnet",
+  "programId": "33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4",
+  "apiUrl": "http://207.180.199.56:4000",
+  "wallets": {
+    "depositor": "F6Fr2Sn6jLMbpLMcg7ezrwNLZxs9MM8RYyifUAvP72BY",
+    "recipient": "EYHxAHSbKMq3KPqAjSDLNWcGpMwVVdNBYgiwj2isU4A8",
+    "relayer": "CsfAbvMGrYK4Ex9rKA5vFEbRR2hMBdbzjVyjjExds2d2",
+    "treasury": "9vDnXsPonRJa7yAmvwRGMAdxt8W13Qbm7HZuvauM3Ya3"
+  },
+  "transactions": {
+    "shield": {
+      "sig": "2526CKHHajSYmZV2BGquS4K9bNJFuCamgkcCjbps8tWLg5Hub4k2qtL3Frwnos8bhaDoaPcszmzA5CL16Zi7En1d",
+      "slot": 434395918,
+      "explorerUrl": "https://explorer.solana.com/tx/2526CKHHajSYmZV2BGquS4K9bNJFuCamgkcCjbps8tWLg5Hub4k2qtL3Frwnos8bhaDoaPcszmzA5CL16Zi7En1d?cluster=devnet"
+    }
+  },
+  "timings": {
+    "shield": 1199,
+    "zkProof": 1471,
+    "total": 130528
+  },
+  "costs": {},
+  "proofMetrics": {
+    "proofSizeBytes": 256,
+    "publicInputsCount": 7
+  },
+  "amounts": {
+    "depositLamports": 10000000
+  },
+  "status": "PASS",
+  "phases": {
+    "secrets": "PASS",
+    "shield": "PASS",
+    "zkProof": "PASS"
+  }
+}

@@ -40,7 +40,7 @@ const connection = new Connection(clusterApiUrl('devnet'));
 
 const client = new DarkNullClient({
   connection,
-  programId: '33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4',
+  programId: '7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w',
 });
 ```
 
@@ -97,7 +97,7 @@ For maximum privacy, use the relayer so your wallet never appears as fee payer:
 ```typescript
 const client = new DarkNullClient({
   connection,
-  programId: '33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4',
+  programId: '7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w',
   relayerUrl: 'https://relayer-falling-dust-5746.fly.dev',
 });
 
@@ -123,7 +123,7 @@ async function main() {
   
   const client = new DarkNullClient({
     connection,
-    programId: '33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4',
+    programId: '7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w',
     relayerUrl: 'https://relayer-falling-dust-5746.fly.dev',
   });
 

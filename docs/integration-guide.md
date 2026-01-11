@@ -37,7 +37,7 @@ function PaymentComponent() {
   
   const client = new DarkNullClient({
     connection: new Connection('https://api.devnet.solana.com'),
-    programId: '33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4',
+    programId: '7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w',
     relayerUrl: 'https://relayer-falling-dust-5746.fly.dev',
   });
 
@@ -348,7 +348,7 @@ const result = await client.pay({
 ```typescript
 const client = new DarkNullClient({
   connection: new Connection('https://api.devnet.solana.com'),
-  programId: '33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4',
+  programId: '7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w',
   relayerUrl: 'https://relayer-falling-dust-5746.fly.dev',
 });
 

@@ -18,7 +18,7 @@ Dark Null Protocol uses a **"Trust Through Verification"** model. While our core
 
 ```bash
 # Program ID
-PROGRAM_ID="33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4"
+PROGRAM_ID="7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w"
 
 # Dump the deployed program binary
 solana program dump $PROGRAM_ID dark_null_v18.so --url devnet
@@ -50,7 +50,7 @@ The IDL defines all program instructions, accounts, and types.
 
 ```bash
 # Using Anchor CLI
-anchor idl fetch 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4 \
+anchor idl fetch 7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w \
   --provider.cluster devnet \
   > idl_from_chain.json
 
@@ -115,7 +115,7 @@ Expected response:
 {
   "ok": true,
   "cluster": "devnet",
-  "programId": "33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4",
+  "programId": "7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w",
   "relayerPubkey": "HBCXhujP9v2i7aPxPRahw46BeZzfcxNuWvCcUYNd2Ueu",
   "relayerBalance": 2000000000,
   "version": "1.0.0"
@@ -167,7 +167,7 @@ curl "https://gateway.pinata.cloud/ipfs/$IPFS_HASH"
 ```typescript
 import { PublicKey } from "@solana/web3.js";
 
-const PROGRAM_ID = new PublicKey("33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4");
+const PROGRAM_ID = new PublicKey("7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w");
 const [globalState] = PublicKey.findProgramAddressSync(
   [Buffer.from("global_state_v18")],
   PROGRAM_ID

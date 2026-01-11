@@ -361,3 +361,8 @@ fly.toml
 Enterprise/
 enterprise/
 
+# Private keys backup (CRITICAL - NEVER COMMIT)
+PRIVATE_KEYS_BACKUP/
+*_BACKUP/
+*_backup/
+

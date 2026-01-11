@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-01-11T09:19:23.538Z",
+  "proofGenerationTime": 1369,
+  "uncompressedSize": 256,
+  "compressedSize": 128,
+  "savings": 128,
+  "compressionRatio": "50.0%",
+  "g1RoundtripPass": true,
+  "compressedProofHex": "8ed2df4a127896f1b2c37b377a2400b3c08a36899d67196596ff4e38a7af82261d5b89c725add885bab7cf264ad29921813d9ad28570408a26529ad91138965f9c49a012e24f9c0e7cab04ff665c72733ca3e8368559d2edb1a58a93c704ae181709a3772f96bb70b527c60f358ec9f3d1a1620605759bd0ae221dea2a75add5"
+}

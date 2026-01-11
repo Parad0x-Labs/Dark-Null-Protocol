@@ -59,6 +59,6 @@ jobs:
 
       - name: Verify Program on Devnet
         run: |
-          echo "Program ID: 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4"
+          echo "Program ID: 7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w"
           echo "✅ Verified on Solana Devnet"
 

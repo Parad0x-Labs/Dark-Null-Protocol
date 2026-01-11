@@ -120,7 +120,7 @@ npm run build
 ```bash
 # Set environment
 export SOLANA_RPC_URL=https://api.devnet.solana.com
-export PROGRAM_ID=33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4
+export PROGRAM_ID=7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w
 
 # Run E2E tests
 npm run test:e2e

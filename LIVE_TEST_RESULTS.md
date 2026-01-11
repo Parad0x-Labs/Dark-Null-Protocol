@@ -58,10 +58,10 @@
 | Metric | Value |
 |--------|-------|
 | **Algorithm** | Groth16 (BN254) |
-| **Total Proof Size** | **256 bytes** |
-| **Proof A (G1)** | 64 bytes |
-| **Proof B (G2)** | 128 bytes |
-| **Proof C (G1)** | 64 bytes |
+| **Total Proof Size** | **128 bytes** (compressed) |
+| **Proof A (G1)** | 32 bytes (x-coord only) |
+| **Proof B (G2)** | 64 bytes (x-coords only) |
+| **Proof C (G1)** | 32 bytes (x-coord only) |
 | **Public Inputs** | 7 |
 | **Circuit** | Poseidon-based Merkle tree (depth 20) |
 
@@ -184,7 +184,7 @@ solana account 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4 --url devnet
    Total: 130528ms
 
 📦 PROOF METRICS:
-   Proof Size: 256 bytes
+   Proof Size: 128 bytes (compressed)
    Public Inputs: 7
 
 💰 AMOUNTS:

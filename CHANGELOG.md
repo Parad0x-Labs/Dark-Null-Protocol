@@ -54,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bug bounty program launched
 
 ### Deployment
-- **Program ID**: `33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4`
+- **Program ID**: `7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w`
 - **Network**: Solana Devnet
 - **Relayer**: https://relayer-falling-dust-5746.fly.dev/
 

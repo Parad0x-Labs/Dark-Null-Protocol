@@ -14,7 +14,7 @@ import { Connection, PublicKey } from '@solana/web3.js';
 // Configuration
 const CONFIG = {
   RPC_URL: 'https://api.devnet.solana.com',
-  PROGRAM_ID: '33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4',
+  PROGRAM_ID: '7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w',
 };
 
 async function main() {

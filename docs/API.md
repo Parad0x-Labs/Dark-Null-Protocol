@@ -27,7 +27,7 @@ GET /health
 {
   "ok": true,
   "cluster": "devnet",
-  "programId": "33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4",
+  "programId": "7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w",
   "relayerPubkey": "CsfAbvMGrYK4Ex9rKA5vFEbRR2hMBdbzjVyjjExds2d2",
   "relayerBalance": 9886935960,
   "version": "1.0.0",
@@ -48,7 +48,7 @@ GET /info
 {
   "protocol": "dark-null",
   "version": "1.0.0",
-  "programId": "33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4",
+  "programId": "7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w",
   "treasury": "9vDnXsPonRJa7yAmvwRGMAdxt8W13Qbm7HZuvauM3Ya3",
   "relayerPubkey": "CsfAbvMGrYK4Ex9rKA5vFEbRR2hMBdbzjVyjjExds2d2",
   "supportedAmounts": ["any"],

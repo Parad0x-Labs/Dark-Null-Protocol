@@ -8,7 +8,7 @@
 
 | Protocol | Payload Size | Verification | Status |
 |----------|-------------|--------------|--------|
-| **Paradox V17** | **144B** | Groth16 on-chain | ✅ Devnet live |
+| **Paradox V18** | **128B** | Groth16 on-chain | ✅ Devnet live |
 | Elusiv | ~500B | Groth16 | Mainnet (deprecated) |
 | Light Protocol | ~400B | Groth16 | Mainnet |
 | Tornado Cash (ETH) | ~1KB | Groth16 | Sanctioned |
@@ -36,14 +36,13 @@ The 2026 narrative has shifted toward:
 
 ## 🔥 Paradox Advantages
 
-### 1. **Smallest Payload (144B compressed)**
+### 1. **Smallest Payload (128B compressed)**
 ```
 Proof A (x-coord):  32 bytes
 Proof B (x-coord):  64 bytes  
 Proof C (x-coord):  32 bytes
-Seed:               16 bytes
 ─────────────────────────────
-Total:             144 bytes
+Total:             128 bytes
 ```
 Competitors use 300-500B. We're 3x more efficient.
 
@@ -197,7 +196,7 @@ This is a defensible niche because:
 
 | Metric | Current | Target |
 |--------|---------|--------|
-| Payload Size | 144B | 144B ✅ |
+| Payload Size | 128B | 128B ✅ |
 | Verification CU | 1.4M | <1.4M |
 | Proof Gen Time | 1.2s | <1s |
 | TVL | $0 (devnet) | $1M+ |

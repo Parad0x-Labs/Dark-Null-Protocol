@@ -58,7 +58,7 @@ We will offer rewards for responsible disclosure after our security audit is com
 
 | Component | Location |
 |-----------|----------|
-| Solana Program (V18) | `33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4` |
+| Solana Program (V18) | `7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w` |
 | Relayer API | https://relayer-falling-dust-5746.fly.dev/ |
 | ZK Proof Verification | On-chain verifier |
 | Intent Signature System | Relayed withdrawals |

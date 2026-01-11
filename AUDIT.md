@@ -77,7 +77,7 @@ We provide multiple ways to verify the security of Dark Null Protocol without re
 
 ```bash
 # Dump deployed program
-solana program dump 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4 dark_null.so --url devnet
+solana program dump 7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w dark_null.so --url devnet
 
 # Compare hash to audited binary
 sha256sum dark_null.so
@@ -91,7 +91,7 @@ The Interface Definition Language (IDL) is fully public:
 
 ```bash
 # Fetch IDL from chain
-anchor idl fetch 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4 --provider.cluster devnet
+anchor idl fetch 7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w --provider.cluster devnet
 ```
 
 ### 3. Deterministic Builds
@@ -131,7 +131,7 @@ We're seeking auditors with:
 
 | Version | Network | Program ID | Audit Status |
 |---------|---------|------------|--------------|
-| V18 (Dark Null v1) | Devnet | `33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4` | Internal review |
+| V18 (Dark Null v1) | Devnet | `7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w` | Internal review |
 | V17 | Devnet | `Ajdw9GaNN39P9mj6uqiAxAnYRS4wC1rQh2C7wguvJArB` | Internal review |
 
 ---

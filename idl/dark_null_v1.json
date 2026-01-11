@@ -1,0 +1,1191 @@
+{
+  "version": "1.0.0",
+  "name": "dark_null_v1",
+  "instructions": [
+    {
+      "name": "initialize",
+      "docs": [
+        "Initialize V18 with configurable params"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "adminSigner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "admin",
+          "type": "publicKey"
+        },
+        {
+          "name": "minDelaySlots",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "setMinDelay",
+      "docs": [
+        "Admin: Update minimum delay"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "newDelay",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "setDenoms",
+      "docs": [
+        "Admin: Update valid denominations"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "newDenoms",
+          "type": {
+            "array": [
+              "u64",
+              6
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "setRelayerMode",
+      "docs": [
+        "Admin: Toggle relayer mode"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "setAuditMode",
+      "docs": [
+        "Admin: Toggle audit mode"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "setDenomMode",
+      "docs": [
+        "Admin: Toggle denomination enforcement",
+        "When OFF: any amount allowed (for x402/agent payments)",
+        "When ON: only standard denominations allowed (better anonymity)"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "enforced",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "pause",
+      "docs": [
+        "Admin: Pause"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "unpause",
+      "docs": [
+        "Admin: Unpause"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "shieldV18",
+      "docs": [
+        "Shield V18 - Enforces denomination + records deposit slot + optional audit tag",
+        "Shield V18 - Deposit funds with commitment",
+        "SECURITY [C-01]: blinded_recipient stored for verification at unshield"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "depositMeta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "depositor",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "commitment",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "blindedRecipient",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "auditTag",
+          "type": {
+            "option": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "updateRoot",
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "indexer",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "newRoot",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "endIndex",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initNullifierPage",
+      "docs": [
+        "Init nullifier page"
+      ],
+      "accounts": [
+        {
+          "name": "nullifierPage",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "seed",
+          "type": {
+            "array": [
+              "u8",
+              16
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "unshieldV18",
+      "docs": [
+        "Unshield V18 - With maturity check + stealth recipient",
+        "SECURITY: deposit_slot read from on-chain DepositMeta (not user input)",
+        "SECURITY: recipient binding verified against blinded_recipient"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nullifierPage",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "depositMeta",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "SECURITY FIX [H-01]: Deposit metadata for maturity verification",
+            "Must be provided by client (derived from commitment)",
+            "deposit_slot is READ from this account, not user input"
+          ]
+        },
+        {
+          "name": "recipient",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "SECURITY FIX [C-01]: Verified against blinded_recipient in proof"
+          ]
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "rootRef",
+          "type": "u8"
+        },
+        {
+          "name": "denomId",
+          "type": "u8"
+        },
+        {
+          "name": "seed",
+          "type": {
+            "array": [
+              "u8",
+              16
+            ]
+          }
+        },
+        {
+          "name": "proofA",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "proofB",
+          "type": {
+            "array": [
+              "u8",
+              128
+            ]
+          }
+        },
+        {
+          "name": "proofC",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "nullifierHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "blindedRecipient",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "salt1",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "salt2",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "salt3",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "depositSlot",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "unshieldV18Flex",
+      "docs": [
+        "Unshield V18 Flex - Accepts raw amount instead of denom_id",
+        "Use this for x402, agent payments, or any non-standard amounts",
+        "Requires denom_enabled = 0 (admin must enable flex mode first)",
+        "SECURITY: Both [C-01] and [H-01] fixes applied"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nullifierPage",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "depositMeta",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "SECURITY FIX [H-01]: Deposit metadata for maturity verification",
+            "Must be provided by client (derived from commitment)",
+            "deposit_slot is READ from this account, not user input"
+          ]
+        },
+        {
+          "name": "recipient",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "SECURITY FIX [C-01]: Verified against blinded_recipient in proof"
+          ]
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "rootRef",
+          "type": "u8"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "seed",
+          "type": {
+            "array": [
+              "u8",
+              16
+            ]
+          }
+        },
+        {
+          "name": "proofA",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "proofB",
+          "type": {
+            "array": [
+              "u8",
+              128
+            ]
+          }
+        },
+        {
+          "name": "proofC",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "nullifierHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "blindedRecipient",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "salt1",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "salt2",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "salt3",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "depositSlot",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "unshieldV18Relayed",
+      "docs": [
+        "Unshield V18 Relayed - Bob signs intent off-chain, relayer submits TX",
+        "This hides Bob's wallet as fee payer entirely",
+        "SECURITY: Both [C-01] and [H-01] fixes applied"
+      ],
+      "accounts": [
+        {
+          "name": "globalState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vault",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nullifierPage",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "depositMeta",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "SECURITY FIX [H-01]: Deposit metadata for maturity verification"
+          ]
+        },
+        {
+          "name": "recipient",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "SECURITY FIX [C-01]: Verified against blinded_recipient"
+          ]
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "relayer",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Relayer pays TX fees (not Bob!)"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "rootRef",
+          "type": "u8"
+        },
+        {
+          "name": "denomId",
+          "type": "u8"
+        },
+        {
+          "name": "seed",
+          "type": {
+            "array": [
+              "u8",
+              16
+            ]
+          }
+        },
+        {
+          "name": "proofA",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "proofB",
+          "type": {
+            "array": [
+              "u8",
+              128
+            ]
+          }
+        },
+        {
+          "name": "proofC",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "nullifierHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "blindedRecipient",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "salt1",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "salt2",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "salt3",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "depositSlot",
+          "type": "u64"
+        },
+        {
+          "name": "bobPubkey",
+          "type": "publicKey"
+        },
+        {
+          "name": "intentNonce",
+          "type": "u64"
+        },
+        {
+          "name": "intentExpirySlot",
+          "type": "u64"
+        },
+        {
+          "name": "intentSignature",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "DepositMeta",
+      "docs": [
+        "Deposit metadata for maturity tracking"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "commitment",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "depositSlot",
+            "type": "u64"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "auditTag",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "leafIndex",
+            "type": "u64"
+          },
+          {
+            "name": "blindedRecipient",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalStateV18",
+      "docs": [
+        "V18 Global State with privacy features"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vaultBump",
+            "type": "u8"
+          },
+          {
+            "name": "paused",
+            "type": "u8"
+          },
+          {
+            "name": "denomEnabled",
+            "type": "u8"
+          },
+          {
+            "name": "relayerEnabled",
+            "type": "u8"
+          },
+          {
+            "name": "auditEnabled",
+            "type": "u8"
+          },
+          {
+            "name": "rateLimitCount",
+            "type": "u8"
+          },
+          {
+            "name": "pad",
+            "type": {
+              "array": [
+                "u8",
+                2
+              ]
+            }
+          },
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "rootHead",
+            "type": "u64"
+          },
+          {
+            "name": "rateLimitSlot",
+            "type": "u64"
+          },
+          {
+            "name": "totalShielded",
+            "type": "u64"
+          },
+          {
+            "name": "totalUnshielded",
+            "type": "u64"
+          },
+          {
+            "name": "minDelaySlots",
+            "type": "u64"
+          },
+          {
+            "name": "intentNonce",
+            "type": "u64"
+          },
+          {
+            "name": "validDenoms",
+            "type": {
+              "array": [
+                "u64",
+                6
+              ]
+            }
+          },
+          {
+            "name": "rootRing",
+            "type": {
+              "array": [
+                {
+                  "defined": "RootEntry"
+                },
+                128
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "NullifierPage",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "shard",
+            "type": "u8"
+          },
+          {
+            "name": "page",
+            "type": "u8"
+          },
+          {
+            "name": "occupancy",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "slots",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u8",
+                    32
+                  ]
+                },
+                256
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "RootEntry",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "root",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "endIndex",
+            "type": "u64"
+          },
+          {
+            "name": "slot",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "ShieldV18Event",
+      "fields": [
+        {
+          "name": "amount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "denomId",
+          "type": "u8",
+          "index": false
+        },
+        {
+          "name": "commitment",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          },
+          "index": false
+        },
+        {
+          "name": "depositSlot",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "hasAuditTag",
+          "type": "bool",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "UnshieldV18Event",
+      "fields": [
+        {
+          "name": "amount",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "fee",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "denomId",
+          "type": "u8",
+          "index": false
+        },
+        {
+          "name": "slot",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "isRelayed",
+          "type": "bool",
+          "index": false
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidRoot",
+      "msg": "Invalid root"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidDenomination",
+      "msg": "Invalid denomination - must use fixed tiers"
+    },
+    {
+      "code": 6002,
+      "name": "DenomEnforcementOn",
+      "msg": "Denomination enforcement is ON - use standard tiers or disable for flex mode"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidAmount",
+      "msg": "Invalid amount - must be > 0 and <= 100 SOL"
+    },
+    {
+      "code": 6004,
+      "name": "MaturityNotReached",
+      "msg": "Maturity not reached - wait for minimum delay"
+    },
+    {
+      "code": 6005,
+      "name": "DoubleSpend",
+      "msg": "Double spend detected"
+    },
+    {
+      "code": 6006,
+      "name": "PageFull",
+      "msg": "Nullifier page full"
+    },
+    {
+      "code": 6007,
+      "name": "RecipientMismatch",
+      "msg": "Recipient mismatch - blinded_recipient does not match actual recipient"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidProof",
+      "msg": "Invalid ZK proof"
+    },
+    {
+      "code": 6009,
+      "name": "ProtocolPaused",
+      "msg": "Protocol paused"
+    },
+    {
+      "code": 6010,
+      "name": "Unauthorized",
+      "msg": "Unauthorized"
+    },
+    {
+      "code": 6011,
+      "name": "RateLimited",
+      "msg": "Rate limited"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidTreasury",
+      "msg": "Invalid treasury"
+    },
+    {
+      "code": 6013,
+      "name": "RelayerDisabled",
+      "msg": "Relayer mode disabled"
+    },
+    {
+      "code": 6014,
+      "name": "IntentExpired",
+      "msg": "Intent expired"
+    },
+    {
+      "code": 6015,
+      "name": "IntentReplay",
+      "msg": "Intent replay detected"
+    }
+  ]
+}

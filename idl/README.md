@@ -59,7 +59,7 @@ const client = new DarkNullClient({ ... });
 You can fetch the IDL directly from the deployed program:
 
 ```bash
-anchor idl fetch 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4 \
+anchor idl fetch 7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w \
   --provider.cluster devnet
 ```
 
@@ -71,7 +71,7 @@ Compare on-chain IDL to published IDL:
 
 ```bash
 # Fetch from chain
-anchor idl fetch 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4 \
+anchor idl fetch 7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w \
   --provider.cluster devnet > idl_from_chain.json
 
 # Compare

@@ -26,7 +26,7 @@
 <table>
 <tr>
 <td align="center">
-<h3>144 Bytes</h3>
+<h3>128 Bytes</h3>
 <p>Smallest ZK proofs on Solana<br/><sub>Industry standard: 256+ bytes</sub></p>
 </td>
 <td align="center">
@@ -92,7 +92,7 @@ Result: No on-chain link between sender and receiver.
 ### Core Technology
 | Feature | What It Means |
 |---------|---------------|
-| **144-Byte ZK Proofs** | Smallest proofs on Solana = cheapest private TXs |
+| **128-Byte ZK Proofs** | Smallest proofs on Solana = cheapest private TXs |
 | **Groth16 Verification** | Battle-tested cryptography (same as Zcash) |
 | **Maturity Delays** | Forced waiting period = NOT instant mixing |
 | **Nullifier Tracking** | Cryptographic double-spend prevention |
@@ -149,7 +149,7 @@ import { DarkNullClient } from '@dark-null/sdk';
 // Initialize client
 const client = new DarkNullClient({
   rpcUrl: 'https://api.devnet.solana.com',
-  programId: '33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4',
+  programId: '7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w',
 });
 
 // Shield funds (deposit into privacy pool)
@@ -217,7 +217,7 @@ const tools = await import('@dark-null/mcp-tools');
 
 | Network | Program ID | Status |
 |---------|------------|--------|
-| **Devnet** | `33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4` | ✅ Live |
+| **Devnet** | `7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w` | ✅ Live |
 | **Mainnet** | Coming after audit | ⏳ Pending |
 
 ### Live API
@@ -243,7 +243,7 @@ We believe in **trust through verification**, not just open source.
 
 ```bash
 # 1. Dump the deployed program
-solana program dump 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4 dark_null.so --url devnet
+solana program dump 7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w dark_null.so --url devnet
 
 # 2. Verify hash matches audited binary
 sha256sum dark_null.so
@@ -297,7 +297,7 @@ See [SECURITY.md](./SECURITY.md) for reporting guidelines.
 ╠═══════════════════════════════════════════════════════════════════════════════╣
 ║  LAYER 1: CORE PROTOCOL (Solana On-Chain)                                     ║
 ║  • Shield  • Merkle Tree  • Groth16 Verifier  • Unshield  • Stealth Addr     ║
-║  Program: 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4                       ║
+║  Program: 7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w                       ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 ```
 

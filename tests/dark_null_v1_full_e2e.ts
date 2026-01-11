@@ -251,14 +251,17 @@ async function main() {
   console.log("═══════════════════════════════════════════════════════════════\n");
 
   const commitmentBytes = Array.from(bigIntToBytes32(commitment));
+  const blindedRecipientBytes = Array.from(bigIntToBytes32(blindedRecipient));
   const [depositMetaPDA] = PublicKey.findProgramAddressSync(
     [Buffer.from("deposit"), Buffer.from(commitmentBytes)],
     PROGRAM_ID
   );
 
   const startShield = Date.now();
-  const shieldTx = await program.methods
-    .shieldV18(new BN(amount.toString()), commitmentBytes, null)
+  
+  // Build shield instruction manually for compatibility
+  const shieldIx = await program.methods
+    .shieldV18(new BN(amount.toString()), commitmentBytes, blindedRecipientBytes)
     .accounts({
       globalState: globalStatePDA,
       vault: vaultPDA,
@@ -266,7 +269,10 @@ async function main() {
       depositor: wallet.publicKey,
       systemProgram: SystemProgram.programId,
     })
-    .rpc();
+    .instruction();
+
+  const shieldTxn = new anchor.web3.Transaction().add(shieldIx);
+  const shieldTx = await provider.sendAndConfirm(shieldTxn);
 
   await connection.confirmTransaction(shieldTx, "confirmed");
   timings.shield = Date.now() - startShield;
@@ -290,14 +296,15 @@ async function main() {
   
   const startRoot = Date.now();
   const rootTx = await withRetry(async () => {
-    const tx = await program.methods
+    const rootIx = await program.methods
       .updateRoot(Array.from(bigIntToBytes32(merkleRoot)), new BN(10))
       .accounts({
         globalState: globalStatePDA,
         indexer: wallet.publicKey,
       })
-      .rpc();
-    await connection.confirmTransaction(tx, "confirmed");
+      .instruction();
+    const rootTxn = new anchor.web3.Transaction().add(rootIx);
+    const tx = await provider.sendAndConfirm(rootTxn);
     return tx;
   });
   timings.rootUpdate = Date.now() - startRoot;
@@ -370,7 +377,7 @@ async function main() {
   const rootBytes = bigIntToBytes32(BigInt(publicSignals[0]));
   const nullifierHashBytes = bigIntToBytes32(BigInt(publicSignals[1]));
   const amountBytes = bigIntToBytes32(BigInt(publicSignals[2]));
-  const blindedRecipientBytes = bigIntToBytes32(BigInt(publicSignals[3]));
+  const blindedRecipientProofBytes = bigIntToBytes32(BigInt(publicSignals[3]));
   const salt1Bytes = bigIntToBytes32(BigInt(publicSignals[4]));
   const salt2Bytes = bigIntToBytes32(BigInt(publicSignals[5]));
   const salt3Bytes = bigIntToBytes32(BigInt(publicSignals[6]));
@@ -397,16 +404,17 @@ async function main() {
 
   // Initialize nullifier page
   try {
-    const initPageTx = await program.methods
+    const initPageIx = await program.methods
       .initNullifierPage(Array.from(seed))
       .accounts({
         nullifierPage: nullifierPagePDA,
         payer: wallet.publicKey,
         systemProgram: SystemProgram.programId,
       })
-      .rpc();
-    await connection.confirmTransaction(initPageTx, "confirmed");
-    console.log(`   ✅ Nullifier page initialized`);
+      .instruction();
+    const initPageTxn = new anchor.web3.Transaction().add(initPageIx);
+    const initPageTx = await provider.sendAndConfirm(initPageTxn);
+    console.log(`   ✅ Nullifier page initialized: ${initPageTx}`);
   } catch (e: any) {
     if (!e.message?.includes("already in use")) {
       console.log(`   ℹ️ Page exists or: ${e.message?.slice(0, 50)}`);
@@ -447,7 +455,7 @@ async function main() {
 
   const startUnshield = Date.now();
   try {
-    const unshieldTx = await program.methods
+    const unshieldIx = await program.methods
       .unshieldV18(
         rootRef,
         selectedDenom.id,
@@ -456,23 +464,28 @@ async function main() {
         Array.from(proof_b),
         Array.from(proof_c),
         Array.from(nullifierHashBytes),
-        Array.from(blindedRecipientBytes),
+        Array.from(blindedRecipientProofBytes),
         Array.from(salt1Bytes),
         Array.from(salt2Bytes),
         Array.from(salt3Bytes),
-        depositSlot
+        depositSlot  // kept for ABI compat, but ignored on-chain
       )
       .accounts({
         globalState: globalStatePDA,
         vault: vaultPDA,
         nullifierPage: nullifierPagePDA,
+        depositMeta: depositMetaPDA,  // SECURITY FIX [H-01]: required for maturity check
         recipient: recipient.publicKey,
         treasury: TREASURY,
         payer: wallet.publicKey,
         systemProgram: SystemProgram.programId,
       })
-      .preInstructions([modifyComputeUnits])
-      .rpc();
+      .instruction();
+
+    const unshieldTxn = new anchor.web3.Transaction()
+      .add(modifyComputeUnits)
+      .add(unshieldIx);
+    const unshieldTx = await provider.sendAndConfirm(unshieldTxn);
 
     await connection.confirmTransaction(unshieldTx, "confirmed");
     timings.unshield = Date.now() - startUnshield;

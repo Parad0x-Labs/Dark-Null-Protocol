@@ -32,7 +32,7 @@
 ║  │ Instruction │ │ Management  │ │ Verifier    │ │ Instruction │             ║
 ║  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘             ║
 ║                                                                               ║
-║  Program: 33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4                       ║
+║  Program: 7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w                       ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -92,10 +92,10 @@ User                    Program                 Vault
                          ▼
 ┌──────────────────────────────────────────────────────────────┐
 │  GROTH16 PROOF                                               │
-│  • proofA (G1): 64 bytes                                     │
-│  • proofB (G2): 128 bytes                                    │
-│  • proofC (G1): 64 bytes                                     │
-│  Total: 256 bytes (compressed to 144 bytes on-chain)         │
+│  • proofA (G1): 32 bytes (compressed)                        │
+│  • proofB (G2): 64 bytes (compressed)                        │
+│  • proofC (G1): 32 bytes (compressed)                        │
+│  Total: 128 bytes (industry-leading compression)             │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -306,7 +306,7 @@ Example (0.1 SOL tier):
 | Proof generation | ~2-5s (client), ~1s (server) |
 | Unshield latency | ~400ms (1 TX) |
 | Total (via relayer) | ~25s (devnet) |
-| Proof size | 144 bytes (compressed) |
+| Proof size | 128 bytes (compressed) |
 | On-chain storage | ~200 bytes per deposit |
 
 ---

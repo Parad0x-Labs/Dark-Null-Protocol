@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  dark-null-relayer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+      - SOLANA_RPC_URL=${SOLANA_RPC_URL:-https://api.devnet.solana.com}
+      - RELAYER_KEYPAIR=${RELAYER_KEYPAIR}
+      - PINATA_JWT=${PINATA_JWT}
+      - PROGRAM_ID=7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  default:
+    name: dark_null_network
+

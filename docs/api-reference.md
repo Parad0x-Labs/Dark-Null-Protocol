@@ -41,7 +41,7 @@ import { Connection } from '@solana/web3.js';
 
 const client = new DarkNullClient({
   connection: new Connection('https://api.devnet.solana.com'),
-  programId: '33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4',
+  programId: '7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w',
   relayerUrl: 'https://relayer-falling-dust-5746.fly.dev',
 });
 ```
@@ -333,7 +333,7 @@ import {
 
 | Constant | Value |
 |----------|-------|
-| `PROGRAM_ID_DEVNET` | `33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4` |
+| `PROGRAM_ID_DEVNET` | `7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w` |
 | `RELAYER_URL_DEVNET` | `https://relayer-falling-dust-5746.fly.dev` |
 | `DEFAULT_MATURITY_SLOTS` | `40` |
 

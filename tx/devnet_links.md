@@ -6,19 +6,19 @@
 
 | Transaction | Explorer |
 |-------------|----------|
-| `gcsnJM4wYvPMWnUpAq53UVU8CdNnXmsfSkBdwpEv9KVFydqvY8Nf4JN5TRH4uxyrhjgZgpT9mNeGbm63Bn9HBY1` | [Solscan](https://solscan.io/tx/gcsnJM4wYvPMWnUpAq53UVU8CdNnXmsfSkBdwpEv9KVFydqvY8Nf4JN5TRH4uxyrhjgZgpT9mNeGbm63Bn9HBY1?cluster=devnet) |
+| `gcsnJM...HBY1` | [Solscan](https://solscan.io/tx/gcsnJM4wYvPMWnUpAq53UVU8CdNnXmsfSkBdwpEv9KVFydqvY8Nf4JN5TRH4uxyrhjgZgpT9mNeGbm63Bn9HBY1?cluster=devnet) |
 
-### Commit (V20 - 32B Claim)
+### CommitUnshieldV20 (32B Claim Hash)
 
-| Transaction | Explorer |
-|-------------|----------|
-| See lab report for latest commit tx | — |
+| Transaction | Explorer | Note |
+|-------------|----------|------|
+| `2t6RCx...USvB` | [Solscan](https://solscan.io/tx/2t6RCxXABDVRCumgMruhkt8T59bsxH6Rb44c1KwwTdHWjjeh2hVx4e4tV5aV7nCdzCqKixkt3bqyyc9QAfbZUSvB?cluster=devnet) | **32B anchor TX** |
 
-### Finalize (V20)
+### FinalizeUnshieldV20
 
-| Transaction | Explorer |
-|-------------|----------|
-| See lab report for latest finalize tx | — |
+| Transaction | Explorer | Note |
+|-------------|----------|------|
+| `2t6RCx...USvB` | [Solscan](https://solscan.io/tx/2t6RCxXABDVRCumgMruhkt8T59bsxH6Rb44c1KwwTdHWjjeh2hVx4e4tV5aV7nCdzCqKixkt3bqyyc9QAfbZUSvB?cluster=devnet) | Nullifier marked spent |
 
 ---
 

@@ -125,13 +125,22 @@ target/
 deploy/
 .anchor/
 
-# ZK build artifacts
-*.wasm
-*.zkey
-*.wtns
-*.r1cs
-*.sym
+# ZK build artifacts (CRITICAL - NEVER COMMIT)
+**/*.wasm
+**/*.zkey
+**/*.ptau
+**/*.wtns
+**/*.r1cs
+**/*.sym
 *_js/
+**/vkey*.json
+**/verification_key*.json
+**/proving_key*
+**/prover*
+**/circuit*
+**/circom*
+**/noir*
+**/acir*
 
 # Light groth16
 light_groth16/
@@ -323,6 +332,17 @@ devnet_keys/
 e2e_results.json
 package-lock.json
 tsconfig.json
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔒 WEBSITE & FRONTEND — NEVER COMMIT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Website source
+website_integration/
+!website_integration/README.md
+
+# Production backups
+PRODUCTION_BACKUP_*/
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 🔒 DEPLOYMENT & INFRASTRUCTURE — NEVER COMMIT

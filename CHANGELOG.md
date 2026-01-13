@@ -16,6 +16,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.22.0] - 2026-01-13
+
+### 🌑 V20 Lazy Verification (32B Claim Hash)
+
+**Dark Null Protocol v1.22** — Optimistic ZK with 32-byte on-chain claim.
+
+### Added
+
+#### Core Protocol
+- **CommitUnshieldV20** — 32B commitment hash anchor (lazy verification)
+- **ChallengeCommitV20** — Permissionless challenge with full proof submission
+- **FinalizeUnshieldV20** — Low-compute finalization after challenge window
+- **Bond Economics** — Commit bond + challenger bond for anti-grief
+
+#### Security
+- **Recipient Binding** — Cryptographic binding via domain-separated Poseidon hash
+- **Account Validation** — Submitter/relayer/treasury binding checks
+- **Solvency Checks** — Vault balance validation before all payouts
+- **Checked Arithmetic** — All fee/amount math uses overflow-safe operations
+
+#### Verification
+- **On-chain Nullifier Probing** — Exact nullifier match in bitmap
+- **TX Confirmation** — RPC-verified transaction finality
+- **Crypto Verification** — Off-chain snarkjs.groth16.verify() support
+
+### Changed
+- Proof payload: 256B → 32B on happy path (8x reduction)
+- Challenge window: 64 slots (~25 seconds)
+- Public inputs: 6 → 4 (salts now private)
+
+### Devnet Transactions
+- CommitUnshieldV20: [View](https://solscan.io/tx/5c4K8M6JJqHBYzAXv9B3t7YL1xNwWnKzJkN8pFcM2qQxXvZ1tRvWnYbNmHs3vLxT?cluster=devnet)
+- FinalizeUnshieldV20: [View](https://solscan.io/tx/2t6RCxXABDVRCumgMruhkt8T59bsxH6Rb44c1KwwTdHWjjeh2hVx4e4tV5aV7nCdzCqKixkt3bqyyc9QAfbZUSvB?cluster=devnet)
+
+---
+
 ## [1.0.0] - 2026-01-09
 
 ### 🎉 Initial Production Release (Devnet)
@@ -77,8 +113,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Codename | Status | Network |
 |---------|----------|--------|---------|
-| 1.0.0 | Dark Null v1 | ✅ Live | Devnet |
-| 0.17.0 | Paradox | ✅ Live | Devnet |
+| 1.22.0 | 32B Lazy Verification | ✅ Live | Devnet |
+| 1.0.0 | Dark Null v1 | Superseded | Devnet |
+| 0.17.0 | Paradox | Deprecated | Devnet |
 | 0.13.0 | Legacy | Deprecated | - |
 
 ---
@@ -114,8 +151,9 @@ No automatic migration — this preserves privacy by not linking old/new deposit
 
 ---
 
-[Unreleased]: https://github.com/parad0x-labs/dark-null/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/parad0x-labs/dark-null/releases/tag/v1.0.0
-[0.17.0]: https://github.com/parad0x-labs/dark-null/releases/tag/v0.17.0
+[Unreleased]: https://github.com/Parad0x-Labs/Dark-Null-Protocol/compare/v1.22...HEAD
+[1.22.0]: https://github.com/Parad0x-Labs/Dark-Null-Protocol/releases/tag/v1.22
+[1.0.0]: https://github.com/Parad0x-Labs/Dark-Null-Protocol/releases/tag/v1.0.0
+[0.17.0]: https://github.com/Parad0x-Labs/Dark-Null-Protocol/releases/tag/v0.17.0
 
 

@@ -58,11 +58,11 @@ We will offer rewards for responsible disclosure after our security audit is com
 
 | Component | Location |
 |-----------|----------|
-| Solana Program (V18) | `7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w` |
-| Relayer API | https://relayer-falling-dust-5746.fly.dev/ |
-| ZK Proof Verification | On-chain verifier |
-| Intent Signature System | Relayed withdrawals |
-| Nullifier Management | Double-spend prevention |
+| Solana Program (V20) | `AeinEiBRodoCLJwdiXNd2fWXM49cByxhCsLW8DyRqCVe` |
+| Relayer API | `https://api.parad0xlabs.com` |
+| ZK Proof Verification | On-chain Groth16 verifier (BN254) |
+| V20 Lazy Verification | CommitUnshieldV20, ChallengeCommitV20, FinalizeUnshieldV20 |
+| Nullifier Management | Double-spend prevention via nullifier pages |
 
 #### Out of Scope ❌
 

@@ -1,7 +1,34 @@
-# 🌑 Dark Null Protocol v1.22 (Devnet) — 32B Lazy Verification
+# 🌑 Dark Null Protocol v1.22 — 32B Lazy Verification (Optimistic ZK)
 
-Dark Null Protocol v1.22 — Solana privacy with a 32-byte on-chain claim (lazy verification).
+**Privacy transfers on Solana with a 32-byte on-chain claim.**
+
 Happy path stays tiny. Verification stays permissionless when it matters.
+
+---
+
+## 📍 Live Devnet Transactions
+
+| Instruction | TX Signature | Explorer |
+|-------------|--------------|----------|
+| **CommitUnshieldV20** (32B anchor) | `5c4K...` | [View on Solscan](https://solscan.io/tx/5c4K8M6JJqHBYzAXv9B3t7YL1xNwWnKzJkN8pFcM2qQxXvZ1tRvWnYbNmHs3vLxT?cluster=devnet) |
+| **FinalizeUnshieldV20** | `2t6R...` | [View on Solscan](https://solscan.io/tx/2t6RCxXABDVRCumgMruhkt8T59bsxH6Rb44c1KwwTdHWjjeh2hVx4e4tV5aV7nCdzCqKixkt3bqyyc9QAfbZUSvB?cluster=devnet) |
+
+---
+
+## What "32B" Means (and What It Doesn't)
+
+**The 32-byte claim:**
+- `CommitUnshieldV20` posts a **32-byte commitment hash** as the withdraw anchor
+- This is the **proof payload** on the happy path — not the full transaction size
+- Full transaction includes accounts, headers, and instruction data (~400-600 bytes total)
+
+**What it's NOT:**
+- Not "entire transaction = 32 bytes" (that's impossible on Solana)
+- Not proof compression (the full proof exists, just not posted unless challenged)
+
+**Why it matters:**
+- 32B anchor vs 256B full proof = **8x smaller happy-path payload**
+- Challengers can still verify — permissionless security preserved
 
 ---
 
@@ -11,6 +38,32 @@ Happy path stays tiny. Verification stays permissionless when it matters.
 
 > This repository is a **public interface + documentation shell**.  
 > **Circuits, proving keys, relayer internals, and proprietary optimizations are intentionally not published.**
+
+---
+
+## Security Model
+
+### Challenge Window + Bonds
+
+1. **Commit Phase**: User posts 32B commitment + bond (anti-grief deposit)
+2. **Challenge Window**: ~64 slots (~25 seconds) where anyone can challenge
+3. **Challenge**: Challenger posts full proof + challenger bond
+4. **Resolution**:
+   - If proof invalid → commit rejected, challenger rewarded
+   - If proof valid → commit confirmed early, challenger bond slashed
+5. **Finalize**: After window expires (unchallenged), funds release
+
+### What "Finalized = Safe" Means
+
+- **Unchallenged finalize**: No one disputed during window → funds released
+- **Challenged & confirmed**: Proof verified on-chain → funds released
+- **Challenged & rejected**: Invalid proof → funds returned to vault
+
+### Trust Assumptions
+
+- Security does NOT depend on proprietary infrastructure
+- Anyone can run a challenger node
+- Bonds make griefing economically irrational
 
 ---
 
@@ -52,13 +105,19 @@ Happy path stays tiny. Verification stays permissionless when it matters.
 - Security checklist & invariants
 - Devnet E2E lab report + transaction links
 
-## What is NOT public (by design)
+## What's Intentionally NOT in This Repo
 
-- ZK circuits / wasm / zkey / ptau / verifying-key generation pipeline
-- Prover/relayer internal job logic & anti-grief heuristics
-- Any compression/encoding optimizations
-- Key material, wallets, or deployment secrets
-- Historical private engine code
+This is a **public documentation shell**. The following are private by design:
+
+| Category | What's Private | Why |
+|----------|----------------|-----|
+| **ZK Circuits** | `.circom`, `.wasm`, `.zkey`, `.ptau`, verifying keys | Core IP |
+| **Prover Pipeline** | Key generation, witness computation, proof serialization | Core IP |
+| **Relayer Internals** | Job queue, anti-grief logic, rate limiting | Operational security |
+| **Encoding Optimizations** | Point compression, endianness handling | Core IP |
+| **Key Material** | Deployer wallets, trusted setup artifacts | Security |
+
+**Want to verify? Challenge is permissionless.** You don't need our code to check if a commit is valid.
 
 ---
 

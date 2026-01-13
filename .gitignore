@@ -343,6 +343,7 @@ website_integration/
 
 # Production backups
 PRODUCTION_BACKUP_*/
+WEBSITE_BACKUP_*/
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 🔒 DEPLOYMENT & INFRASTRUCTURE — NEVER COMMIT

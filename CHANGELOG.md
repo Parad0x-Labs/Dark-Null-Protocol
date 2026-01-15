@@ -16,6 +16,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.23.0] - 2026-01-15
+
+### 🔒 Security Hardening Release
+
+**Dark Null Protocol v1.23** — Critical security fixes and client-side verification.
+
+### Security Fixes
+
+- **Root Authorization** — Merkle root updates now require authorized indexer
+- **Challenge Protection** — Self-challenge exploit prevented
+- **Verification Enforcement** — ZK proofs always verified (no bypass)
+- **Accounting Fix** — Correct amount tracking in telemetry
+
+### Added
+
+#### Client-Side Verification
+- **Level 0** — Server lookup confirmation
+- **Level 1** — Commitment derivation (Poseidon hash in browser)
+- **Level 2** — Full Groth16 proof verification (snarkjs in browser)
+
+#### Receipt Format
+- `zkReceipt` now includes cryptographic inputs for client verification
+- Supports offline verification without trusting server
+
+### Changed
+
+- Frontend fallback to V18 now requires explicit user confirmation
+- Receipt format extended with `blindedRecipient` field
+- Improved fee display precision for small transfers
+
+### Devnet Status
+- ✅ Full V20 flow operational (commit → finalize)
+- ✅ Client-side verification working
+- ✅ E2E tested on devnet
+
+---
+
 ## [1.22.0] - 2026-01-13
 
 ### 🌑 V20 Lazy Verification (32B Claim Hash)
@@ -113,7 +150,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Codename | Status | Network |
 |---------|----------|--------|---------|
-| 1.22.0 | 32B Lazy Verification | ✅ Live | Devnet |
+| 1.23.0 | Security Hardening | ✅ Live | Devnet |
+| 1.22.0 | 32B Lazy Verification | Superseded | Devnet |
 | 1.0.0 | Dark Null v1 | Superseded | Devnet |
 | 0.17.0 | Paradox | Deprecated | Devnet |
 | 0.13.0 | Legacy | Deprecated | - |
@@ -151,7 +189,8 @@ No automatic migration — this preserves privacy by not linking old/new deposit
 
 ---
 
-[Unreleased]: https://github.com/Parad0x-Labs/Dark-Null-Protocol/compare/v1.22...HEAD
+[Unreleased]: https://github.com/Parad0x-Labs/Dark-Null-Protocol/compare/v1.23...HEAD
+[1.23.0]: https://github.com/Parad0x-Labs/Dark-Null-Protocol/releases/tag/v1.23
 [1.22.0]: https://github.com/Parad0x-Labs/Dark-Null-Protocol/releases/tag/v1.22
 [1.0.0]: https://github.com/Parad0x-Labs/Dark-Null-Protocol/releases/tag/v1.0.0
 [0.17.0]: https://github.com/Parad0x-Labs/Dark-Null-Protocol/releases/tag/v0.17.0

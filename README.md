@@ -1,4 +1,4 @@
-# 🌑 Dark Null Protocol v1.22 — 32B Lazy Verification (Optimistic ZK)
+# 🌑 Dark Null Protocol v1.23 — 32B Lazy Verification (Optimistic ZK)
 
 **Privacy transfers on Solana with a 32-byte on-chain claim.**
 
@@ -32,7 +32,7 @@ Happy path stays tiny. Verification stays permissionless when it matters.
 
 ---
 
-**Dark Null v1.22** is a Solana privacy transfer protocol that minimizes on-chain proof payload using a **lazy verification** model.
+**Dark Null v1.23** is a Solana privacy transfer protocol that minimizes on-chain proof payload using a **lazy verification** model.
 
 **Key idea:** the "happy path" posts only a **32-byte claim hash** on-chain. Full SNARK proof bytes are only required in a **permissionless challenge path** (rare).
 
@@ -67,7 +67,7 @@ Happy path stays tiny. Verification stays permissionless when it matters.
 
 ---
 
-## What shipped (v1.22)
+## What shipped (v1.23)
 
 - ✅ **32B on-chain claim** (`commitment_hash`) for withdraw commits
 - ✅ **Permissionless challenge**: anyone can submit a standard proof during the window
@@ -75,6 +75,8 @@ Happy path stays tiny. Verification stays permissionless when it matters.
 - ✅ **Bond economics**: anti-grief + fraud incentives
 - ✅ **Account binding**: recipient/relayer/submitter validated against commit state
 - ✅ **Solvency & checked-math** protections in payout paths
+- ✅ **Client-side verification**: Level 0/1/2 cryptographic checks in browser
+- ✅ **Security hardening**: Root authorization, self-challenge prevention
 
 ---
 
@@ -150,9 +152,9 @@ See [tx/devnet_links.md](tx/devnet_links.md) for verified E2E transaction links.
 
 ## Versioning
 
-- Official version: **Dark Null Protocol v1.22**
+- Official version: **Dark Null Protocol v1.23**
 - Current status: **Devnet verified (E2E)**
-- Git tag: `v1.22`
+- Git tag: `v1.23`
 
 ---
 

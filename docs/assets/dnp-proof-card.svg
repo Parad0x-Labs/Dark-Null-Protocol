@@ -1,0 +1,31 @@
+<svg width="1280" height="340" viewBox="0 0 1280 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="340" rx="24" fill="#10081A"/>
+  <text x="54" y="58" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800">Protocol Snapshot</text>
+  <text x="54" y="92" fill="#C8C0E8" font-family="Arial, Helvetica, sans-serif" font-size="20">Based on the public protocol docs and tracked devnet references in this repo.</text>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="52" y="126" width="228" height="156" rx="18" fill="#140B21" stroke="#47345E"/>
+    <text x="78" y="164" fill="#BFDFFF" font-size="18" font-weight="700">HAPPY PATH</text>
+    <text x="78" y="214" fill="white" font-size="50" font-weight="800">32B</text>
+    <text x="78" y="250" fill="#CDBFE5" font-size="20">claim hash anchor</text>
+
+    <rect x="302" y="126" width="228" height="156" rx="18" fill="#140B21" stroke="#47345E"/>
+    <text x="328" y="164" fill="#BFDFFF" font-size="18" font-weight="700">WINDOW</text>
+    <text x="328" y="214" fill="white" font-size="50" font-weight="800">~64</text>
+    <text x="328" y="250" fill="#CDBFE5" font-size="20">slots challenge period</text>
+
+    <rect x="552" y="126" width="228" height="156" rx="18" fill="#140B21" stroke="#47345E"/>
+    <text x="578" y="164" fill="#BFDFFF" font-size="18" font-weight="700">SECURITY</text>
+    <text x="578" y="214" fill="white" font-size="36" font-weight="800">permissionless</text>
+    <text x="578" y="250" fill="#CDBFE5" font-size="20">challenge path</text>
+
+    <rect x="802" y="126" width="228" height="156" rx="18" fill="#140B21" stroke="#47345E"/>
+    <text x="828" y="164" fill="#BFDFFF" font-size="18" font-weight="700">NETWORK</text>
+    <text x="828" y="214" fill="white" font-size="42" font-weight="800">devnet</text>
+    <text x="828" y="250" fill="#CDBFE5" font-size="20">public tx references tracked</text>
+
+    <rect x="1052" y="126" width="176" height="156" rx="18" fill="#140B21" stroke="#47345E"/>
+    <text x="1078" y="164" fill="#BFDFFF" font-size="18" font-weight="700">FIT</text>
+    <text x="1078" y="214" fill="white" font-size="34" font-weight="800">private</text>
+    <text x="1078" y="250" fill="#CDBFE5" font-size="20">settlement lane</text>
+  </g>
+</svg>

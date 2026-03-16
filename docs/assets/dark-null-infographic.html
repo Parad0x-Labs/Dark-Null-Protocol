@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Null Protocol v1 - System Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Share Tech Mono', monospace;
+      overflow: hidden;
+    }
+
+    /* Matrix rain background */
+    .matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.15;
+      background: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 255, 65, 0.03) 2px,
+          rgba(0, 255, 65, 0.03) 4px
+        );
+      animation: scanline 8s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100vh; }
+    }
+
+    .container {
+      width: 1000px;
+      background: linear-gradient(135deg, #0a0a0a 0%, #0d1a0d 50%, #0a0a0a 100%);
+      border: 2px solid #00ff41;
+      border-radius: 12px;
+      padding: 40px;
+      position: relative;
+      box-shadow: 
+        0 0 40px rgba(0, 255, 65, 0.3),
+        inset 0 0 60px rgba(0, 255, 65, 0.05);
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #00ff41, #00cc33, #00ff41);
+      border-radius: 14px;
+      z-index: -1;
+      opacity: 0.5;
+      filter: blur(10px);
+    }
+
+    /* Scanline overlay */
+    .scanlines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 0, 0, 0.3) 1px,
+        rgba(0, 0, 0, 0.3) 2px
+      );
+      border-radius: 12px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: #00ff41;
+      text-shadow: 
+        0 0 10px #00ff41,
+        0 0 20px #00ff41,
+        0 0 40px #00ff41;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .header .subtitle {
+      font-size: 14px;
+      color: #00cc33;
+      margin-top: 8px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+    }
+
+    /* Flow diagram */
+    .flow-diagram {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 50px 0;
+      padding: 0 20px;
+    }
+
+    .node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .node-icon {
+      width: 100px;
+      height: 100px;
+      border: 3px solid #00ff41;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, rgba(0, 255, 65, 0.15) 0%, transparent 70%);
+      box-shadow: 
+        0 0 20px rgba(0, 255, 65, 0.4),
+        inset 0 0 20px rgba(0, 255, 65, 0.1);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .node-icon:hover {
+      transform: scale(1.1);
+      box-shadow: 
+        0 0 40px rgba(0, 255, 65, 0.6),
+        inset 0 0 30px rgba(0, 255, 65, 0.2);
+    }
+
+    .node-icon svg {
+      width: 50px;
+      height: 50px;
+      fill: #00ff41;
+      filter: drop-shadow(0 0 8px #00ff41);
+    }
+
+    .node-label {
+      margin-top: 15px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #00ff41;
+      text-shadow: 0 0 10px #00ff41;
+      letter-spacing: 2px;
+    }
+
+    .arrow {
+      flex: 1;
+      height: 4px;
+      background: linear-gradient(90deg, #00ff41, #00cc33, #00ff41);
+      margin: 0 -10px;
+      margin-bottom: 35px;
+      position: relative;
+      box-shadow: 0 0 10px #00ff41;
+    }
+
+    .arrow::after {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 8px solid transparent;
+      border-left: 12px solid #00ff41;
+      filter: drop-shadow(0 0 5px #00ff41);
+    }
+
+    /* Animated pulse on arrows */
+    .arrow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 30px;
+      background: linear-gradient(90deg, transparent, #fff, transparent);
+      animation: pulse 2s infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes pulse {
+      0% { left: -30px; }
+      100% { left: 100%; }
+    }
+
+    /* Architecture section */
+    .architecture {
+      display: flex;
+      justify-content: space-between;
+      margin: 40px 0;
+      gap: 30px;
+    }
+
+    .arch-box {
+      flex: 1;
+      border: 1px solid rgba(0, 255, 65, 0.5);
+      border-radius: 8px;
+      padding: 20px;
+      background: rgba(0, 255, 65, 0.03);
+    }
+
+    .arch-box h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      color: #00cc33;
+      margin-bottom: 15px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+      padding-bottom: 10px;
+    }
+
+    .arch-item {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 13px;
+      color: #00ff41;
+    }
+
+    .arch-item svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      fill: #00ff41;
+      opacity: 0.8;
+    }
+
+    .tech-list {
+      list-style: none;
+    }
+
+    .tech-list li {
+      font-size: 13px;
+      color: #00cc33;
+      margin: 8px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .tech-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #00ff41;
+      text-shadow: 0 0 5px #00ff41;
+    }
+
+    /* Metrics bar */
+    .metrics-bar {
+      border: 2px solid #00ff41;
+      border-radius: 8px;
+      padding: 20px 30px;
+      background: linear-gradient(90deg, rgba(0, 255, 65, 0.1) 0%, rgba(0, 255, 65, 0.05) 50%, rgba(0, 255, 65, 0.1) 100%);
+      margin-top: 30px;
+    }
+
+    .metrics-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      color: #00cc33;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .metrics-values {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #00ff41;
+      text-shadow: 0 0 15px #00ff41;
+    }
+
+    .metric-name {
+      font-size: 11px;
+      color: #00cc33;
+      margin-top: 5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .metric-divider {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(180deg, transparent, #00ff41, transparent);
+    }
+
+    /* Corner decorations */
+    .corner {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-color: #00ff41;
+      border-style: solid;
+    }
+
+    .corner-tl { top: 10px; left: 10px; border-width: 3px 0 0 3px; }
+    .corner-tr { top: 10px; right: 10px; border-width: 3px 3px 0 0; }
+    .corner-bl { bottom: 10px; left: 10px; border-width: 0 0 3px 3px; }
+    .corner-br { bottom: 10px; right: 10px; border-width: 0 3px 3px 0; }
+
+    /* Status indicator */
+    .status {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      background: #00ff41;
+      border-radius: 50%;
+      animation: blink 1.5s infinite;
+      box-shadow: 0 0 10px #00ff41;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .status-text {
+      font-size: 11px;
+      color: #00ff41;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="matrix-bg"></div>
+  
+  <div class="container">
+    <div class="scanlines"></div>
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+    
+    <div class="status">
+      <div class="status-dot"></div>
+      <span class="status-text">Demo-Ready</span>
+    </div>
+
+    <div class="header">
+      <h1>Dark Null Protocol v1</h1>
+      <div class="subtitle">System Overview</div>
+    </div>
+
+    <div class="flow-diagram">
+      <div class="node">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+        </div>
+        <div class="node-label">Real Shield</div>
+      </div>
+
+      <div class="arrow"></div>
+
+      <div class="node">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 10c-1.67 0-3.14-.85-4-2.15.02-1.32 2.67-2.05 4-2.05s3.98.73 4 2.05c-.86 1.3-2.33 2.15-4 2.15z"/></svg>
+        </div>
+        <div class="node-label">Real Root</div>
+      </div>
+
+      <div class="arrow"></div>
+
+      <div class="node">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+        </div>
+        <div class="node-label">Real ZK Proof</div>
+      </div>
+
+      <div class="arrow"></div>
+
+      <div class="node">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24"><path d="M10.5 13H8v-3h2.5V7.5h3V10H16v3h-2.5v2.5h-3V13zM12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>
+        </div>
+        <div class="node-label">Real Unshield</div>
+      </div>
+    </div>
+
+    <div class="architecture">
+      <div class="arch-box">
+        <h3>High-Level Architecture</h3>
+        <div class="arch-item">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <span>Clients</span>
+        </div>
+        <div class="arch-item">
+          <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+          <span>Desktop</span>
+        </div>
+        <div class="arch-item">
+          <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+          <span>Mobile</span>
+        </div>
+      </div>
+
+      <div class="arch-box">
+        <h3>Core Technology</h3>
+        <ul class="tech-list">
+          <li>Groth16 / BN254 verification on-chain</li>
+          <li>ProofPack + QR flow (desktop → mobile)</li>
+          <li>Relayer + receipts + indexer infrastructure</li>
+          <li>144-byte compressed ZK proofs</li>
+        </ul>
+      </div>
+
+      <div class="arch-box">
+        <h3>Infrastructure</h3>
+        <div class="arch-item">
+          <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+          <span>Infrastructure</span>
+        </div>
+        <div class="arch-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          <span>Relayer</span>
+        </div>
+        <div class="arch-item">
+          <svg viewBox="0 0 24 24"><path d="M20 13H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM20 3H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+          <span>Indexer + Postgres</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="metrics-bar">
+      <div class="metrics-label">Current Metrics</div>
+      <div class="metrics-values">
+        <div class="metric">
+          <div class="metric-value">144B</div>
+          <div class="metric-name">Proof Size</div>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric">
+          <div class="metric-value">~400ms</div>
+          <div class="metric-name">TX Confirm</div>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric">
+          <div class="metric-value">0.2%</div>
+          <div class="metric-name">Protocol Fee</div>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric">
+          <div class="metric-value">10,000:1</div>
+          <div class="metric-name">Batch Ratio</div>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric">
+          <div class="metric-value">$0.0003</div>
+          <div class="metric-name">Cost/TX</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

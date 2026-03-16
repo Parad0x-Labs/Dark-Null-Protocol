@@ -1,0 +1,86 @@
+{
+  "label": "canonical-devnet-root-1",
+  "status": "canonical-devnet-track",
+  "promoted_on": "2026-03-15",
+  "program": {
+    "name": "paradox",
+    "id": "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF",
+    "cluster": "devnet"
+  },
+  "source": {
+    "promoted_from": "historical/null-mint",
+    "recovered_manifest": "historical/null-mint/MANIFEST.json",
+    "security_model": "SECURITY_MODEL.md",
+    "hardening": [
+      "root-authority-pda",
+      "bounded-window-fail-closed"
+    ]
+  },
+  "groth16": {
+    "protocol": "groth16",
+    "curve": "bn128",
+    "n_public": 3,
+    "vk_ic_count": 4,
+    "circuit": "circuits/null_proof.circom",
+    "zkey": "circuits/null_proof_final.zkey",
+    "wasm": "circuits/null_proof_js/null_proof.wasm",
+    "vk_json": "circuits/vk.json"
+  },
+  "artifacts": [
+    {
+      "path": "Anchor.toml",
+      "sha256": "6bd8b1cac364afc57bca76d8756b618510c21d73cd9a45a42a56421f7697bcbc",
+      "size": 516
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "1cca58f12950895cc5a2b301dd86f2a1d40d739adb2c905ec85c0e57fd13aa86",
+      "size": 1061
+    },
+    {
+      "path": "NETWORKS.json",
+      "sha256": "22828856a7d97f054ac0e2833a138400edeae1d7d84daa777eff69b320efd9e0",
+      "size": 631
+    },
+    {
+      "path": "src/lib.rs",
+      "sha256": "13465fe4e2902dbb73dc793073076ce31f44f278b81af8d00fc53159ca32f33b",
+      "size": 13032
+    },
+    {
+      "path": "src/verifying_key.rs",
+      "sha256": "d3177b82e981989a7ff8b8c866f455611363331fc969f505414eca6de0b06398",
+      "size": 4872
+    },
+    {
+      "path": "idl/paradox.json",
+      "sha256": "10df669847af76d74adf54575f1cd182a51a15789e90161019b506c002ecaa45",
+      "size": 13228
+    },
+    {
+      "path": "circuits/null_proof.circom",
+      "sha256": "e432ca645c36991ced2746cda1dba6cbba150faa376fba2578dc3405a3a41d71",
+      "size": 2042
+    },
+    {
+      "path": "circuits/null_proof.r1cs",
+      "sha256": "95df3c03aa93384750a8934b40885d03908338a252c6ce9434b516425549180c",
+      "size": 2090876
+    },
+    {
+      "path": "circuits/null_proof_final.zkey",
+      "sha256": "9d11b03a5db8e766ae143b336050c8f83c133c31b2bc17b851f86ca2e99d7c64",
+      "size": 6429596
+    },
+    {
+      "path": "circuits/null_proof_js/null_proof.wasm",
+      "sha256": "9cb0aff97455bfb9f87855c4ff6262a06c20013ab10436157c63e35ecec81748",
+      "size": 113229
+    },
+    {
+      "path": "circuits/vk.json",
+      "sha256": "61517db91f66a6bbefa5b190cb349b37fad0b2d6ec2cefb667e2ebb87e7f7414",
+      "size": 3292
+    }
+  ]
+}

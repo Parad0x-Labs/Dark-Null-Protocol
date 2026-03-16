@@ -1,0 +1,44 @@
+<svg width="1280" height="420" viewBox="0 0 1280 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0C0617"/>
+      <stop offset="0.55" stop-color="#180B2A"/>
+      <stop offset="1" stop-color="#271044"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(930 120) rotate(90) scale(220 320)">
+      <stop stop-color="#67C1FF" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#67C1FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="420" rx="28" fill="url(#bg)"/>
+  <g opacity="0.12" stroke="#87B4FF">
+    <path d="M0 84H1280"/>
+    <path d="M0 168H1280"/>
+    <path d="M0 252H1280"/>
+    <path d="M0 336H1280"/>
+    <path d="M128 0V420"/>
+    <path d="M336 0V420"/>
+    <path d="M544 0V420"/>
+    <path d="M752 0V420"/>
+    <path d="M960 0V420"/>
+    <path d="M1168 0V420"/>
+  </g>
+  <circle cx="930" cy="120" r="220" fill="url(#glow)"/>
+  <rect x="72" y="62" width="220" height="34" rx="17" fill="#170C27" stroke="#6FC9FF"/>
+  <text x="96" y="85" fill="#BCE4FF" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">PRIVATE SOLANA SETTLEMENT</text>
+  <text x="72" y="162" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="800">Dark Null Protocol</text>
+  <text x="72" y="220" fill="#E9DFFE" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700">Private settlement. Challengeable security.</text>
+  <text x="72" y="262" fill="#C5B8E8" font-family="Arial, Helvetica, sans-serif" font-size="25">Shield - Commit - Finalize</text>
+  <text x="72" y="316" fill="#C9C2E8" font-family="Arial, Helvetica, sans-serif" font-size="22">Optimistic-ZK with a separate latency profile.</text>
+  <g>
+    <rect x="820" y="78" width="350" height="84" rx="18" fill="#110A1E" stroke="#4D3A79"/>
+    <text x="848" y="114" fill="#B9DFFF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">HAPPY PATH</text>
+    <text x="848" y="146" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="800">32B claim hash</text>
+    <rect x="820" y="182" width="350" height="84" rx="18" fill="#110A1E" stroke="#4D3A79"/>
+    <text x="848" y="218" fill="#B9DFFF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">SECURITY</text>
+    <text x="848" y="250" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="800">open challenge window</text>
+    <rect x="820" y="286" width="350" height="84" rx="18" fill="#110A1E" stroke="#4D3A79"/>
+    <text x="848" y="322" fill="#B9DFFF" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">BOUNDARY</text>
+    <text x="848" y="354" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="800">not x402 hot path</text>
+  </g>
+</svg>

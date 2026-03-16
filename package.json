@@ -1,0 +1,97 @@
+{
+  "name": "@dark-null/protocol",
+  "version": "1.2.1",
+  "description": "Solana zero-knowledge privacy research SDK and prototype artifact bundle with Groth16, Circom, BN254, IDL, Rust source, and historical devnet materials",
+  "main": "./sdk/index.mjs",
+  "types": "./sdk/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./sdk/index.d.ts",
+      "default": "./sdk/index.mjs"
+    },
+    "./idl": "./idl/paradox.json",
+    "./networks": "./NETWORKS.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "Anchor.toml",
+    "MANIFEST.json",
+    "NETWORKS.json",
+    ".env.example",
+    "sdk/",
+    "circuits/",
+    "client/",
+    "src/",
+    "idl/",
+    "interfaces/",
+    "SECURITY_MODEL.md",
+    "docs/PROGRAM_IDS.md",
+    "PROTOTYPE_STATUS.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "homepage": "https://parad0xlabs.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Parad0x-Labs/Dark-Null-Protocol.git"
+  },
+  "keywords": [
+    "solana",
+    "privacy",
+    "zero-knowledge",
+    "zk",
+    "zk-snark",
+    "zk-snarks",
+    "zkproof",
+    "zk-proofs",
+    "groth16",
+    "bn254",
+    "circom",
+    "snarkjs",
+    "anchor",
+    "privacy-payments",
+    "private-payments",
+    "solana-program",
+    "cryptography",
+    "zero-knowledge-proofs",
+    "idl",
+    "sdk",
+    "auditability",
+    "research",
+    "verification"
+  ],
+  "author": "Parad0x Labs <hello@parad0xlabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Parad0x-Labs/Dark-Null-Protocol/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "bootstrap": "sh ./scripts/bootstrap.sh",
+    "check:public": "node ./scripts/check-public-repo.mjs",
+    "config:devnet": "node ./scripts/network-config.mjs --network devnet --check",
+    "config:localnet": "node ./scripts/network-config.mjs --network localnet --check",
+    "config:json:devnet": "node ./scripts/network-config.mjs --network devnet --json --check",
+    "config:json:localnet": "node ./scripts/network-config.mjs --network localnet --json --check",
+    "test:artifacts": "node --test ./tests/verification-key-consistency.test.mjs ./tests/canonical-manifest.test.mjs ./tests/canonical-proof-flow.test.mjs ./tests/historical-null-mint-consistency.test.mjs ./tests/historical-null-mint-manifest.test.mjs",
+    "test:config": "node --test ./tests/network-config.test.mjs",
+    "test:sdk": "node --test ./sdk/index.test.mjs",
+    "test:python": "PYTHONPYCACHEPREFIX=/tmp/pycache_darknull python3 -m py_compile client/*.py",
+    "test:python:unit": "python3 -m pytest client/test_dark_protocol.py",
+    "test:rust": "cargo test --offline",
+    "test": "npm run check:public && npm run test:sdk && npm run test:config && npm run test:artifacts",
+    "test:all": "npm run test && npm run test:python && npm run test:rust",
+    "docs": "node -e \"console.log('Read README.md, docs/getting-started.md, and docs/PROGRAM_IDS.md')\""
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.29.0",
+    "@solana/web3.js": "^1.98.4",
+    "circomlibjs": "^0.1.7",
+    "snarkjs": "^0.7.5"
+  }
+}

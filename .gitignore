@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+wallet/node_modules/
+circuits/node_modules/
+
+# Build outputs
+dist/
+build/
+target/
+deploy/
+.anchor/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# Circuit generated artifacts
+*.wasm
+*.zkey
+*.ptau
+*.wtns
+*.r1cs
+*.sym
+*_js/
+vkey*.json
+!circuits/dark.zkey
+!circuits/dark_transfer.wasm
+!circuits/dark_transfer.r1cs
+!circuits/dark_transfer.sym
+!historical/null-mint/circuits/null_proof_final.zkey
+!historical/null-mint/circuits/null_proof_js/
+!historical/null-mint/circuits/null_proof_js/generate_witness.js
+!historical/null-mint/circuits/null_proof_js/null_proof.wasm
+!historical/null-mint/circuits/null_proof_js/witness_calculator.js
+!historical/null-mint/circuits/null_proof.r1cs
+!historical/null-mint/circuits/null_proof.sym
+!circuits/null_proof_final.zkey
+!circuits/null_proof_js/
+!circuits/null_proof_js/generate_witness.js
+!circuits/null_proof_js/null_proof.wasm
+!circuits/null_proof_js/witness_calculator.js
+!circuits/null_proof.r1cs
+!circuits/null_proof.sym
+
+# Environment and secrets
+.env
+.env.*
+*.env
+!.env.example
+deployer_wallet.json
+main_wallet.json
+relayer.json
+null_mint_authority.json
+wallet.json
+test_wallet.json
+*.keypair.json
+*_keypair.json
+*-keypair.json
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+
+# Local reports and temp files
+*.log
+tmp/

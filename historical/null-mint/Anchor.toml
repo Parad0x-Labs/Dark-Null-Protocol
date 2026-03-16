@@ -1,0 +1,23 @@
+[toolchain]
+
+[features]
+seeds = false
+skip-lint = false
+
+[programs.localnet]
+paradox = "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF"
+
+[programs.devnet]
+paradox = "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF"
+whisper = "4AQpjBrwsT7Dqm9iupMVBjm4gHKSnKVs13quzxmVAesr"
+ghost_mint = "AedRaM2Pimj9EkWqNx7QMkGXTGLXMbtz1Z96aMkGGmhe"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "devnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

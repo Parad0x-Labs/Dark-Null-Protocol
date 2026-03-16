@@ -1,0 +1,93 @@
+{
+  "label": "recovered-null-mint-prototype-1",
+  "status": "historical-recovered-devnet-branch",
+  "recovered_on": "2026-03-15",
+  "programs": {
+    "paradox": "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF",
+    "whisper": "4AQpjBrwsT7Dqm9iupMVBjm4gHKSnKVs13quzxmVAesr",
+    "ghost_mint": "AedRaM2Pimj9EkWqNx7QMkGXTGLXMbtz1Z96aMkGGmhe"
+  },
+  "addresses": {
+    "abyss_pda_note": "4EQfWjVCDq7jG3Db8sygSxtpm4hzz3A2D2L3MRiVxvrS",
+    "psol_mint_note": "GkTuE7qYUY9yTaj8gPssDBnTN5wvKBqeya6xjriTcSBy"
+  },
+  "groth16": {
+    "protocol": "groth16",
+    "curve": "bn128",
+    "n_public": 3,
+    "vk_ic_count": 4,
+    "program_verify_call": "Groth16Verifier::new(...).verify()"
+  },
+  "artifacts": [
+    {
+      "path": "Anchor.toml",
+      "sha256": "6bd8b1cac364afc57bca76d8756b618510c21d73cd9a45a42a56421f7697bcbc",
+      "size": 516
+    },
+    {
+      "path": "programs/paradox/src/lib.rs",
+      "sha256": "c2c0fed68e54be04565517f3fbabe195b3b7a20acd339ff434af34aa1c257659",
+      "size": 11485
+    },
+    {
+      "path": "programs/paradox/Cargo.toml",
+      "sha256": "dc3d6172b15d4545590e5838702573fbfdc845cbdff5a1024a7fbf768eae4b05",
+      "size": 1022
+    },
+    {
+      "path": "idl/paradox.json",
+      "sha256": "8ea97c7a55e0f84432771b22cc02a6681f7ddb74b33b5bd1cb5316d72a75a13e",
+      "size": 9880
+    },
+    {
+      "path": "types/paradox.ts",
+      "sha256": "cc4ef6c80b3f53427c85916fe9515207ed0284f61447b7c872c3addb8d04ea8d",
+      "size": 10076
+    },
+    {
+      "path": "verification_key_latest.json",
+      "sha256": "61517db91f66a6bbefa5b190cb349b37fad0b2d6ec2cefb667e2ebb87e7f7414",
+      "size": 3292
+    },
+    {
+      "path": "circuits/null_proof.circom",
+      "sha256": "e432ca645c36991ced2746cda1dba6cbba150faa376fba2578dc3405a3a41d71",
+      "size": 2042
+    },
+    {
+      "path": "circuits/null_proof.r1cs",
+      "sha256": "95df3c03aa93384750a8934b40885d03908338a252c6ce9434b516425549180c",
+      "size": 2090876
+    },
+    {
+      "path": "circuits/null_proof_final.zkey",
+      "sha256": "9d11b03a5db8e766ae143b336050c8f83c133c31b2bc17b851f86ca2e99d7c64",
+      "size": 6429596
+    },
+    {
+      "path": "circuits/null_proof_js/null_proof.wasm",
+      "sha256": "9cb0aff97455bfb9f87855c4ff6262a06c20013ab10436157c63e35ecec81748",
+      "size": 113229
+    },
+    {
+      "path": "circuits/vk.json",
+      "sha256": "61517db91f66a6bbefa5b190cb349b37fad0b2d6ec2cefb667e2ebb87e7f7414",
+      "size": 3292
+    },
+    {
+      "path": "circuits/vk.bin",
+      "sha256": "fed461efaf0f0d98cc33baf36ba83e07b9c1b6cc60872c719034bbf2c201e219",
+      "size": 704
+    },
+    {
+      "path": "vk-gen/src/main.rs",
+      "sha256": "35dd52d428831da344f8de6c4b743a7fa1bbeedd25e786580c623d891b275f16",
+      "size": 2059
+    },
+    {
+      "path": "tools/parse_vk_to_rust.cjs",
+      "sha256": "c83faeaa6235c2be648d7ce1c2d310966c3d1230e6f41921c86583ce65c14e65",
+      "size": 1879
+    }
+  ]
+}

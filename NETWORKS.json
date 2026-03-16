@@ -1,0 +1,22 @@
+{
+  "canonicalProgramId": "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF",
+  "defaultNetwork": "devnet",
+  "supportedNetworks": {
+    "devnet": {
+      "label": "Canonical devnet",
+      "cluster": "devnet",
+      "anchorCluster": "devnet",
+      "rpcUrl": "https://api.devnet.solana.com",
+      "wsUrl": "wss://api.devnet.solana.com/",
+      "manifestKey": "canonicalDevnet"
+    },
+    "localnet": {
+      "label": "Canonical localnet",
+      "cluster": "localnet",
+      "anchorCluster": "localnet",
+      "rpcUrl": "http://127.0.0.1:8899",
+      "wsUrl": "ws://127.0.0.1:8900",
+      "manifestKey": "canonicalDevnet"
+    }
+  }
+}

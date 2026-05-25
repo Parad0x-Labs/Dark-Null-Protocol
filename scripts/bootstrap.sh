@@ -17,28 +17,8 @@ printf '==> Running public repo checks and SDK tests\n'
 npm test
 
 if [ "${FULL_VALIDATION:-0}" = "1" ]; then
-  printf '==> FULL_VALIDATION=1, running Python and Rust checks when available\n'
-  if command -v python3 >/dev/null 2>&1; then
-    npm run test:python
-    if python3 - <<'PY' >/dev/null 2>&1
-import pytest
-import solders
-import solana
-PY
-    then
-      npm run test:python:unit
-    else
-      printf '==> Python unit-test dependencies not installed, skipping pytest suite\n'
-    fi
-  else
-    printf '==> python3 not found, skipping Python check\n'
-  fi
-
-  if command -v cargo >/dev/null 2>&1; then
-    npm run test:rust
-  else
-    printf '==> cargo not found, skipping Rust check\n'
-  fi
+  printf '==> FULL_VALIDATION=1, running the cumulative validation lane\n'
+  npm run test:all
 fi
 
 printf '==> Complete\n'

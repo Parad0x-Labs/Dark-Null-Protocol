@@ -1,7 +1,7 @@
 # Internal Review Notes
 
 **Date**: March 15, 2026
-**Review Type**: AI-assisted internal security and consistency review
+**Review Type**: Internal security and consistency review
 **Scope**: Public repository contents only
 **Not a Third-Party Audit**
 

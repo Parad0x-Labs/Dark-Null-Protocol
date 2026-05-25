@@ -463,6 +463,127 @@
       ]
     },
     {
+      "name": "prepare_phantom_withdraw_v2",
+      "discriminator": [
+        57,
+        163,
+        57,
+        34,
+        135,
+        215,
+        181,
+        185
+      ],
+      "accounts": [
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  101,
+                  114,
+                  107,
+                  108,
+                  101,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "writable": true
+        },
+        {
+          "name": "receiver_token",
+          "writable": true
+        },
+        {
+          "name": "receiver",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "nullifier_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "root",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "proof_a",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "proof_b",
+          "type": {
+            "array": [
+              "u8",
+              128
+            ]
+          }
+        },
+        {
+          "name": "proof_c",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "public_inputs",
+          "type": {
+            "array": [
+              {
+                "array": [
+                  "u8",
+                  32
+                ]
+              },
+              8
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "update_root",
       "discriminator": [
         58,
@@ -607,6 +728,16 @@
       "code": 6006,
       "name": "UnauthorizedRootUpdate",
       "msg": "Signer is not authorized to update roots."
+    },
+    {
+      "code": 6007,
+      "name": "UnsafePublicWithdrawPath",
+      "msg": "Public withdraw payout path is disabled until amount and recipient are bound by the canonical proof bundle."
+    },
+    {
+      "code": 6008,
+      "name": "WithdrawV2CircuitNotPromoted",
+      "msg": "Withdraw v2 payout remains disabled until the v2 circuit, proving key, verifying key, manifest, and IDL are promoted together."
     }
   ],
   "types": [

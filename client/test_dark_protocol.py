@@ -13,8 +13,11 @@ from dark_client import (
     DarkClient,
     PROGRAM_ID,
     anchor_discriminator,
+    encode_u64_public_input,
+    encode_withdraw_v2_public_inputs,
     list_supported_networks,
     resolve_network_config,
+    split_pubkey_public_inputs,
 )
 from nebula_core import NebulaCore
 
@@ -119,6 +122,63 @@ class TestDarkClient:
         assert int.from_bytes(instruction.data[8:16], "little") == 42
         assert len(instruction.data) == 432
         assert len(instruction.accounts) == 5
+
+    def test_withdraw_v2_public_input_encoding_matches_idl_layout(self):
+        receiver = Keypair().pubkey()
+        mint = Keypair().pubkey()
+        receiver_token = Keypair().pubkey()
+        commitment = b"\x00" * 31 + b"\x01"
+        nullifier = b"\x00" * 31 + b"\x02"
+        root = b"\x00" * 31 + b"\x03"
+
+        public_inputs = encode_withdraw_v2_public_inputs(
+            commitment=commitment,
+            nullifier=nullifier,
+            root=root,
+            amount=42,
+            receiver_token=receiver_token,
+            mint=mint,
+        )
+        receiver_part_0, receiver_part_1 = split_pubkey_public_inputs(receiver_token)
+
+        assert len(public_inputs) == 8
+        assert encode_u64_public_input(42) == b"\x00" * 31 + b"\x2a"
+        assert public_inputs[3] == b"\x00" * 31 + b"\x2a"
+        assert public_inputs[4] == receiver_part_0
+        assert public_inputs[5] == receiver_part_1
+
+        proof_bundle = {
+            "proof_a": b"A" * 64,
+            "proof_b": b"B" * 128,
+            "proof_c": b"C" * 64,
+            "public_inputs": public_inputs,
+            "commitment": commitment,
+            "nullifier_hash": nullifier,
+            "root": root,
+        }
+        instruction = self.client.build_prepare_phantom_withdraw_v2_instruction(
+            receiver=receiver,
+            mint=mint,
+            receiver_token=receiver_token,
+            amount=42,
+            proof_bundle=proof_bundle,
+        )
+
+        assert instruction.data[:8] == anchor_discriminator("prepare_phantom_withdraw_v2")
+        assert int.from_bytes(instruction.data[8:16], "little") == 42
+        assert len(instruction.data) == 592
+        assert len(instruction.accounts) == 5
+
+        proof_bundle["public_inputs"] = list(public_inputs)
+        proof_bundle["public_inputs"][3] = b"\x00" * 32
+        with pytest.raises(ValueError, match="public_inputs must match"):
+            self.client.build_prepare_phantom_withdraw_v2_instruction(
+                receiver=receiver,
+                mint=mint,
+                receiver_token=receiver_token,
+                amount=42,
+                proof_bundle=proof_bundle,
+            )
 
     def test_root_authority_pda_and_root_update_layout_are_canonical(self):
         signer = Keypair().pubkey()

@@ -1,13 +1,18 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import path from "node:path";
 
 import {
   bytes32ToHex,
   createAnchorProgram,
   createConnection,
   deriveCanonicalPdas,
+  encodeBytes32PublicInputParts,
+  encodeU64PublicInput,
+  encodeWithdrawV2PublicInputs,
   getCanonicalArtifacts,
   getCanonicalManifest,
+  getProofEncoding,
   findProgramIdEntry,
   getIdl,
   getInstructionDefinition,
@@ -25,11 +30,15 @@ test("IDL helpers expose published instruction metadata", () => {
   const idl = getIdl();
   assert.equal(idl.metadata.name, "paradox");
   assert.ok(listInstructionNames().includes("prepare_phantom_withdraw"));
+  assert.ok(listInstructionNames().includes("prepare_phantom_withdraw_v2"));
   assert.ok(listInstructionNames().includes("rotate_root_authority"));
 
   const instruction = getInstructionDefinition("prepare_phantom_withdraw");
   assert.equal(instruction.name, "prepare_phantom_withdraw");
   assert.ok(Array.isArray(instruction.accounts));
+
+  const withdrawV2 = getInstructionDefinition("prepare_phantom_withdraw_v2");
+  assert.equal(withdrawV2.args.find((arg) => arg.name === "public_inputs").type.array[1], 8);
 
   const initialize = getInstructionDefinition("initialize");
   const updateRoot = getInstructionDefinition("update_root");
@@ -60,7 +69,8 @@ test("canonical manifest and network helpers expose one coherent root", () => {
   assert.equal(networks.length, 2);
   assert.equal(getNetworkDefinition("devnet")?.rpcUrl, "https://api.devnet.solana.com");
   assert.equal(resolveNetworkConfig("localnet").rpcUrl, "http://127.0.0.1:8899");
-  assert.ok(artifacts.circuitPath.endsWith("/circuits/null_proof.circom"));
+  assert.ok(path.normalize(artifacts.circuitPath).endsWith(path.join("circuits", "null_proof.circom")));
+  assert.equal(artifacts.relativePaths.circuit, "circuits/null_proof.circom");
 });
 
 test("bytes32 helpers normalize arrays and hex strings", () => {
@@ -69,6 +79,37 @@ test("bytes32 helpers normalize arrays and hex strings", () => {
   assert.equal(hex.length, 66);
   assert.deepEqual(hexToBytes32(hex), bytes);
   assert.deepEqual(normalizeBytes32(Uint8Array.from(bytes)), bytes);
+});
+
+test("proof encoding helpers expose ABI sizes and deterministic public inputs", () => {
+  const encoding = getProofEncoding();
+  assert.equal(encoding.current_verifier_abi_bytes, 256);
+  assert.equal(encoding.compressed_target_bytes, 128);
+  assert.equal(encoding.proof_sections.proof_b, 128);
+
+  const amount = encodeU64PublicInput(1n);
+  assert.equal(amount.length, 32);
+  assert.deepEqual(amount.slice(0, 31), new Array(31).fill(0));
+  assert.equal(amount[31], 1);
+  assert.throws(() => encodeU64PublicInput(-1n), /u64/);
+  assert.throws(() => encodeU64PublicInput(2n ** 64n), /u64/);
+
+  const pubkeyBytes = Array.from({ length: 32 }, (_, index) => index);
+  const [part0, part1] = encodeBytes32PublicInputParts(pubkeyBytes, "receiver_token");
+  assert.deepEqual(part0, new Array(16).fill(0).concat(pubkeyBytes.slice(0, 16)));
+  assert.deepEqual(part1, new Array(16).fill(0).concat(pubkeyBytes.slice(16, 32)));
+
+  const withdrawInputs = encodeWithdrawV2PublicInputs({
+    commitment: bytes32ToHex(new Array(31).fill(0).concat([1])),
+    nullifier: bytes32ToHex(new Array(31).fill(0).concat([2])),
+    root: bytes32ToHex(new Array(31).fill(0).concat([3])),
+    amount: "42",
+    receiverToken: pubkeyBytes,
+    mint: pubkeyBytes.map((value) => value + 32),
+  });
+
+  assert.equal(withdrawInputs.length, 8);
+  assert.equal(withdrawInputs[3][31], 42);
 });
 
 test("anchor helper works with injected modules", async () => {

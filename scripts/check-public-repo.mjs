@@ -20,6 +20,7 @@ const requiredFiles = [
   "INTERNAL_REVIEW.md",
   "VERIFICATION.md",
   "SECURITY.md",
+  ".gitattributes",
   "Cargo.toml",
   "src/lib.rs",
   "sdk/index.mjs",
@@ -34,6 +35,9 @@ const requiredFiles = [
   "tests/verification-key-consistency.test.mjs",
   "tests/canonical-manifest.test.mjs",
   "tests/canonical-proof-flow.test.mjs",
+  "tests/proof-encoding.test.mjs",
+  "tests/malformed-proof.test.mjs",
+  "tests/mainnet-readiness.test.mjs",
   "tests/historical-null-mint-consistency.test.mjs",
   "tests/historical-null-mint-manifest.test.mjs",
   "client/dark_client.py",
@@ -45,10 +49,21 @@ const requiredFiles = [
   "circuits/vk.json",
   "circuits/README.md",
   "docs/CONTRIBUTOR_QUICKSTART.md",
+  "docs/LAUNCH_NARRATIVE.md",
+  "docs/MAINNET_READINESS.md",
   "docs/PROGRAM_IDS.md",
   "scripts/bootstrap.sh",
+  "scripts/check-mainnet-readiness.mjs",
   "scripts/check-public-repo.mjs",
+  "scripts/generate-checksums.mjs",
+  "scripts/generate-sbom.mjs",
+  "scripts/python-compile.mjs",
+  "scripts/python-pytest.mjs",
+  "scripts/verify-release-artifacts.mjs",
   "scripts/network-config.mjs",
+  ".github/workflows/ci.yml",
+  ".github/workflows/codeql.yml",
+  ".github/workflows/release.yml",
   "idl/paradox.json",
   "tests/network-config.test.mjs",
 ];
@@ -84,6 +99,8 @@ const disallowedPatterns = [
   { label: "stale auditor recruitment copy", regex: /We're seeking auditors/ },
   { label: "stale public release badge", regex: /Status-Public_Release/ },
   { label: "stale production-ready devnet claim", regex: /production-ready release on solana devnet/i },
+  { label: "stale assistant attribution", regex: /\b(?:AI[- ](?:assisted|assistant|auditor)|Codex)\b/i },
+  { label: "stale proof-size claim", regex: /\b(?:144B|150B|144-byte|150-byte)\b/i },
 ];
 
 async function assertRequiredFiles() {
@@ -140,6 +157,9 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || packageJson.scripts.bootstrap !== "sh ./scripts/bootstrap.sh") {
     failures.push("package.json must expose scripts.bootstrap");
   }
+  if (!packageJson.scripts || packageJson.scripts["check:mainnet"] !== "node ./scripts/check-mainnet-readiness.mjs") {
+    failures.push("package.json must expose scripts.check:mainnet");
+  }
   if (!packageJson.exports || packageJson.exports["./networks"] !== "./NETWORKS.json") {
     failures.push("package.json must export ./networks -> ./NETWORKS.json");
   }
@@ -157,6 +177,42 @@ async function checkPackageMetadata() {
   }
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:config")) {
     failures.push("package.json test script must include npm run test:config");
+  }
+  if (!packageJson.scripts || packageJson.scripts["test:proof"] !== "node --test ./tests/proof-encoding.test.mjs ./tests/malformed-proof.test.mjs ./tests/mainnet-readiness.test.mjs") {
+    failures.push("package.json must expose scripts.test:proof");
+  }
+  if (!packageJson.scripts || packageJson.scripts["test:security"] !== "npm audit") {
+    failures.push("package.json must expose scripts.test:security");
+  }
+  if (!packageJson.scripts || packageJson.scripts["test:python"] !== "node ./scripts/python-compile.mjs") {
+    failures.push("package.json must expose cross-platform scripts.test:python");
+  }
+  if (!packageJson.scripts || packageJson.scripts["test:python:unit"] !== "node ./scripts/python-pytest.mjs") {
+    failures.push("package.json must expose cross-platform scripts.test:python:unit");
+  }
+  if (!packageJson.scripts || packageJson.scripts["test:package"] !== "npm pack --dry-run") {
+    failures.push("package.json must expose scripts.test:package");
+  }
+  for (const requiredStep of [
+    "npm run test:proof",
+    "npm run test:python:unit",
+    "npm run test:rust",
+    "npm run test:security",
+    "npm run release:verify",
+    "npm run test:package",
+  ]) {
+    if (!packageJson.scripts?.["test:all"]?.includes(requiredStep)) {
+      failures.push(`package.json test:all must include ${requiredStep}`);
+    }
+  }
+  if (!packageJson.scripts || packageJson.scripts["release:verify"] !== "node ./scripts/verify-release-artifacts.mjs") {
+    failures.push("package.json must expose scripts.release:verify");
+  }
+  if (!packageJson.scripts || packageJson.scripts["release:sbom"] !== "node ./scripts/generate-sbom.mjs") {
+    failures.push("package.json must expose scripts.release:sbom");
+  }
+  if (!packageJson.scripts || packageJson.scripts["release:checksums"] !== "node ./scripts/generate-checksums.mjs") {
+    failures.push("package.json must expose scripts.release:checksums");
   }
 
   return failures;
@@ -196,7 +252,7 @@ async function checkDocs() {
 
   for (const file of files) {
     const content = await fs.readFile(file, "utf8");
-    const relativePath = path.relative(repoRoot, file);
+    const relativePath = path.relative(repoRoot, file).split(path.sep).join("/");
 
     if (relativePath === "scripts/check-public-repo.mjs") {
       continue;

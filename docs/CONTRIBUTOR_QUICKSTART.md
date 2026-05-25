@@ -20,9 +20,7 @@ sh scripts/bootstrap.sh
 ## 3. Run What You Can
 
 ```bash
-npm test
-python3 -m py_compile client/*.py
-cargo test
+npm run test:all
 ```
 
 ## 4. Keep the Bar High

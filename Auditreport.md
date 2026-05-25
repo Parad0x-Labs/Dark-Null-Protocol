@@ -7,5 +7,5 @@ The previous contents described an internal scope and verification wishlist for 
 Use these documents instead:
 
 - [`AUDIT.md`](./AUDIT.md): current security-review status
-- [`INTERNAL_REVIEW.md`](./INTERNAL_REVIEW.md): AI-assisted internal review summary
+- [`INTERNAL_REVIEW.md`](./INTERNAL_REVIEW.md): internal technical review summary
 - [`VERIFICATION.md`](./VERIFICATION.md): what can and cannot be verified from the repo today

@@ -15,6 +15,7 @@ It is still **not** a finished mainnet product from the public materials alone.
 - root updates are now restricted by a dedicated `RootAuthorityConfig` PDA instead of any signer
 - leaves, roots, and nullifiers now hard-fail on window exhaustion instead of silently overwriting old entries
 - the public root now fails closed on payout instead of minting from proof-unbound `amount` / recipient instruction args
+- `prepare_phantom_withdraw_v2` publishes the payout-bound public-input shape, but still fails closed pending v2 artifacts
 
 ## What Is Still Historical
 
@@ -29,20 +30,20 @@ It is still **not** a finished mainnet product from the public materials alone.
 - no public ops/relayer package with production controls
 - no proof in this repo that every historical deployment maps to the canonical root files now published
 - Merkle root evolution is still computed off-chain and then published by a trusted updater
-- the canonical circuit does not yet publish payout-bound public inputs for withdrawal amount and recipient
+- the promoted canonical circuit still binds only `[commitment, nullifier, root]`; payout-bound v2 artifacts are not promoted yet
 
 ## Safe Public Claims
 
 - the root repo now publishes one canonical Groth16 path
 - the canonical root artifact set is reproducible and locally verifiable
 - historical material is still published, but it is no longer the main integration target
-- the repo still does **not** prove audit completion or mainnet readiness
+- the repo still does **not** prove audit completion or mainnet release readiness
 - the public root prefers fail-closed payout behavior over pretending the current proof bundle safely authorizes mint amount or recipient
 
 ## Unsafe Public Claims
 
 - "audited"
-- "mainnet-ready"
+- "safe for mainnet"
 - "just switch devnet to mainnet"
 - "all historical program IDs are the same deployment"
 - "the repo alone proves production security"

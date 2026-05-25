@@ -1,226 +1,113 @@
-# ZK Conventions for Paradox V17
+# ZK Conventions for the Canonical BN254 Root
 
-**CRITICAL**: These conventions are battle-tested and MUST be followed exactly.  
-Breaking any of these will result in `ProofVerificationFailed`.
+This document describes the current canonical root in this repository. Historical proof-pack and v17/v18 material can still be useful for context, but it is not the active integration target.
 
----
+## Current Proof Shape
 
-## ✅ Canonical Rules
+The promoted circuit currently exposes exactly three public inputs:
 
-### 1. Proof A Negation (CLIENT-SIDE)
-
-**groth16-solana v0.2.0 expects proof_A to be negated by the caller.**
-
-```typescript
-// ✅ CORRECT - Use this EXACT function
-const negFq = (y: bigint): bigint => {
-  const yMod = mod(y, FQ);
-  return yMod === 0n ? 0n : (FQ - yMod);  // (-y) mod Fq
-};
-
-const proofA_y_neg = negFq(BigInt(proof.pi_a[1]));
+```text
+[commitment, nullifier, root]
 ```
 
-```typescript
-// ❌ WRONG - Never use naive subtraction
-const proofA_y_neg = FQ - proofA_y;  // BUG: if y==0, produces FQ (invalid!)
-```
+The verifier ABI passed to `groth16-solana` is:
 
-**Why?** The Groth16 pairing equation requires `e(-A, B)`. The library does NOT negate internally.
+| Section | Bytes | Meaning |
+|---|---:|---|
+| `proof_a` | 64 | G1 point `[x, y]` |
+| `proof_b` | 128 | G2 point `[x.c1, x.c0, y.c1, y.c0]` |
+| `proof_c` | 64 | G1 point `[x, y]` |
+| Total | 256 | Current verifier ABI |
 
----
+The compressed proof target remains 128 bytes. Keep the two claims separate: 256 bytes is the current public verifier ABI, 128 bytes is the compressed target/artifact class.
 
-### 2. G2 Encoding Format
+## Public Inputs
 
-**G2 points use `[x.c1, x.c0, y.c1, y.c0]` format (imaginary component first).**
-
-```typescript
-// snarkjs format: [[X.c0, X.c1], [Y.c0, Y.c1]]
-// groth16-solana expects: [X.c1, X.c0, Y.c1, Y.c0]
-
-const proofB = Buffer.concat([
-  bigIntToBytes32(BigInt(proof.pi_b[0][1])), // X.c1 (imag) ← FIRST
-  bigIntToBytes32(BigInt(proof.pi_b[0][0])), // X.c0 (real)
-  bigIntToBytes32(BigInt(proof.pi_b[1][1])), // Y.c1 (imag) ← FIRST
-  bigIntToBytes32(BigInt(proof.pi_b[1][0])), // Y.c0 (real)
-]);
-```
-
-| Byte Range | snarkjs Source | Component |
-|------------|----------------|-----------|
-| 0-31 | `[0][1]` | X imaginary |
-| 32-63 | `[0][0]` | X real |
-| 64-95 | `[1][1]` | Y imaginary |
-| 96-127 | `[1][0]` | Y real |
-
-Each limb is **32-byte big-endian**.
-
----
-
-### 3. Public Inputs Format
-
-**Public inputs are 32-byte big-endian scalars in Fr (scalar field).**
+All public inputs are 32-byte big-endian BN254 Fr scalars.
 
 ```typescript
-// BN254 scalar field prime (Fr) - for public inputs
 const FR = BigInt("21888242871839275222246405745257275088548364400416034343698204186575808495617");
 
-// Validate BEFORE sending
-const assertFr = (name: string, x: bigint) => {
-  if (x < 0n || x >= FR) {
-    throw new Error(`Public input ${name} out of Fr range`);
+function assertFr(name: string, bytes: Uint8Array) {
+  const value = BigInt(`0x${Buffer.from(bytes).toString("hex")}`);
+  if (value >= FR) {
+    throw new Error(`${name} must be less than Fr`);
   }
-};
+}
 ```
 
-**Consistency requirement**: The same integer value must be used in:
-- Circuit (snarkjs witness)
-- Client encoding (bigIntToBytes32)
-- On-chain reconstruction
+The same integer value must be used in the Circom witness, SDK encoding, IDL payload, and Rust verifier path.
 
----
+## G2 Encoding
 
-### 4. Never Mix Conventions
+`snarkjs` emits G2 points as `[[x.c0, x.c1], [y.c0, y.c1]]`. The Solana verifier path expects:
 
-**Pick ONE negation convention and stick with it.**
+```text
+[x.c1, x.c0, y.c1, y.c0]
+```
 
-| Convention | proof_A | VK alpha/gamma/delta |
-|------------|---------|---------------------|
-| ✅ **Ours (working)** | NEGATED | NOT negated |
-| ❌ Alternative | NOT negated | NEGATED |
+Each limb is 32-byte big-endian.
 
-**Never** use negated VK constants (`verifier_constants.rs`) together with negated proof_A. This double-negates and breaks verification.
+## Withdraw V2 Planned Encoding
 
----
+`prepare_phantom_withdraw_v2` is present in the IDL and source, but it fails closed with `WithdrawV2CircuitNotPromoted` until the v2 artifacts are generated and promoted together.
 
-## 🔢 Critical Constants
+The planned public-input order is:
+
+```text
+[
+  commitment,
+  nullifier,
+  root,
+  amount,
+  receiver_token_part_0,
+  receiver_token_part_1,
+  mint_part_0,
+  mint_part_1
+]
+```
+
+Encoding rules:
+
+- `amount` is `24` zero bytes followed by `u64_be`
+- `receiver_token` and `mint` are each split into two 16-byte chunks
+- each pubkey chunk is left-padded with 16 zero bytes to form one 32-byte Fr scalar
+- every scalar must be less than the BN254 Fr modulus
+
+Use the SDK helpers:
 
 ```typescript
-// BN254 base field prime (Fq) - for G1/G2 point coordinates & negation
-const FQ = BigInt("21888242871839275222246405745257275088696311157297823662689037894645226208583");
-
-// BN254 scalar field prime (Fr) - for public inputs / circuit signals  
-const FR = BigInt("21888242871839275222246405745257275088548364400416034343698204186575808495617");
+import {
+  encodeU64PublicInput,
+  encodeBytes32PublicInputParts,
+  encodeWithdrawV2PublicInputs,
+  getProofEncoding,
+} from "@dark-null/protocol";
 ```
 
-| Use Case | Field |
-|----------|-------|
-| G1 point negation | Fq |
-| G2 point coordinates | Fq |
-| Public input validation | Fr |
-| Circuit signals | Fr |
+## Regression Checks
 
----
+Run the canonical checks before publishing proof claims:
 
-## 🧪 Regression Tests
-
-### Test 1: Native Verifier (Host Rust)
-
-Create `programs/paradox/tests/native_verify.rs`:
-
-```rust
-use groth16_solana::groth16::Groth16Verifier;
-use paradox::verifier::VERIFYINGKEY;
-
-fn hex_to_array<const N: usize>(s: &str) -> [u8; N] {
-    let mut arr = [0u8; N];
-    for i in 0..N {
-        arr[i] = u8::from_str_radix(&s[i*2..i*2+2], 16).unwrap();
-    }
-    arr
-}
-
-#[test]
-fn native_verify_proof() {
-    // Paste hex from TS test output
-    let proof_a: [u8; 64] = hex_to_array("...");
-    let proof_b: [u8; 128] = hex_to_array("...");
-    let proof_c: [u8; 64] = hex_to_array("...");
-    
-    let inputs: [[u8; 32]; 7] = [
-        hex_to_array("..."), // root
-        hex_to_array("..."), // nullifier
-        hex_to_array("..."), // amount
-        hex_to_array("..."), // recipient
-        hex_to_array("..."), // salt1
-        hex_to_array("..."), // salt2
-        hex_to_array("..."), // salt3
-    ];
-
-    let verifier = Groth16Verifier::new(
-        &proof_a, &proof_b, &proof_c, &inputs, &VERIFYINGKEY
-    ).expect("init failed");
-    
-    verifier.verify().expect("verification failed");
-}
-```
-
-Run with: `cargo test native_verify_proof`
-
-### Test 2: On-Chain E2E
-
-Already exists: `tests/v17_full_e2e_test.ts`
-
-Run with: `npx ts-node tests/v17_full_e2e_test.ts`
-
----
-
-## 🔄 Circuit/VK Rotation Procedure
-
-When you update the circuit or regenerate keys:
-
-### Step 1: Regenerate VK Rust bytes
 ```bash
-cd circuits
-node ../scripts/export_vkey.js > ../programs/paradox/src/verifier_generated.rs
-# Then copy VERIFYINGKEY into verifier.rs
+npm run test:all
 ```
 
-### Step 2: Run native verify FIRST
-```bash
-cargo test native_verify_proof
-```
-This catches encoding mismatches without waiting for on-chain deployment.
+`cargo` is required for local Rust verification and is included in `npm run test:all`.
 
-### Step 3: Run on-chain E2E
-```powershell
-npx ts-node tests/v17_full_e2e_test.ts
-```
+## Rotation Rule
 
-**This 3-step process prevents multi-day "pairing check mystery" debugging sessions.**
+Do not promote `canonical-devnet-root-2` until all of these agree:
 
----
+- circuit
+- zkey
+- wasm
+- verification key JSON
+- Rust verifying key
+- Rust instruction logic
+- IDL
+- manifest hashes
+- SDK helpers
+- proof-flow tests
 
-## 🚨 Common Failure Modes
-
-| Error | Cause | Fix |
-|-------|-------|-----|
-| `ProofVerificationFailed` | Wrong negation, G2 order, or input mismatch | Check all conventions above |
-| `PublicInputGreaterThanFieldSize` | Input >= Fr | Validate with `assertFr()` |
-| `Verifier initialization failed` | Malformed VK bytes | Regenerate VK with export_vkey.js |
-
----
-
-## 📋 Quick Reference Card
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  PARADOX V17 ZK QUICK REFERENCE                             │
-├─────────────────────────────────────────────────────────────┤
-│  proof_A:  [x, negFq(y)]           ← Y NEGATED              │
-│  proof_B:  [x.c1, x.c0, y.c1, y.c0] ← SWAPPED              │
-│  proof_C:  [x, y]                   ← NOT negated           │
-│  VK:       NOT negated              ← Standard export       │
-│  Inputs:   32-byte BE, < Fr         ← Validate range        │
-│  Bytes:    Always big-endian        ← MSB first             │
-├─────────────────────────────────────────────────────────────┤
-│  FQ = 218882428718392752222464057452572750886963111572...83 │
-│  FR = 218882428718392752222464057452572750885483644004...17 │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-*Last updated: January 8, 2026*  
-*Verified working with groth16-solana v0.2.0*
-
+Partial promotion is a security bug, not a release shortcut.

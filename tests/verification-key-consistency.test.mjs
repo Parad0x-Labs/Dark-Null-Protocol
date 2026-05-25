@@ -9,6 +9,11 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."
 const vkJsonPath = path.join(repoRoot, "circuits", "vk.json");
 const rustSnapshotPath = path.join(repoRoot, "src", "verifying_key.rs");
 
+async function canonicalTextBytes(fullPath) {
+  const text = await fs.readFile(fullPath, "utf8");
+  return Buffer.from(text.replace(/\r\n/g, "\n"), "utf8");
+}
+
 function matchValue(source, pattern, label) {
   const match = source.match(pattern);
   assert.ok(match, `Missing ${label} in Rust verifier snapshot`);
@@ -16,7 +21,7 @@ function matchValue(source, pattern, label) {
 }
 
 test("Rust verifier matches canonical vk.json metadata", async () => {
-  const vkRaw = await fs.readFile(vkJsonPath);
+  const vkRaw = await canonicalTextBytes(vkJsonPath);
   const vk = JSON.parse(vkRaw.toString("utf8"));
   const rust = await fs.readFile(rustSnapshotPath, "utf8");
   const sha256 = crypto.createHash("sha256").update(vkRaw).digest("hex");

@@ -54,7 +54,9 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 import {
   createAnchorProgram,
   deriveCanonicalPdas,
+  encodeWithdrawV2PublicInputs,
   getInstructionDefinition,
+  getProofEncoding,
   resolveNetworkConfig,
   resolveProgramId,
 } from "@dark-null/protocol";
@@ -66,12 +68,16 @@ const program = await createAnchorProgram({
 });
 
 const withdraw = getInstructionDefinition("prepare_phantom_withdraw");
+const withdrawV2 = getInstructionDefinition("prepare_phantom_withdraw_v2");
+const proofEncoding = getProofEncoding();
 const programId = resolveProgramId("canonicalDevnet");
 const network = resolveNetworkConfig("devnet");
 const pdas = await deriveCanonicalPdas();
 ```
 
 `prepare_phantom_withdraw` still exists in the public IDL, but the current canonical source now fails closed before payout until the proof bundle binds withdrawal amount and recipient semantics.
+
+`prepare_phantom_withdraw_v2` defines the next payout-bound public-input layout and the SDK can encode it with `encodeWithdrawV2PublicInputs`. It still fails closed with `WithdrawV2CircuitNotPromoted` until the v2 circuit, zkey, wasm, vk, verifier, manifest, IDL, SDK, and tests are promoted as one artifact set.
 
 ## 7. Or Use the Public IDL Directly
 
@@ -92,9 +98,7 @@ const program = new Program(
 ## 8. Run the Canonical Checks
 
 ```bash
-npm test
-npm run test:python:unit
-cargo test --offline
+npm run test:all
 ```
 
 ## 9. Keep the Boundary Straight
@@ -103,5 +107,6 @@ cargo test --offline
 - root updates in the current source require the `root_authority` PDA and authorized signer
 - bounded root / leaf / nullifier windows now fail closed instead of overwriting silently
 - the public root no longer releases payout from proof-unbound `amount` / recipient instruction arguments
+- the v2 withdraw interface is present for integration testing, but it is intentionally disabled until the promoted circuit actually proves the v2 public inputs
 - the repo still does **not** prove a completed audit or a mainnet release
 - historical result bundles are still useful, but they are not the root integration target

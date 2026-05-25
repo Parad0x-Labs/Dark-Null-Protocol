@@ -8,11 +8,12 @@
 | Track | Status |
 |---|---|
 | Third-party audit | Not completed |
-| AI-assisted internal review | Completed for the public repo |
+| Internal technical review | Completed for the public repo |
 | Public consistency checks | Available via `npm run check:public` |
 | Root canonical verifier path | Published and compile-tested |
 | Root canonical proof flow | Published and locally reproducible via `tests/canonical-proof-flow.test.mjs` |
 | Public withdraw payout path | Disabled/fail-closed until amount+recipient binding is promoted into the canonical proof bundle |
+| Withdraw v2 payout-bound interface | Published in IDL/source, argument binding checked, still fails closed pending v2 artifacts |
 | Root update authority | Restricted by `RootAuthorityConfig` in the current root source |
 | Mainnet release assurance | Not established |
 

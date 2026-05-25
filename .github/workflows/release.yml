@@ -1,0 +1,89 @@
+name: Release Integrity
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+  artifact-metadata: write
+
+jobs:
+  release:
+    name: Checksums, SBOM, Attestation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked Node dependencies
+        run: npm ci
+
+      - name: Run public regression checks
+        run: npm test
+
+      - name: Run proof hardening tests
+        run: npm run test:proof
+
+      - name: Run npm audit gate
+        run: npm run test:security
+
+      - name: Verify manifest-bound artifacts
+        run: npm run release:verify
+
+      - name: Generate SBOM
+        run: npm run release:sbom
+
+      - name: Pack npm artifact
+        run: npm pack
+
+      - name: Generate checksums
+        run: npm run release:checksums
+
+      - name: Verify release checksums
+        run: npm run release:verify
+
+      - name: Attest release artifact provenance
+        uses: actions/attest@v4
+        with:
+          subject-checksums: dist/release/SHA256SUMS
+
+      - name: Attest release SBOM
+        uses: actions/attest@v4
+        with:
+          subject-checksums: dist/release/SHA256SUMS
+          sbom-path: dist/release/sbom.cdx.json
+
+      - name: Upload workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dark-null-release-integrity
+          path: |
+            *.tgz
+            dist/release/SHA256SUMS
+            dist/release/sbom.cdx.json
+
+      - name: Publish GitHub release artifacts
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            gh release upload "$TAG_NAME" ./*.tgz dist/release/SHA256SUMS dist/release/sbom.cdx.json --clobber
+          else
+            gh release create "$TAG_NAME" ./*.tgz dist/release/SHA256SUMS dist/release/sbom.cdx.json --title "$TAG_NAME" --notes "Release $TAG_NAME"
+          fi

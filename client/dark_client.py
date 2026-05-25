@@ -23,6 +23,8 @@ TOKEN_PROGRAM_ID = Pubkey.from_string("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5
 SYSTEM_PROGRAM_ID = Pubkey.from_string("11111111111111111111111111111111")
 VAULT_SEED = b"merkle_vault"
 ROOT_AUTHORITY_SEED = b"root_authority"
+BN254_FR = 21888242871839275222246405745257275088548364400416034343698204186575808495617
+U64_MAX = (1 << 64) - 1
 
 
 def anchor_discriminator(name: str) -> bytes:
@@ -49,6 +51,49 @@ def coerce_bytes32(value) -> bytes:
     if len(raw) != 32:
         raise ValueError(f"Expected 32 bytes, received {len(raw)}")
     return raw
+
+
+def assert_fr_scalar(value: bytes, label: str) -> None:
+    if int.from_bytes(value, "big") >= BN254_FR:
+        raise ValueError(f"{label} must be less than the BN254 scalar field modulus")
+
+
+def encode_u64_public_input(value) -> bytes:
+    parsed = int(value)
+    if parsed < 0 or parsed > U64_MAX:
+        raise ValueError(f"amount must fit in u64, received {value}")
+    return b"\x00" * 24 + parsed.to_bytes(8, "big")
+
+
+def split_pubkey_public_inputs(pubkey):
+    raw = bytes(pubkey) if isinstance(pubkey, Pubkey) else coerce_bytes32(pubkey)
+    part_0 = b"\x00" * 16 + raw[:16]
+    part_1 = b"\x00" * 16 + raw[16:32]
+    assert_fr_scalar(part_0, "pubkey_part_0")
+    assert_fr_scalar(part_1, "pubkey_part_1")
+    return part_0, part_1
+
+
+def encode_withdraw_v2_public_inputs(commitment, nullifier, root, amount, receiver_token, mint):
+    commitment_input = coerce_bytes32(commitment)
+    nullifier_input = coerce_bytes32(nullifier)
+    root_input = coerce_bytes32(root)
+    assert_fr_scalar(commitment_input, "commitment")
+    assert_fr_scalar(nullifier_input, "nullifier")
+    assert_fr_scalar(root_input, "root")
+
+    receiver_token_part_0, receiver_token_part_1 = split_pubkey_public_inputs(receiver_token)
+    mint_part_0, mint_part_1 = split_pubkey_public_inputs(mint)
+    return [
+        commitment_input,
+        nullifier_input,
+        root_input,
+        encode_u64_public_input(amount),
+        receiver_token_part_0,
+        receiver_token_part_1,
+        mint_part_0,
+        mint_part_1,
+    ]
 
 
 def list_supported_networks():
@@ -280,6 +325,64 @@ class DarkClient:
             raise ValueError("public_inputs must match the nullifier_hash/root instruction arguments")
 
         data = bytearray(anchor_discriminator("prepare_phantom_withdraw"))
+        data.extend(int(amount).to_bytes(8, "little"))
+        data.extend(nullifier_hash)
+        data.extend(root)
+        data.extend(proof_a)
+        data.extend(proof_b)
+        data.extend(proof_c)
+        for value in public_inputs:
+            data.extend(value)
+
+        return Instruction(
+            program_id,
+            bytes(data),
+            [
+                AccountMeta(vault, False, True),
+                AccountMeta(mint, False, True),
+                AccountMeta(receiver_token, False, True),
+                AccountMeta(receiver, True, False),
+                AccountMeta(TOKEN_PROGRAM_ID, False, False),
+            ],
+        )
+
+    def build_prepare_phantom_withdraw_v2_instruction(
+        self,
+        receiver,
+        mint,
+        receiver_token,
+        amount,
+        proof_bundle,
+        vault=None,
+        program_id=None,
+    ):
+        program_id = program_id or self.program_id
+        vault = vault or self.derive_vault_pda(program_id)
+        proof_a = bytes(proof_bundle["proof_a"])
+        proof_b = bytes(proof_bundle["proof_b"])
+        proof_c = bytes(proof_bundle["proof_c"])
+        root = coerce_bytes32(proof_bundle["root"])
+        nullifier_hash = coerce_bytes32(proof_bundle["nullifier_hash"])
+
+        if len(proof_a) != 64 or len(proof_b) != 128 or len(proof_c) != 64:
+            raise ValueError("Groth16 sections must be 64/128/64 bytes")
+
+        expected_public_inputs = encode_withdraw_v2_public_inputs(
+            commitment=proof_bundle["commitment"],
+            nullifier=nullifier_hash,
+            root=root,
+            amount=amount,
+            receiver_token=receiver_token,
+            mint=mint,
+        )
+        public_inputs = [coerce_bytes32(value) for value in proof_bundle.get("public_inputs", expected_public_inputs)]
+
+        if len(public_inputs) != 8:
+            raise ValueError("prepare_phantom_withdraw_v2 requires exactly 8 public inputs")
+        if public_inputs != expected_public_inputs:
+            raise ValueError("public_inputs must match commitment/nullifier/root/amount/receiver_token/mint binding")
+
+        data = bytearray(anchor_discriminator("prepare_phantom_withdraw_v2"))
         data.extend(int(amount).to_bytes(8, "little"))
         data.extend(nullifier_hash)
         data.extend(root)

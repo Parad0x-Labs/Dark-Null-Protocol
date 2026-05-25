@@ -10,6 +10,24 @@ declare_id!("2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF");
 pub const ROOT_WINDOW: usize = 20;
 pub const LEAF_WINDOW: usize = 128;
 pub const NULLIFIER_WINDOW: usize = 128;
+pub const WITHDRAW_V2_PUBLIC_INPUTS: usize = 8;
+pub const BN254_FR_BYTES: [u8; 32] = [
+    0x30, 0x64, 0x4e, 0x72, 0xe1, 0x31, 0xa0, 0x29,
+    0xb8, 0x50, 0x45, 0xb6, 0x81, 0x81, 0x58, 0x5d,
+    0x28, 0x33, 0xe8, 0x48, 0x79, 0xb9, 0x70, 0x91,
+    0x43, 0xe1, 0xf5, 0x93, 0xf0, 0x00, 0x00, 0x01,
+];
+
+fn is_fr_scalar(input: &[u8; 32]) -> bool {
+    input.as_slice() < BN254_FR_BYTES.as_slice()
+}
+
+fn require_fr_public_inputs<const N: usize>(public_inputs: &[[u8; 32]; N]) -> Result<()> {
+    for input in public_inputs.iter() {
+        require!(is_fr_scalar(input), ErrorCode::InvalidProof);
+    }
+    Ok(())
+}
 
 fn verify_withdraw_public_inputs(
     proof_a: &[u8; 64],
@@ -17,6 +35,8 @@ fn verify_withdraw_public_inputs(
     proof_c: &[u8; 64],
     public_inputs: &[[u8; 32]; 3],
 ) -> Result<()> {
+    require_fr_public_inputs(public_inputs)?;
+
     let mut verifier = Groth16Verifier::new(
         proof_a,
         proof_b,
@@ -26,6 +46,21 @@ fn verify_withdraw_public_inputs(
     ).map_err(|_| ErrorCode::InvalidProof)?;
 
     verifier.verify().map_err(|_| ErrorCode::InvalidProof.into())
+}
+
+fn encode_u64_public_input(value: u64) -> [u8; 32] {
+    let mut out = [0u8; 32];
+    out[24..32].copy_from_slice(&value.to_be_bytes());
+    out
+}
+
+fn split_pubkey_public_inputs(pubkey: &Pubkey) -> ([u8; 32], [u8; 32]) {
+    let bytes = pubkey.as_ref();
+    let mut part_0 = [0u8; 32];
+    let mut part_1 = [0u8; 32];
+    part_0[16..32].copy_from_slice(&bytes[0..16]);
+    part_1[16..32].copy_from_slice(&bytes[16..32]);
+    (part_0, part_1)
 }
 
 #[program]
@@ -132,6 +167,44 @@ pub mod paradox {
         )?;
 
         err!(ErrorCode::UnsafePublicWithdrawPath)
+    }
+
+    pub fn prepare_phantom_withdraw_v2(
+        ctx: Context<PrepareWithdraw>,
+        amount: u64,
+        nullifier_hash: [u8; 32],
+        root: [u8; 32],
+        proof_a: [u8; 64],
+        proof_b: [u8; 128],
+        proof_c: [u8; 64],
+        public_inputs: [[u8; 32]; 8]
+    ) -> Result<()> {
+        let vault = ctx.accounts.vault.load_mut()?;
+        let _ = (&proof_a, &proof_b, &proof_c);
+
+        require_fr_public_inputs(&public_inputs)?;
+        require!(vault.contains_root(&root), ErrorCode::InvalidRoot);
+        require!(
+            !vault.contains_nullifier(&nullifier_hash),
+            ErrorCode::DoubleSpend
+        );
+
+        let receiver_token_key = ctx.accounts.receiver_token.key();
+        let mint_key = ctx.accounts.mint.key();
+        let (receiver_token_part_0, receiver_token_part_1) =
+            split_pubkey_public_inputs(&receiver_token_key);
+        let (mint_part_0, mint_part_1) = split_pubkey_public_inputs(&mint_key);
+
+        require!(public_inputs[1] == nullifier_hash, ErrorCode::InvalidProof);
+        require!(public_inputs[2] == root, ErrorCode::InvalidProof);
+        require!(public_inputs[3] == encode_u64_public_input(amount), ErrorCode::InvalidProof);
+        require!(public_inputs[4] == receiver_token_part_0, ErrorCode::InvalidProof);
+        require!(public_inputs[5] == receiver_token_part_1, ErrorCode::InvalidProof);
+        require!(public_inputs[6] == mint_part_0, ErrorCode::InvalidProof);
+        require!(public_inputs[7] == mint_part_1, ErrorCode::InvalidProof);
+
+        msg!("ZK_VERIFY_V2: payout-bound public inputs checked; circuit promotion pending");
+        err!(ErrorCode::WithdrawV2CircuitNotPromoted)
     }
 
     pub fn burn_and_whisper(ctx: Context<BurnToken>, amount: u64, _commitment: [u8; 32], encrypted_note: Vec<u8>, ephemeral_pubkey: [u8; 32], view_tag: u8) -> Result<()> {
@@ -318,6 +391,8 @@ pub enum ErrorCode {
     UnauthorizedRootUpdate,
     #[msg("Public withdraw payout path is disabled until amount and recipient are bound by the canonical proof bundle.")]
     UnsafePublicWithdrawPath,
+    #[msg("Withdraw v2 payout remains disabled until the v2 circuit, proving key, verifying key, manifest, and IDL are promoted together.")]
+    WithdrawV2CircuitNotPromoted,
 }
 
 #[cfg(test)]
@@ -334,6 +409,40 @@ mod tests {
     fn verifying_key_uses_three_public_inputs() {
         assert_eq!(verifying_key::NR_PUBINPUTS, 3);
         assert_eq!(VERIFYING_KEY.nr_pubinputs, 3);
+        assert_eq!(WITHDRAW_V2_PUBLIC_INPUTS, 8);
+    }
+
+    #[test]
+    fn bn254_fr_scalar_range_check_is_stable() {
+        assert!(is_fr_scalar(&[0u8; 32]));
+        assert!(!is_fr_scalar(&BN254_FR_BYTES));
+
+        let mut max_valid = BN254_FR_BYTES;
+        max_valid[31] -= 1;
+        assert!(is_fr_scalar(&max_valid));
+    }
+
+    #[test]
+    fn withdraw_v2_public_input_encoding_is_stable() {
+        assert_eq!(
+            encode_u64_public_input(42),
+            [
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42,
+            ]
+        );
+
+        let key = Pubkey::new_from_array([
+            0, 1, 2, 3, 4, 5, 6, 7,
+            8, 9, 10, 11, 12, 13, 14, 15,
+            16, 17, 18, 19, 20, 21, 22, 23,
+            24, 25, 26, 27, 28, 29, 30, 31,
+        ]);
+        let (part_0, part_1) = split_pubkey_public_inputs(&key);
+        assert_eq!(&part_0[0..16], &[0u8; 16]);
+        assert_eq!(&part_0[16..32], &key.as_ref()[0..16]);
+        assert_eq!(&part_1[0..16], &[0u8; 16]);
+        assert_eq!(&part_1[16..32], &key.as_ref()[16..32]);
     }
 
     #[test]

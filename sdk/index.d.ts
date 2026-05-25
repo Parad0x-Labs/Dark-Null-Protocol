@@ -35,6 +35,7 @@ export interface CanonicalManifest {
     wasm: string;
     vk_json: string;
   };
+  proof_encoding?: ProofEncoding;
   artifacts: Array<{
     path: string;
     sha256: string;
@@ -51,6 +52,30 @@ export interface CanonicalArtifacts {
   zkeyPath: string;
   wasmPath: string;
   vkJsonPath: string;
+  relativePaths: {
+    anchorToml: string;
+    manifest: string;
+    networks: string;
+    idl: string;
+    circuit: string;
+    zkey: string;
+    wasm: string;
+    vkJson: string;
+  };
+}
+
+export interface ProofEncoding {
+  current_verifier_abi_bytes: 256;
+  compressed_target_bytes: 128;
+  field: "bn254-fr";
+  byte_order: "big-endian";
+  current_public_inputs: string[];
+  planned_withdraw_v2_public_inputs: string[];
+  proof_sections: {
+    proof_a: 64;
+    proof_b: 128;
+    proof_c: 64;
+  };
 }
 
 export interface NetworkDefinition {
@@ -110,6 +135,7 @@ export declare function getSdkMetadata(): SdkMetadata;
 export declare function getCanonicalManifest(): CanonicalManifest;
 export declare function getIdl(): any;
 export declare function getCanonicalArtifacts(): CanonicalArtifacts;
+export declare function getProofEncoding(): ProofEncoding;
 export declare function listInstructionNames(): string[];
 export declare function getInstructionDefinition(name: string): any;
 export declare function listAccountNames(): string[];
@@ -127,6 +153,16 @@ export declare function deriveCanonicalPdas(options?: {
 export declare function bytes32ToHex(input: string | ArrayLike<number>): string;
 export declare function hexToBytes32(input: string): number[];
 export declare function normalizeBytes32(input: string | ArrayLike<number>): number[];
+export declare function encodeU64PublicInput(value: string | number | bigint): number[];
+export declare function encodeBytes32PublicInputParts(input: string | ArrayLike<number>, label?: string): [number[], number[]];
+export declare function encodeWithdrawV2PublicInputs(input: {
+  commitment: string | ArrayLike<number>;
+  nullifier: string | ArrayLike<number>;
+  root: string | ArrayLike<number>;
+  amount: string | number | bigint;
+  receiverToken: string | ArrayLike<number>;
+  mint: string | ArrayLike<number>;
+}): number[][];
 export declare function createAnchorProgram(options: CreateAnchorProgramOptions): Promise<any>;
 export declare function createConnection(rpcUrl: string, web3Module?: unknown): Promise<any>;
 export declare function createConnectionForNetwork(options?: ResolveNetworkConfigOptions | NetworkDefinition["key"], web3Module?: unknown): Promise<any>;

@@ -1,216 +1,51 @@
-# Paradox V17 - Competitive Positioning
+# Dark Null Competitive Positioning
 
-*Last updated: January 2026*
+*Last updated: May 2026*
 
----
+Dark Null should win on verifiable evidence, not posture. The canonical root now publishes the program source, IDL, manifest, circuit, zkey, wasm, verifying key, SDK helpers, and a reproducible local Groth16 proof flow.
 
-## 🏆 TL;DR: Paradox is the Most Compact ZK Privacy on Solana
+## Current Position
 
-| Protocol | Payload Size | Verification | Status |
-|----------|-------------|--------------|--------|
-| **Paradox V18** | **128B** | Groth16 on-chain | ✅ Devnet live |
-| Elusiv | ~500B | Groth16 | Mainnet (deprecated) |
-| Light Protocol | ~400B | Groth16 | Mainnet |
-| Tornado Cash (ETH) | ~1KB | Groth16 | Sanctioned |
-| Arcium | N/A | MPC-based | Mainnet (different model) |
+| Track | Dark Null status |
+|---|---|
+| Proof system | Groth16 on BN254 |
+| Current verifier wire ABI | 256 bytes (`proof_a[64]`, `proof_b[128]`, `proof_c[64]`) |
+| Compressed proof target | 128 bytes |
+| Canonical proof flow | Reproducible with `npm run test:all` |
+| Payout safety | Fail-closed; v2 payout-bound input shape is published but disabled pending artifacts |
+| Audit status | No completed third-party audit |
+| Mainnet status | Not released for mainnet |
 
-**Paradox achieves 3x smaller payloads than competitors through G2 point compression.**
+## Why This Can Beat Heavier Privacy Stacks
 
----
+Dark Null's strongest lane is Solana-native settlement with a small BN254 Groth16 proof surface and direct public artifact binding. A validator-run privacy L2 can add networking, slashing, and operator economics, but it also adds trust seams and operational burden. Dark Null should stay sharper: prove the circuit, bind the verifier, fail closed when semantics are not bound, and make every claim reproducible from the repo.
 
-## 🌊 2026 Solana Privacy Landscape
+## Public Message
 
-### The Shift: "Privacy 2.0" + Compliance
+Dark Null is the evidence-first privacy settlement root for Solana: compact Groth16 proofs, canonical artifacts, reproducible tests, and no unsupported audit or launch claims.
 
-The 2026 narrative has shifted toward:
-- **Arcium/MPC**: "Compliant privacy" - computation hiding, not transaction hiding
-- **Light Protocol**: Compressed accounts + selective disclosure
-- **Regulatory pressure**: OFAC sanctions on Tornado created chilling effect
+Use the aggressive line only where the repo backs it:
 
-**What this means for Paradox:**
-- Pure max-privacy ZK is less spotlighted (regulatory headwinds)
-- BUT demand exists for **uncensorable options**
-- Paradox fills the "hardcore privacy" niche that compliance-focused tools won't serve
-
----
-
-## 🔥 Paradox Advantages
-
-### 1. **Smallest Payload (128B compressed)**
-```
-Proof A (x-coord):  32 bytes
-Proof B (x-coord):  64 bytes  
-Proof C (x-coord):  32 bytes
-─────────────────────────────
-Total:             128 bytes
-```
-Competitors use 300-500B. We're 3x more efficient.
-
-### 2. **Infinite Scale Architecture**
-- Merkle tree pagination (no 2^20 limit)
-- Ring roots for historical proof validity
-- Can handle billions of commitments
-
-### 3. **Real On-Chain ZK (Not Trusted Relayers)**
-- `groth16-solana` native verification
-- Uses Solana's `alt_bn128` precompiles
-- ~1.4M CU per verification (fits single TX)
-
-### 4. **Battle-Tested Cryptography**
-- Groth16 (same as Tornado, Zcash)
-- BN254 curve (Ethereum standard)
-- No novel cryptographic assumptions
-
----
-
-## 🔗 Integration Opportunities
-
-### Currently Exploring:
-- **x402 Protocol**: HTTP 402 payment standard integration
-- **8333 Network**: Bitcoin bridge compatibility  
-- **Jupiter**: DEX aggregator hooks
-- **Phantom/Backpack**: Wallet integrations
-
-### Why Integrations Matter:
-- Privacy is a feature, not a destination
-- Users want privacy embedded in their normal flows
-- "Send privately" button > dedicated privacy app
-
----
-
-## 📊 Technical Comparison
-
-### Proof Systems
-
-| | Paradox V17 | Elusiv | Light Protocol | Arcium |
-|-|------------|--------|----------------|--------|
-| Proof System | Groth16 | Groth16 | Groth16 | MPC |
-| Curve | BN254 | BN254 | BN254 | N/A |
-| Verification | On-chain | On-chain | On-chain | Off-chain |
-| Trusted Setup | Yes (Powers of Tau) | Yes | Yes | No |
-| Proof Time | ~1.2s | ~2s | ~1.5s | N/A |
-
-### Privacy Model
-
-| | Paradox V17 | Elusiv | Light Protocol | Arcium |
-|-|------------|--------|----------------|--------|
-| Sender Hidden | ✅ | ✅ | ✅ | ❌ |
-| Receiver Hidden | ✅ | ✅ | Partial | ❌ |
-| Amount Hidden | ✅ | ✅ | Partial | ✅ |
-| Compliance Option | ❌ | ✅ | ✅ | ✅ |
-| Max Privacy | ✅ | Partial | Partial | ❌ |
-
----
-
-## 🎯 Target Users
-
-### Primary (Today):
-- Privacy maximalists
-- Crypto OGs who remember pre-KYC era
-- Developers building uncensorable apps
-- DAOs needing treasury privacy
-
-### Secondary (Tomorrow):
-- Institutions (with compliance layer)
-- Cross-chain bridges needing privacy
-- DeFi protocols wanting private liquidations
-
----
-
-## 🚀 Competitive Moat
-
-### What's Hard to Replicate:
-
-1. **The 150B Payload**
-   - G2 compression math is non-trivial
-   - Most teams use library defaults (uncompressed)
-
-2. **Infinite Scale Design**
-   - Ring roots + pagination took months to architect
-   - Most mixers hit the 2^20 wall
-
-3. **Working Devnet**
-   - Not a whitepaper - actual verified transactions
-   - Proof: [See receipt hashes in artifacts/]
-
-4. **ZK Expertise**
-   - Debugging `groth16-solana` edge cases (negFq!)
-   - Understanding G2 encoding conventions
-   - This knowledge is rare
-
----
-
-## 📈 Market Position
-
-```
-                    HIGH PRIVACY
-                         │
-                         │    ┌──────────────┐
-                         │    │  PARADOX V17 │ ← You are here
-                         │    └──────────────┘
-                         │
-    NO COMPLIANCE ───────┼─────────────────── FULL COMPLIANCE
-                         │
-                         │    ┌──────────────┐
-                         │    │    Arcium    │
-                         │    └──────────────┘
-                         │
-                    LOW PRIVACY
+```text
+256-byte current verifier ABI. 128-byte compressed proof target. Public artifacts. Public tests. Fail-closed payout until v2 binding is promoted.
 ```
 
-**Position**: Maximum privacy, zero compliance. 
+## Advantages To Press
 
-This is a defensible niche because:
-- Compliance-focused competitors won't serve this market
-- Regulatory risk keeps big players away
-- True believers will always need uncensorable options
+- **Small proof target:** 128-byte compressed proof class, with the current public ABI honestly documented as 256 bytes.
+- **Verifier evidence:** root Rust verifier, `vk.json`, `null_proof.circom`, wasm, zkey, and manifest are all published together.
+- **Fail-closed payout:** the canonical withdraw path does not release funds from proof-unbound amount or recipient fields.
+- **SDK distribution:** `@dark-null/protocol` exposes IDL, network config, canonical artifact helpers, proof encoding metadata, and v2 public-input encoders.
+- **Reviewability:** historical tracks are separated from the canonical root instead of being implied as one deployment.
 
----
+## Gaps To Close Next
 
-## 🛣️ Roadmap to Mainnet
+- Promote a payout-bound v2 circuit before enabling public withdrawal payout.
+- Keep release integrity active: checksums, SBOM, and Sigstore attestations.
+- Keep high-signal security automation active: CodeQL, strict npm audit gates, and deterministic malformed-proof tests.
+- Publish a proof-size benchmark that validates both current ABI bytes and compressed target bytes.
+- Keep third-party audit and mainnet claims out until the evidence exists.
 
-### Phase 1: Devnet (✅ DONE)
-- [x] ZK verification working
-- [x] Full E2E flow tested
-- [x] Receipt generator for proof
-- [x] Documentation complete
+## Market Narrative
 
-### Phase 2: Security (Q1 2026)
-- [ ] Circuit audit
-- [ ] Economic security analysis
-- [ ] Bug bounty program
-
-### Phase 3: Mainnet (Q2 2026)
-- [ ] Deploy to mainnet
-- [ ] Relayer network
-- [x] SDK release
-
-### Phase 4: Integrations (Q3 2026)
-- [ ] Wallet integrations
-- [ ] DEX hooks
-- [ ] Cross-chain bridges
-
----
-
-## 📝 Key Metrics to Track
-
-| Metric | Current | Target |
-|--------|---------|--------|
-| Payload Size | 128B | 128B ✅ |
-| Verification CU | 1.4M | <1.4M |
-| Proof Gen Time | 1.2s | <1s |
-| TVL | $0 (devnet) | $1M+ |
-| Daily TX | Test only | 1000+ |
-
----
-
-## 🔮 2026 Prediction
-
-> "Pure ZK privacy will be the 'Tor' of crypto - not mainstream, but essential infrastructure for those who need it. Paradox is positioned to be the Solana standard for this category."
-
-The key is **not** competing with Arcium on compliance.
-The key is **owning** the max-privacy niche.
-
----
-
-*"Privacy is not about having something to hide. It's about having something to protect."*
+Dark Null is not trying to be a generic validator network. It is the compact, evidence-first Solana privacy settlement track: fewer moving parts, smaller proof target, public artifacts, and no fake readiness claims. The product standard is simple: if the repo cannot prove it, the docs must call it roadmap.

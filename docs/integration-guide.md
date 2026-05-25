@@ -25,7 +25,9 @@ Use:
 ```typescript
 import {
   createAnchorProgram,
+  encodeWithdrawV2PublicInputs,
   getInstructionDefinition,
+  getProofEncoding,
   resolveProgramId,
 } from "@dark-null/protocol";
 
@@ -36,8 +38,12 @@ const program = await createAnchorProgram({
 });
 
 const withdraw = getInstructionDefinition("prepare_phantom_withdraw");
+const withdrawV2 = getInstructionDefinition("prepare_phantom_withdraw_v2");
+const proofEncoding = getProofEncoding();
 const programId = resolveProgramId("canonicalDevnet");
 ```
+
+Use `encodeWithdrawV2PublicInputs` for the planned v2 payout-bound input order. Do not treat `prepare_phantom_withdraw_v2` as a live payout route yet; the current source verifies the argument binding shape, then fails closed until the v2 artifact set is promoted.
 
 ## Raw IDL
 

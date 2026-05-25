@@ -63,3 +63,5 @@ Thumbs.db
 # Local reports and temp files
 *.log
 tmp/
+__pycache__/
+*.pyc

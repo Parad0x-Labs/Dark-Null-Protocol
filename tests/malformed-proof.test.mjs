@@ -1,9 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
-import path from "node:path";
+import { mkdtemp, rm, writeFile, readFile } from "node:fs/promises";
 import os from "node:os";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -12,7 +12,7 @@ const wasmPath = path.join(repoRoot, "circuits", "null_proof_js", "null_proof.wa
 const zkeyPath = path.join(repoRoot, "circuits", "null_proof_final.zkey");
 const vkPath = path.join(repoRoot, "circuits", "vk.json");
 
-const canonicalInputs = {
+const canonicalInput = {
   amount: "1000000",
   blinding: "7",
   nullifier_secret: "99",
@@ -21,30 +21,36 @@ const canonicalInputs = {
   pathIndices: Array(7).fill(0),
 };
 
-test("canonical root circuit artifacts generate and verify a Groth16 proof", { timeout: 120000 }, async () => {
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), "dark-null-proof-"));
-  const inputPath = path.join(tempDir, "input.json");
-  const proofPath = path.join(tempDir, "proof.json");
-  const publicPath = path.join(tempDir, "public.json");
-
+test("canonical verifier rejects a deterministically malformed proof", { timeout: 120000 }, async () => {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), "dark-null-bad-proof-"));
   try {
-    await writeFile(inputPath, JSON.stringify(canonicalInputs), "utf8");
+    const inputPath = path.join(tempDir, "input.json");
+    const proofPath = path.join(tempDir, "proof.json");
+    const malformedPath = path.join(tempDir, "proof.malformed.json");
+    const publicPath = path.join(tempDir, "public.json");
 
+    await writeFile(inputPath, JSON.stringify(canonicalInput), "utf8");
     execFileSync(process.execPath, [snarkjsPath, "groth16", "fullprove", inputPath, wasmPath, zkeyPath, proofPath, publicPath], {
       cwd: repoRoot,
       stdio: "pipe",
     });
-
-    const publicSignals = JSON.parse(await readFile(publicPath, "utf8"));
-    assert.equal(publicSignals.length, 3);
-    assert.equal(publicSignals[0], "4883420918941545271209898763027081868674067317782929581070619755169613001115");
-    assert.equal(publicSignals[1], "20771749344370779171742970368265706730294924718458058226975588733415774772728");
-    assert.equal(publicSignals[2], canonicalInputs.root);
-
     execFileSync(process.execPath, [snarkjsPath, "groth16", "verify", vkPath, publicPath, proofPath], {
       cwd: repoRoot,
       stdio: "pipe",
     });
+
+    const proof = JSON.parse(await readFile(proofPath, "utf8"));
+    proof.pi_a[0] = (BigInt(proof.pi_a[0]) + 1n).toString();
+    await writeFile(malformedPath, JSON.stringify(proof), "utf8");
+
+    assert.throws(
+      () =>
+        execFileSync(process.execPath, [snarkjsPath, "groth16", "verify", vkPath, publicPath, malformedPath], {
+          cwd: repoRoot,
+          stdio: "pipe",
+        }),
+      /Command failed/,
+    );
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }

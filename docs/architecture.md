@@ -34,7 +34,7 @@
 ║  │ Instruction │ │ Management  │ │ Verifier    │ │ Instruction │             ║
 ║  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘             ║
 ║                                                                               ║
-║  Program: 7niGgy3EBVZtFjY1Gjx2hoeNHzeiJER76sEVhd4S5p6w                       ║
+║  Canonical program: 2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF             ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -94,10 +94,11 @@ User                    Program                 Vault
                          ▼
 ┌──────────────────────────────────────────────────────────────┐
 │  GROTH16 PROOF                                               │
-│  • proofA (G1): 32 bytes (compressed)                        │
-│  • proofB (G2): 64 bytes (compressed)                        │
-│  • proofC (G1): 32 bytes (compressed)                        │
-│  Total: 128 bytes (industry-leading compression)             │
+│  • proofA (G1): 64-byte groth16-solana ABI section           │
+│  • proofB (G2): 128-byte groth16-solana ABI section          │
+│  • proofC (G1): 64-byte groth16-solana ABI section           │
+│  Total current verifier ABI: 256 bytes                       │
+│  Compressed target / artifact class: 128 bytes               │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -308,7 +309,7 @@ Example (0.1 SOL tier):
 | Proof generation | ~2-5s (client), ~1s (server) |
 | Unshield latency | ~400ms (1 TX) |
 | Total (via relayer) | ~25s (devnet) |
-| Proof size | 128 bytes (compressed) |
+| Proof size | 256-byte current verifier ABI; 128-byte compressed target |
 | On-chain storage | ~200 bytes per deposit |
 
 ---

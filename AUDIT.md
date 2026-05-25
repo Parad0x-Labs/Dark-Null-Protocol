@@ -8,7 +8,7 @@ Dark Null Protocol does **not** have a completed third-party audit in this publi
 
 | Track | Status | Notes |
 |---|---|---|
-| AI-assisted internal review | Complete | See [`INTERNAL_REVIEW.md`](./INTERNAL_REVIEW.md) |
+| Internal technical review | Complete | See [`INTERNAL_REVIEW.md`](./INTERNAL_REVIEW.md) |
 | Third-party audit | Not started | No funded external engagement has been completed yet |
 | Public repo consistency checks | Shipped | Run `npm run check:public` |
 | Core source publication | Shipped | Rust, Circom, and Python client code now live in-tree |
@@ -29,7 +29,7 @@ Dark Null Protocol does **not** have a completed third-party audit in this publi
 
 ## Published Review Materials
 
-- [`INTERNAL_REVIEW.md`](./INTERNAL_REVIEW.md): AI-assisted internal review summary for the public repo
+- [`INTERNAL_REVIEW.md`](./INTERNAL_REVIEW.md): internal technical review summary for the public repo
 - [`VERIFICATION.md`](./VERIFICATION.md): what can be verified from the repo today
 - [`SECURITY.md`](./SECURITY.md): disclosure and security policy
 

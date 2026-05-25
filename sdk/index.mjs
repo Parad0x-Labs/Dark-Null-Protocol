@@ -79,9 +79,45 @@ const canonicalArtifacts = Object.freeze({
   zkeyPath: path.join(repoRoot, canonicalManifest.groth16.zkey),
   wasmPath: path.join(repoRoot, canonicalManifest.groth16.wasm),
   vkJsonPath: path.join(repoRoot, canonicalManifest.groth16.vk_json),
+  relativePaths: Object.freeze({
+    anchorToml: "Anchor.toml",
+    manifest: "MANIFEST.json",
+    networks: "NETWORKS.json",
+    idl: "idl/paradox.json",
+    circuit: canonicalManifest.groth16.circuit,
+    zkey: canonicalManifest.groth16.zkey,
+    wasm: canonicalManifest.groth16.wasm,
+    vkJson: canonicalManifest.groth16.vk_json,
+  }),
 });
 const vaultSeed = Buffer.from("merkle_vault");
 const rootAuthoritySeed = Buffer.from("root_authority");
+const BN254_FR = BigInt("21888242871839275222246405745257275088548364400416034343698204186575808495617");
+const U64_MAX = (1n << 64n) - 1n;
+
+const defaultProofEncoding = Object.freeze({
+  current_verifier_abi_bytes: 256,
+  compressed_target_bytes: 128,
+  field: "bn254-fr",
+  byte_order: "big-endian",
+  current_public_inputs: Object.freeze(["commitment", "nullifier", "root"]),
+  planned_withdraw_v2_public_inputs: Object.freeze([
+    "commitment",
+    "nullifier",
+    "root",
+    "amount",
+    "receiver_token_part_0",
+    "receiver_token_part_1",
+    "mint_part_0",
+    "mint_part_1",
+  ]),
+  proof_sections: Object.freeze({
+    proof_a: 64,
+    proof_b: 128,
+    proof_c: 64,
+  }),
+});
+const proofEncoding = Object.freeze(canonicalManifest.proof_encoding ?? defaultProofEncoding);
 
 function deepCopy(value) {
   return JSON.parse(JSON.stringify(value));
@@ -95,6 +131,36 @@ function assertBytes32Length(bytes) {
   if (bytes.length !== 32) {
     throw new Error(`Expected 32 bytes, received ${bytes.length}`);
   }
+}
+
+function bytesToBigIntBE(bytes) {
+  return BigInt(`0x${Buffer.from(bytes).toString("hex") || "0"}`);
+}
+
+function assertFrScalarBytes(bytes, label) {
+  const value = bytesToBigIntBE(bytes);
+  if (value >= BN254_FR) {
+    throw new Error(`${label} must be less than the BN254 scalar field modulus`);
+  }
+}
+
+function parseU64(value) {
+  if (typeof value === "number" && !Number.isSafeInteger(value)) {
+    throw new Error("amount number must be a safe integer; pass a string or bigint for large values");
+  }
+
+  const parsed =
+    typeof value === "bigint"
+      ? value
+      : typeof value === "number"
+        ? BigInt(value)
+        : BigInt(value);
+
+  if (parsed < 0n || parsed > U64_MAX) {
+    throw new Error(`amount must fit in u64, received ${value}`);
+  }
+
+  return parsed;
 }
 
 export const SDK_METADATA = Object.freeze({
@@ -117,7 +183,14 @@ export function getIdl() {
 }
 
 export function getCanonicalArtifacts() {
-  return { ...canonicalArtifacts };
+  return {
+    ...canonicalArtifacts,
+    relativePaths: { ...canonicalArtifacts.relativePaths },
+  };
+}
+
+export function getProofEncoding() {
+  return deepCopy(proofEncoding);
 }
 
 export function listInstructionNames() {
@@ -248,6 +321,57 @@ export function normalizeBytes32(input) {
     }
     return value;
   });
+}
+
+export function encodeU64PublicInput(value) {
+  const parsed = parseU64(value);
+  const bytes = new Array(32).fill(0);
+  for (let index = 0; index < 8; index += 1) {
+    bytes[31 - index] = Number((parsed >> BigInt(index * 8)) & 0xffn);
+  }
+  return bytes;
+}
+
+export function encodeBytes32PublicInputParts(input, label = "pubkey") {
+  const bytes = normalizeBytes32(input);
+  const first = new Array(16).fill(0).concat(bytes.slice(0, 16));
+  const second = new Array(16).fill(0).concat(bytes.slice(16, 32));
+  assertFrScalarBytes(first, `${label}_part_0`);
+  assertFrScalarBytes(second, `${label}_part_1`);
+  return [first, second];
+}
+
+export function encodeWithdrawV2PublicInputs({
+  commitment,
+  nullifier,
+  root,
+  amount,
+  receiverToken,
+  mint,
+}) {
+  const commitmentInput = normalizeBytes32(commitment);
+  const nullifierInput = normalizeBytes32(nullifier);
+  const rootInput = normalizeBytes32(root);
+  assertFrScalarBytes(commitmentInput, "commitment");
+  assertFrScalarBytes(nullifierInput, "nullifier");
+  assertFrScalarBytes(rootInput, "root");
+
+  const [receiverTokenPart0, receiverTokenPart1] = encodeBytes32PublicInputParts(
+    receiverToken,
+    "receiver_token",
+  );
+  const [mintPart0, mintPart1] = encodeBytes32PublicInputParts(mint, "mint");
+
+  return [
+    commitmentInput,
+    nullifierInput,
+    rootInput,
+    encodeU64PublicInput(amount),
+    receiverTokenPart0,
+    receiverTokenPart1,
+    mintPart0,
+    mintPart1,
+  ];
 }
 
 export async function createAnchorProgram({

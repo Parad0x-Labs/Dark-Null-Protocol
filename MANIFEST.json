@@ -26,6 +26,32 @@
     "wasm": "circuits/null_proof_js/null_proof.wasm",
     "vk_json": "circuits/vk.json"
   },
+  "proof_encoding": {
+    "current_verifier_abi_bytes": 256,
+    "compressed_target_bytes": 128,
+    "field": "bn254-fr",
+    "byte_order": "big-endian",
+    "current_public_inputs": [
+      "commitment",
+      "nullifier",
+      "root"
+    ],
+    "planned_withdraw_v2_public_inputs": [
+      "commitment",
+      "nullifier",
+      "root",
+      "amount",
+      "receiver_token_part_0",
+      "receiver_token_part_1",
+      "mint_part_0",
+      "mint_part_1"
+    ],
+    "proof_sections": {
+      "proof_a": 64,
+      "proof_b": 128,
+      "proof_c": 64
+    }
+  },
   "artifacts": [
     {
       "path": "Anchor.toml",
@@ -44,8 +70,8 @@
     },
     {
       "path": "src/lib.rs",
-      "sha256": "13465fe4e2902dbb73dc793073076ce31f44f278b81af8d00fc53159ca32f33b",
-      "size": 13032
+      "sha256": "8860b569e016278685542b9ebc7a9daaab5ca24dffa9b48a7cd089ab1a46b9a4",
+      "size": 17123
     },
     {
       "path": "src/verifying_key.rs",
@@ -54,8 +80,8 @@
     },
     {
       "path": "idl/paradox.json",
-      "sha256": "10df669847af76d74adf54575f1cd182a51a15789e90161019b506c002ecaa45",
-      "size": 13228
+      "sha256": "9aa857f3ce6bac231515e99bc0e3ff588d4869da12c2732a43d0a70d37db1f8c",
+      "size": 15896
     },
     {
       "path": "circuits/null_proof.circom",

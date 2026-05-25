@@ -5,21 +5,23 @@ This repository now has one canonical root validation lane plus historical evide
 ## What Runs Locally Today
 
 ```bash
-npm test
-python3 -m py_compile client/*.py
-npm run test:python:unit
-cargo test --offline
+npm run test:all
 ```
 
-`npm test` now includes:
+`npm run test:all` now includes:
 
 - public repo consistency checks
 - SDK tests
 - network config and PDA tests
 - canonical manifest binding
 - canonical proof generation + verification against the root circuit/zkey/vk
+- malformed-proof rejection
+- mainnet-readiness gate regression
+- Python compile and unit tests
 - root-authority and bounded-window safety tests in the Rust crate
 - historical provenance checks for the recovered `null-mint` branch
+- strict npm audit
+- SBOM, checksum, release verification, and package dry-run checks
 
 ## Published Test Material
 

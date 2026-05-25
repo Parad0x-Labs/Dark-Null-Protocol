@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
+import path from "node:path";
 
 import {
   createConnectionForNetwork,
@@ -33,9 +34,9 @@ test("canonical artifacts and manifest stay aligned", () => {
   const artifacts = getCanonicalArtifacts();
 
   assert.equal(manifest.program.id, "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF");
-  assert.ok(artifacts.manifestPath.endsWith("/MANIFEST.json"));
-  assert.ok(artifacts.zkeyPath.endsWith(`/${manifest.groth16.zkey}`));
-  assert.ok(artifacts.wasmPath.endsWith(`/${manifest.groth16.wasm}`));
+  assert.ok(path.normalize(artifacts.manifestPath).endsWith("MANIFEST.json"));
+  assert.ok(path.normalize(artifacts.zkeyPath).endsWith(path.normalize(manifest.groth16.zkey)));
+  assert.ok(path.normalize(artifacts.wasmPath).endsWith(path.normalize(manifest.groth16.wasm)));
 });
 
 test("network-aware connection helper uses the selected rpc url", async () => {

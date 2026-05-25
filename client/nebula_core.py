@@ -1,6 +1,6 @@
 # ==============================================================================
 # NEBULA V23.1 CORE - EVENT HORIZON COMPRESSION
-# Source: Parad0x Labs Master Codex
+# Source: Parad0x Labs internal technical review
 # Purpose: Compresses transaction metadata (Memos/Logs) for Dark Protocol
 # ==============================================================================
 

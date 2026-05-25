@@ -8,7 +8,7 @@ on:
 
 jobs:
   public-node:
-    name: Public Repo + SDK
+    name: Public Repo + Proofs
     runs-on: ubuntu-latest
 
     steps:
@@ -19,12 +19,39 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
 
-      - name: Install Node dependencies
-        run: npm install
+      - name: Install locked Node dependencies
+        run: npm ci
 
       - name: Run public checks and SDK tests
         run: npm test
+
+      - name: Run proof hardening tests
+        run: npm run test:proof
+
+      - name: Verify release artifact integrity
+        run: npm run release:verify
+
+  security:
+    name: NPM Audit Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked Node dependencies
+        run: npm ci
+
+      - name: Block high and critical npm advisories
+        run: npm run test:security
 
   python-syntax:
     name: Python Syntax
@@ -40,7 +67,7 @@ jobs:
           python-version: "3.11"
 
       - name: Compile Python client files
-        run: python3 -m py_compile client/*.py
+        run: npm run test:python
 
   rust:
     name: Rust Smoke
@@ -51,4 +78,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Rust tests
-        run: cargo test
+        run: cargo test --locked

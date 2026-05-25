@@ -51,14 +51,17 @@ const requiredFiles = [
   "circuits/null_proof.r1cs",
   "circuits/vk.json",
   "circuits/README.md",
+  "docs/CLAIMS_LEDGER.md",
   "docs/CONTRIBUTOR_QUICKSTART.md",
   "docs/EXTERNAL_AUDIT_SCOPE.md",
   "docs/LAUNCH_NARRATIVE.md",
   "docs/MAINNET_READINESS.md",
   "docs/MAINNET_RUNBOOK.md",
   "docs/PROGRAM_IDS.md",
+  "scripts/cargo-test.mjs",
   "scripts/bootstrap.sh",
   "scripts/check-ceremony-evidence.mjs",
+  "scripts/check-claims-evidence.mjs",
   "scripts/check-mainnet-evidence.mjs",
   "scripts/check-mainnet-readiness.mjs",
   "scripts/check-public-repo.mjs",
@@ -168,6 +171,9 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || packageJson.scripts["check:ceremony"] !== "node ./scripts/check-ceremony-evidence.mjs") {
     failures.push("package.json must expose scripts.check:ceremony");
   }
+  if (!packageJson.scripts || packageJson.scripts["check:claims"] !== "node ./scripts/check-claims-evidence.mjs") {
+    failures.push("package.json must expose scripts.check:claims");
+  }
   if (!packageJson.scripts || packageJson.scripts["check:mainnet"] !== "node ./scripts/check-mainnet-readiness.mjs") {
     failures.push("package.json must expose scripts.check:mainnet");
   }
@@ -192,6 +198,9 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:config")) {
     failures.push("package.json test script must include npm run test:config");
   }
+  if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run check:claims")) {
+    failures.push("package.json test script must include npm run check:claims");
+  }
   if (!packageJson.scripts || packageJson.scripts["test:proof"] !== "node --test ./tests/proof-encoding.test.mjs ./tests/malformed-proof.test.mjs ./tests/mainnet-readiness.test.mjs ./tests/mainnet-evidence.test.mjs") {
     failures.push("package.json must expose scripts.test:proof");
   }
@@ -206,6 +215,9 @@ async function checkPackageMetadata() {
   }
   if (!packageJson.scripts || packageJson.scripts["test:package"] !== "npm pack --dry-run") {
     failures.push("package.json must expose scripts.test:package");
+  }
+  if (!packageJson.scripts || packageJson.scripts["test:rust"] !== "node ./scripts/cargo-test.mjs") {
+    failures.push("package.json must expose cross-platform scripts.test:rust");
   }
   for (const requiredStep of [
     "npm run check:ceremony",

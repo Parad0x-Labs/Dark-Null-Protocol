@@ -1,338 +1,114 @@
 # Architecture Overview
 
-## Dark Null Protocol — Technical Architecture
+This page describes the canonical public devnet root. Older diagrams and roadmap-only infrastructure have been removed from this page on purpose: if a feature is not backed by the root source, artifacts, manifest, SDK, and tests, it belongs in the claims ledger as blocked or roadmap.
 
-> Historical note: this architecture page blends older protocol/infrastructure plans with recovered artifacts. For the current canonical public root, start with [`../README.md`](../README.md), [`../MANIFEST.json`](../MANIFEST.json), and [`../src/lib.rs`](../src/lib.rs).
+Start with:
 
----
+- [`../MANIFEST.json`](../MANIFEST.json)
+- [`../NETWORKS.json`](../NETWORKS.json)
+- [`../src/lib.rs`](../src/lib.rs)
+- [`../src/verifying_key.rs`](../src/verifying_key.rs)
+- [`../idl/paradox.json`](../idl/paradox.json)
+- [`../sdk/index.mjs`](../sdk/index.mjs)
+- [`CLAIMS_LEDGER.md`](./CLAIMS_LEDGER.md)
 
-## High-Level Architecture
+## Current Shape
 
-```
-╔═══════════════════════════════════════════════════════════════════════════════╗
-║  LAYER 4: DISTRIBUTION                                                        ║
-║  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐             ║
-║  │ npm/SDK     │ │ MCP Tools   │ │ Extension   │ │ PWA         │             ║
-║  │ @dark-null/ │ │ AI Agents   │ │ Chrome/Edge │ │ Mobile      │             ║
-║  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘             ║
-╠═══════════════════════════════════════════════════════════════════════════════╣
-║  LAYER 3: INTEGRATIONS                                                        ║
-║  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐                             ║
-║  │ x402        │ │ Jupiter     │ │ Wallet      │                             ║
-║  │ Middleware  │ │ Hook        │ │ Adapters    │                             ║
-║  └─────────────┘ └─────────────┘ └─────────────┘                             ║
-╠═══════════════════════════════════════════════════════════════════════════════╣
-║  LAYER 2: INFRASTRUCTURE                                                      ║
-║  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐             ║
-║  │ Relayer     │ │ Receipt API │ │ Indexer     │ │ Micropay    │             ║
-║  │ (Fly.io)    │ │ (IPFS)      │ │ (Events)    │ │ Batching    │             ║
-║  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘             ║
-╠═══════════════════════════════════════════════════════════════════════════════╣
-║  LAYER 1: CORE PROTOCOL (Solana On-Chain)                                     ║
-║  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐             ║
-║  │ Shield      │ │ Merkle Tree │ │ Groth16     │ │ Unshield    │             ║
-║  │ Instruction │ │ Management  │ │ Verifier    │ │ Instruction │             ║
-║  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘             ║
-║                                                                               ║
-║  Canonical program: 2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF             ║
-╚═══════════════════════════════════════════════════════════════════════════════╝
+```text
+Client / SDK
+  |
+  | public inputs + Groth16 proof
+  v
+Dark Null Solana program
+  |
+  | verifies promoted public-input shape
+  | records nullifier
+  | transfers only through payout-bound v2 path
+  v
+Vault token account -> receiver token account
 ```
 
----
+The canonical release surface is intentionally small:
 
-## Core Protocol (Layer 1)
+- one program id in `MANIFEST.json`, `NETWORKS.json`, `Anchor.toml`, IDL, and Rust source
+- one promoted circuit bundle: circuit, R1CS, zkey, wasm, witness helper, and verifying key
+- one JavaScript SDK entry point with artifact metadata and public-input encoders
+- one Rust verifier path
+- one mainnet gate that stays blocked until deployment, audit, and setup evidence exist
 
-### Shield (Deposit)
+## Proof Path
 
-```
-User                    Program                 Vault
-  │                        │                      │
-  │─── shield(amount) ────▶│                      │
-  │    + commitment        │                      │
-  │                        │─── transfer ────────▶│
-  │                        │                      │
-  │                        │◀── store deposit ────│
-  │◀── signature ──────────│                      │
-```
+The current promoted proof shape has eight public inputs:
 
-1. User generates secret: `secret = random(32 bytes)`
-2. Compute commitment: `commitment = Poseidon(secret, 0)`
-3. Send shield instruction with commitment + SOL
-4. Program stores commitment in Merkle tree
-
-### Merkle Tree
-
-```
-                    ROOT
-                   /    \
-                  /      \
-                H01      H23
-               /  \     /   \
-              H0  H1   H2   H3
-              │   │    │    │
-             C0  C1   C2   C3  ← Commitments (leaves)
+```text
+commitment
+nullifier
+root
+amount
+receiver_token_part_0
+receiver_token_part_1
+mint_part_0
+mint_part_1
 ```
 
-- **Depth**: 20 levels
-- **Capacity**: 2²⁰ = 1,048,576 deposits
-- **Hash**: Poseidon (ZK-friendly)
+Encoding rules:
 
-### ZK Proof Generation
+- `amount` is `24` zero bytes followed by a `u64` big-endian value
+- each Solana public key is split into two 16-byte chunks
+- each chunk is left-padded to a 32-byte scalar so it remains below the BN254 scalar field
+- the current `groth16-solana` verifier ABI is 256 bytes
+- the compressed proof target/artifact class is 128 bytes
 
-```
-┌──────────────────────────────────────────────────────────────┐
-│  CIRCUIT INPUTS                                              │
-├──────────────────────────────────────────────────────────────┤
-│  Private:                    Public:                         │
-│  • secret                    • root (Merkle)                 │
-│  • pathElements[20]          • nullifierHash                 │
-│  • pathIndices[20]           • amount                        │
-│                              • blindedRecipient              │
-│                              • salt1, salt2, salt3           │
-└──────────────────────────────────────────────────────────────┘
-                         │
-                         ▼
-┌──────────────────────────────────────────────────────────────┐
-│  GROTH16 PROOF                                               │
-│  • proofA (G1): 64-byte groth16-solana ABI section           │
-│  • proofB (G2): 128-byte groth16-solana ABI section          │
-│  • proofC (G1): 64-byte groth16-solana ABI section           │
-│  Total current verifier ABI: 256 bytes                       │
-│  Compressed target / artifact class: 128 bytes               │
-└──────────────────────────────────────────────────────────────┘
-```
+## Program Behavior
 
-### Unshield (Withdraw)
+The current root program is a settlement prototype, not a generic network.
 
-```
-User                    Program                 Vault
-  │                        │                      │
-  │─── unshield ──────────▶│                      │
-  │    + proof             │                      │
-  │    + nullifier         │─── verify proof ────▶│
-  │    + recipient         │                      │
-  │                        │─── check nullifier ─▶│
-  │                        │    (not spent)       │
-  │                        │                      │
-  │                        │─── mark spent ──────▶│
-  │                        │                      │
-  │                        │─── transfer ────────▶│ → Recipient
-  │◀── signature ──────────│                      │
-```
+Delivered behavior:
 
----
+- shield records commitments
+- root updates are authority-controlled and bounded
+- legacy proof-unbound withdraw fails closed
+- `prepare_phantom_withdraw_v2` verifies the promoted eight-input proof shape
+- payout v2 binds amount, receiver token account, and mint before transfer
+- nullifier recording prevents replay
 
-## Infrastructure (Layer 2)
+Known limits:
 
-### Relayer Service
+- root derivation is not append-only in-program yet
+- root updates still rely on a privileged updater
+- final mainnet setup evidence is not published
+- no completed third-party audit is published
+- mainnet deployment evidence is not published
 
-The relayer enables privacy by paying transaction fees on behalf of users:
+## Trust Boundaries
 
-```
-┌──────────────────────────────────────────────────────────────┐
-│  RELAYER SERVICE                                             │
-├──────────────────────────────────────────────────────────────┤
-│  Endpoints:                                                  │
-│  • POST /v1/pay     → Full payment (shield+unshield)         │
-│  • POST /v1/shield  → Shield only                            │
-│  • POST /v1/unshield → Unshield only                         │
-│  • GET  /v1/job/:id → Check job status                       │
-│  • GET  /health     → Service health                         │
-├──────────────────────────────────────────────────────────────┤
-│  Job Processing:                                             │
-│  1. Receive request                                          │
-│  2. Execute shield (relayer pays fees)                       │
-│  3. Wait for maturity                                        │
-│  4. Generate ZK proof (snarkjs)                              │
-│  5. Upload proof to IPFS                                     │
-│  6. Execute unshield (relayer pays fees)                     │
-│  7. Upload receipt to IPFS                                   │
-│  8. Return result                                            │
-└──────────────────────────────────────────────────────────────┘
+| Boundary | Current trust assumption | Required before mainnet |
+|---|---|---|
+| Solana runtime | Solana consensus and token program behavior | audited deployment configuration |
+| Root updates | privileged root updater | stronger root derivation or accepted operational controls |
+| Groth16 artifacts | manifest-bound devnet artifact set | final setup evidence and external audit acceptance |
+| Payout path | v2 proof-bound transfer path | audited release commit and mainnet evidence |
+| Relayer, if used | censorship only; direct submission must remain possible | documented fallback and operating limits |
+
+## Not Current Claims
+
+Dark Null does not currently claim a validator network, BFT consensus layer, private compute engine, separate bridge product, completed external audit, completed public ceremony, or mainnet-ready deployment.
+
+Those ideas may be evaluated later, but they are not part of the current canonical root.
+
+## Verification
+
+Run the cumulative validation lane:
+
+```bash
+npm run test:all
 ```
 
-### Micropayment Batching (PIE+PIP+PAP)
+For launch gates:
 
-For sub-cent payments, batching reduces costs by 10,000x:
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│  PIE (Payment Intent Envelope)                               │
-│  • User signs intent off-chain                               │
-│  • No blockchain interaction                                 │
-│  • Instant, free                                             │
-└───────────────────────┬──────────────────────────────────────┘
-                        │
-                        ▼
-┌──────────────────────────────────────────────────────────────┐
-│  PIP (Payment Intent Pool)                                   │
-│  • Collects PIEs in time windows (60s)                       │
-│  • Computes netting between parties                          │
-│  • Aggregates into batch                                     │
-└───────────────────────┬──────────────────────────────────────┘
-                        │
-                        ▼
-┌──────────────────────────────────────────────────────────────┐
-│  PAP (Payment Aggregation Proof)                             │
-│  • ONE ZK proof for ALL intents                              │
-│  • SINGLE on-chain transaction                               │
-│  • 10,000 payments → 1 TX fee                                │
-└──────────────────────────────────────────────────────────────┘
+```bash
+npm run check:mainnet:evidence
+npm run check:mainnet
 ```
 
-### IPFS Storage (Pinata)
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│  IPFS STORAGE                                                │
-├──────────────────────────────────────────────────────────────┤
-│  Stored Items:                                               │
-│  • ZK Proofs      → ipfs://Qm... (before on-chain)           │
-│  • Receipts       → ipfs://Qm... (after unshield)            │
-│  • Batch Proofs   → ipfs://Qm... (micropayment batches)      │
-├──────────────────────────────────────────────────────────────┤
-│  Benefits:                                                   │
-│  • Immutable (can't be altered)                              │
-│  • Decentralized (not just our servers)                      │
-│  • Auditable (anyone can verify)                             │
-│  • Permanent (with Pinata pinning)                           │
-└──────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Privacy Model
-
-### What's Hidden
-
-| Information | Hidden From |
-|-------------|-------------|
-| Sender identity | Public blockchain |
-| Recipient identity | Public blockchain (without stealth addr) |
-| Amount (with denominations) | Pattern analysis |
-| Timing (with maturity) | Correlation attacks |
-
-### What's Visible
-
-| Information | Who Can See |
-|-------------|-------------|
-| Total pool balance | Public |
-| Number of deposits | Public |
-| Shield/unshield events | Public |
-| Commitment hashes | Public (but unlinkable) |
-
-### Anonymity Set
-
-```
-Anonymity Set Size = Number of deposits with same denomination
-
-Example (0.1 SOL tier):
-- 1,000 deposits of 0.1 SOL
-- Anonymity set = 1,000
-- Probability of correct guess = 0.1%
-```
-
----
-
-## Security Model
-
-### Trust Assumptions
-
-| Component | Trust Level | Failure Mode |
-|-----------|-------------|--------------|
-| Solana | Consensus | Network halt |
-| ZK Proofs | Cryptographic | None (if math holds) |
-| Relayer | Operational | Censorship (not theft) |
-| IPFS | Availability | Data unavailable |
-
-### What Relayer CAN'T Do
-
-- ❌ Steal user funds
-- ❌ Create fake proofs
-- ❌ Link sender to recipient
-- ❌ Reverse transactions
-
-### What Relayer CAN Do
-
-- ✅ Refuse to process transactions (censorship)
-- ✅ See transaction amounts
-- ✅ See recipient addresses
-
-**Solution**: Users can run their own relayer or submit directly.
-
----
-
-## Data Flow
-
-### Complete Payment Flow
-
-```
-1. User → SDK
-   "Pay 0.1 SOL to Bob privately"
-
-2. SDK → Relayer
-   POST /v1/pay { amount: 0.1, recipient: "Bob" }
-
-3. Relayer → Solana
-   shield(0.1 SOL, commitment)
-   
-4. Relayer (waits)
-   Wait for maturity (40 slots)
-
-5. Relayer → Circuit
-   Generate ZK proof (snarkjs)
-
-6. Relayer → IPFS
-   Upload proof to Pinata
-
-7. Relayer → Solana
-   unshield(proof, nullifier, recipient)
-
-8. Relayer → IPFS
-   Upload receipt to Pinata
-
-9. Relayer → SDK
-   { status: "completed", txSig: "...", receipt: "ipfs://..." }
-
-10. Bob receives 0.1 SOL
-    No visible link to original sender!
-```
-
----
-
-## Performance Characteristics
-
-| Metric | Value |
-|--------|-------|
-| Shield latency | ~400ms (1 TX) |
-| Maturity wait | ~20s (devnet), ~10min (mainnet recommended) |
-| Proof generation | ~2-5s (client), ~1s (server) |
-| Unshield latency | ~400ms (1 TX) |
-| Total (via relayer) | ~25s (devnet) |
-| Proof size | 256-byte current verifier ABI; 128-byte compressed target |
-| On-chain storage | ~200 bytes per deposit |
-
----
-
-## Scaling Considerations
-
-### Current Limits
-
-- Merkle tree: 1M deposits
-- Nullifier pages: Paginated (unlimited)
-- Relayer: Single instance (can scale horizontally)
-
-### Future Scaling
-
-- Multiple Merkle trees (sharding)
-- Multi-region relayers
-- L2 integration (for higher throughput)
-
----
-
-## See Also
-
-- [ZK Conventions](./zk-conventions.md) — Proof encoding details
-- [API Reference](./api-reference.md) — SDK documentation
-- [Integration Guide](./integration-guide.md) — How to integrate
-
+Those launch gates are expected to fail until the evidence in [`MAINNET_READINESS.md`](./MAINNET_READINESS.md) exists.

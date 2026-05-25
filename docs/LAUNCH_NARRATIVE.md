@@ -28,7 +28,7 @@ The public root is intentionally narrow:
 
 ## Claims We Must Not Make Yet
 
-- completed third-party audit
+- no completed third-party audit
 - final trusted setup evidence accepted for mainnet
 - mainnet launch
 - production security

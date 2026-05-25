@@ -20,6 +20,7 @@ This repo now has one canonical public root:
 - one root verifier path: [`src/lib.rs`](./src/lib.rs) + [`src/verifying_key.rs`](./src/verifying_key.rs)
 - one published security model: [`SECURITY_MODEL.md`](./SECURITY_MODEL.md)
 - one setup evidence file: [`CEREMONY.md`](./CEREMONY.md)
+- one public claims ledger: [`docs/CLAIMS_LEDGER.md`](./docs/CLAIMS_LEDGER.md)
 
 Historical branches and artifact bundles are still published, but they are no longer the main integration target.
 
@@ -38,6 +39,7 @@ Dark Null is the compact, evidence-first Solana privacy settlement track:
 - public launch gate that blocks unsupported mainnet claims
 
 For launch copy and positioning, read [`docs/LAUNCH_NARRATIVE.md`](./docs/LAUNCH_NARRATIVE.md). For the release gate, read [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) and [`docs/MAINNET_RUNBOOK.md`](./docs/MAINNET_RUNBOOK.md).
+For the delivered-vs-blocked claim boundary, read [`docs/CLAIMS_LEDGER.md`](./docs/CLAIMS_LEDGER.md).
 
 ## One Command Bootstrap
 
@@ -130,10 +132,11 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 1. Run `sh scripts/bootstrap.sh`.
 2. Run `npm run config:devnet` or `npm run config:localnet`.
 3. Read [`MANIFEST.json`](./MANIFEST.json), [`NETWORKS.json`](./NETWORKS.json), and [`docs/PROGRAM_IDS.md`](./docs/PROGRAM_IDS.md).
-4. Run `npm run check:ceremony`.
-5. Run `npm run test:all`.
-6. Run `npm run check:mainnet:evidence` and expect it to fail until `MAINNET_EVIDENCE.json` is real.
-7. Run `npm run check:mainnet` and expect it to fail until the blockers in [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) are cleared.
+4. Run `npm run check:claims`.
+5. Run `npm run check:ceremony`.
+6. Run `npm run test:all`.
+7. Run `npm run check:mainnet:evidence` and expect it to fail until `MAINNET_EVIDENCE.json` is real.
+8. Run `npm run check:mainnet` and expect it to fail until the blockers in [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) are cleared.
 
 ## For Integrators and Agent Builders
 

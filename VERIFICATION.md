@@ -89,7 +89,7 @@ Use those to understand how the repo evolved. Do not confuse them with the canon
 - mainnet operational controls, relayer controls, or release management
 - that every historical deployment in this repo used the current canonical root artifact set
 - completed mainnet deployment evidence
-- completed third-party audit evidence
+- no completed third-party audit evidence
 - final trusted setup evidence accepted for mainnet
 
 ## Honest Verification Standard

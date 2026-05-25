@@ -65,6 +65,11 @@
       "size": 2396
     },
     {
+      "path": "docs/CLAIMS_LEDGER.md",
+      "sha256": "e45680473e317ee3582665270684f2570445eaac1380ea59b6f9fbe231de452e",
+      "size": 2122
+    },
+    {
       "path": "Cargo.toml",
       "sha256": "1cca58f12950895cc5a2b301dd86f2a1d40d739adb2c905ec85c0e57fd13aa86",
       "size": 1061
@@ -76,8 +81,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "cf49c77f80795ed0ba6376dcd7d22186edefe39b9db2a6b0c352ad900c85a6aa",
-      "size": 5046
+      "sha256": "80b171aa3eeb9b2434c5962dc18e86618aed7c93761ba346ab8754196c7882a6",
+      "size": 5243
     },
     {
       "path": "package-lock.json",
@@ -100,9 +105,19 @@
       "size": 6842
     },
     {
+      "path": "scripts/cargo-test.mjs",
+      "sha256": "73f7ab9105e66393d70eb349d928b1b190e02db3f3e324e6db9d72c44dfd0465",
+      "size": 2767
+    },
+    {
       "path": "scripts/check-ceremony-evidence.mjs",
       "sha256": "a5f0fbc022f30a13e1ffa91d44f3698d524d2cb65b877ede5750b45a9a1fe749",
       "size": 3887
+    },
+    {
+      "path": "scripts/check-claims-evidence.mjs",
+      "sha256": "559133d46ffbaf4d2c840fa38e95ea475d4d2b0190d654ad89ea0a04f0f86427",
+      "size": 5881
     },
     {
       "path": "scripts/check-mainnet-evidence.mjs",

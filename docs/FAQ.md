@@ -4,7 +4,7 @@
 
 Dark Null is a public repository of privacy-settlement research materials for Solana: docs, IDL, interfaces, historical harnesses, and result artifacts.
 
-## Is this a completed third-party-audited product repo?
+## Has a third-party audit been completed?
 
 No. See [`../AUDIT.md`](../AUDIT.md). The repo currently publishes internal review material and historical artifacts, not a completed external audit.
 

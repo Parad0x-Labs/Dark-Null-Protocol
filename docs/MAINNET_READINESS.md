@@ -7,6 +7,7 @@ Run:
 ```bash
 npm run check:mainnet
 npm run check:mainnet:evidence
+npm run check:claims
 ```
 
 Those commands are expected to fail until every blocker below is cleared.
@@ -24,6 +25,7 @@ Those commands are expected to fail until every blocker below is cleared.
 | Third-party audit | external audit report with scope, commit hash, findings, fixes, residual risk, and auditor identity |
 | Runtime security | strict npm audit is clean for runtime and dev dependencies |
 | Release integrity | checksums, SBOM, and GitHub artifact attestations produced for release artifacts |
+| Public claims | `docs/CLAIMS_LEDGER.md` reflects delivered, blocked, and roadmap claims, and `npm run check:claims` passes |
 | Operations | relayer/direct fallback, rate limits, health checks, key custody, pause/upgrade policy, and incident response are documented |
 | End-to-end flow | deposit, root update, proof generation, v2 withdraw, replay rejection, malformed proof rejection, and packaging all pass together |
 

@@ -48,6 +48,7 @@
     "client/README.md",
     "client/requirements.txt",
     "docs/CLAIMS_LEDGER.md",
+    "docs/AUDITOR_HANDOFF.md",
     "docs/DNA_X402_INTEGRATION.md",
     "docs/EXTERNAL_AUDIT_SCOPE.md",
     "docs/LAUNCH_NARRATIVE.md",

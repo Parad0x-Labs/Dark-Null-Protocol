@@ -56,6 +56,7 @@ const requiredFiles = [
   "circuits/null_proof.r1cs",
   "circuits/vk.json",
   "circuits/README.md",
+  "docs/AUDITOR_HANDOFF.md",
   "docs/CLAIMS_LEDGER.md",
   "docs/CONTRIBUTOR_QUICKSTART.md",
   "docs/DNA_X402_INTEGRATION.md",
@@ -366,6 +367,9 @@ async function checkDocs() {
   }
   if (!readme.includes("docs/PRIVATE_X402_PAYMENTS.md")) {
     failures.push("README.md: missing private x402 payments doc link");
+  }
+  if (!readme.includes("docs/AUDITOR_HANDOFF.md")) {
+    failures.push("README.md: missing auditor handoff doc link");
   }
   if (!readme.includes("npm run check:x402")) {
     failures.push("README.md: missing private x402 receipt check command");

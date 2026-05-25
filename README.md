@@ -40,6 +40,7 @@ Dark Null is the compact, evidence-first Solana privacy settlement track:
 
 For launch copy and positioning, read [`docs/LAUNCH_NARRATIVE.md`](./docs/LAUNCH_NARRATIVE.md). For the release gate, read [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) and [`docs/MAINNET_RUNBOOK.md`](./docs/MAINNET_RUNBOOK.md).
 For the delivered-vs-blocked claim boundary, read [`docs/CLAIMS_LEDGER.md`](./docs/CLAIMS_LEDGER.md).
+For external review, use the single handoff packet in [`docs/AUDITOR_HANDOFF.md`](./docs/AUDITOR_HANDOFF.md).
 For an explicitly unaudited, capped mainnet beta lane, read [`docs/MAINNET_OPEN_BETA.md`](./docs/MAINNET_OPEN_BETA.md).
 For off-chain service operations and the x402 receipt boundary, read [`docs/OFFCHAIN_SWARM.md`](./docs/OFFCHAIN_SWARM.md), [`docs/DNA_X402_INTEGRATION.md`](./docs/DNA_X402_INTEGRATION.md), and [`docs/PRIVATE_X402_PAYMENTS.md`](./docs/PRIVATE_X402_PAYMENTS.md).
 
@@ -94,6 +95,7 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 | Circuit artifacts | [`circuits/null_proof.circom`](./circuits/null_proof.circom), [`circuits/null_proof_final.zkey`](./circuits/null_proof_final.zkey), [`circuits/null_proof_js/null_proof.wasm`](./circuits/null_proof_js/null_proof.wasm) |
 | Proof encoding | 256-byte current `groth16-solana` verifier ABI; 128-byte compressed proof target |
 | Private x402 receipts | [`swarm/x402.mjs`](./swarm/x402.mjs), [`docs/PRIVATE_X402_PAYMENTS.md`](./docs/PRIVATE_X402_PAYMENTS.md) |
+| Auditor handoff | [`docs/AUDITOR_HANDOFF.md`](./docs/AUDITOR_HANDOFF.md) |
 | Trusted setup evidence | [`CEREMONY.md`](./CEREMONY.md), [`scripts/check-ceremony-evidence.mjs`](./scripts/check-ceremony-evidence.mjs) |
 | Public IDL | [`idl/paradox.json`](./idl/paradox.json) |
 | JavaScript SDK | [`sdk/index.mjs`](./sdk/index.mjs), [`sdk/index.d.ts`](./sdk/index.d.ts) |

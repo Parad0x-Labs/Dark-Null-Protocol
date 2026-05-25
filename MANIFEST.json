@@ -132,8 +132,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "80f91e13275c50527d957557a939822d85775b2d1140e1c6d88513d6676dd751",
-      "size": 6396
+      "sha256": "0d810504063548bf724837a9266e706512897144a7120d036d9a786eefcbc73e",
+      "size": 6427
     },
     {
       "path": "package-lock.json",
@@ -284,6 +284,11 @@
       "path": "swarm/x402.d.ts",
       "sha256": "3a7e80bd57c57d5d67ac3fbf274f322b91e5e7eaf0da2a538e2e09c2239925df",
       "size": 5619
+    },
+    {
+      "path": "docs/AUDITOR_HANDOFF.md",
+      "sha256": "d305376b55921672a7cef0306eb51e367b6f7976e671f82f680d913b1093c12a",
+      "size": 21272
     }
   ]
 }

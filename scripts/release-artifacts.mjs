@@ -30,6 +30,7 @@ export const releaseFiles = [
   "scripts/check-x402-receipts.mjs",
   "scripts/generate-verifying-key.mjs",
   "idl/paradox.json",
+  "docs/AUDITOR_HANDOFF.md",
   "docs/CLAIMS_LEDGER.md",
   "docs/DNA_X402_INTEGRATION.md",
   "docs/MAINNET_OPEN_BETA.md",

@@ -66,8 +66,13 @@
     },
     {
       "path": "docs/CLAIMS_LEDGER.md",
-      "sha256": "74f72682c2465f494a0b8e21037e6607461161fb5e8a6f71003d1c07fc8dc7a6",
-      "size": 2300
+      "sha256": "6de6bc421a83045c87526d5a187cf00f3e0b285e62fac3ce37de6cfa4e2f4309",
+      "size": 2522
+    },
+    {
+      "path": "docs/DNA_X402_INTEGRATION.md",
+      "sha256": "592201378a7b781cd99d0a757624819306598390465656e94c5a49ed5929e219",
+      "size": 1176
     },
     {
       "path": "Cargo.toml",
@@ -90,9 +95,19 @@
       "size": 2860
     },
     {
+      "path": "docs/OFFCHAIN_SWARM.md",
+      "sha256": "2693e271b9a7c18a9dacc4aa6a4afd280c9c8af47b32089f07b682ef84ceb89d",
+      "size": 1734
+    },
+    {
+      "path": "config/swarm.open-beta.example.json",
+      "sha256": "c3d8ec25a7a91ffd0e64ec34195ba13440828490ba674f2815ff3d0a3529ba85",
+      "size": 1897
+    },
+    {
       "path": "package.json",
-      "sha256": "2d232f8ebf834e6d845699f239f06c4fb7dbcab5afe063a9a126785c6b4ff81c",
-      "size": 5480
+      "sha256": "d0b32462c7d4280e8855637aed305854fbf0a698a4f6239375c5a79a21d5598d",
+      "size": 5924
     },
     {
       "path": "package-lock.json",
@@ -145,9 +160,24 @@
       "size": 5631
     },
     {
+      "path": "scripts/check-swarm-config.mjs",
+      "sha256": "2fc772349c6e48dcc1d62b84586d4bd0e1fe6a434661969d61afa91d6c1d1db7",
+      "size": 870
+    },
+    {
       "path": "scripts/generate-verifying-key.mjs",
       "sha256": "79c1ec0e94fcc0859f531805190d010ff9ffaa1bc89979c6efcace0681c5d101",
       "size": 1819
+    },
+    {
+      "path": "swarm/config.mjs",
+      "sha256": "0f6a38bc5780b951774d0e5901e5deac3b6123c07fa228ec9160d62f41adebfd",
+      "size": 6368
+    },
+    {
+      "path": "swarm/server.mjs",
+      "sha256": "1a807b7e6fca946efa928c0aa8e706b93d6111d3270857d7920d2ae3e890f11d",
+      "size": 3060
     },
     {
       "path": "idl/paradox.json",

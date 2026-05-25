@@ -16,6 +16,7 @@ const requiredFiles = [
   "MAINNET_EVIDENCE.example.json",
   "MANIFEST.json",
   "NETWORKS.json",
+  "config/swarm.open-beta.example.json",
   ".env.example",
   "PROTOTYPE_STATUS.md",
   "SECURITY_MODEL.md",
@@ -43,6 +44,7 @@ const requiredFiles = [
   "tests/mainnet-readiness.test.mjs",
   "tests/mainnet-evidence.test.mjs",
   "tests/mainnet-beta-evidence.test.mjs",
+  "tests/swarm-config.test.mjs",
   "tests/historical-null-mint-consistency.test.mjs",
   "tests/historical-null-mint-manifest.test.mjs",
   "client/dark_client.py",
@@ -55,11 +57,13 @@ const requiredFiles = [
   "circuits/README.md",
   "docs/CLAIMS_LEDGER.md",
   "docs/CONTRIBUTOR_QUICKSTART.md",
+  "docs/DNA_X402_INTEGRATION.md",
   "docs/EXTERNAL_AUDIT_SCOPE.md",
   "docs/LAUNCH_NARRATIVE.md",
   "docs/MAINNET_READINESS.md",
   "docs/MAINNET_OPEN_BETA.md",
   "docs/MAINNET_RUNBOOK.md",
+  "docs/OFFCHAIN_SWARM.md",
   "docs/PROGRAM_IDS.md",
   "scripts/cargo-test.mjs",
   "scripts/bootstrap.sh",
@@ -69,6 +73,7 @@ const requiredFiles = [
   "scripts/check-mainnet-evidence.mjs",
   "scripts/check-mainnet-readiness.mjs",
   "scripts/check-public-repo.mjs",
+  "scripts/check-swarm-config.mjs",
   "scripts/generate-checksums.mjs",
   "scripts/generate-verifying-key.mjs",
   "scripts/generate-sbom.mjs",
@@ -81,6 +86,8 @@ const requiredFiles = [
   ".github/workflows/release.yml",
   "idl/paradox.json",
   "tests/network-config.test.mjs",
+  "swarm/config.mjs",
+  "swarm/server.mjs",
 ];
 
 const textExtensions = new Set([
@@ -190,6 +197,12 @@ async function checkPackageMetadata() {
   if (!packageJson.exports || packageJson.exports["./networks"] !== "./NETWORKS.json") {
     failures.push("package.json must export ./networks -> ./NETWORKS.json");
   }
+  if (!packageJson.exports || packageJson.exports["./swarm"] !== "./swarm/server.mjs") {
+    failures.push("package.json must export ./swarm -> ./swarm/server.mjs");
+  }
+  if (!packageJson.exports || packageJson.exports["./swarm/config"] !== "./swarm/config.mjs") {
+    failures.push("package.json must export ./swarm/config -> ./swarm/config.mjs");
+  }
   if (!packageJson.scripts || packageJson.scripts["test:artifacts"] !== "node --test ./tests/verification-key-consistency.test.mjs ./tests/canonical-manifest.test.mjs ./tests/canonical-proof-flow.test.mjs ./tests/historical-null-mint-consistency.test.mjs ./tests/historical-null-mint-manifest.test.mjs") {
     failures.push("package.json must expose scripts.test:artifacts");
   }
@@ -202,8 +215,17 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || packageJson.scripts["config:localnet"] !== "node ./scripts/network-config.mjs --network localnet --check") {
     failures.push("package.json must expose scripts.config:localnet");
   }
+  if (!packageJson.scripts || packageJson.scripts["check:swarm"] !== "node ./scripts/check-swarm-config.mjs") {
+    failures.push("package.json must expose scripts.check:swarm");
+  }
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:config")) {
     failures.push("package.json test script must include npm run test:config");
+  }
+  if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run check:swarm")) {
+    failures.push("package.json test script must include npm run check:swarm");
+  }
+  if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:swarm")) {
+    failures.push("package.json test script must include npm run test:swarm");
   }
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run check:claims")) {
     failures.push("package.json test script must include npm run check:claims");
@@ -213,6 +235,9 @@ async function checkPackageMetadata() {
   }
   if (!packageJson.scripts || packageJson.scripts["test:security"] !== "npm audit") {
     failures.push("package.json must expose scripts.test:security");
+  }
+  if (!packageJson.scripts || packageJson.scripts["test:swarm"] !== "node --test ./tests/swarm-config.test.mjs") {
+    failures.push("package.json must expose scripts.test:swarm");
   }
   if (!packageJson.scripts || packageJson.scripts["test:python"] !== "node ./scripts/python-compile.mjs") {
     failures.push("package.json must expose cross-platform scripts.test:python");

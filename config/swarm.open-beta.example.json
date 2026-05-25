@@ -1,0 +1,85 @@
+{
+  "schema": "dark-null-swarm-open-beta-v1",
+  "mode": "open-beta",
+  "network": "mainnet-beta",
+  "productionClaimsAllowed": false,
+  "beta": {
+    "caps": {
+      "maxTotalValueLockedLamports": "10000000000",
+      "maxDepositLamports": "1000000000",
+      "dailyWithdrawLimitLamports": "5000000000"
+    }
+  },
+  "operations": {
+    "healthPath": "/health",
+    "readyPath": "/ready",
+    "metricsPath": "/metrics",
+    "directSubmissionSupported": true,
+    "relayerOptional": true,
+    "killSwitchDocumented": true
+  },
+  "integrations": {
+    "x402": {
+      "status": "planned-disabled",
+      "enabled": false,
+      "requiresExternalRepo": "dna-x402"
+    }
+  },
+  "services": [
+    {
+      "id": "indexer-a",
+      "role": "indexer",
+      "enabled": true,
+      "bindHost": "127.0.0.1",
+      "port": 7411,
+      "publicUrl": "",
+      "hotKeysAllowed": false
+    },
+    {
+      "id": "relayer-a",
+      "role": "relayer",
+      "enabled": true,
+      "bindHost": "127.0.0.1",
+      "port": 7412,
+      "publicUrl": "",
+      "hotKeysAllowed": false
+    },
+    {
+      "id": "prover-a",
+      "role": "prover",
+      "enabled": true,
+      "bindHost": "127.0.0.1",
+      "port": 7413,
+      "publicUrl": "",
+      "hotKeysAllowed": false
+    },
+    {
+      "id": "monitor-a",
+      "role": "monitor",
+      "enabled": true,
+      "bindHost": "127.0.0.1",
+      "port": 7414,
+      "publicUrl": "",
+      "hotKeysAllowed": false
+    },
+    {
+      "id": "root-coordinator-a",
+      "role": "root_coordinator",
+      "enabled": true,
+      "bindHost": "127.0.0.1",
+      "port": 7415,
+      "publicUrl": "",
+      "hotKeysAllowed": false,
+      "rootAuthorityOnServer": false
+    },
+    {
+      "id": "x402-adapter-a",
+      "role": "x402_adapter",
+      "enabled": false,
+      "bindHost": "127.0.0.1",
+      "port": 7416,
+      "publicUrl": "",
+      "hotKeysAllowed": false
+    }
+  ]
+}

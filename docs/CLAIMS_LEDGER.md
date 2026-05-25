@@ -19,6 +19,7 @@ This ledger separates delivered claims from blocked claims and roadmap ideas. It
 | Claim | Status | Required evidence |
 |---|---|---|
 | Mainnet ready | Blocked | `MAINNET_EVIDENCE.json`, mainnet manifest, deployment transaction, audit report hash, setup evidence |
+| Mainnet open beta | Blocked | `MAINNET_BETA_EVIDENCE.json`, capped deployment evidence, pause authority, beta disclosure, release checksums, SBOM, and audit-pending boundary |
 | Completed third-party audit | Blocked | external audit report with scope, commit, findings, fixes, residual risk, and auditor identity |
 | Final trusted setup evidence | Blocked | public ceremony transcript or explicit audit acceptance of the setup path |
 | Production release | Blocked | mainnet gate passing on the audited release commit |

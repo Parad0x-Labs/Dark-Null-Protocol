@@ -127,6 +127,7 @@ async function checkClaimsLedger() {
     "| Compressed proof target is 128 bytes | Delivered |",
     "| Canonical public-input shape has eight signals | Delivered |",
     "| Mainnet ready | Blocked |",
+    "| Mainnet open beta | Blocked |",
     "| Completed third-party audit | Blocked |",
     "| Validator network | Not a current claim |",
     "| BFT consensus layer | Not a current claim |",

@@ -1,0 +1,62 @@
+{
+  "schema": "dark-null-mainnet-open-beta-evidence-v1",
+  "release_commit": "REPLACE_WITH_40_HEX_RELEASE_COMMIT",
+  "beta": {
+    "status": "open-beta",
+    "risk_disclosure": "unaudited-open-beta",
+    "production_claims_allowed": false,
+    "max_total_value_locked_lamports": "10000000000",
+    "max_deposit_lamports": "1000000000",
+    "daily_withdraw_limit_lamports": "5000000000",
+    "kill_switch_enabled": true,
+    "direct_submission_supported": true,
+    "relayer_optional": true
+  },
+  "program": {
+    "cluster": "mainnet-beta",
+    "id": "REPLACE_WITH_MAINNET_BETA_PROGRAM_ID",
+    "deployment_tx": "REPLACE_WITH_MAINNET_BETA_DEPLOYMENT_TRANSACTION",
+    "upgrade_authority_policy": "REPLACE_WITH_locked_OR_multisig_OR_timelock-multisig",
+    "upgrade_authority": "REPLACE_WITH_UPGRADE_AUTHORITY_OR_none",
+    "pause_authority": "REPLACE_WITH_PAUSE_AUTHORITY"
+  },
+  "proof_artifacts": {
+    "label": "canonical-mainnet-open-beta-withdraw-v2",
+    "n_public": 8,
+    "trusted_setup_status": "development-evidence-accepted-for-open-beta-only",
+    "trusted_setup_report_path": "CEREMONY.md",
+    "trusted_setup_report_sha256": "REPLACE_WITH_CEREMONY_SHA256",
+    "checksums_path": "dist/release/SHA256SUMS",
+    "checksums_sha256": "REPLACE_WITH_SHA256SUMS_SHA256",
+    "sbom_path": "dist/release/sbom.cdx.json",
+    "sbom_sha256": "REPLACE_WITH_SBOM_SHA256"
+  },
+  "payout": {
+    "enabled": true,
+    "instruction": "prepare_phantom_withdraw_v2",
+    "public_inputs": [
+      "commitment",
+      "nullifier",
+      "root",
+      "amount",
+      "receiver_token_part_0",
+      "receiver_token_part_1",
+      "mint_part_0",
+      "mint_part_1"
+    ]
+  },
+  "audit": {
+    "status": "pending",
+    "external_audit_required_before_production": true,
+    "target_scope": "mainnet open beta release commit",
+    "notes": "No production claim until external audit and production mainnet evidence pass."
+  },
+  "operations": {
+    "disclosure_path": "docs/MAINNET_OPEN_BETA.md",
+    "disclosure_sha256": "REPLACE_WITH_OPEN_BETA_DOC_SHA256",
+    "incident_response_path": "docs/MAINNET_OPEN_BETA.md",
+    "incident_response_sha256": "REPLACE_WITH_OPEN_BETA_DOC_SHA256",
+    "rollback_runbook_path": "docs/MAINNET_OPEN_BETA.md",
+    "rollback_runbook_sha256": "REPLACE_WITH_OPEN_BETA_DOC_SHA256"
+  }
+}

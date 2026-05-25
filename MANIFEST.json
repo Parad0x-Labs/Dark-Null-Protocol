@@ -66,8 +66,8 @@
     },
     {
       "path": "docs/CLAIMS_LEDGER.md",
-      "sha256": "e45680473e317ee3582665270684f2570445eaac1380ea59b6f9fbe231de452e",
-      "size": 2122
+      "sha256": "74f72682c2465f494a0b8e21037e6607461161fb5e8a6f71003d1c07fc8dc7a6",
+      "size": 2300
     },
     {
       "path": "Cargo.toml",
@@ -80,9 +80,19 @@
       "size": 1443
     },
     {
+      "path": "MAINNET_BETA_EVIDENCE.example.json",
+      "sha256": "e8941e6213966b9063855c5f41d1664ffc0c238dd22f676655aa4266d96f9fc4",
+      "size": 2306
+    },
+    {
+      "path": "docs/MAINNET_OPEN_BETA.md",
+      "sha256": "a0a431c0f36851124679c9caa065543b148e76d22b9648d6350b9d74589a57ba",
+      "size": 2860
+    },
+    {
       "path": "package.json",
-      "sha256": "80b171aa3eeb9b2434c5962dc18e86618aed7c93761ba346ab8754196c7882a6",
-      "size": 5243
+      "sha256": "2d232f8ebf834e6d845699f239f06c4fb7dbcab5afe063a9a126785c6b4ff81c",
+      "size": 5480
     },
     {
       "path": "package-lock.json",
@@ -116,8 +126,13 @@
     },
     {
       "path": "scripts/check-claims-evidence.mjs",
-      "sha256": "559133d46ffbaf4d2c840fa38e95ea475d4d2b0190d654ad89ea0a04f0f86427",
-      "size": 5881
+      "sha256": "4d03b779b51e7a342873c32b6089bebf4c4c1d63e1bf0861eb85e454f7955198",
+      "size": 5920
+    },
+    {
+      "path": "scripts/check-mainnet-beta-evidence.mjs",
+      "sha256": "de29c4e97d37f9170c2ca67e3786a31440d5fc4c253d1362ba2d4b50e885ca72",
+      "size": 12421
     },
     {
       "path": "scripts/check-mainnet-evidence.mjs",

@@ -40,6 +40,7 @@ Dark Null is the compact, evidence-first Solana privacy settlement track:
 
 For launch copy and positioning, read [`docs/LAUNCH_NARRATIVE.md`](./docs/LAUNCH_NARRATIVE.md). For the release gate, read [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) and [`docs/MAINNET_RUNBOOK.md`](./docs/MAINNET_RUNBOOK.md).
 For the delivered-vs-blocked claim boundary, read [`docs/CLAIMS_LEDGER.md`](./docs/CLAIMS_LEDGER.md).
+For an explicitly unaudited, capped mainnet beta lane, read [`docs/MAINNET_OPEN_BETA.md`](./docs/MAINNET_OPEN_BETA.md).
 
 ## One Command Bootstrap
 
@@ -136,7 +137,8 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 5. Run `npm run check:ceremony`.
 6. Run `npm run test:all`.
 7. Run `npm run check:mainnet:evidence` and expect it to fail until `MAINNET_EVIDENCE.json` is real.
-8. Run `npm run check:mainnet` and expect it to fail until the blockers in [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) are cleared.
+8. Run `npm run check:mainnet:beta` and expect it to fail until `MAINNET_BETA_EVIDENCE.json` is real.
+9. Run `npm run check:mainnet` and expect it to fail until the blockers in [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) are cleared.
 
 ## For Integrators and Agent Builders
 

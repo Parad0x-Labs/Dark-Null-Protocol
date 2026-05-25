@@ -7,6 +7,7 @@ Run:
 ```bash
 npm run check:mainnet
 npm run check:mainnet:evidence
+npm run check:mainnet:beta
 npm run check:claims
 ```
 
@@ -28,6 +29,12 @@ Those commands are expected to fail until every blocker below is cleared.
 | Public claims | `docs/CLAIMS_LEDGER.md` reflects delivered, blocked, and roadmap claims, and `npm run check:claims` passes |
 | Operations | relayer/direct fallback, rate limits, health checks, key custody, pause/upgrade policy, and incident response are documented |
 | End-to-end flow | deposit, root update, proof generation, v2 withdraw, replay rejection, malformed proof rejection, and packaging all pass together |
+
+## Open Beta Lane
+
+An unaudited mainnet beta is a separate evidence lane, not a production release shortcut. It uses [`MAINNET_BETA_EVIDENCE.example.json`](../MAINNET_BETA_EVIDENCE.example.json), [`MAINNET_OPEN_BETA.md`](./MAINNET_OPEN_BETA.md), and `npm run check:mainnet:beta`.
+
+The production gate above remains blocked until the production evidence exists.
 
 ## Architecture Ideas Worth Evaluating
 

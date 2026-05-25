@@ -9,6 +9,7 @@ export const sbomPath = path.join(releaseDir, "sbom.cdx.json");
 
 export const releaseFiles = [
   "CEREMONY.md",
+  "MAINNET_BETA_EVIDENCE.example.json",
   "MAINNET_EVIDENCE.example.json",
   "MANIFEST.json",
   "NETWORKS.json",
@@ -21,11 +22,13 @@ export const releaseFiles = [
   "scripts/cargo-test.mjs",
   "scripts/check-ceremony-evidence.mjs",
   "scripts/check-claims-evidence.mjs",
+  "scripts/check-mainnet-beta-evidence.mjs",
   "scripts/check-mainnet-evidence.mjs",
   "scripts/check-mainnet-readiness.mjs",
   "scripts/generate-verifying-key.mjs",
   "idl/paradox.json",
   "docs/CLAIMS_LEDGER.md",
+  "docs/MAINNET_OPEN_BETA.md",
   "circuits/null_proof.circom",
   "circuits/null_proof.r1cs",
   "circuits/null_proof.sym",

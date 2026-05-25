@@ -45,6 +45,7 @@ const requiredFiles = [
   "tests/mainnet-evidence.test.mjs",
   "tests/mainnet-beta-evidence.test.mjs",
   "tests/swarm-config.test.mjs",
+  "tests/x402-private-payments.test.mjs",
   "tests/historical-null-mint-consistency.test.mjs",
   "tests/historical-null-mint-manifest.test.mjs",
   "client/dark_client.py",
@@ -64,6 +65,7 @@ const requiredFiles = [
   "docs/MAINNET_OPEN_BETA.md",
   "docs/MAINNET_RUNBOOK.md",
   "docs/OFFCHAIN_SWARM.md",
+  "docs/PRIVATE_X402_PAYMENTS.md",
   "docs/PROGRAM_IDS.md",
   "scripts/cargo-test.mjs",
   "scripts/bootstrap.sh",
@@ -74,6 +76,7 @@ const requiredFiles = [
   "scripts/check-mainnet-readiness.mjs",
   "scripts/check-public-repo.mjs",
   "scripts/check-swarm-config.mjs",
+  "scripts/check-x402-receipts.mjs",
   "scripts/generate-checksums.mjs",
   "scripts/generate-verifying-key.mjs",
   "scripts/generate-sbom.mjs",
@@ -88,6 +91,8 @@ const requiredFiles = [
   "tests/network-config.test.mjs",
   "swarm/config.mjs",
   "swarm/server.mjs",
+  "swarm/x402.d.ts",
+  "swarm/x402.mjs",
 ];
 
 const textExtensions = new Set([
@@ -203,6 +208,13 @@ async function checkPackageMetadata() {
   if (!packageJson.exports || packageJson.exports["./swarm/config"] !== "./swarm/config.mjs") {
     failures.push("package.json must export ./swarm/config -> ./swarm/config.mjs");
   }
+  if (
+    !packageJson.exports ||
+    packageJson.exports["./swarm/x402"]?.types !== "./swarm/x402.d.ts" ||
+    packageJson.exports["./swarm/x402"]?.default !== "./swarm/x402.mjs"
+  ) {
+    failures.push("package.json must export ./swarm/x402 with types and default paths");
+  }
   if (!packageJson.scripts || packageJson.scripts["test:artifacts"] !== "node --test ./tests/verification-key-consistency.test.mjs ./tests/canonical-manifest.test.mjs ./tests/canonical-proof-flow.test.mjs ./tests/historical-null-mint-consistency.test.mjs ./tests/historical-null-mint-manifest.test.mjs") {
     failures.push("package.json must expose scripts.test:artifacts");
   }
@@ -218,6 +230,12 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || packageJson.scripts["check:swarm"] !== "node ./scripts/check-swarm-config.mjs") {
     failures.push("package.json must expose scripts.check:swarm");
   }
+  if (!packageJson.scripts || packageJson.scripts["check:x402"] !== "node ./scripts/check-x402-receipts.mjs") {
+    failures.push("package.json must expose scripts.check:x402");
+  }
+  if (!packageJson.scripts || packageJson.scripts["check:x402:devnet"] !== "node ./scripts/check-x402-receipts.mjs --devnet") {
+    failures.push("package.json must expose scripts.check:x402:devnet");
+  }
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:config")) {
     failures.push("package.json test script must include npm run test:config");
   }
@@ -226,6 +244,12 @@ async function checkPackageMetadata() {
   }
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:swarm")) {
     failures.push("package.json test script must include npm run test:swarm");
+  }
+  if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run check:x402")) {
+    failures.push("package.json test script must include npm run check:x402");
+  }
+  if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:x402")) {
+    failures.push("package.json test script must include npm run test:x402");
   }
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run check:claims")) {
     failures.push("package.json test script must include npm run check:claims");
@@ -238,6 +262,9 @@ async function checkPackageMetadata() {
   }
   if (!packageJson.scripts || packageJson.scripts["test:swarm"] !== "node --test ./tests/swarm-config.test.mjs") {
     failures.push("package.json must expose scripts.test:swarm");
+  }
+  if (!packageJson.scripts || packageJson.scripts["test:x402"] !== "node --test ./tests/x402-private-payments.test.mjs") {
+    failures.push("package.json must expose scripts.test:x402");
   }
   if (!packageJson.scripts || packageJson.scripts["test:python"] !== "node ./scripts/python-compile.mjs") {
     failures.push("package.json must expose cross-platform scripts.test:python");
@@ -336,6 +363,12 @@ async function checkDocs() {
   }
   if (!readme.includes("npm run config:localnet")) {
     failures.push("README.md: missing canonical localnet config command");
+  }
+  if (!readme.includes("docs/PRIVATE_X402_PAYMENTS.md")) {
+    failures.push("README.md: missing private x402 payments doc link");
+  }
+  if (!readme.includes("npm run check:x402")) {
+    failures.push("README.md: missing private x402 receipt check command");
   }
 
   const auditDoc = await fs.readFile(path.join(repoRoot, "AUDIT.md"), "utf8");

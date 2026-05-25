@@ -14,6 +14,7 @@ This ledger separates delivered claims from blocked claims and roadmap ideas. It
 | Public artifact hashes are stable across platforms | Delivered | `.gitattributes`, `MANIFEST.json`, release verification scripts |
 | Full local validation lane exists | Delivered | `npm run test:all` |
 | Open-beta swarm health surface exists | Delivered | `swarm/server.mjs`, `config/swarm.open-beta.example.json`, `npm run test:swarm` |
+| Private x402 receipt primitives exist | Delivered | `swarm/x402.mjs`, `docs/PRIVATE_X402_PAYMENTS.md`, `npm run test:x402`, `npm run check:x402` |
 
 ## Blocked Claims
 
@@ -35,7 +36,7 @@ This ledger separates delivered claims from blocked claims and roadmap ideas. It
 | Private compute | Not a current claim |
 | Separate bridge product | Not a current claim |
 | Sigstore-signed public release | Not a current claim until tagged release evidence exists |
-| x402 adapter | Planned-disabled integration slot until `dna-x402` evidence exists |
+| x402 merchant gateway | Not a current claim until `dna-x402` evidence exists |
 
 ## Rule
 

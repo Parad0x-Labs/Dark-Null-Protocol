@@ -53,6 +53,32 @@
       "proof_c": 64
     }
   },
+  "x402_receipts": {
+    "protocol": "x402-v2",
+    "intent_schema": "dark-null-private-x402-intent-v1",
+    "request_binding_schema": "dark-null-private-x402-request-binding-v1",
+    "receipt_schema": "dark-null-private-x402-receipt-v1",
+    "required_headers": [
+      "PAYMENT-REQUIRED",
+      "PAYMENT-SIGNATURE",
+      "PAYMENT-RESPONSE"
+    ],
+    "privacy": {
+      "raw_buyer_metadata_allowed": false,
+      "raw_payment_headers_stored": false,
+      "resource_url_storage": "hash-only"
+    },
+    "receipt_lock": [
+      "x402-header-hashes",
+      "request-replay-key",
+      "proof-bundle-hash",
+      "public-input-hash",
+      "solana-signature-slot",
+      "repository-commit",
+      "manifest-sha256",
+      "previous-receipt-hash"
+    ]
+  },
   "artifacts": [
     {
       "path": "Anchor.toml",
@@ -66,13 +92,13 @@
     },
     {
       "path": "docs/CLAIMS_LEDGER.md",
-      "sha256": "6de6bc421a83045c87526d5a187cf00f3e0b285e62fac3ce37de6cfa4e2f4309",
-      "size": 2522
+      "sha256": "96abb93e6110f2e7ad2043c017234d9c862f41fd39938186df126fa5f5c63c74",
+      "size": 2666
     },
     {
       "path": "docs/DNA_X402_INTEGRATION.md",
-      "sha256": "592201378a7b781cd99d0a757624819306598390465656e94c5a49ed5929e219",
-      "size": 1176
+      "sha256": "94e61b08d4727fde56a26ba367b594f327216ce72a83a50e572b31fc0d3f3dbc",
+      "size": 2057
     },
     {
       "path": "Cargo.toml",
@@ -96,18 +122,18 @@
     },
     {
       "path": "docs/OFFCHAIN_SWARM.md",
-      "sha256": "2693e271b9a7c18a9dacc4aa6a4afd280c9c8af47b32089f07b682ef84ceb89d",
-      "size": 1734
+      "sha256": "48d04091f9e568633b7c6e35847310dc5d0a832f4fb041029979e2a08dfe5566",
+      "size": 2012
     },
     {
       "path": "config/swarm.open-beta.example.json",
-      "sha256": "c3d8ec25a7a91ffd0e64ec34195ba13440828490ba674f2815ff3d0a3529ba85",
-      "size": 1897
+      "sha256": "534afb54afd3e1e08bad23c53c4ac34f1496af806fe7e65e93bf865505b994e1",
+      "size": 2404
     },
     {
       "path": "package.json",
-      "sha256": "d0b32462c7d4280e8855637aed305854fbf0a698a4f6239375c5a79a21d5598d",
-      "size": 5924
+      "sha256": "80f91e13275c50527d957557a939822d85775b2d1140e1c6d88513d6676dd751",
+      "size": 6396
     },
     {
       "path": "package-lock.json",
@@ -141,8 +167,8 @@
     },
     {
       "path": "scripts/check-claims-evidence.mjs",
-      "sha256": "4d03b779b51e7a342873c32b6089bebf4c4c1d63e1bf0861eb85e454f7955198",
-      "size": 5920
+      "sha256": "094e9d507f56bc75fca30e763c1d4dde4148a04a972a71c91ecfcb9ce4965368",
+      "size": 5981
     },
     {
       "path": "scripts/check-mainnet-beta-evidence.mjs",
@@ -171,13 +197,13 @@
     },
     {
       "path": "swarm/config.mjs",
-      "sha256": "0f6a38bc5780b951774d0e5901e5deac3b6123c07fa228ec9160d62f41adebfd",
-      "size": 6368
+      "sha256": "7dc8c9b2391efa49004c66a8f0a3e4f0863f9b5998a240855fbfa96afbbb3d88",
+      "size": 7604
     },
     {
       "path": "swarm/server.mjs",
-      "sha256": "1a807b7e6fca946efa928c0aa8e706b93d6111d3270857d7920d2ae3e890f11d",
-      "size": 3060
+      "sha256": "cb5b68660e7dc219083f07a11cfaf94d0737c24b59ec09f71696825045b33bb3",
+      "size": 3693
     },
     {
       "path": "idl/paradox.json",
@@ -238,6 +264,26 @@
       "path": "circuits/vk.json",
       "sha256": "6abfff44d3516d44321b1d9be8f545751bd643f4f6d04ae25b881ba43133d63a",
       "size": 4200
+    },
+    {
+      "path": "docs/PRIVATE_X402_PAYMENTS.md",
+      "sha256": "6e7b9d97650771b32c2739f8a0ae8293c018ff6af00639a131e20a7e301f3312",
+      "size": 3265
+    },
+    {
+      "path": "scripts/check-x402-receipts.mjs",
+      "sha256": "bb9ad7cb7dff845a9cbe99042bb9f05a549892dd98bd03073a0b58b12d02797f",
+      "size": 7969
+    },
+    {
+      "path": "swarm/x402.mjs",
+      "sha256": "679ba748d5013b79dfcb6b33712726105a177618048dce45acd15645938ff5b2",
+      "size": 19876
+    },
+    {
+      "path": "swarm/x402.d.ts",
+      "sha256": "3a7e80bd57c57d5d67ac3fbf274f322b91e5e7eaf0da2a538e2e09c2239925df",
+      "size": 5619
     }
   ]
 }

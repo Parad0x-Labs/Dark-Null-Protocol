@@ -33,6 +33,13 @@ export function swarmStatus(config, now = new Date()) {
     ready: validation.ok && requiredReady,
     validation,
     roles,
+    integrations: {
+      x402: {
+        enabled: config.integrations?.x402?.enabled === true,
+        status: config.integrations?.x402?.status ?? "missing",
+        privateReceiptsReady: validation.ok && config.integrations?.x402?.privateReceipts?.receiptSchema === "dark-null-private-x402-receipt-v1",
+      },
+    },
   };
 }
 
@@ -51,6 +58,10 @@ export function prometheusMetrics(config, status = swarmStatus(config)) {
   for (const [role, ready] of Object.entries(status.roles)) {
     lines.push(`dark_null_swarm_role_enabled{role="${role}"} ${ready ? 1 : 0}`);
   }
+
+  lines.push("# HELP dark_null_swarm_x402_private_receipts_ready 1 when private x402 receipt policy is configured.");
+  lines.push("# TYPE dark_null_swarm_x402_private_receipts_ready gauge");
+  lines.push(`dark_null_swarm_x402_private_receipts_ready ${status.integrations.x402.privateReceiptsReady ? 1 : 0}`);
 
   const caps = config.beta?.caps ?? {};
   for (const [name, value] of Object.entries(caps)) {

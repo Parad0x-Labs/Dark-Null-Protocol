@@ -40,6 +40,8 @@ test("open-beta swarm config is valid and keeps x402 disabled", async () => {
   assert.deepEqual(result.failures, []);
   assert.equal(result.ok, true);
   assert.equal(config.integrations.x402.enabled, false);
+  assert.equal(config.integrations.x402.privateReceipts.receiptSchema, "dark-null-private-x402-receipt-v1");
+  assert.equal(config.integrations.x402.privateReceipts.rawBuyerMetadataAllowed, false);
   assert.equal(config.productionClaimsAllowed, false);
 });
 
@@ -66,6 +68,21 @@ test("swarm config rejects enabled x402 adapter until external evidence exists",
   assert.ok(result.failures.includes("integrations.x402.enabled must be false until external evidence exists"));
 });
 
+test("swarm config rejects unsafe x402 private receipt policy", async () => {
+  const config = await readExampleConfig();
+  config.integrations.x402.privateReceipts.rawBuyerMetadataAllowed = true;
+  config.integrations.x402.privateReceipts.requiredHeaders = ["PAYMENT-SIGNATURE"];
+
+  const result = validateSwarmConfig(config);
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.failures.includes("integrations.x402.privateReceipts.rawBuyerMetadataAllowed must be false"),
+  );
+  assert.ok(
+    result.failures.includes("integrations.x402.privateReceipts.requiredHeaders must list the x402 V2 payment headers in order"),
+  );
+});
+
 test("swarm health, readiness, and metrics endpoints expose operational state", async () => {
   const config = await readExampleConfig();
   const server = createSwarmServer(config, { now: () => new Date("2026-05-25T00:00:00.000Z") });
@@ -80,10 +97,13 @@ test("swarm health, readiness, and metrics endpoints expose operational state", 
     assert.equal(health.statusCode, 200);
     assert.equal(JSON.parse(health.body).status, "ok");
     assert.equal(ready.statusCode, 200);
-    assert.equal(JSON.parse(ready.body).ready, true);
+    const readyBody = JSON.parse(ready.body);
+    assert.equal(readyBody.ready, true);
+    assert.equal(readyBody.integrations.x402.privateReceiptsReady, true);
     assert.equal(metrics.statusCode, 200);
     assert.match(metrics.body, /dark_null_swarm_config_valid 1/);
     assert.match(metrics.body, /dark_null_swarm_role_enabled\{role="relayer"\} 1/);
+    assert.match(metrics.body, /dark_null_swarm_x402_private_receipts_ready 1/);
   } finally {
     await new Promise((resolve) => server.close(resolve));
   }

@@ -126,6 +126,7 @@ async function checkClaimsLedger() {
     "| Current verifier ABI is 256 bytes | Delivered |",
     "| Compressed proof target is 128 bytes | Delivered |",
     "| Canonical public-input shape has eight signals | Delivered |",
+    "| Private x402 receipt primitives exist | Delivered |",
     "| Mainnet ready | Blocked |",
     "| Mainnet open beta | Blocked |",
     "| Completed third-party audit | Blocked |",

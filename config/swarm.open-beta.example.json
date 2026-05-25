@@ -22,7 +22,22 @@
     "x402": {
       "status": "planned-disabled",
       "enabled": false,
-      "requiresExternalRepo": "dna-x402"
+      "requiresExternalRepo": "dna-x402",
+      "privateReceipts": {
+        "adapterModule": "swarm/x402.mjs",
+        "protocol": "x402-v2",
+        "receiptSchema": "dark-null-private-x402-receipt-v1",
+        "rawBuyerMetadataAllowed": false,
+        "rawPaymentHeadersStored": false,
+        "replayProtectionRequired": true,
+        "settlementTxRequired": true,
+        "receiptHashChainRequired": true,
+        "requiredHeaders": [
+          "PAYMENT-REQUIRED",
+          "PAYMENT-SIGNATURE",
+          "PAYMENT-RESPONSE"
+        ]
+      }
     }
   },
   "services": [

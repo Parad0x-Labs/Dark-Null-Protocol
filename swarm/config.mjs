@@ -159,6 +159,42 @@ function validateX402(config, failures) {
   if (x402.requiresExternalRepo !== "dna-x402") {
     failures.push("integrations.x402.requiresExternalRepo must be dna-x402");
   }
+
+  const receipts = x402.privateReceipts;
+  if (!isObject(receipts)) {
+    failures.push("integrations.x402.privateReceipts is required");
+    return;
+  }
+
+  for (const [field, expected] of [
+    ["adapterModule", "swarm/x402.mjs"],
+    ["protocol", "x402-v2"],
+    ["receiptSchema", "dark-null-private-x402-receipt-v1"],
+  ]) {
+    if (receipts[field] !== expected) {
+      failures.push(`integrations.x402.privateReceipts.${field} must be ${expected}`);
+    }
+  }
+
+  for (const [field, expected] of [
+    ["rawBuyerMetadataAllowed", false],
+    ["rawPaymentHeadersStored", false],
+    ["replayProtectionRequired", true],
+    ["settlementTxRequired", true],
+    ["receiptHashChainRequired", true],
+  ]) {
+    requireBoolean(failures, receipts[field], `integrations.x402.privateReceipts.${field}`, expected);
+  }
+
+  const headers = receipts.requiredHeaders;
+  const expectedHeaders = ["PAYMENT-REQUIRED", "PAYMENT-SIGNATURE", "PAYMENT-RESPONSE"];
+  if (
+    !Array.isArray(headers) ||
+    headers.length !== expectedHeaders.length ||
+    !expectedHeaders.every((header, index) => headers[index] === header)
+  ) {
+    failures.push("integrations.x402.privateReceipts.requiredHeaders must list the x402 V2 payment headers in order");
+  }
 }
 
 export function validateSwarmConfig(config) {

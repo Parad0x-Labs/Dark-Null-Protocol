@@ -476,7 +476,7 @@ Audit priority test gaps:
 - live x402 integration test once `dna-x402` evidence exists
 - append-only receipt persistence test for real service storage
 
-## Known Weaknesses And Honest Risk Register
+## Known Weaknesses And Risk Register
 
 Known weaknesses:
 

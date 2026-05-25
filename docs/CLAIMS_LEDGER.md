@@ -38,6 +38,23 @@ This ledger separates delivered claims from blocked claims and roadmap ideas. It
 | Sigstore-signed public release | Not a current claim until tagged release evidence exists |
 | x402 merchant gateway | Not a current claim until `dna-x402` evidence exists |
 
+## Gated Research Primitives
+
+| Primitive | Status | Claim gate |
+|---|---|---|
+| Dark Null x402 Privacy Extension | Prototype | private receipt primitives only until `dna-x402` integration evidence exists |
+| Compressed Anonymity / Nullifier State | Research | requires compressed-state code, tests, and manifest binding |
+| Receipt DAG / Append-Only Private Receipts | Prototype | requires persistent append-only storage before public service claim |
+| Proof-Carrying Relayer Swarm | Research | not a validator network, not BFT, and not decentralized consensus |
+| Recursive Settlement Batches | Research | requires recursive artifacts, verifier, manifest, and duplicate-nullifier tests |
+| Ephemeral Private Payment Sessions | Research | requires real session backend integration evidence |
+| Finality-Aware / Alpenglow-Ready Receipts | Research | requires finality policy code and Solana protocol evidence at implementation time |
+| Confidential Token-2022 Linkage Privacy | Blocked | blocked while Confidential Transfer availability is audit-gated |
+| MPC Sealed Pricing / Private Auctions | Research | not a private compute network; requires external compute integration |
+| MEV-Aware Private Settlement Routes | Research | no MEV-proof or BAM integration claim |
+| x402 Bazaar Private Reputation Receipts | Research | requires Bazaar adapter and metadata-leakage tests |
+| ZK Access Receipts | Research | requires access-receipt protocol, replay policy, and revocation tests |
+
 ## Rule
 
 If a claim is not in the delivered table, public docs must either mark it as blocked/roadmap or omit it.

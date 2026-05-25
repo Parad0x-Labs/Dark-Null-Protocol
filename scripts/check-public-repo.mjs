@@ -46,6 +46,7 @@ const requiredFiles = [
   "tests/mainnet-beta-evidence.test.mjs",
   "tests/swarm-config.test.mjs",
   "tests/x402-private-payments.test.mjs",
+  "tests/2030-claims.test.mjs",
   "tests/historical-null-mint-consistency.test.mjs",
   "tests/historical-null-mint-manifest.test.mjs",
   "client/dark_client.py",
@@ -56,8 +57,10 @@ const requiredFiles = [
   "circuits/null_proof.r1cs",
   "circuits/vk.json",
   "circuits/README.md",
+  "docs/2030_PRIMITIVES.md",
   "docs/AUDITOR_HANDOFF.md",
   "docs/CLAIMS_LEDGER.md",
+  "docs/COMPRESSED_ANONYMITY_STATE.md",
   "docs/CONTRIBUTOR_QUICKSTART.md",
   "docs/DNA_X402_INTEGRATION.md",
   "docs/EXTERNAL_AUDIT_SCOPE.md",
@@ -66,8 +69,11 @@ const requiredFiles = [
   "docs/MAINNET_OPEN_BETA.md",
   "docs/MAINNET_RUNBOOK.md",
   "docs/OFFCHAIN_SWARM.md",
+  "docs/PROOF_CARRYING_SWARM.md",
   "docs/PRIVATE_X402_PAYMENTS.md",
+  "docs/RECURSIVE_BATCHING.md",
   "docs/PROGRAM_IDS.md",
+  "scripts/check-2030-claims.mjs",
   "scripts/cargo-test.mjs",
   "scripts/bootstrap.sh",
   "scripts/check-ceremony-evidence.mjs",
@@ -231,6 +237,9 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || packageJson.scripts["check:swarm"] !== "node ./scripts/check-swarm-config.mjs") {
     failures.push("package.json must expose scripts.check:swarm");
   }
+  if (!packageJson.scripts || packageJson.scripts["check:2030"] !== "node ./scripts/check-2030-claims.mjs") {
+    failures.push("package.json must expose scripts.check:2030");
+  }
   if (!packageJson.scripts || packageJson.scripts["check:x402"] !== "node ./scripts/check-x402-receipts.mjs") {
     failures.push("package.json must expose scripts.check:x402");
   }
@@ -249,8 +258,14 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run check:x402")) {
     failures.push("package.json test script must include npm run check:x402");
   }
+  if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run check:2030")) {
+    failures.push("package.json test script must include npm run check:2030");
+  }
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:x402")) {
     failures.push("package.json test script must include npm run test:x402");
+  }
+  if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:2030")) {
+    failures.push("package.json test script must include npm run test:2030");
   }
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run check:claims")) {
     failures.push("package.json test script must include npm run check:claims");
@@ -266,6 +281,9 @@ async function checkPackageMetadata() {
   }
   if (!packageJson.scripts || packageJson.scripts["test:x402"] !== "node --test ./tests/x402-private-payments.test.mjs") {
     failures.push("package.json must expose scripts.test:x402");
+  }
+  if (!packageJson.scripts || packageJson.scripts["test:2030"] !== "node --test ./tests/2030-claims.test.mjs") {
+    failures.push("package.json must expose scripts.test:2030");
   }
   if (!packageJson.scripts || packageJson.scripts["test:python"] !== "node ./scripts/python-compile.mjs") {
     failures.push("package.json must expose cross-platform scripts.test:python");
@@ -370,6 +388,9 @@ async function checkDocs() {
   }
   if (!readme.includes("docs/AUDITOR_HANDOFF.md")) {
     failures.push("README.md: missing auditor handoff doc link");
+  }
+  if (!readme.includes("docs/2030_PRIMITIVES.md")) {
+    failures.push("README.md: missing 2030 primitives doc link");
   }
   if (!readme.includes("npm run check:x402")) {
     failures.push("README.md: missing private x402 receipt check command");

@@ -33,9 +33,9 @@ Use the aggressive line only where the repo backs it:
 
 ## Advantages To Press
 
-- **Small proof target:** 128-byte compressed proof class, with the current public ABI honestly documented as 256 bytes.
+- **Small proof target:** 128-byte compressed proof class, with the current public ABI documented as 256 bytes.
 - **Verifier evidence:** root Rust verifier, `vk.json`, `null_proof.circom`, wasm, zkey, and manifest are all published together.
-- **Setup honesty:** `CEREMONY.md` records the current setup boundary instead of implying a public ceremony that did not happen.
+- **Setup boundary:** `CEREMONY.md` records the current setup boundary instead of implying a public ceremony that did not happen.
 - **Payout-bound withdraw:** the promoted v2 path verifies amount, receiver token account, and mint before transfer; the legacy proof-unbound path stays closed.
 - **SDK distribution:** `@dark-null/protocol` exposes IDL, network config, canonical artifact helpers, proof encoding metadata, and v2 public-input encoders.
 - **Reviewability:** historical tracks are separated from the canonical root instead of being implied as one deployment.

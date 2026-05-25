@@ -43,6 +43,7 @@ For the delivered-vs-blocked claim boundary, read [`docs/CLAIMS_LEDGER.md`](./do
 For external review, use the single handoff packet in [`docs/AUDITOR_HANDOFF.md`](./docs/AUDITOR_HANDOFF.md).
 For an explicitly unaudited, capped mainnet beta lane, read [`docs/MAINNET_OPEN_BETA.md`](./docs/MAINNET_OPEN_BETA.md).
 For off-chain service operations and the x402 receipt boundary, read [`docs/OFFCHAIN_SWARM.md`](./docs/OFFCHAIN_SWARM.md), [`docs/DNA_X402_INTEGRATION.md`](./docs/DNA_X402_INTEGRATION.md), and [`docs/PRIVATE_X402_PAYMENTS.md`](./docs/PRIVATE_X402_PAYMENTS.md).
+For frontier work, read [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md).
 
 ## One Command Bootstrap
 
@@ -146,6 +147,48 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 10. Run `npm run check:mainnet:evidence` and expect it to fail until `MAINNET_EVIDENCE.json` is real.
 11. Run `npm run check:mainnet:beta` and expect it to fail until `MAINNET_BETA_EVIDENCE.json` is real.
 12. Run `npm run check:mainnet` and expect it to fail until the blockers in [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) are cleared.
+
+## 2030 Research Primitives
+
+Dark Null's research lane is proof-carrying private settlement for machine payments. These are gated research primitives, not launch claims:
+
+- private x402/AP2 receipts for agent-paid APIs
+- compressed anonymity and nullifier state
+- append-only private receipt DAGs
+- proof-carrying relayer/prover/indexer capsules
+- recursive settlement batches
+- ephemeral private payment sessions
+- finality-aware private receipts
+- confidential amount plus private linkage research
+- sealed pricing and private auction integrations
+- MEV-aware private settlement routes
+- private reputation receipts for payable API discovery
+- ZK access receipts after payment
+
+Gated details and claim gates live in [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md), [`docs/COMPRESSED_ANONYMITY_STATE.md`](./docs/COMPRESSED_ANONYMITY_STATE.md), [`docs/RECURSIVE_BATCHING.md`](./docs/RECURSIVE_BATCHING.md), and [`docs/PROOF_CARRYING_SWARM.md`](./docs/PROOF_CARRYING_SWARM.md).
+
+```yaml
+frontier_primitives:
+  status: gated_research_not_launch_claims
+  current_delivered_base:
+    - groth16_verifier_path
+    - payout_bound_withdraw_v2
+    - manifest_locked_artifacts
+    - private_x402_receipt_primitives
+  gated_tracks:
+    - x402_privacy_extension
+    - compressed_anonymity_state
+    - receipt_dag
+    - proof_carrying_swarm
+    - recursive_settlement_batches
+    - ephemeral_private_sessions
+    - finality_aware_receipts
+    - confidential_token_2022_linkage
+    - mpc_sealed_pricing
+    - mev_aware_routes
+    - x402_bazaar_private_reputation
+    - zk_access_receipts
+```
 
 ## For Integrators and Agent Builders
 

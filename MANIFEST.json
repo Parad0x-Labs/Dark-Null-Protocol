@@ -92,8 +92,8 @@
     },
     {
       "path": "docs/CLAIMS_LEDGER.md",
-      "sha256": "96abb93e6110f2e7ad2043c017234d9c862f41fd39938186df126fa5f5c63c74",
-      "size": 2666
+      "sha256": "d6ee2a5fb50b91e62bfafad4cb173483dd33a1fe0e6b759d9378ce559f407019",
+      "size": 4151
     },
     {
       "path": "docs/DNA_X402_INTEGRATION.md",
@@ -132,8 +132,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "0d810504063548bf724837a9266e706512897144a7120d036d9a786eefcbc73e",
-      "size": 6427
+      "sha256": "78c7b0da467c8fd71007e1cacf65248cc95e458ea5d275c3c631a11c204111eb",
+      "size": 6769
     },
     {
       "path": "package-lock.json",
@@ -287,8 +287,48 @@
     },
     {
       "path": "docs/AUDITOR_HANDOFF.md",
-      "sha256": "d305376b55921672a7cef0306eb51e367b6f7976e671f82f680d913b1093c12a",
-      "size": 21272
+      "sha256": "a9d1c72912bbbc5aaaa37e3f11cbbe1ee62b0ffd9090c0bf196143f7e7677b85",
+      "size": 21265
+    },
+    {
+      "path": "docs/2030_PRIMITIVES.md",
+      "sha256": "95cff8daf8a9b1e3443b6b9057949abbf6e8ead7b72a83e92ccb1e657a8b2a5b",
+      "size": 15043
+    },
+    {
+      "path": "docs/COMPRESSED_ANONYMITY_STATE.md",
+      "sha256": "5beca7a5fd3ed8cf296469bb3d87a3adf172626a1333fc7cf1b392d2773a6510",
+      "size": 2951
+    },
+    {
+      "path": "docs/RECURSIVE_BATCHING.md",
+      "sha256": "df7a0f349b8b07c2a2ab8146a4521939ab08d9cc23a03d3ec49b925801c2f07e",
+      "size": 2352
+    },
+    {
+      "path": "docs/PROOF_CARRYING_SWARM.md",
+      "sha256": "739a54821c2eb94f60769f8d9eaa4e440e118c3fe9121f23063a4127feb4ba66",
+      "size": 3400
+    },
+    {
+      "path": "docs/PARADOX_STACK.md",
+      "sha256": "5a5b80f3fc20ae408a689708d627a0ce865515f8b4d0f3fead6997d603740715",
+      "size": 2963
+    },
+    {
+      "path": "docs/architecture.md",
+      "sha256": "b0bbd65ac3bd2b7c7622cea9529ddc1d093ef8e19b8d206b5982ea2824f15934",
+      "size": 4653
+    },
+    {
+      "path": "scripts/check-2030-claims.mjs",
+      "sha256": "2cca7f52027bed16115dc7ea1af30590d6e1fa373422db36d9d7a9f57d0e48fc",
+      "size": 7867
+    },
+    {
+      "path": "tests/2030-claims.test.mjs",
+      "sha256": "bfeb2d70853d5224edeff8e1d3a0dd496bec02d38f1bc54a7ec324a7a2321cc4",
+      "size": 3540
     }
   ]
 }

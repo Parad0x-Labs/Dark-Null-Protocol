@@ -59,6 +59,26 @@ Encoding rules:
 - the current `groth16-solana` verifier ABI is 256 bytes
 - the compressed proof target/artifact class is 128 bytes
 
+## Research Extension: PAP And Recursive Epoch Proofs
+
+The Proof Aggregation Pipeline (PAP) is a research extension, not current verifier behavior. The base idea is to keep the current single-proof settlement lane intact while defining a future path where many settlement proofs can be accumulated into an epoch proof.
+
+Current delivered base:
+
+- one canonical Groth16 proof flow
+- one payout-bound withdraw v2 public-input shape
+- malformed proof rejection
+- manifest-bound verifier artifacts
+
+Recursive epoch proofs would add:
+
+- sub-batch proof aggregation
+- duplicate-nullifier checks across sub-batches
+- epoch-level public inputs
+- manifest-bound recursive artifacts
+
+The detailed gate is [`RECURSIVE_BATCHING.md`](./RECURSIVE_BATCHING.md). No recursive verifier, recursive batch circuit, or epoch proof artifact is currently shipped.
+
 ## Program Behavior
 
 The current root program is a settlement prototype, not a generic network.

@@ -11,6 +11,7 @@ const requiredFiles = [
   "LICENSE",
   "package.json",
   "Anchor.toml",
+  "CEREMONY.md",
   "MAINNET_EVIDENCE.example.json",
   "MANIFEST.json",
   "NETWORKS.json",
@@ -57,6 +58,7 @@ const requiredFiles = [
   "docs/MAINNET_RUNBOOK.md",
   "docs/PROGRAM_IDS.md",
   "scripts/bootstrap.sh",
+  "scripts/check-ceremony-evidence.mjs",
   "scripts/check-mainnet-evidence.mjs",
   "scripts/check-mainnet-readiness.mjs",
   "scripts/check-public-repo.mjs",
@@ -163,6 +165,9 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || packageJson.scripts.bootstrap !== "sh ./scripts/bootstrap.sh") {
     failures.push("package.json must expose scripts.bootstrap");
   }
+  if (!packageJson.scripts || packageJson.scripts["check:ceremony"] !== "node ./scripts/check-ceremony-evidence.mjs") {
+    failures.push("package.json must expose scripts.check:ceremony");
+  }
   if (!packageJson.scripts || packageJson.scripts["check:mainnet"] !== "node ./scripts/check-mainnet-readiness.mjs") {
     failures.push("package.json must expose scripts.check:mainnet");
   }
@@ -203,6 +208,7 @@ async function checkPackageMetadata() {
     failures.push("package.json must expose scripts.test:package");
   }
   for (const requiredStep of [
+    "npm run check:ceremony",
     "npm run test:proof",
     "npm run test:python:unit",
     "npm run test:rust",

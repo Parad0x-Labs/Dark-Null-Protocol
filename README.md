@@ -19,6 +19,7 @@ This repo now has one canonical public root:
 - one root circuit bundle: [`circuits/null_proof.circom`](./circuits/null_proof.circom), [`circuits/null_proof_final.zkey`](./circuits/null_proof_final.zkey), [`circuits/null_proof_js/null_proof.wasm`](./circuits/null_proof_js/null_proof.wasm), [`circuits/vk.json`](./circuits/vk.json)
 - one root verifier path: [`src/lib.rs`](./src/lib.rs) + [`src/verifying_key.rs`](./src/verifying_key.rs)
 - one published security model: [`SECURITY_MODEL.md`](./SECURITY_MODEL.md)
+- one setup evidence file: [`CEREMONY.md`](./CEREMONY.md)
 
 Historical branches and artifact bundles are still published, but they are no longer the main integration target.
 
@@ -32,6 +33,7 @@ Dark Null is the compact, evidence-first Solana privacy settlement track:
 - `128-byte` compressed proof target
 - canonical artifact manifest with stable hash checks
 - reproducible Groth16 proof flow
+- explicit trusted-setup evidence with a mainnet blocker until final setup evidence exists
 - payout-bound v2 withdraw path proving amount, receiver token account, and mint
 - public launch gate that blocks unsupported mainnet claims
 
@@ -87,6 +89,7 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 | Verifier | [`src/verifying_key.rs`](./src/verifying_key.rs), [`circuits/vk.json`](./circuits/vk.json) |
 | Circuit artifacts | [`circuits/null_proof.circom`](./circuits/null_proof.circom), [`circuits/null_proof_final.zkey`](./circuits/null_proof_final.zkey), [`circuits/null_proof_js/null_proof.wasm`](./circuits/null_proof_js/null_proof.wasm) |
 | Proof encoding | 256-byte current `groth16-solana` verifier ABI; 128-byte compressed proof target |
+| Trusted setup evidence | [`CEREMONY.md`](./CEREMONY.md), [`scripts/check-ceremony-evidence.mjs`](./scripts/check-ceremony-evidence.mjs) |
 | Public IDL | [`idl/paradox.json`](./idl/paradox.json) |
 | JavaScript SDK | [`sdk/index.mjs`](./sdk/index.mjs), [`sdk/index.d.ts`](./sdk/index.d.ts) |
 | Python helper client | [`client/dark_client.py`](./client/dark_client.py) |
@@ -116,6 +119,7 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 
 - third-party audit completion
 - completed mainnet deployment evidence
+- final trusted setup evidence accepted for mainnet
 - that every historical deployment in the repo used the current root files
 - that switching `devnet` to `mainnet` is enough to ship
 - append-only root derivation on-chain; the current source still trusts a privileged root updater
@@ -126,9 +130,10 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 1. Run `sh scripts/bootstrap.sh`.
 2. Run `npm run config:devnet` or `npm run config:localnet`.
 3. Read [`MANIFEST.json`](./MANIFEST.json), [`NETWORKS.json`](./NETWORKS.json), and [`docs/PROGRAM_IDS.md`](./docs/PROGRAM_IDS.md).
-4. Run `npm run test:all`.
-5. Run `npm run check:mainnet:evidence` and expect it to fail until `MAINNET_EVIDENCE.json` is real.
-6. Run `npm run check:mainnet` and expect it to fail until the blockers in [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) are cleared.
+4. Run `npm run check:ceremony`.
+5. Run `npm run test:all`.
+6. Run `npm run check:mainnet:evidence` and expect it to fail until `MAINNET_EVIDENCE.json` is real.
+7. Run `npm run check:mainnet` and expect it to fail until the blockers in [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) are cleared.
 
 ## For Integrators and Agent Builders
 

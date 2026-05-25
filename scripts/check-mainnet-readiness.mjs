@@ -38,6 +38,7 @@ function collectBlockers() {
   const packageJson = readJson("package.json");
   const rootSource = readText("src/lib.rs");
   const auditDoc = readText("AUDIT.md");
+  const setupDoc = readText("CEREMONY.md");
   const mainnetEvidencePath = path.join(repoRoot, "MAINNET_EVIDENCE.json");
 
   if (!existsSync(mainnetEvidencePath)) {
@@ -102,6 +103,16 @@ function collectBlockers() {
       "blocker",
       "No completed third-party audit is published.",
       "Publish a real audit report with scope, commit, findings, fixes, residual risk, and auditor identity.",
+    );
+  }
+
+  if (/not enough by itself for mainnet trust|Anything less is development evidence|not a public multi-party ceremony/i.test(setupDoc)) {
+    add(
+      blockers,
+      "trusted-setup-evidence",
+      "blocker",
+      "Current trusted setup evidence is development-grade, not mainnet evidence.",
+      "Publish final public ceremony evidence or explicit audit acceptance of the setup path for the release artifact set.",
     );
   }
 

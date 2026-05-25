@@ -1,8 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 
 import {
+  assertGroth16VerificationKeyShape,
   bytes32ToHex,
   createAnchorProgram,
   createConnection,
@@ -22,6 +24,7 @@ import {
   listInstructionNames,
   listSupportedNetworks,
   normalizeBytes32,
+  proofBundleSha256,
   resolveNetworkConfig,
   resolveProgramId,
 } from "./index.mjs";
@@ -71,7 +74,9 @@ test("canonical manifest and network helpers expose one coherent root", () => {
   assert.equal(getNetworkDefinition("devnet")?.rpcUrl, "https://api.devnet.solana.com");
   assert.equal(resolveNetworkConfig("localnet").rpcUrl, "http://127.0.0.1:8899");
   assert.ok(path.normalize(artifacts.circuitPath).endsWith(path.join("circuits", "null_proof.circom")));
+  assert.ok(path.normalize(artifacts.ceremonyPath).endsWith("CEREMONY.md"));
   assert.equal(artifacts.relativePaths.circuit, "circuits/null_proof.circom");
+  assert.equal(artifacts.relativePaths.ceremony, "CEREMONY.md");
 });
 
 test("bytes32 helpers normalize arrays and hex strings", () => {
@@ -111,6 +116,30 @@ test("proof encoding helpers expose ABI sizes and deterministic public inputs", 
 
   assert.equal(withdrawInputs.length, 8);
   assert.equal(withdrawInputs[3][31], 42);
+});
+
+test("verifier shape and proof bundle helpers reject drift", () => {
+  const artifacts = getCanonicalArtifacts();
+  const vk = JSON.parse(readFileSync(artifacts.vkJsonPath, "utf8"));
+
+  assert.equal(assertGroth16VerificationKeyShape(vk), true);
+  assert.throws(() => assertGroth16VerificationKeyShape({ ...vk, nPublic: 3 }), /nPublic mismatch/);
+  assert.throws(
+    () => assertGroth16VerificationKeyShape({ ...vk, IC: vk.IC.slice(0, -1) }),
+    /IC length mismatch/,
+  );
+
+  const firstHash = proofBundleSha256({
+    proof: { pi_c: ["3", "4"], pi_a: ["1", "2"], nested: { z: "last", a: "first" } },
+    publicSignals: ["7", "8"],
+  });
+  const secondHash = proofBundleSha256({
+    proof: { nested: { a: "first", z: "last" }, pi_a: ["1", "2"], pi_c: ["3", "4"] },
+    publicSignals: ["7", "8"],
+  });
+
+  assert.match(firstHash, /^[0-9a-f]{64}$/);
+  assert.equal(firstHash, secondHash);
 });
 
 test("anchor helper works with injected modules", async () => {

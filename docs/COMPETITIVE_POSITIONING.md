@@ -12,6 +12,7 @@ Dark Null should win on verifiable evidence, not posture. The canonical root now
 | Current verifier wire ABI | 256 bytes (`proof_a[64]`, `proof_b[128]`, `proof_c[64]`) |
 | Compressed proof target | 128 bytes |
 | Canonical proof flow | Reproducible with `npm run test:all` |
+| Setup evidence | Development setup report is public; final mainnet setup evidence is still required |
 | Payout safety | Legacy path fail-closed; v2 payout verifies amount, receiver token account, and mint before transfer |
 | Audit status | No completed third-party audit |
 | Mainnet status | Not released for mainnet |
@@ -34,6 +35,7 @@ Use the aggressive line only where the repo backs it:
 
 - **Small proof target:** 128-byte compressed proof class, with the current public ABI honestly documented as 256 bytes.
 - **Verifier evidence:** root Rust verifier, `vk.json`, `null_proof.circom`, wasm, zkey, and manifest are all published together.
+- **Setup honesty:** `CEREMONY.md` records the current setup boundary instead of implying a public ceremony that did not happen.
 - **Payout-bound withdraw:** the promoted v2 path verifies amount, receiver token account, and mint before transfer; the legacy proof-unbound path stays closed.
 - **SDK distribution:** `@dark-null/protocol` exposes IDL, network config, canonical artifact helpers, proof encoding metadata, and v2 public-input encoders.
 - **Reviewability:** historical tracks are separated from the canonical root instead of being implied as one deployment.
@@ -43,6 +45,7 @@ Use the aggressive line only where the repo backs it:
 - Keep release integrity active: checksums, SBOM, and Sigstore attestations.
 - Keep high-signal security automation active: CodeQL, strict npm audit gates, and deterministic malformed-proof tests.
 - Publish a proof-size benchmark that validates both current ABI bytes and compressed target bytes.
+- Replace development setup evidence with final mainnet setup evidence or explicit audit acceptance.
 - Keep third-party audit and mainnet claims out until the evidence exists.
 
 ## Market Narrative

@@ -8,6 +8,8 @@ export const checksumsPath = path.join(releaseDir, "SHA256SUMS");
 export const sbomPath = path.join(releaseDir, "sbom.cdx.json");
 
 export const releaseFiles = [
+  "CEREMONY.md",
+  "MAINNET_EVIDENCE.example.json",
   "MANIFEST.json",
   "NETWORKS.json",
   "package.json",
@@ -16,6 +18,9 @@ export const releaseFiles = [
   "Cargo.toml",
   "src/lib.rs",
   "src/verifying_key.rs",
+  "scripts/check-ceremony-evidence.mjs",
+  "scripts/check-mainnet-evidence.mjs",
+  "scripts/check-mainnet-readiness.mjs",
   "scripts/generate-verifying-key.mjs",
   "idl/paradox.json",
   "circuits/null_proof.circom",

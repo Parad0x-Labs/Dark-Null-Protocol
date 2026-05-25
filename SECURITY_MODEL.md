@@ -12,6 +12,7 @@ This file describes the **current public root source model**. It is not an exter
 
 - the Groth16 circuit artifacts published in [`circuits`](./circuits)
 - the generated verifying key in [`src/verifying_key.rs`](./src/verifying_key.rs)
+- the setup process documented in [`CEREMONY.md`](./CEREMONY.md)
 - the privileged root updater recorded in the `RootAuthorityConfig` PDA
 
 ## Attacker Model
@@ -46,6 +47,7 @@ Assume the attacker cannot:
 - the canonical public root keeps a bounded live state window rather than paged append-only history
 - the hardened root source is stronger than the earlier public devnet snapshot, but still depends on a trusted root updater
 - the v2 note commitment binds the receiver token account and mint at note creation time; that is safer for payout authorization but less flexible than recipient-chosen withdrawals
+- the current setup evidence is development-grade; mainnet needs final ceremony evidence or explicit audit acceptance of the setup path
 
 ## Privacy Caveats
 
@@ -57,5 +59,5 @@ Assume the attacker cannot:
 
 1. Verify the root updater path in [`src/lib.rs`](./src/lib.rs).
 2. Verify the live artifact binding in [`MANIFEST.json`](./MANIFEST.json).
-3. Run `npm test` and `cargo test --offline`.
+3. Run `npm test`, `npm run check:ceremony`, and `cargo test --offline`.
 4. Read [`SECURITY.md`](./SECURITY.md) and [`PROTOTYPE_STATUS.md`](./PROTOTYPE_STATUS.md).

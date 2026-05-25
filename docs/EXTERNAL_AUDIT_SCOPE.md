@@ -9,13 +9,14 @@ Use this as the audit brief for a real third-party review. It is not an audit re
 - `circuits/null_proof.circom`
 - promoted v2 circuit artifacts
 - `MANIFEST.json`
+- `CEREMONY.md` and final trusted setup evidence
 - `NETWORKS.json`
 - `idl/paradox.json`
 - SDK and Python public-input encoders
 - proof packing and `groth16-solana` encoding assumptions
 - root authority and upgrade controls
 - payout enablement logic
-- replay, malformed proof, stale root, wrong receiver, wrong mint, and wrong amount paths
+- replay, malformed proof, stale root, wrong receiver, wrong mint, wrong public payout input, and wrong amount paths
 - CI, release checksums, SBOM, and artifact provenance
 
 ## Required Auditor Deliverables
@@ -29,6 +30,7 @@ Use this as the audit brief for a real third-party review. It is not an audit re
 - fix validation
 - remaining risk
 - final report hash
+- explicit acceptance or rejection of the promoted trusted setup path for mainnet
 
 ## Required Release Linkage
 

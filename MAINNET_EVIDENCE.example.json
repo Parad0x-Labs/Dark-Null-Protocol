@@ -12,6 +12,8 @@
     "label": "canonical-mainnet-withdraw-v2",
     "n_public": 8,
     "manifest_path": "MANIFEST.json",
+    "trusted_setup_report_path": "audits/REPLACE_WITH_FINAL_TRUSTED_SETUP_REPORT.pdf",
+    "trusted_setup_report_sha256": "REPLACE_WITH_TRUSTED_SETUP_REPORT_SHA256",
     "checksums_path": "dist/release/SHA256SUMS",
     "sbom_path": "dist/release/sbom.cdx.json"
   },

@@ -20,6 +20,7 @@ The canonical root is bound by:
 - [`Anchor.toml`](./Anchor.toml)
 - [`src/lib.rs`](./src/lib.rs)
 - [`idl/paradox.json`](./idl/paradox.json)
+- [`CEREMONY.md`](./CEREMONY.md)
 
 From those files you can verify:
 
@@ -45,6 +46,7 @@ Run:
 
 ```bash
 npm test
+npm run check:ceremony
 npm run test:proof
 npm run test:security
 npm run release:verify
@@ -57,6 +59,7 @@ That now includes:
 - root manifest binding
 - root proof generation and Groth16 verification against the canonical artifact set
 - proof encoding metadata and withdraw v2 public-input encoder checks
+- trusted setup report checks, with optional `snarkjs zkey verify` when `DARK_NULL_PTAU_PATH` is available
 - release artifact hash verification against the manifest
 
 ### 4. Root Rust and Python Checks
@@ -87,6 +90,7 @@ Use those to understand how the repo evolved. Do not confuse them with the canon
 - that every historical deployment in this repo used the current canonical root artifact set
 - completed mainnet deployment evidence
 - completed third-party audit evidence
+- final trusted setup evidence accepted for mainnet
 
 ## Honest Verification Standard
 

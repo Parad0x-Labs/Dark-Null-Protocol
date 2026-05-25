@@ -146,6 +146,44 @@ function collectBlockers() {
   if (isPlaceholder(evidence.proof_artifacts?.label) || /devnet/i.test(evidence.proof_artifacts?.label ?? "")) {
     add(blockers, "artifact-label", "Mainnet v2 artifact label is missing or still devnet-oriented.", "Publish a mainnet v2 artifact label.");
   }
+  const setupReportPath = path.resolve(repoRoot, evidence.proof_artifacts?.trusted_setup_report_path ?? "");
+  if (isPlaceholder(evidence.proof_artifacts?.trusted_setup_report_path) || !existsSync(setupReportPath)) {
+    add(
+      blockers,
+      "trusted-setup-report",
+      "Trusted setup report evidence is missing.",
+      "Publish the final trusted setup report or ceremony transcript for the exact promoted mainnet artifact set.",
+    );
+  } else if (!/^[0-9a-f]{64}$/i.test(evidence.proof_artifacts?.trusted_setup_report_sha256 ?? "")) {
+    add(
+      blockers,
+      "trusted-setup-report-hash",
+      "Trusted setup report hash is missing or malformed.",
+      "Publish the SHA-256 hash of the final trusted setup report.",
+    );
+  } else {
+    const actual = sha256File(setupReportPath);
+    if (actual !== evidence.proof_artifacts.trusted_setup_report_sha256) {
+      add(
+        blockers,
+        "trusted-setup-report-hash",
+        "Trusted setup report hash does not match the report file.",
+        "Update the evidence hash or use the final setup report file.",
+      );
+    }
+
+    if ([".md", ".txt"].includes(path.extname(setupReportPath).toLowerCase())) {
+      const setupReport = readFileSync(setupReportPath, "utf8");
+      if (/not enough by itself for mainnet trust|Anything less is development evidence|not a public multi-party ceremony/i.test(setupReport)) {
+        add(
+          blockers,
+          "trusted-setup-not-mainnet",
+          "Trusted setup report is marked as development evidence, not mainnet evidence.",
+          "Use a final public ceremony transcript or explicit audit acceptance for the promoted mainnet artifact set.",
+        );
+      }
+    }
+  }
   const withdrawV2 = functionBody(source, "prepare_phantom_withdraw_v2");
   if (
     !evidence.payout?.enabled ||

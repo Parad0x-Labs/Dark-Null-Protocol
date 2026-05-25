@@ -17,6 +17,7 @@ Those commands are expected to fail until every blocker below is cleared.
 |---|---|
 | Rust validation | `cargo test --offline` passes on the release commit |
 | Payout-bound proof | v2 circuit, zkey, wasm, vk, Rust verifier, IDL, manifest, SDK, and tests all bind `[commitment, nullifier, root, amount, receiver_token_part_0, receiver_token_part_1, mint_part_0, mint_part_1]` |
+| Trusted setup | final public ceremony transcript or explicit third-party audit acceptance of the setup path, with report path and SHA-256 hash in `MAINNET_EVIDENCE.json` |
 | Public payout | v2 proof verifies amount, receiver token account, and mint before transfer; legacy proof-unbound path stays closed |
 | Mainnet manifest | mainnet program id, deployment transaction, artifact hashes, cluster, and upgrade-authority policy are published |
 | Mainnet evidence | `MAINNET_EVIDENCE.json` binds the audited commit, program id, deployment transaction, upgrade policy, v2 artifact label, payout enablement, and audit report hash |
@@ -34,7 +35,7 @@ The strongest adjacent ideas to evaluate before mainnet are:
 - use credit-note style commitments for delayed payout
 - add preimage-verified revoke or recovery only if the privacy tradeoff is explicit
 - increase root-history usability or publish snapshot-staleness warnings
-- test wrong recipient, fake note, wrong opening, replay, stale root, and malformed proof paths as first-class regression cases
+- test wrong recipient, fake note, wrong opening, wrong public payout input, replay, stale root, and malformed proof paths as first-class regression cases
 - make relayer trust boundaries explicit: censorship only, direct fallback always available
 
 These are design directions, not current Dark Null claims.
@@ -42,5 +43,6 @@ These are design directions, not current Dark Null claims.
 ## Promotion Files
 
 - [`MAINNET_EVIDENCE.example.json`](../MAINNET_EVIDENCE.example.json) defines the evidence schema.
+- [`../CEREMONY.md`](../CEREMONY.md) documents the current setup boundary and why it is not mainnet launch evidence.
 - [`MAINNET_RUNBOOK.md`](./MAINNET_RUNBOOK.md) defines the release order.
 - [`EXTERNAL_AUDIT_SCOPE.md`](./EXTERNAL_AUDIT_SCOPE.md) defines the audit scope required before launch language changes.

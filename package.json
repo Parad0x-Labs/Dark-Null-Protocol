@@ -15,6 +15,7 @@
   },
   "files": [
     "Anchor.toml",
+    "CEREMONY.md",
     "MAINNET_EVIDENCE.example.json",
     "MANIFEST.json",
     "NETWORKS.json",
@@ -42,6 +43,7 @@
     "docs/LAUNCH_NARRATIVE.md",
     "docs/MAINNET_READINESS.md",
     "docs/MAINNET_RUNBOOK.md",
+    "scripts/check-ceremony-evidence.mjs",
     "scripts/generate-verifying-key.mjs",
     "src/lib.rs",
     "src/verifying_key.rs",
@@ -95,6 +97,7 @@
   },
     "scripts": {
     "bootstrap": "sh ./scripts/bootstrap.sh",
+    "check:ceremony": "node ./scripts/check-ceremony-evidence.mjs",
     "check:mainnet": "node ./scripts/check-mainnet-readiness.mjs",
     "check:mainnet:evidence": "node ./scripts/check-mainnet-evidence.mjs",
     "check:public": "node ./scripts/check-public-repo.mjs",
@@ -113,7 +116,7 @@
     "test:package": "npm pack --dry-run",
     "test:rust": "cargo test --offline",
     "test": "npm run check:public && npm run test:sdk && npm run test:config && npm run test:artifacts",
-    "test:all": "npm run test && npm run test:proof && npm run test:python && npm run test:python:unit && npm run test:rust && npm run test:security && npm run release:sbom && npm run release:checksums && npm run release:verify && npm run test:package",
+    "test:all": "npm run test && npm run check:ceremony && npm run test:proof && npm run test:python && npm run test:python:unit && npm run test:rust && npm run test:security && npm run release:sbom && npm run release:checksums && npm run release:verify && npm run test:package",
     "release:verify": "node ./scripts/verify-release-artifacts.mjs",
     "release:sbom": "node ./scripts/generate-sbom.mjs",
     "release:checksums": "node ./scripts/generate-checksums.mjs",

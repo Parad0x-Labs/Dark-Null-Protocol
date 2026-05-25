@@ -60,14 +60,24 @@
       "size": 516
     },
     {
+      "path": "CEREMONY.md",
+      "sha256": "ecdaa41b896d50744153d9070c5b2f5d884feadc8988971eca36e5ee810b69fa",
+      "size": 2396
+    },
+    {
       "path": "Cargo.toml",
       "sha256": "1cca58f12950895cc5a2b301dd86f2a1d40d739adb2c905ec85c0e57fd13aa86",
       "size": 1061
     },
     {
+      "path": "MAINNET_EVIDENCE.example.json",
+      "sha256": "90ada8a6ac204f55adc14b116fc26901e074255cb1666b390a6ecfe76dc58db1",
+      "size": 1443
+    },
+    {
       "path": "package.json",
-      "sha256": "67123f18d02004d3b413e5b8c36ce119c69d4997f3004030b9510ce3ca1e214e",
-      "size": 4890
+      "sha256": "cf49c77f80795ed0ba6376dcd7d22186edefe39b9db2a6b0c352ad900c85a6aa",
+      "size": 5046
     },
     {
       "path": "package-lock.json",
@@ -90,6 +100,21 @@
       "size": 6842
     },
     {
+      "path": "scripts/check-ceremony-evidence.mjs",
+      "sha256": "a5f0fbc022f30a13e1ffa91d44f3698d524d2cb65b877ede5750b45a9a1fe749",
+      "size": 3887
+    },
+    {
+      "path": "scripts/check-mainnet-evidence.mjs",
+      "sha256": "8394c1578988eda6243c963993a0e581d0a56c74cc6d51580d0078d4f6eafb00",
+      "size": 10260
+    },
+    {
+      "path": "scripts/check-mainnet-readiness.mjs",
+      "sha256": "90d7f6886f4e82ef964b00a05d179d6a797799ddecf98a33b2b06db17fe909b2",
+      "size": 5631
+    },
+    {
       "path": "scripts/generate-verifying-key.mjs",
       "sha256": "79c1ec0e94fcc0859f531805190d010ff9ffaa1bc89979c6efcace0681c5d101",
       "size": 1819
@@ -101,13 +126,13 @@
     },
     {
       "path": "sdk/index.mjs",
-      "sha256": "42f73924f66ec12dc03bc824ce2ed31a8f203ff747ed7c024833bffc1ec01a98",
-      "size": 13137
+      "sha256": "717b2dccdf5394cba1402fd1d20eff63014a637c55ed2ba629c6ca3c9c61a04e",
+      "size": 15424
     },
     {
       "path": "sdk/index.d.ts",
-      "sha256": "ec07ba06a9b6d0f4c2fae23226f01893df205ea796603b5720ce73f86dd8cd53",
-      "size": 4886
+      "sha256": "b382e843431997ac2165a1897643cf078738c4d0634c01d771a341b822a3f613",
+      "size": 5357
     },
     {
       "path": "client/dark_client.py",

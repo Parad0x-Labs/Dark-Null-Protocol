@@ -21,6 +21,7 @@ The public root is intentionally narrow:
 - The current verifier ABI is 256 bytes: `proof_a[64] + proof_b[128] + proof_c[64]`.
 - The compressed proof target is 128 bytes.
 - The SDK exposes canonical artifact paths, proof encoding metadata, and v2 public-input encoders.
+- The setup boundary is explicit in `CEREMONY.md`; the current evidence is development-grade until final mainnet setup evidence exists.
 - The v2 payout path verifies amount, receiver token account, and mint before transfer.
 - Release integrity scripts generate and verify checksums and SBOM material.
 - CI now includes public checks, proof hardening, strict npm audit gating, CodeQL, and release integrity workflows.
@@ -28,6 +29,7 @@ The public root is intentionally narrow:
 ## Claims We Must Not Make Yet
 
 - completed third-party audit
+- final trusted setup evidence accepted for mainnet
 - mainnet launch
 - production security
 - append-only on-chain root derivation
@@ -70,7 +72,8 @@ Before launch language changes, clear [`MAINNET_READINESS.md`](./MAINNET_READINE
 1. Run Rust validation on the release commit.
 2. Publish a real third-party audit.
 3. Publish mainnet manifest, deployment transaction, upgrade-authority policy, and artifact hashes.
-4. Publish `MAINNET_EVIDENCE.json` and pass `npm run check:mainnet:evidence`.
-5. Pass public, proof, security, release integrity, Python, Rust, packaging, and end-to-end checks together.
+4. Publish final trusted setup evidence and bind its hash in `MAINNET_EVIDENCE.json`.
+5. Publish `MAINNET_EVIDENCE.json` and pass `npm run check:mainnet:evidence`.
+6. Pass public, proof, security, release integrity, Python, Rust, packaging, and end-to-end checks together.
 
 Until then, the correct public line is simple: strong devnet evidence, not mainnet launch.

@@ -22,6 +22,8 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 - `getInstructionDefinition(name)`
 - `getCanonicalArtifacts()`
 - `getProofEncoding()`
+- `assertGroth16VerificationKeyShape(vkey, options)`
+- `proofBundleSha256({ proof, publicSignals })`
 - `getProgramIdManifest()`
 - `findProgramIdEntry(value)`
 - `resolveProgramId(value)`
@@ -50,6 +52,7 @@ import {
   createAnchorProgram,
   deriveCanonicalPdas,
   encodeWithdrawV2PublicInputs,
+  assertGroth16VerificationKeyShape,
   getProofEncoding,
   resolveNetworkConfig,
   resolveProgramId,
@@ -59,6 +62,7 @@ const network = resolveNetworkConfig("localnet");
 const programId = resolveProgramId("canonicalDevnet");
 const proofEncoding = getProofEncoding();
 const pdas = await deriveCanonicalPdas();
+assertGroth16VerificationKeyShape(vkJson);
 const withdrawV2Inputs = encodeWithdrawV2PublicInputs({
   commitment,
   nullifier,

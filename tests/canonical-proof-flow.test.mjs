@@ -36,6 +36,7 @@ test("canonical root circuit artifacts generate and verify a Groth16 proof", { t
   const inputPath = path.join(tempDir, "input.json");
   const proofPath = path.join(tempDir, "proof.json");
   const publicPath = path.join(tempDir, "public.json");
+  const mutatedPublicPath = path.join(tempDir, "public-mutated-amount.json");
 
   try {
     await writeFile(inputPath, JSON.stringify(canonicalInputs), "utf8");
@@ -60,6 +61,19 @@ test("canonical root circuit artifacts generate and verify a Groth16 proof", { t
       cwd: repoRoot,
       stdio: "pipe",
     });
+
+    const mutatedPublicSignals = [...publicSignals];
+    mutatedPublicSignals[3] = (BigInt(mutatedPublicSignals[3]) + 1n).toString();
+    await writeFile(mutatedPublicPath, JSON.stringify(mutatedPublicSignals), "utf8");
+
+    assert.throws(
+      () =>
+        execFileSync(process.execPath, [snarkjsPath, "groth16", "verify", vkPath, mutatedPublicPath, proofPath], {
+          cwd: repoRoot,
+          stdio: "pipe",
+        }),
+      /Command failed/,
+    );
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }

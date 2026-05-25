@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -75,6 +76,7 @@ const canonicalArtifacts = Object.freeze({
   manifestPath,
   networksPath,
   idlPath,
+  ceremonyPath: path.join(repoRoot, "CEREMONY.md"),
   circuitPath: path.join(repoRoot, canonicalManifest.groth16.circuit),
   zkeyPath: path.join(repoRoot, canonicalManifest.groth16.zkey),
   wasmPath: path.join(repoRoot, canonicalManifest.groth16.wasm),
@@ -84,6 +86,7 @@ const canonicalArtifacts = Object.freeze({
     manifest: "MANIFEST.json",
     networks: "NETWORKS.json",
     idl: "idl/paradox.json",
+    ceremony: "CEREMONY.md",
     circuit: canonicalManifest.groth16.circuit,
     zkey: canonicalManifest.groth16.zkey,
     wasm: canonicalManifest.groth16.wasm,
@@ -121,6 +124,22 @@ const proofEncoding = Object.freeze(canonicalManifest.proof_encoding ?? defaultP
 
 function deepCopy(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function canonicalJson(value) {
+  if (Array.isArray(value)) {
+    return value.map((entry) => canonicalJson(entry));
+  }
+
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value)
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([key, entry]) => [key, canonicalJson(entry)]),
+    );
+  }
+
+  return value;
 }
 
 function stripHexPrefix(value) {
@@ -191,6 +210,54 @@ export function getCanonicalArtifacts() {
 
 export function getProofEncoding() {
   return deepCopy(proofEncoding);
+}
+
+export function assertGroth16VerificationKeyShape(vkey, options = {}) {
+  const expected = typeof options === "number" ? { nPublic: options } : options;
+  const expectedNPublic = expected.nPublic ?? canonicalManifest.groth16.n_public;
+  const expectedProtocol = expected.protocol ?? canonicalManifest.groth16.protocol;
+  const expectedCurve = expected.curve ?? canonicalManifest.groth16.curve;
+
+  if (!vkey || typeof vkey !== "object") {
+    throw new Error("verification key must be an object");
+  }
+
+  if (vkey.protocol !== expectedProtocol) {
+    throw new Error(`verification key protocol mismatch: expected ${expectedProtocol}, got ${vkey.protocol}`);
+  }
+
+  if (vkey.curve !== expectedCurve) {
+    throw new Error(`verification key curve mismatch: expected ${expectedCurve}, got ${vkey.curve}`);
+  }
+
+  if (vkey.nPublic !== expectedNPublic) {
+    throw new Error(`verification key nPublic mismatch: expected ${expectedNPublic}, got ${vkey.nPublic}`);
+  }
+
+  if (!Array.isArray(vkey.IC)) {
+    throw new Error("verification key IC must be an array");
+  }
+
+  if (vkey.IC.length !== expectedNPublic + 1) {
+    throw new Error(`verification key IC length mismatch: expected ${expectedNPublic + 1}, got ${vkey.IC.length}`);
+  }
+
+  for (const field of ["vk_alpha_1", "vk_beta_2", "vk_gamma_2", "vk_delta_2"]) {
+    if (!Array.isArray(vkey[field])) {
+      throw new Error(`verification key missing array field: ${field}`);
+    }
+  }
+
+  return true;
+}
+
+export function proofBundleSha256({ proof, publicSignals }) {
+  if (!proof || !Array.isArray(publicSignals)) {
+    throw new Error("proofBundleSha256 requires proof and publicSignals");
+  }
+
+  const canonical = JSON.stringify(canonicalJson({ proof, publicSignals }));
+  return crypto.createHash("sha256").update(canonical).digest("hex");
 }
 
 export function listInstructionNames() {

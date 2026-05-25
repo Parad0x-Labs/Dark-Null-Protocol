@@ -24,6 +24,8 @@ npm install @coral-xyz/anchor @solana/web3.js
 - bytes32 normalization helpers
 - proof encoding metadata helpers
 - withdraw v2 public-input encoders
+- Groth16 verification-key shape checks
+- deterministic proof bundle hashes
 - optional Anchor and web3 connection helpers
 
 ## Default Program ID
@@ -38,10 +40,15 @@ The canonical manifest key is `canonicalDevnet`, which resolves to:
 
 `encodeWithdrawV2PublicInputs()` encodes the promoted payout-bound input order for `prepare_phantom_withdraw_v2`.
 
+`assertGroth16VerificationKeyShape()` rejects verifier metadata drift such as wrong protocol, curve, public input count, or IC length.
+
+`proofBundleSha256()` produces a stable SHA-256 digest for a proof plus public signals bundle.
+
 ## Start Here
 
 - [`../README.md`](../README.md)
 - [`../MANIFEST.json`](../MANIFEST.json)
+- [`../CEREMONY.md`](../CEREMONY.md)
 - [`../NETWORKS.json`](../NETWORKS.json)
 - [`../SECURITY_MODEL.md`](../SECURITY_MODEL.md)
 - [`../docs/getting-started.md`](../docs/getting-started.md)

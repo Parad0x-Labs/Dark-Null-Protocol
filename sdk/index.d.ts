@@ -48,6 +48,7 @@ export interface CanonicalArtifacts {
   manifestPath: string;
   networksPath: string;
   idlPath: string;
+  ceremonyPath: string;
   circuitPath: string;
   zkeyPath: string;
   wasmPath: string;
@@ -57,6 +58,7 @@ export interface CanonicalArtifacts {
     manifest: string;
     networks: string;
     idl: string;
+    ceremony: string;
     circuit: string;
     zkey: string;
     wasm: string;
@@ -76,6 +78,17 @@ export interface ProofEncoding {
     proof_b: 128;
     proof_c: 64;
   };
+}
+
+export interface Groth16VerificationKeyShapeOptions {
+  protocol?: string;
+  curve?: string;
+  nPublic?: number;
+}
+
+export interface ProofBundle {
+  proof: Record<string, unknown>;
+  publicSignals: string[];
 }
 
 export interface NetworkDefinition {
@@ -136,6 +149,11 @@ export declare function getCanonicalManifest(): CanonicalManifest;
 export declare function getIdl(): any;
 export declare function getCanonicalArtifacts(): CanonicalArtifacts;
 export declare function getProofEncoding(): ProofEncoding;
+export declare function assertGroth16VerificationKeyShape(
+  vkey: unknown,
+  options?: Groth16VerificationKeyShapeOptions | number,
+): true;
+export declare function proofBundleSha256(bundle: ProofBundle): string;
 export declare function listInstructionNames(): string[];
 export declare function getInstructionDefinition(name: string): any;
 export declare function listAccountNames(): string[];

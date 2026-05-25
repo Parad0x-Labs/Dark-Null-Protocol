@@ -35,7 +35,7 @@ Dark Null is the compact, evidence-first Solana privacy settlement track:
 - fail-closed payout path until amount, receiver token account, and mint are proven by promoted v2 artifacts
 - public launch gate that blocks unsupported mainnet claims
 
-For launch copy and positioning, read [`docs/LAUNCH_NARRATIVE.md`](./docs/LAUNCH_NARRATIVE.md). For the release gate, read [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md).
+For launch copy and positioning, read [`docs/LAUNCH_NARRATIVE.md`](./docs/LAUNCH_NARRATIVE.md). For the release gate, read [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) and [`docs/MAINNET_RUNBOOK.md`](./docs/MAINNET_RUNBOOK.md).
 
 ## One Command Bootstrap
 
@@ -127,7 +127,8 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 2. Run `npm run config:devnet` or `npm run config:localnet`.
 3. Read [`MANIFEST.json`](./MANIFEST.json), [`NETWORKS.json`](./NETWORKS.json), and [`docs/PROGRAM_IDS.md`](./docs/PROGRAM_IDS.md).
 4. Run `npm run test:all`.
-5. Run `npm run check:mainnet` and expect it to fail until the blockers in [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) are cleared.
+5. Run `npm run check:mainnet:evidence` and expect it to fail until `MAINNET_EVIDENCE.json` is real.
+6. Run `npm run check:mainnet` and expect it to fail until the blockers in [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) are cleared.
 
 ## For Integrators and Agent Builders
 

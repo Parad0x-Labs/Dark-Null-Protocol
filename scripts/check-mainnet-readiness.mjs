@@ -38,6 +38,7 @@ function collectBlockers() {
   const packageJson = readJson("package.json");
   const rootSource = readText("src/lib.rs");
   const auditDoc = readText("AUDIT.md");
+  const mainnetEvidencePath = path.join(repoRoot, "MAINNET_EVIDENCE.json");
 
   if (!commandExists("cargo")) {
     add(
@@ -46,6 +47,16 @@ function collectBlockers() {
       "blocker",
       "cargo is not available locally, so Rust tests cannot be treated as locally validated.",
       "Run cargo test --offline locally or in CI on the exact release commit.",
+    );
+  }
+
+  if (!existsSync(mainnetEvidencePath)) {
+    add(
+      blockers,
+      "mainnet-evidence-file",
+      "blocker",
+      "MAINNET_EVIDENCE.json is not published.",
+      "Create MAINNET_EVIDENCE.json from MAINNET_EVIDENCE.example.json after deployment, v2 artifact promotion, and audit completion.",
     );
   }
 

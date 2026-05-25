@@ -21,4 +21,5 @@ test("mainnet readiness gate reports current blockers without pretending readine
   assert.ok(blockerIds.includes("payout-disabled"));
   assert.ok(blockerIds.includes("third-party-audit"));
   assert.ok(blockerIds.includes("mainnet-manifest"));
+  assert.ok(blockerIds.includes("mainnet-evidence-file"));
 });

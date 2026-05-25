@@ -11,6 +11,7 @@ const requiredFiles = [
   "LICENSE",
   "package.json",
   "Anchor.toml",
+  "MAINNET_EVIDENCE.example.json",
   "MANIFEST.json",
   "NETWORKS.json",
   ".env.example",
@@ -38,6 +39,7 @@ const requiredFiles = [
   "tests/proof-encoding.test.mjs",
   "tests/malformed-proof.test.mjs",
   "tests/mainnet-readiness.test.mjs",
+  "tests/mainnet-evidence.test.mjs",
   "tests/historical-null-mint-consistency.test.mjs",
   "tests/historical-null-mint-manifest.test.mjs",
   "client/dark_client.py",
@@ -49,10 +51,13 @@ const requiredFiles = [
   "circuits/vk.json",
   "circuits/README.md",
   "docs/CONTRIBUTOR_QUICKSTART.md",
+  "docs/EXTERNAL_AUDIT_SCOPE.md",
   "docs/LAUNCH_NARRATIVE.md",
   "docs/MAINNET_READINESS.md",
+  "docs/MAINNET_RUNBOOK.md",
   "docs/PROGRAM_IDS.md",
   "scripts/bootstrap.sh",
+  "scripts/check-mainnet-evidence.mjs",
   "scripts/check-mainnet-readiness.mjs",
   "scripts/check-public-repo.mjs",
   "scripts/generate-checksums.mjs",
@@ -160,6 +165,9 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || packageJson.scripts["check:mainnet"] !== "node ./scripts/check-mainnet-readiness.mjs") {
     failures.push("package.json must expose scripts.check:mainnet");
   }
+  if (!packageJson.scripts || packageJson.scripts["check:mainnet:evidence"] !== "node ./scripts/check-mainnet-evidence.mjs") {
+    failures.push("package.json must expose scripts.check:mainnet:evidence");
+  }
   if (!packageJson.exports || packageJson.exports["./networks"] !== "./NETWORKS.json") {
     failures.push("package.json must export ./networks -> ./NETWORKS.json");
   }
@@ -178,7 +186,7 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:config")) {
     failures.push("package.json test script must include npm run test:config");
   }
-  if (!packageJson.scripts || packageJson.scripts["test:proof"] !== "node --test ./tests/proof-encoding.test.mjs ./tests/malformed-proof.test.mjs ./tests/mainnet-readiness.test.mjs") {
+  if (!packageJson.scripts || packageJson.scripts["test:proof"] !== "node --test ./tests/proof-encoding.test.mjs ./tests/malformed-proof.test.mjs ./tests/mainnet-readiness.test.mjs ./tests/mainnet-evidence.test.mjs") {
     failures.push("package.json must expose scripts.test:proof");
   }
   if (!packageJson.scripts || packageJson.scripts["test:security"] !== "npm audit") {

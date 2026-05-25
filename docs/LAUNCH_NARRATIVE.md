@@ -73,6 +73,7 @@ Before launch language changes, clear [`MAINNET_READINESS.md`](./MAINNET_READINE
 3. Run Rust validation on the release commit.
 4. Publish a real third-party audit.
 5. Publish mainnet manifest, deployment transaction, upgrade-authority policy, and artifact hashes.
-6. Pass public, proof, security, release integrity, Python, Rust, packaging, and end-to-end checks together.
+6. Publish `MAINNET_EVIDENCE.json` and pass `npm run check:mainnet:evidence`.
+7. Pass public, proof, security, release integrity, Python, Rust, packaging, and end-to-end checks together.
 
 Until then, the correct public line is simple: strong devnet evidence, not mainnet launch.

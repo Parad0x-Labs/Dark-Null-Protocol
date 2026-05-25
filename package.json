@@ -15,6 +15,7 @@
   },
   "files": [
     "Anchor.toml",
+    "MAINNET_EVIDENCE.example.json",
     "MANIFEST.json",
     "NETWORKS.json",
     ".env.example",
@@ -36,8 +37,10 @@
     "client/proof_packer.py",
     "client/README.md",
     "client/requirements.txt",
+    "docs/EXTERNAL_AUDIT_SCOPE.md",
     "docs/LAUNCH_NARRATIVE.md",
     "docs/MAINNET_READINESS.md",
+    "docs/MAINNET_RUNBOOK.md",
     "src/lib.rs",
     "src/verifying_key.rs",
     "idl/paradox.json",
@@ -88,9 +91,10 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "scripts": {
+    "scripts": {
     "bootstrap": "sh ./scripts/bootstrap.sh",
     "check:mainnet": "node ./scripts/check-mainnet-readiness.mjs",
+    "check:mainnet:evidence": "node ./scripts/check-mainnet-evidence.mjs",
     "check:public": "node ./scripts/check-public-repo.mjs",
     "config:devnet": "node ./scripts/network-config.mjs --network devnet --check",
     "config:localnet": "node ./scripts/network-config.mjs --network localnet --check",
@@ -98,7 +102,7 @@
     "config:json:localnet": "node ./scripts/network-config.mjs --network localnet --json --check",
     "test:artifacts": "node --test ./tests/verification-key-consistency.test.mjs ./tests/canonical-manifest.test.mjs ./tests/canonical-proof-flow.test.mjs ./tests/historical-null-mint-consistency.test.mjs ./tests/historical-null-mint-manifest.test.mjs",
     "test:config": "node --test ./tests/network-config.test.mjs",
-    "test:proof": "node --test ./tests/proof-encoding.test.mjs ./tests/malformed-proof.test.mjs ./tests/mainnet-readiness.test.mjs",
+    "test:proof": "node --test ./tests/proof-encoding.test.mjs ./tests/malformed-proof.test.mjs ./tests/mainnet-readiness.test.mjs ./tests/mainnet-evidence.test.mjs",
     "test:security": "npm audit",
     "test:sdk": "node --test ./sdk/index.test.mjs",
     "test:python": "node ./scripts/python-compile.mjs",

@@ -1,0 +1,40 @@
+{
+  "schema": "dark-null-mainnet-evidence-v1",
+  "release_commit": "REPLACE_WITH_40_HEX_RELEASE_COMMIT",
+  "program": {
+    "cluster": "mainnet-beta",
+    "id": "REPLACE_WITH_MAINNET_PROGRAM_ID",
+    "deployment_tx": "REPLACE_WITH_MAINNET_DEPLOYMENT_TRANSACTION",
+    "upgrade_authority_policy": "REPLACE_WITH_locked_OR_multisig_OR_timelock-multisig",
+    "upgrade_authority": "REPLACE_WITH_UPGRADE_AUTHORITY_OR_none"
+  },
+  "proof_artifacts": {
+    "label": "canonical-mainnet-withdraw-v2",
+    "n_public": 8,
+    "manifest_path": "MANIFEST.json",
+    "checksums_path": "dist/release/SHA256SUMS",
+    "sbom_path": "dist/release/sbom.cdx.json"
+  },
+  "payout": {
+    "enabled": true,
+    "instruction": "prepare_phantom_withdraw_v2",
+    "public_inputs": [
+      "commitment",
+      "nullifier",
+      "root",
+      "amount",
+      "receiver_token_part_0",
+      "receiver_token_part_1",
+      "mint_part_0",
+      "mint_part_1"
+    ]
+  },
+  "audit": {
+    "auditor": "REPLACE_WITH_AUDITOR_NAME",
+    "completed_on": "YYYY-MM-DD",
+    "report_path": "audits/REPLACE_WITH_FINAL_AUDIT_REPORT.pdf",
+    "sha256": "REPLACE_WITH_AUDIT_REPORT_SHA256",
+    "scope_commit": "REPLACE_WITH_40_HEX_RELEASE_COMMIT",
+    "residual_risk": "REPLACE_WITH_ACCEPTED_RESIDUAL_RISK_SUMMARY"
+  }
+}

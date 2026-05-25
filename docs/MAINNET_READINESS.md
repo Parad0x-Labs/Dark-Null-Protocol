@@ -6,9 +6,10 @@ Run:
 
 ```bash
 npm run check:mainnet
+npm run check:mainnet:evidence
 ```
 
-That command is expected to fail until every blocker below is cleared.
+Those commands are expected to fail until every blocker below is cleared.
 
 ## Required Evidence
 
@@ -18,6 +19,7 @@ That command is expected to fail until every blocker below is cleared.
 | Payout-bound proof | v2 circuit, zkey, wasm, vk, Rust verifier, IDL, manifest, SDK, and tests all bind `[commitment, nullifier, root, amount, receiver_token_part_0, receiver_token_part_1, mint_part_0, mint_part_1]` |
 | Public payout | fail-closed placeholder errors removed only after the promoted proof actually authorizes payout |
 | Mainnet manifest | mainnet program id, deployment transaction, artifact hashes, cluster, and upgrade-authority policy are published |
+| Mainnet evidence | `MAINNET_EVIDENCE.json` binds the audited commit, program id, deployment transaction, upgrade policy, v2 artifact label, payout enablement, and audit report hash |
 | Third-party audit | external audit report with scope, commit hash, findings, fixes, residual risk, and auditor identity |
 | Runtime security | strict npm audit is clean for runtime and dev dependencies |
 | Release integrity | checksums, SBOM, and GitHub artifact attestations produced for release artifacts |
@@ -36,3 +38,9 @@ The strongest adjacent ideas to evaluate before mainnet are:
 - make relayer trust boundaries explicit: censorship only, direct fallback always available
 
 These are design directions, not current Dark Null claims.
+
+## Promotion Files
+
+- [`MAINNET_EVIDENCE.example.json`](../MAINNET_EVIDENCE.example.json) defines the evidence schema.
+- [`MAINNET_RUNBOOK.md`](./MAINNET_RUNBOOK.md) defines the release order.
+- [`EXTERNAL_AUDIT_SCOPE.md`](./EXTERNAL_AUDIT_SCOPE.md) defines the audit scope required before launch language changes.

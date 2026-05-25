@@ -70,7 +70,7 @@ export interface ProofEncoding {
   field: "bn254-fr";
   byte_order: "big-endian";
   current_public_inputs: string[];
-  planned_withdraw_v2_public_inputs: string[];
+  withdraw_v1_legacy_public_inputs: string[];
   proof_sections: {
     proof_a: 64;
     proof_b: 128;

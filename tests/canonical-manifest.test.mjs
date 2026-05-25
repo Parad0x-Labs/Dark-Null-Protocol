@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const manifestPath = path.join(repoRoot, "MANIFEST.json");
-const textExtensions = new Set([".circom", ".json", ".md", ".mjs", ".rs", ".toml", ".ts"]);
+const textExtensions = new Set([".circom", ".json", ".md", ".mjs", ".cjs", ".js", ".py", ".rs", ".sym", ".toml", ".ts"]);
 
 async function canonicalArtifactBytes(fullPath) {
   const bytes = await fs.readFile(fullPath);

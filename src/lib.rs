@@ -29,12 +29,16 @@ fn require_fr_public_inputs<const N: usize>(public_inputs: &[[u8; 32]; N]) -> Re
     Ok(())
 }
 
-fn verify_withdraw_public_inputs(
+fn verify_withdraw_v2_public_inputs(
     proof_a: &[u8; 64],
     proof_b: &[u8; 128],
     proof_c: &[u8; 64],
-    public_inputs: &[[u8; 32]; 3],
+    public_inputs: &[[u8; 32]; WITHDRAW_V2_PUBLIC_INPUTS],
 ) -> Result<()> {
+    require!(
+        verifying_key::NR_PUBINPUTS == WITHDRAW_V2_PUBLIC_INPUTS,
+        ErrorCode::InvalidProof
+    );
     require_fr_public_inputs(public_inputs)?;
 
     let mut verifier = Groth16Verifier::new(
@@ -91,6 +95,17 @@ pub mod paradox {
         ephemeral_pubkey: [u8; 32],
         view_tag: u8
     ) -> Result<()> {
+        require_keys_eq!(
+            ctx.accounts.user_wsol.mint,
+            ctx.accounts.vault_wsol.mint,
+            ErrorCode::InvalidPayoutAccount
+        );
+        require_keys_eq!(
+            ctx.accounts.vault_wsol.owner,
+            ctx.accounts.vault.key(),
+            ErrorCode::InvalidPayoutAccount
+        );
+
         token::transfer(
             CpiContext::new(
                 ctx.accounts.token_program.to_account_info(),
@@ -134,43 +149,14 @@ pub mod paradox {
         proof_c: [u8; 64],
         public_inputs: [[u8; 32]; 3]
     ) -> Result<()> {
-        let vault = ctx.accounts.vault.load_mut()?;
         let _ = (amount, ctx.accounts.receiver.key(), ctx.accounts.receiver_token.key());
-
-        // 1. Root Check
-        require!(vault.contains_root(&root), ErrorCode::InvalidRoot);
-
-        // 2. Double Spend Check
-        require!(
-            !vault.contains_nullifier(&nullifier_hash),
-            ErrorCode::DoubleSpend
-        );
-
-        // 3. GROTH16-SOLANA VERIFICATION
-        // Consistency checks: ensure public inputs match instruction arguments
-        // Order: [Commitment, Nullifier, Root]
-        require!(
-            public_inputs.len() == verifying_key::NR_PUBINPUTS,
-            ErrorCode::InvalidProof
-        );
-        require!(public_inputs[1] == nullifier_hash, ErrorCode::InvalidProof);
-        require!(public_inputs[2] == root, ErrorCode::InvalidProof);
-
-        msg!("ZK_VERIFY: Received {} public inputs", public_inputs.len());
-
-        // Expected order: [commitment, nullifier, root]
-        verify_withdraw_public_inputs(
-            &proof_a,
-            &proof_b,
-            &proof_c,
-            &public_inputs,
-        )?;
+        let _ = (&nullifier_hash, &root, &proof_a, &proof_b, &proof_c, &public_inputs);
 
         err!(ErrorCode::UnsafePublicWithdrawPath)
     }
 
     pub fn prepare_phantom_withdraw_v2(
-        ctx: Context<PrepareWithdraw>,
+        ctx: Context<PrepareWithdrawV2>,
         amount: u64,
         nullifier_hash: [u8; 32],
         root: [u8; 32],
@@ -179,16 +165,6 @@ pub mod paradox {
         proof_c: [u8; 64],
         public_inputs: [[u8; 32]; 8]
     ) -> Result<()> {
-        let vault = ctx.accounts.vault.load_mut()?;
-        let _ = (&proof_a, &proof_b, &proof_c);
-
-        require_fr_public_inputs(&public_inputs)?;
-        require!(vault.contains_root(&root), ErrorCode::InvalidRoot);
-        require!(
-            !vault.contains_nullifier(&nullifier_hash),
-            ErrorCode::DoubleSpend
-        );
-
         let receiver_token_key = ctx.accounts.receiver_token.key();
         let mint_key = ctx.accounts.mint.key();
         let (receiver_token_part_0, receiver_token_part_1) =
@@ -203,8 +179,69 @@ pub mod paradox {
         require!(public_inputs[6] == mint_part_0, ErrorCode::InvalidProof);
         require!(public_inputs[7] == mint_part_1, ErrorCode::InvalidProof);
 
-        msg!("ZK_VERIFY_V2: payout-bound public inputs checked; circuit promotion pending");
-        err!(ErrorCode::WithdrawV2CircuitNotPromoted)
+        require_keys_eq!(
+            ctx.accounts.vault_token.owner,
+            ctx.accounts.vault.key(),
+            ErrorCode::InvalidPayoutAccount
+        );
+        require_keys_eq!(
+            ctx.accounts.vault_token.mint,
+            mint_key,
+            ErrorCode::InvalidPayoutAccount
+        );
+        require_keys_eq!(
+            ctx.accounts.receiver_token.owner,
+            ctx.accounts.receiver.key(),
+            ErrorCode::InvalidPayoutAccount
+        );
+        require_keys_eq!(
+            ctx.accounts.receiver_token.mint,
+            mint_key,
+            ErrorCode::InvalidPayoutAccount
+        );
+
+        {
+            let vault = ctx.accounts.vault.load()?;
+            require!(vault.contains_root(&root), ErrorCode::InvalidRoot);
+            require!(
+                !vault.contains_nullifier(&nullifier_hash),
+                ErrorCode::DoubleSpend
+            );
+        }
+
+        verify_withdraw_v2_public_inputs(
+            &proof_a,
+            &proof_b,
+            &proof_c,
+            &public_inputs,
+        )?;
+
+        {
+            let mut vault = ctx.accounts.vault.load_mut()?;
+            require!(
+                !vault.contains_nullifier(&nullifier_hash),
+                ErrorCode::DoubleSpend
+            );
+            vault.append_nullifier(nullifier_hash)?;
+        }
+
+        let vault_bump = ctx.bumps.vault;
+        let signer_seeds: &[&[&[u8]]] = &[&[b"merkle_vault", &[vault_bump]]];
+        token::transfer(
+            CpiContext::new_with_signer(
+                ctx.accounts.token_program.to_account_info(),
+                Transfer {
+                    from: ctx.accounts.vault_token.to_account_info(),
+                    to: ctx.accounts.receiver_token.to_account_info(),
+                    authority: ctx.accounts.vault.to_account_info(),
+                },
+                signer_seeds,
+            ),
+            amount,
+        )?;
+
+        msg!("ZK_VERIFY_V2: payout-bound proof verified and withdrawal paid");
+        Ok(())
     }
 
     pub fn burn_and_whisper(ctx: Context<BurnToken>, amount: u64, _commitment: [u8; 32], encrypted_note: Vec<u8>, ephemeral_pubkey: [u8; 32], view_tag: u8) -> Result<()> {
@@ -264,6 +301,19 @@ pub struct PrepareWithdraw<'info> {
     pub mint: Account<'info, Mint>,
     #[account(mut)]
     pub receiver_token: Account<'info, TokenAccount>, // Bob's ATA
+    pub receiver: Signer<'info>,
+    pub token_program: Program<'info, Token>,
+}
+
+#[derive(Accounts)]
+pub struct PrepareWithdrawV2<'info> {
+    #[account(mut, seeds = [b"merkle_vault"], bump)]
+    pub vault: AccountLoader<'info, Vault>,
+    pub mint: Account<'info, Mint>,
+    #[account(mut)]
+    pub vault_token: Account<'info, TokenAccount>,
+    #[account(mut)]
+    pub receiver_token: Account<'info, TokenAccount>,
     pub receiver: Signer<'info>,
     pub token_program: Program<'info, Token>,
 }
@@ -389,10 +439,10 @@ pub enum ErrorCode {
     RootStorageFull,
     #[msg("Signer is not authorized to update roots.")]
     UnauthorizedRootUpdate,
-    #[msg("Public withdraw payout path is disabled until amount and recipient are bound by the canonical proof bundle.")]
+    #[msg("Legacy public withdraw payout path is disabled because its proof shape does not bind payout semantics.")]
     UnsafePublicWithdrawPath,
-    #[msg("Withdraw v2 payout remains disabled until the v2 circuit, proving key, verifying key, manifest, and IDL are promoted together.")]
-    WithdrawV2CircuitNotPromoted,
+    #[msg("Payout token account ownership or mint binding is invalid.")]
+    InvalidPayoutAccount,
 }
 
 #[cfg(test)]
@@ -406,9 +456,9 @@ mod tests {
     }
 
     #[test]
-    fn verifying_key_uses_three_public_inputs() {
-        assert_eq!(verifying_key::NR_PUBINPUTS, 3);
-        assert_eq!(VERIFYING_KEY.nr_pubinputs, 3);
+    fn verifying_key_uses_withdraw_v2_public_inputs() {
+        assert_eq!(verifying_key::NR_PUBINPUTS, WITHDRAW_V2_PUBLIC_INPUTS);
+        assert_eq!(VERIFYING_KEY.nr_pubinputs, WITHDRAW_V2_PUBLIC_INPUTS);
         assert_eq!(WITHDRAW_V2_PUBLIC_INPUTS, 8);
     }
 

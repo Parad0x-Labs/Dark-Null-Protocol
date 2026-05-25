@@ -79,15 +79,19 @@ class TestDarkClient:
             amount=1_000_000,
             blinding=7,
             nullifier_secret=99,
-            root=123,
+            receiver_token=b"\x01" * 32,
+            mint=b"\x02" * 32,
             path_elements=[0, 0, 0, 0, 0, 0, 0],
             path_indices=[0, 0, 0, 0, 0, 0, 0],
         )
         assert inputs["amount"] == "1000000"
+        assert "root" not in inputs
+        assert int(inputs["receiver_token_part_0"]) > 0
+        assert int(inputs["mint_part_1"]) > 0
         assert inputs["pathIndices"] == [0] * 7
 
         with pytest.raises(ValueError, match="7 path elements"):
-            self.client.build_proof_inputs(1, 2, 3, 4, [0], [0])
+            self.client.build_proof_inputs(1, 2, 3, b"\x01" * 32, b"\x02" * 32, [0], [0])
 
     def test_resolve_proving_artifacts_uses_canonical_defaults(self):
         zkey_path, wasm_path = self.client._resolve_proving_artifacts()
@@ -126,6 +130,7 @@ class TestDarkClient:
     def test_withdraw_v2_public_input_encoding_matches_idl_layout(self):
         receiver = Keypair().pubkey()
         mint = Keypair().pubkey()
+        vault_token = Keypair().pubkey()
         receiver_token = Keypair().pubkey()
         commitment = b"\x00" * 31 + b"\x01"
         nullifier = b"\x00" * 31 + b"\x02"
@@ -159,6 +164,7 @@ class TestDarkClient:
         instruction = self.client.build_prepare_phantom_withdraw_v2_instruction(
             receiver=receiver,
             mint=mint,
+            vault_token=vault_token,
             receiver_token=receiver_token,
             amount=42,
             proof_bundle=proof_bundle,
@@ -167,7 +173,9 @@ class TestDarkClient:
         assert instruction.data[:8] == anchor_discriminator("prepare_phantom_withdraw_v2")
         assert int.from_bytes(instruction.data[8:16], "little") == 42
         assert len(instruction.data) == 592
-        assert len(instruction.accounts) == 5
+        assert len(instruction.accounts) == 6
+        assert not instruction.accounts[1].is_writable
+        assert instruction.accounts[2].pubkey == vault_token
 
         proof_bundle["public_inputs"] = list(public_inputs)
         proof_bundle["public_inputs"][3] = b"\x00" * 32
@@ -175,6 +183,7 @@ class TestDarkClient:
             self.client.build_prepare_phantom_withdraw_v2_instruction(
                 receiver=receiver,
                 mint=mint,
+                vault_token=vault_token,
                 receiver_token=receiver_token,
                 amount=42,
                 proof_bundle=proof_bundle,
@@ -236,16 +245,19 @@ class TestDarkClient:
             with open(proof_path, "w", encoding="utf8") as handle:
                 json.dump(proof, handle)
             with open(public_path, "w", encoding="utf8") as handle:
-                json.dump(["11", "12", "13"], handle)
+                json.dump(["11", "12", "13", "14", "15", "16", "17", "18"], handle)
             return Mock()
 
         mock_run.side_effect = write_outputs
+        receiver_token = Keypair().pubkey()
+        mint = Keypair().pubkey()
 
         bundle = self.client.generate_withdraw_proof(
             amount=1_000_000,
             blinding=7,
             nullifier_secret=99,
-            root=123456,
+            receiver_token=receiver_token,
+            mint=mint,
             path_elements=[0, 0, 0, 0, 0, 0, 0],
             path_indices=[0, 0, 0, 0, 0, 0, 0],
         )
@@ -253,7 +265,7 @@ class TestDarkClient:
         assert bundle["proof_a"] == (1).to_bytes(32, "big") + (2).to_bytes(32, "big")
         assert bundle["nullifier_hash"] == (12).to_bytes(32, "big")
         assert bundle["root"] == (13).to_bytes(32, "big")
-        assert len(bundle["public_inputs"]) == 3
+        assert len(bundle["public_inputs"]) == 8
 
 
 if __name__ == "__main__":

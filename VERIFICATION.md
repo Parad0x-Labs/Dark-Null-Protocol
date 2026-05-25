@@ -1,6 +1,6 @@
 # Public Verification Guide
 
-**Last Updated**: March 15, 2026
+**Last Updated**: May 25, 2026
 
 This guide is intentionally narrow: it describes what an outside reviewer can verify from the public repo without trusting private context.
 
@@ -56,7 +56,7 @@ That now includes:
 - root verifier/vk consistency
 - root manifest binding
 - root proof generation and Groth16 verification against the canonical artifact set
-- proof encoding metadata and planned withdraw v2 public-input encoder checks
+- proof encoding metadata and withdraw v2 public-input encoder checks
 - release artifact hash verification against the manifest
 
 ### 4. Root Rust and Python Checks
@@ -85,8 +85,8 @@ Use those to understand how the repo evolved. Do not confuse them with the canon
 - third-party audit completion beyond what is explicitly stated in [`AUDIT.md`](./AUDIT.md)
 - mainnet operational controls, relayer controls, or release management
 - that every historical deployment in this repo used the current canonical root artifact set
-- mainnet readiness
-- live payout behavior for `prepare_phantom_withdraw_v2`; the interface is published but still fails closed until matching v2 artifacts are promoted
+- completed mainnet deployment evidence
+- completed third-party audit evidence
 
 ## Honest Verification Standard
 

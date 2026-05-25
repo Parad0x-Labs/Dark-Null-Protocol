@@ -139,21 +139,35 @@ class DarkClient:
         program_id = program_id or self.program_id
         return Pubkey.find_program_address([ROOT_AUTHORITY_SEED], program_id)[0]
 
-    def build_proof_inputs(self, amount, blinding, nullifier_secret, root, path_elements, path_indices):
+    def build_proof_inputs(self, amount, blinding, nullifier_secret, receiver_token, mint, path_elements, path_indices):
         if len(path_elements) != 7 or len(path_indices) != 7:
             raise ValueError("null_proof requires 7 path elements and 7 path indices")
 
+        receiver_token_part_0, receiver_token_part_1 = split_pubkey_public_inputs(receiver_token)
+        mint_part_0, mint_part_1 = split_pubkey_public_inputs(mint)
+
         return {
             "amount": str(int(amount)),
+            "receiver_token_part_0": str(int.from_bytes(receiver_token_part_0, "big")),
+            "receiver_token_part_1": str(int.from_bytes(receiver_token_part_1, "big")),
+            "mint_part_0": str(int.from_bytes(mint_part_0, "big")),
+            "mint_part_1": str(int.from_bytes(mint_part_1, "big")),
             "blinding": str(int(blinding)),
             "nullifier_secret": str(int(nullifier_secret)),
-            "root": str(int(root)),
             "pathElements": [str(int(value)) for value in path_elements],
             "pathIndices": [int(value) for value in path_indices],
         }
 
-    def generate_withdraw_proof(self, amount, blinding, nullifier_secret, root, path_elements, path_indices):
-        proof_inputs = self.build_proof_inputs(amount, blinding, nullifier_secret, root, path_elements, path_indices)
+    def generate_withdraw_proof(self, amount, blinding, nullifier_secret, receiver_token, mint, path_elements, path_indices):
+        proof_inputs = self.build_proof_inputs(
+            amount,
+            blinding,
+            nullifier_secret,
+            receiver_token,
+            mint,
+            path_elements,
+            path_indices,
+        )
         zkey_path, wasm_path = self._resolve_proving_artifacts()
 
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -350,6 +364,7 @@ class DarkClient:
         self,
         receiver,
         mint,
+        vault_token,
         receiver_token,
         amount,
         proof_bundle,
@@ -397,7 +412,8 @@ class DarkClient:
             bytes(data),
             [
                 AccountMeta(vault, False, True),
-                AccountMeta(mint, False, True),
+                AccountMeta(mint, False, False),
+                AccountMeta(vault_token, False, True),
                 AccountMeta(receiver_token, False, True),
                 AccountMeta(receiver, True, False),
                 AccountMeta(TOKEN_PROGRAM_ID, False, False),
@@ -453,8 +469,8 @@ class DarkClient:
         return proof_a, proof_b, proof_c
 
     def _public_signals_to_bytes(self, public_signals):
-        if len(public_signals) != 3:
-            raise ValueError(f"Expected 3 public signals, received {len(public_signals)}")
+        if len(public_signals) != 8:
+            raise ValueError(f"Expected 8 public signals, received {len(public_signals)}")
         return [self._snarkjs_int_to_bytes(value) for value in public_signals]
 
     def _snarkjs_int_to_bytes(self, value):
@@ -466,9 +482,13 @@ class DarkClient:
         if getattr(self, "snarkjs_path", None):
             return self.snarkjs_path
 
-        local_binary = REPO_ROOT / "node_modules" / ".bin" / "snarkjs"
-        if local_binary.exists():
-            return str(local_binary)
+        local_bin = REPO_ROOT / "node_modules" / ".bin"
+        candidates = [local_bin / "snarkjs"]
+        if os.name == "nt":
+            candidates = [local_bin / "snarkjs.cmd", local_bin / "snarkjs.ps1", *candidates]
+        for local_binary in candidates:
+            if local_binary.exists():
+                return str(local_binary)
 
         return "snarkjs"
 

@@ -15,8 +15,7 @@ test("proof encoding metadata distinguishes current ABI from compressed target",
   const encoding = getProofEncoding();
   assert.equal(encoding.current_verifier_abi_bytes, 256);
   assert.equal(encoding.compressed_target_bytes, 128);
-  assert.deepEqual(encoding.current_public_inputs, ["commitment", "nullifier", "root"]);
-  assert.deepEqual(encoding.planned_withdraw_v2_public_inputs, [
+  assert.deepEqual(encoding.current_public_inputs, [
     "commitment",
     "nullifier",
     "root",
@@ -26,6 +25,7 @@ test("proof encoding metadata distinguishes current ABI from compressed target",
     "mint_part_0",
     "mint_part_1",
   ]);
+  assert.deepEqual(encoding.withdraw_v1_legacy_public_inputs, ["commitment", "nullifier", "root"]);
 });
 
 test("u64 public input encoding is fixed-width big-endian", () => {
@@ -64,4 +64,3 @@ test("withdraw v2 public inputs reject non-field root inputs", () => {
     /root must be less/,
   );
 });
-

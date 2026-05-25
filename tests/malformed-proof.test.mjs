@@ -12,11 +12,21 @@ const wasmPath = path.join(repoRoot, "circuits", "null_proof_js", "null_proof.wa
 const zkeyPath = path.join(repoRoot, "circuits", "null_proof_final.zkey");
 const vkPath = path.join(repoRoot, "circuits", "vk.json");
 
+const receiverToken = Array.from({ length: 32 }, (_, index) => index + 1);
+const mint = Array.from({ length: 32 }, (_, index) => index + 33);
+
+function pubkeyPart(bytes) {
+  return BigInt(`0x${Buffer.concat([Buffer.alloc(16), Buffer.from(bytes)]).toString("hex")}`).toString();
+}
+
 const canonicalInput = {
   amount: "1000000",
+  receiver_token_part_0: pubkeyPart(receiverToken.slice(0, 16)),
+  receiver_token_part_1: pubkeyPart(receiverToken.slice(16, 32)),
+  mint_part_0: pubkeyPart(mint.slice(0, 16)),
+  mint_part_1: pubkeyPart(mint.slice(16, 32)),
   blinding: "7",
   nullifier_secret: "99",
-  root: "21400004692153895819275719573511056573585842202260377849491291672960823998665",
   pathElements: Array(7).fill("0"),
   pathIndices: Array(7).fill(0),
 };

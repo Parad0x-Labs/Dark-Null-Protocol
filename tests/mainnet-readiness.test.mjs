@@ -17,8 +17,8 @@ test("mainnet readiness gate reports current blockers without pretending readine
   const blockerIds = report.blockers.map((blocker) => blocker.id);
 
   assert.equal(report.status, "BLOCKED");
-  assert.ok(blockerIds.includes("withdraw-v2-artifacts"));
-  assert.ok(blockerIds.includes("payout-disabled"));
+  assert.ok(!blockerIds.includes("withdraw-v2-artifacts"));
+  assert.ok(!blockerIds.includes("payout-disabled"));
   assert.ok(blockerIds.includes("third-party-audit"));
   assert.ok(blockerIds.includes("mainnet-manifest"));
   assert.ok(blockerIds.includes("mainnet-evidence-file"));

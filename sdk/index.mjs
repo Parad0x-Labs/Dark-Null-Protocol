@@ -100,8 +100,7 @@ const defaultProofEncoding = Object.freeze({
   compressed_target_bytes: 128,
   field: "bn254-fr",
   byte_order: "big-endian",
-  current_public_inputs: Object.freeze(["commitment", "nullifier", "root"]),
-  planned_withdraw_v2_public_inputs: Object.freeze([
+  current_public_inputs: Object.freeze([
     "commitment",
     "nullifier",
     "root",
@@ -111,6 +110,7 @@ const defaultProofEncoding = Object.freeze({
     "mint_part_0",
     "mint_part_1",
   ]),
+  withdraw_v1_legacy_public_inputs: Object.freeze(["commitment", "nullifier", "root"]),
   proof_sections: Object.freeze({
     proof_a: 64,
     proof_b: 128,

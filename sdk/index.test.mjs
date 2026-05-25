@@ -39,6 +39,7 @@ test("IDL helpers expose published instruction metadata", () => {
 
   const withdrawV2 = getInstructionDefinition("prepare_phantom_withdraw_v2");
   assert.equal(withdrawV2.args.find((arg) => arg.name === "public_inputs").type.array[1], 8);
+  assert.ok(withdrawV2.accounts.some((account) => account.name === "vault_token"));
 
   const initialize = getInstructionDefinition("initialize");
   const updateRoot = getInstructionDefinition("update_root");

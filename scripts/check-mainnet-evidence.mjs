@@ -30,6 +30,16 @@ function add(blockers, id, summary, requiredEvidence) {
   blockers.push({ id, severity: "blocker", summary, requiredEvidence });
 }
 
+function functionBody(source, name) {
+  const start = source.indexOf(`pub fn ${name}`);
+  if (start === -1) {
+    return "";
+  }
+
+  const next = source.indexOf("\n    pub fn ", start + 1);
+  return source.slice(start, next === -1 ? source.length : next);
+}
+
 function isPlaceholder(value) {
   return (
     typeof value !== "string" ||
@@ -136,7 +146,13 @@ function collectBlockers() {
   if (isPlaceholder(evidence.proof_artifacts?.label) || /devnet/i.test(evidence.proof_artifacts?.label ?? "")) {
     add(blockers, "artifact-label", "Mainnet v2 artifact label is missing or still devnet-oriented.", "Publish a mainnet v2 artifact label.");
   }
-  if (!evidence.payout?.enabled || source.includes("WithdrawV2CircuitNotPromoted") || source.includes("UnsafePublicWithdrawPath")) {
+  const withdrawV2 = functionBody(source, "prepare_phantom_withdraw_v2");
+  if (
+    !evidence.payout?.enabled ||
+    withdrawV2.includes("WithdrawV2CircuitNotPromoted") ||
+    !withdrawV2.includes("verify_withdraw_v2_public_inputs") ||
+    !withdrawV2.includes("token::transfer")
+  ) {
     add(
       blockers,
       "payout-enabled",

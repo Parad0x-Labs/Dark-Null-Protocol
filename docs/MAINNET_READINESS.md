@@ -1,6 +1,6 @@
 # Mainnet Readiness Gate
 
-Dark Null must not be launched on mainnet from the current public repo. This page defines the release gate that must pass before mainnet language or deployment claims are allowed.
+Dark Null must not be launched on mainnet until deployment and audit evidence are published. This page defines the release gate that must pass before mainnet language or deployment claims are allowed.
 
 Run:
 
@@ -17,7 +17,7 @@ Those commands are expected to fail until every blocker below is cleared.
 |---|---|
 | Rust validation | `cargo test --offline` passes on the release commit |
 | Payout-bound proof | v2 circuit, zkey, wasm, vk, Rust verifier, IDL, manifest, SDK, and tests all bind `[commitment, nullifier, root, amount, receiver_token_part_0, receiver_token_part_1, mint_part_0, mint_part_1]` |
-| Public payout | fail-closed placeholder errors removed only after the promoted proof actually authorizes payout |
+| Public payout | v2 proof verifies amount, receiver token account, and mint before transfer; legacy proof-unbound path stays closed |
 | Mainnet manifest | mainnet program id, deployment transaction, artifact hashes, cluster, and upgrade-authority policy are published |
 | Mainnet evidence | `MAINNET_EVIDENCE.json` binds the audited commit, program id, deployment transaction, upgrade policy, v2 artifact label, payout enablement, and audit report hash |
 | Third-party audit | external audit report with scope, commit hash, findings, fixes, residual risk, and auditor identity |
@@ -30,7 +30,7 @@ Those commands are expected to fail until every blocker below is cleared.
 
 The strongest adjacent ideas to evaluate before mainnet are:
 
-- split claim and withdraw so the proof-bearing transaction does not move value
+- split claim and withdraw so the proof-bearing transaction does not move value if future audits prefer delayed payout
 - use credit-note style commitments for delayed payout
 - add preimage-verified revoke or recovery only if the privacy tradeoff is explicit
 - increase root-history usability or publish snapshot-staleness warnings

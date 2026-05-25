@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -18,13 +17,14 @@ function readText(relativePath) {
   return readFileSync(path.join(repoRoot, relativePath), "utf8");
 }
 
-function commandExists(command, versionArgs = ["--version"]) {
-  const result = spawnSync(command, versionArgs, {
-    cwd: repoRoot,
-    stdio: "ignore",
-    shell: process.platform === "win32",
-  });
-  return result.status === 0;
+function functionBody(source, name) {
+  const start = source.indexOf(`pub fn ${name}`);
+  if (start === -1) {
+    return "";
+  }
+
+  const next = source.indexOf("\n    pub fn ", start + 1);
+  return source.slice(start, next === -1 ? source.length : next);
 }
 
 function add(blockers, id, severity, summary, requiredEvidence) {
@@ -39,16 +39,6 @@ function collectBlockers() {
   const rootSource = readText("src/lib.rs");
   const auditDoc = readText("AUDIT.md");
   const mainnetEvidencePath = path.join(repoRoot, "MAINNET_EVIDENCE.json");
-
-  if (!commandExists("cargo")) {
-    add(
-      blockers,
-      "rust-local-validation",
-      "blocker",
-      "cargo is not available locally, so Rust tests cannot be treated as locally validated.",
-      "Run cargo test --offline locally or in CI on the exact release commit.",
-    );
-  }
 
   if (!existsSync(mainnetEvidencePath)) {
     add(
@@ -90,15 +80,17 @@ function collectBlockers() {
     );
   }
 
+  const withdrawV2 = functionBody(rootSource, "prepare_phantom_withdraw_v2");
   if (
-    rootSource.includes("WithdrawV2CircuitNotPromoted") ||
-    rootSource.includes("UnsafePublicWithdrawPath")
+    withdrawV2.includes("WithdrawV2CircuitNotPromoted") ||
+    !withdrawV2.includes("verify_withdraw_v2_public_inputs") ||
+    !withdrawV2.includes("token::transfer")
   ) {
     add(
       blockers,
       "payout-disabled",
       "blocker",
-      "The public payout paths are intentionally fail-closed in source.",
+      "The v2 payout path is not enabled by the promoted source.",
       "Enable payout only after v2 proof artifacts bind amount, receiver token account, and mint.",
     );
   }

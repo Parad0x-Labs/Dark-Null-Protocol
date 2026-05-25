@@ -11,7 +11,7 @@ The public root is intentionally narrow:
 - publish the circuit, zkey, wasm, verification key, Rust verifier, IDL, SDK, and manifest together
 - prove the current canonical Groth16 flow locally
 - document the exact proof byte story: 256-byte current verifier ABI, 128-byte compressed proof target
-- fail closed where payout semantics are not yet proven
+- keep legacy payout closed where payout semantics are not proven
 - keep historical branches visible, but separate from the canonical integration path
 
 ## Hard Claims We Can Make
@@ -21,7 +21,7 @@ The public root is intentionally narrow:
 - The current verifier ABI is 256 bytes: `proof_a[64] + proof_b[128] + proof_c[64]`.
 - The compressed proof target is 128 bytes.
 - The SDK exposes canonical artifact paths, proof encoding metadata, and v2 public-input encoders.
-- The public payout path is fail-closed until the promoted circuit proves amount, receiver token account, and mint.
+- The v2 payout path verifies amount, receiver token account, and mint before transfer.
 - Release integrity scripts generate and verify checksums and SBOM material.
 - CI now includes public checks, proof hardening, strict npm audit gating, CodeQL, and release integrity workflows.
 
@@ -30,7 +30,6 @@ The public root is intentionally narrow:
 - completed third-party audit
 - mainnet launch
 - production security
-- payout-enabled public withdrawals
 - append-only on-chain root derivation
 - that historical deployments are equivalent to the current canonical root
 - that switching a config value from devnet to mainnet is a release plan
@@ -40,7 +39,7 @@ The public root is intentionally narrow:
 Use these lines when describing the project publicly:
 
 ```text
-Dark Null is an evidence-first Solana privacy settlement root with a published Groth16 verifier path, canonical artifact manifest, reproducible proof tests, and fail-closed payout semantics until v2 amount/recipient binding is promoted.
+Dark Null is an evidence-first Solana privacy settlement root with a published Groth16 verifier path, canonical artifact manifest, reproducible proof tests, and payout-bound v2 withdrawals.
 ```
 
 ```text
@@ -60,7 +59,7 @@ The advantage is not just smaller proof positioning. The advantage is discipline
 - artifact-bound proof claims
 - platform-neutral test behavior
 - explicit security model
-- fail-closed payout path
+- payout-bound v2 withdraw path
 - release checksums and SBOM generation
 - public mainnet readiness gate
 
@@ -68,12 +67,10 @@ The advantage is not just smaller proof positioning. The advantage is discipline
 
 Before launch language changes, clear [`MAINNET_READINESS.md`](./MAINNET_READINESS.md):
 
-1. Promote payout-bound v2 artifacts as one set.
-2. Remove fail-closed payout placeholders only after v2 proofs authorize payout semantics.
-3. Run Rust validation on the release commit.
-4. Publish a real third-party audit.
-5. Publish mainnet manifest, deployment transaction, upgrade-authority policy, and artifact hashes.
-6. Publish `MAINNET_EVIDENCE.json` and pass `npm run check:mainnet:evidence`.
-7. Pass public, proof, security, release integrity, Python, Rust, packaging, and end-to-end checks together.
+1. Run Rust validation on the release commit.
+2. Publish a real third-party audit.
+3. Publish mainnet manifest, deployment transaction, upgrade-authority policy, and artifact hashes.
+4. Publish `MAINNET_EVIDENCE.json` and pass `npm run check:mainnet:evidence`.
+5. Pass public, proof, security, release integrity, Python, Rust, packaging, and end-to-end checks together.
 
 Until then, the correct public line is simple: strong devnet evidence, not mainnet launch.

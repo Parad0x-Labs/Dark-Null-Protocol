@@ -86,8 +86,8 @@ const program = await createAnchorProgram({
 
 `update_root` in the current source now requires the dedicated `root_authority` PDA and authorized signer path published in [`../idl/paradox.json`](../idl/paradox.json).
 
-`prepare_phantom_withdraw` is intentionally fail-closed in the current canonical source. The verifier path is compiled and published, but payout is rejected until the canonical proof bundle binds withdrawal amount and recipient semantics.
+`prepare_phantom_withdraw` is intentionally fail-closed because the legacy three-signal proof shape does not bind withdrawal amount or recipient semantics.
 
-`prepare_phantom_withdraw_v2` is the planned payout-bound instruction shape. Its public inputs are `[commitment, nullifier, root, amount, receiver_token_part_0, receiver_token_part_1, mint_part_0, mint_part_1]`; `amount` is encoded as 24 zero bytes plus `u64_be`, and each token account pubkey is split into two 16-byte chunks left-padded to 32 bytes. The instruction still fails closed with `WithdrawV2CircuitNotPromoted` until v2 circuit artifacts and manifest hashes are promoted together.
+`prepare_phantom_withdraw_v2` is the promoted payout-bound instruction shape. Its public inputs are `[commitment, nullifier, root, amount, receiver_token_part_0, receiver_token_part_1, mint_part_0, mint_part_1]`; `amount` is encoded as 24 zero bytes plus `u64_be`, and each token account pubkey is split into two 16-byte chunks left-padded to 32 bytes. The instruction verifies the v2 proof, checks the vault/receiver token accounts, records the nullifier, and transfers from the vault token account.
 
 Historical IDs are still cataloged in [`PROGRAM_IDS.md`](./PROGRAM_IDS.md). Do not hardcode one old ID across every document in the repo.

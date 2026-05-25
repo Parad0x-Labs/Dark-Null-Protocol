@@ -7,9 +7,9 @@ fn canonical_root_is_bound_to_recovered_devnet_program() {
 
 #[test]
 fn verifying_key_metadata_is_live_not_placeholder() {
-    assert_eq!(verifying_key::NR_PUBINPUTS, 3);
-    assert_eq!(verifying_key::VK_IC_COUNT, 4);
-    assert_eq!(VERIFYING_KEY.nr_pubinputs, 3);
+    assert_eq!(verifying_key::NR_PUBINPUTS, 8);
+    assert_eq!(verifying_key::VK_IC_COUNT, 9);
+    assert_eq!(VERIFYING_KEY.nr_pubinputs, 8);
 }
 
 #[test]

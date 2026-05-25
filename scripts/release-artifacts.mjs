@@ -16,11 +16,15 @@ export const releaseFiles = [
   "Cargo.toml",
   "src/lib.rs",
   "src/verifying_key.rs",
+  "scripts/generate-verifying-key.mjs",
   "idl/paradox.json",
   "circuits/null_proof.circom",
   "circuits/null_proof.r1cs",
+  "circuits/null_proof.sym",
   "circuits/null_proof_final.zkey",
+  "circuits/null_proof_js/generate_witness.js",
   "circuits/null_proof_js/null_proof.wasm",
+  "circuits/null_proof_js/witness_calculator.js",
   "circuits/vk.json",
 ];
 

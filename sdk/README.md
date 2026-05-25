@@ -23,7 +23,7 @@ npm install @coral-xyz/anchor @solana/web3.js
 - instruction metadata helpers
 - bytes32 normalization helpers
 - proof encoding metadata helpers
-- planned withdraw v2 public-input encoders
+- withdraw v2 public-input encoders
 - optional Anchor and web3 connection helpers
 
 ## Default Program ID
@@ -36,7 +36,7 @@ The canonical manifest key is `canonicalDevnet`, which resolves to:
 
 `getProofEncoding()` exposes the current `groth16-solana` verifier ABI size as 256 bytes and the compressed proof target as 128 bytes.
 
-`encodeWithdrawV2PublicInputs()` encodes the planned payout-bound input order for `prepare_phantom_withdraw_v2`. That instruction remains fail-closed until the v2 circuit and artifact manifest are promoted together.
+`encodeWithdrawV2PublicInputs()` encodes the promoted payout-bound input order for `prepare_phantom_withdraw_v2`.
 
 ## Start Here
 

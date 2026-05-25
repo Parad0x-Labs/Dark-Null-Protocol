@@ -36,22 +36,21 @@ Assume the attacker cannot:
 - a nullifier may not be reused within the live nullifier window
 - `update_root` must be signed by the configured `RootAuthorityConfig.authority`
 - deposit, root, and nullifier storage now **hard-fail** when the bounded public window is full
-- the public inputs `[commitment, nullifier, root]` must match the withdrawal instruction arguments
-- the public root must not release funds from proof-unbound instruction arguments; the canonical payout path now fails closed instead
-- `prepare_phantom_withdraw_v2` defines and checks the planned payout-bound public-input layout, then still fails closed until matching v2 circuit artifacts are promoted
+- `prepare_phantom_withdraw_v2` public inputs must match commitment, nullifier, root, amount, receiver token account, and mint arguments
+- v2 payout transfers only from a token account owned by the vault PDA and only into the signed receiver's token account
+- the legacy `prepare_phantom_withdraw` path remains fail-closed because its old three-signal proof shape does not bind payout semantics
 
 ## Known Trust Seams
 
 - root evolution is still off-chain: deposits append commitments, but the Merkle root is still computed externally and then published via `update_root`
 - the canonical public root keeps a bounded live state window rather than paged append-only history
 - the hardened root source is stronger than the earlier public devnet snapshot, but still depends on a trusted root updater
-- the current canonical circuit still exposes only `[commitment, nullifier, root]`; the v2 payout-bound instruction shape exists, but it is intentionally disabled until circuit, zkey, wasm, vk, Rust verifier, manifest, IDL, SDK, and tests rotate together
+- the v2 note commitment binds the receiver token account and mint at note creation time; that is safer for payout authorization but less flexible than recipient-chosen withdrawals
 
 ## Privacy Caveats
 
 - encrypted note distribution and relayer behavior are outside the proof system itself
-- the promoted proof currently binds `[commitment, nullifier, root]`, not payout amount or recipient
-- the planned v2 public inputs are `[commitment, nullifier, root, amount, receiver_token_part_0, receiver_token_part_1, mint_part_0, mint_part_1]`
+- the promoted proof binds `[commitment, nullifier, root, amount, receiver_token_part_0, receiver_token_part_1, mint_part_0, mint_part_1]`
 - off-chain timing, RPC patterns, and note delivery can still leak information
 
 ## Review Checklist

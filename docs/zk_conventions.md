@@ -4,10 +4,10 @@ This document describes the current canonical root in this repository. Historica
 
 ## Current Proof Shape
 
-The promoted circuit currently exposes exactly three public inputs:
+The promoted circuit exposes eight public signals:
 
 ```text
-[commitment, nullifier, root]
+[commitment, nullifier, root, amount, receiver_token_part_0, receiver_token_part_1, mint_part_0, mint_part_1]
 ```
 
 The verifier ABI passed to `groth16-solana` is:
@@ -48,11 +48,11 @@ The same integer value must be used in the Circom witness, SDK encoding, IDL pay
 
 Each limb is 32-byte big-endian.
 
-## Withdraw V2 Planned Encoding
+## Withdraw V2 Encoding
 
-`prepare_phantom_withdraw_v2` is present in the IDL and source, but it fails closed with `WithdrawV2CircuitNotPromoted` until the v2 artifacts are generated and promoted together.
+`prepare_phantom_withdraw_v2` is the promoted payout-bound withdrawal path. The legacy three-signal withdraw path remains fail-closed.
 
-The planned public-input order is:
+The public-input order is:
 
 ```text
 [
@@ -97,7 +97,7 @@ npm run test:all
 
 ## Rotation Rule
 
-Do not promote `canonical-devnet-root-2` until all of these agree:
+`canonical-devnet-root-2` is promoted only when all of these agree:
 
 - circuit
 - zkey

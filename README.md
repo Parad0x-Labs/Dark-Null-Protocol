@@ -32,7 +32,7 @@ Dark Null is the compact, evidence-first Solana privacy settlement track:
 - `128-byte` compressed proof target
 - canonical artifact manifest with stable hash checks
 - reproducible Groth16 proof flow
-- fail-closed payout path until amount, receiver token account, and mint are proven by promoted v2 artifacts
+- payout-bound v2 withdraw path proving amount, receiver token account, and mint
 - public launch gate that blocks unsupported mainnet claims
 
 For launch copy and positioning, read [`docs/LAUNCH_NARRATIVE.md`](./docs/LAUNCH_NARRATIVE.md). For the release gate, read [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) and [`docs/MAINNET_RUNBOOK.md`](./docs/MAINNET_RUNBOOK.md).
@@ -108,18 +108,18 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 - the root devnet/localnet selection now resolves through one published config surface
 - root updates are no longer open to any signer in the current root source
 - bounded root, leaf, and nullifier storage now fail closed instead of overwriting silently
-- the public root fails closed before payout if a proof does not bind withdrawal amount and recipient semantics
-- the planned `prepare_phantom_withdraw_v2` interface and SDK/client encoders bind amount, receiver token account, and mint in public inputs, while still failing closed until v2 artifacts are promoted
+- the legacy `prepare_phantom_withdraw` path fails closed instead of paying against proof-unbound arguments
+- `prepare_phantom_withdraw_v2` verifies the promoted eight-signal proof, binds amount/receiver token/mint, records the nullifier, and pays from the vault token account
 - the repo has one canonical public root path instead of a placeholder root plus side branch
 
 ## What This Repo Does Not Prove
 
 - third-party audit completion
-- mainnet readiness
+- completed mainnet deployment evidence
 - that every historical deployment in the repo used the current root files
 - that switching `devnet` to `mainnet` is enough to ship
 - append-only root derivation on-chain; the current source still trusts a privileged root updater
-- a safe public withdrawal payout path from the canonical root; both withdraw paths reject payout until amount/recipient binding is promoted into the canonical circuit and manifest
+- append-only Merkle root derivation in-program; the current source still trusts a privileged root updater
 
 ## Verification Flow
 

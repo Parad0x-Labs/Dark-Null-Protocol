@@ -61,6 +61,7 @@ const requiredFiles = [
   "scripts/check-mainnet-readiness.mjs",
   "scripts/check-public-repo.mjs",
   "scripts/generate-checksums.mjs",
+  "scripts/generate-verifying-key.mjs",
   "scripts/generate-sbom.mjs",
   "scripts/python-compile.mjs",
   "scripts/python-pytest.mjs",

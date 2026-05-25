@@ -4,16 +4,13 @@ This runbook is the release path. It is not evidence that mainnet is ready today
 
 ## Release Order
 
-1. Promote the payout-bound v2 circuit.
-2. Generate the v2 r1cs, wasm, zkey, verification key, Rust verifier, manifest, IDL, SDK metadata, and proof-flow tests as one artifact set.
-3. Remove fail-closed payout errors only after the v2 proof verifies amount, receiver token account, and mint.
-4. Run `npm run test:all` from a clean dependency install.
-5. Complete a third-party audit against the exact release commit.
-6. Deploy the audited release to mainnet-beta.
-7. Publish `MAINNET_EVIDENCE.json` from `MAINNET_EVIDENCE.example.json`.
-8. Run `npm run check:mainnet:evidence`.
-9. Run `npm run check:mainnet`.
-10. Tag the release only after both mainnet checks pass.
+1. Run `npm run test:all` from a clean dependency install.
+2. Complete a third-party audit against the exact release commit.
+3. Deploy the audited release to mainnet-beta.
+4. Publish `MAINNET_EVIDENCE.json` from `MAINNET_EVIDENCE.example.json`.
+5. Run `npm run check:mainnet:evidence`.
+6. Run `npm run check:mainnet`.
+7. Tag the release only after both mainnet checks pass.
 
 ## Evidence Required
 
@@ -46,7 +43,7 @@ npm run check:mainnet
 Do not deploy or announce mainnet if any of these are true:
 
 - the promoted circuit has fewer than eight public inputs
-- payout source still contains fail-closed placeholder errors
+- v2 payout source does not verify the promoted eight-signal proof before transfer
 - the audit report is missing, draft, or scoped to a different commit
 - the deployment transaction is not published
 - the upgrade-authority policy is unclear

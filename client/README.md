@@ -17,7 +17,7 @@ This directory now carries a **canonical root helper client**, not a toy-root tr
 - canonical network config from [`../NETWORKS.json`](../NETWORKS.json)
 - canonical root circuit artifacts under [`../circuits`](../circuits)
 - canonical root IDL semantics from [`../idl/paradox.json`](../idl/paradox.json)
-- planned withdraw v2 public-input encoding for amount, receiver token account, and mint binding
+- withdraw v2 public-input encoding for amount, receiver token account, and mint binding
 
 ## Limits
 
@@ -25,4 +25,4 @@ This directory now carries a **canonical root helper client**, not a toy-root tr
 - it helps build and verify the canonical root proof path; it does not make the repo audited or mainnet-safe
 - older client-side program references remain historical and are tracked in [`../docs/PROGRAM_IDS.md`](../docs/PROGRAM_IDS.md)
 - root updates now require the canonical `root_authority` PDA and authorized signer path from [`../idl/paradox.json`](../idl/paradox.json)
-- `prepare_phantom_withdraw_v2` helpers build the planned payout-bound payload, but the on-chain instruction still fails closed until matching v2 artifacts are promoted
+- `prepare_phantom_withdraw_v2` helpers build the promoted payout-bound payload; actual mainnet use still requires deployment evidence and an external audit

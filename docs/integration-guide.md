@@ -43,7 +43,7 @@ const proofEncoding = getProofEncoding();
 const programId = resolveProgramId("canonicalDevnet");
 ```
 
-Use `encodeWithdrawV2PublicInputs` for the planned v2 payout-bound input order. Do not treat `prepare_phantom_withdraw_v2` as a live payout route yet; the current source verifies the argument binding shape, then fails closed until the v2 artifact set is promoted.
+Use `encodeWithdrawV2PublicInputs` for the promoted v2 payout-bound input order. Treat live mainnet payout as blocked until `MAINNET_EVIDENCE.json` and a completed external audit exist.
 
 ## Raw IDL
 

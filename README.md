@@ -95,7 +95,7 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 | Verifier | [`src/verifying_key.rs`](./src/verifying_key.rs), [`circuits/vk.json`](./circuits/vk.json) |
 | Circuit artifacts | [`circuits/null_proof.circom`](./circuits/null_proof.circom), [`circuits/null_proof_final.zkey`](./circuits/null_proof_final.zkey), [`circuits/null_proof_js/null_proof.wasm`](./circuits/null_proof_js/null_proof.wasm) |
 | Proof encoding | 256-byte current `groth16-solana` verifier ABI; 128-byte compressed proof target |
-| Private x402 receipts | [`swarm/x402.mjs`](./swarm/x402.mjs), [`docs/PRIVATE_X402_PAYMENTS.md`](./docs/PRIVATE_X402_PAYMENTS.md) |
+| Private x402 receipts | [`swarm/x402.mjs`](./swarm/x402.mjs), [`docs/PRIVATE_X402_PAYMENTS.md`](./docs/PRIVATE_X402_PAYMENTS.md), DNA signed-receipt wrapper |
 | Auditor handoff | [`docs/AUDITOR_HANDOFF.md`](./docs/AUDITOR_HANDOFF.md) |
 | Trusted setup evidence | [`CEREMONY.md`](./CEREMONY.md), [`scripts/check-ceremony-evidence.mjs`](./scripts/check-ceremony-evidence.mjs) |
 | Public IDL | [`idl/paradox.json`](./idl/paradox.json) |
@@ -121,6 +121,7 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 - bounded root, leaf, and nullifier storage now fail closed instead of overwriting silently
 - the legacy `prepare_phantom_withdraw` path fails closed instead of paying against proof-unbound arguments
 - `prepare_phantom_withdraw_v2` verifies the promoted eight-signal proof, binds amount/receiver token/mint, records the nullifier, and pays from the vault token account
+- DNA x402 signed receipts can be wrapped into Dark Null private receipt envelopes without storing raw resource URLs or raw payment headers
 - the repo has one canonical public root path instead of a placeholder root plus side branch
 
 ## What This Repo Does Not Prove

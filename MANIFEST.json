@@ -97,8 +97,8 @@
     },
     {
       "path": "docs/DNA_X402_INTEGRATION.md",
-      "sha256": "94e61b08d4727fde56a26ba367b594f327216ce72a83a50e572b31fc0d3f3dbc",
-      "size": 2057
+      "sha256": "f86636d171d32282b23872b8d24def45ff010895f139449433b327f1359c6e2b",
+      "size": 3115
     },
     {
       "path": "Cargo.toml",
@@ -267,8 +267,8 @@
     },
     {
       "path": "docs/PRIVATE_X402_PAYMENTS.md",
-      "sha256": "6e7b9d97650771b32c2739f8a0ae8293c018ff6af00639a131e20a7e301f3312",
-      "size": 3265
+      "sha256": "0ca80ed185f6824a1b91b470cd14dee9c1df30da81b8f30aa9c7dd4797ec82f4",
+      "size": 4124
     },
     {
       "path": "scripts/check-x402-receipts.mjs",
@@ -277,13 +277,13 @@
     },
     {
       "path": "swarm/x402.mjs",
-      "sha256": "679ba748d5013b79dfcb6b33712726105a177618048dce45acd15645938ff5b2",
-      "size": 19876
+      "sha256": "192fb791c20ff470e7f3e489a5a4ce7fd123901c4b4be093eb57f359340271cc",
+      "size": 26397
     },
     {
       "path": "swarm/x402.d.ts",
-      "sha256": "3a7e80bd57c57d5d67ac3fbf274f322b91e5e7eaf0da2a538e2e09c2239925df",
-      "size": 5619
+      "sha256": "f3e51d7c9cfcddd4269cac41a91748b93bb84ed5541663d6e79454c8ca58502b",
+      "size": 8034
     },
     {
       "path": "docs/AUDITOR_HANDOFF.md",

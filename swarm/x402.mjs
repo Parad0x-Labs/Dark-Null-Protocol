@@ -10,6 +10,7 @@ export const X402_HEADERS = Object.freeze({
 export const PRIVATE_X402_INTENT_SCHEMA = "dark-null-private-x402-intent-v1";
 export const PRIVATE_X402_REQUEST_BINDING_SCHEMA = "dark-null-private-x402-request-binding-v1";
 export const PRIVATE_X402_RECEIPT_SCHEMA = "dark-null-private-x402-receipt-v1";
+export const DNA_X402_PRIVATE_RECEIPT_SCHEMA = "dark-null-dna-x402-private-receipt-v1";
 export const EMPTY_BODY_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
 
 const HASH_RE = /^[0-9a-f]{64}$/;
@@ -22,6 +23,16 @@ const SAFE_IDENTIFIER_RE = /^[A-Za-z0-9:._+/@-]{1,160}$/;
 const SUPPORTED_STATUS = new Set(["settled", "rejected"]);
 const SUPPORTED_CONFIRMATION = new Set(["processed", "confirmed", "finalized"]);
 const SUPPORTED_CLUSTER = new Set(["devnet", "localnet", "mainnet-beta"]);
+const CURRENT_WITHDRAW_V2_PUBLIC_INPUTS = [
+  "commitment",
+  "nullifier",
+  "root",
+  "amount",
+  "receiver_token_part_0",
+  "receiver_token_part_1",
+  "mint_part_0",
+  "mint_part_1",
+];
 const SENSITIVE_PATTERNS = [
   { label: "email address", regex: /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i },
   { label: "phone number", regex: /\b(?:\+?\d[\d\s().-]{7,}\d)\b/ },
@@ -166,6 +177,55 @@ function normalizeIdentifier(value, label) {
   return value;
 }
 
+function normalizeOptionalHash(value, label) {
+  return value === undefined ? undefined : normalizeHash(value, label);
+}
+
+function normalizeDnaSignedReceipt(receipt) {
+  assertObject(receipt, "dnaReceipt");
+  assertObject(receipt.payload, "dnaReceipt.payload");
+
+  const payload = receipt.payload;
+  const normalized = {
+    payload,
+    prevHash: normalizeHash(receipt.prevHash, "dnaReceipt.prevHash"),
+    receiptHash: normalizeHash(receipt.receiptHash, "dnaReceipt.receiptHash"),
+    signerPublicKey: normalizeIdentifier(receipt.signerPublicKey, "dnaReceipt.signerPublicKey"),
+    signature: normalizeIdentifier(receipt.signature, "dnaReceipt.signature"),
+  };
+
+  normalizeIdentifier(payload.receiptId, "dnaReceipt.payload.receiptId");
+  normalizeIdentifier(payload.quoteId, "dnaReceipt.payload.quoteId");
+  normalizeIdentifier(payload.commitId, "dnaReceipt.payload.commitId");
+  normalizeHash(payload.requestDigest, "dnaReceipt.payload.requestDigest");
+  normalizeHash(payload.responseDigest, "dnaReceipt.payload.responseDigest");
+  normalizeAtomicAmount(payload.totalAtomic, "dnaReceipt.payload.totalAtomic");
+  normalizeIdentifier(payload.recipient, "dnaReceipt.payload.recipient");
+  normalizeIdentifier(payload.mint, "dnaReceipt.payload.mint");
+  normalizeIdentifier(payload.settlement, "dnaReceipt.payload.settlement");
+
+  return normalized;
+}
+
+function defaultProofEncodingHash() {
+  return sha256Hex({
+    field: "bn254-fr",
+    publicInputs: CURRENT_WITHDRAW_V2_PUBLIC_INPUTS,
+  });
+}
+
+function normalizeDnaSettlement(input, payload) {
+  const settlement = input.settlement ?? {
+    cluster: input.cluster,
+    programId: input.programId,
+    signature: payload.txSignature,
+    slot: input.slot,
+    confirmationStatus: input.confirmationStatus ?? "finalized",
+  };
+
+  return normalizeReceiptSettlement(settlement, "settled");
+}
+
 function normalizeNonce(value) {
   if (typeof value !== "string" || !SAFE_NONCE_RE.test(value)) {
     fail("nonce must be a 16-128 character URL-safe nonce");
@@ -279,6 +339,127 @@ export function createPaymentRequiredHeader(intent) {
     name: X402_HEADERS.paymentRequired,
     value: encodeBase64Json(payload),
     payload,
+  };
+}
+
+export function createPrivateX402ReceiptFromDna(input) {
+  assertObject(input, "input");
+  const dnaReceipt = normalizeDnaSignedReceipt(input.dnaReceipt);
+  const payload = dnaReceipt.payload;
+  const proofEncodingHash = normalizeHash(
+    input.proof?.proofEncodingHash ?? input.proofEncodingHash ?? defaultProofEncodingHash(),
+    "proofEncodingHash",
+  );
+  const resourceHash = sha256Hex(payload.resource ?? payload.requestDigest);
+  const recipientHash = sha256Hex(payload.recipient);
+  const mintHash = sha256Hex(payload.mint);
+  const signatureHash = sha256Hex(dnaReceipt.signature);
+  const dnaReceiptPayloadHash = sha256Hex(payload);
+  const privateResourceAlias = input.resourceAlias ?? `dna:receipt:${dnaReceipt.receiptHash.slice(0, 32)}`;
+
+  const intent = createPrivateX402Intent({
+    method: input.method ?? "POST",
+    resource: privateResourceAlias,
+    description: input.description ?? "dna-x402-dark-null-private-receipt",
+    nonce: input.nonce ?? `dna_${dnaReceipt.receiptHash.slice(0, 32)}`,
+    expiresAt: input.expiresAt,
+    maxAmountRequired: payload.totalAtomic,
+    asset: input.asset ?? "solana-usdc",
+    network: input.network ?? `solana-${input.cluster ?? input.settlement?.cluster ?? "devnet"}`,
+    payTo: input.payTo ?? payload.recipient,
+    settlement: {
+      mode: input.settlementMode ?? "dark-null-withdraw-v2",
+      cluster: input.cluster ?? input.settlement?.cluster,
+      programId: input.programId ?? input.settlement?.programId,
+      manifestLabel: input.manifestLabel,
+      amountLamports: input.amountLamports ?? payload.totalAtomic,
+      receiverTokenAccountHash: input.receiverTokenAccountHash ?? recipientHash,
+      mintHash: input.mintHash ?? mintHash,
+      proofEncodingHash,
+    },
+  });
+
+  const paymentRequiredHeader = input.paymentRequiredHeader ?? createPaymentRequiredHeader(intent).value;
+  const paymentSignatureHeader = input.paymentSignatureHeader ?? encodeBase64Json({
+    schema: "dna-x402-signed-receipt-lock-v1",
+    receiptHash: dnaReceipt.receiptHash,
+    signerPublicKey: dnaReceipt.signerPublicKey,
+    signatureHash,
+  });
+  const paymentResponseHeader = input.paymentResponseHeader ?? encodeBase64Json({
+    status: "settled",
+    dnaReceiptHash: dnaReceipt.receiptHash,
+  });
+
+  const requestBinding = createPrivateX402RequestBinding({
+    intent,
+    method: input.method ?? "POST",
+    resourceHash,
+    bodyHash: payload.requestDigest,
+    paymentRequiredHeader,
+    paymentSignatureHeader,
+  });
+
+  const proof = {
+    proofBundleHash: normalizeOptionalHash(input.proof?.proofBundleHash, "proof.proofBundleHash")
+      ?? normalizeOptionalHash(input.proofBundleHash, "proofBundleHash")
+      ?? sha256Hex({
+        source: "dna-x402",
+        receiptHash: dnaReceipt.receiptHash,
+        receiptSignatureHash: signatureHash,
+        splitPaymentProofs: payload.splitPaymentProofs ?? null,
+      }),
+    publicInputHash: normalizeOptionalHash(input.proof?.publicInputHash, "proof.publicInputHash")
+      ?? normalizeOptionalHash(input.publicInputHash, "publicInputHash")
+      ?? sha256Hex({
+        source: "dna-x402",
+        amount: payload.totalAtomic,
+        recipientHash,
+        mintHash,
+        receiptHash: dnaReceipt.receiptHash,
+      }),
+    proofEncodingHash,
+  };
+
+  const receipt = createPrivateX402Receipt({
+    requestBinding,
+    paymentResponseHeader,
+    observedAt: input.observedAt,
+    response: {
+      statusCode: input.responseStatusCode ?? 200,
+      bodyHash: payload.responseDigest,
+    },
+    settlement: normalizeDnaSettlement(input, payload),
+    proof,
+    repository: input.repository,
+    previousReceiptHash: input.previousReceiptHash,
+  });
+
+  return {
+    schema: DNA_X402_PRIVATE_RECEIPT_SCHEMA,
+    source: "dna-x402",
+    privacyPath: "dark-null",
+    normalPath: "dna-x402",
+    dnaReceiptHash: dnaReceipt.receiptHash,
+    dnaReceiptPayloadHash,
+    dnaReceiptSignatureHash: signatureHash,
+    resourceHash,
+    requestDigest: payload.requestDigest,
+    responseDigest: payload.responseDigest,
+    amountHash: sha256Hex(payload.totalAtomic),
+    recipientHash,
+    mintHash,
+    intent,
+    requestBinding,
+    receipt,
+    receiptHash: receipt.lock.receiptHash,
+    privacy: {
+      rawDnaReceiptStored: false,
+      rawResourceStored: false,
+      rawPaymentHeadersStored: false,
+      darkNullOptionalPath: true,
+      normalDnaPathStillSupported: true,
+    },
   };
 }
 

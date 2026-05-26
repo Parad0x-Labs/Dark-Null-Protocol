@@ -11,6 +11,7 @@ Dark Null now has a local adapter surface for private x402-style machine payment
 | `PAYMENT-REQUIRED` Base64 JSON payloads | `createPaymentRequiredHeader()` |
 | Replay-safe request binding | `createPrivateX402RequestBinding()` |
 | Hash-locked receipts | `createPrivateX402Receipt()` |
+| DNA signed-receipt wrapper | `createPrivateX402ReceiptFromDna()` |
 | Structural receipt verifier | `verifyPrivateX402Receipt()` |
 | Solana signature verifier hook | `verifyPrivateX402ReceiptOnSolana()` |
 | Tests | [`../tests/x402-private-payments.test.mjs`](../tests/x402-private-payments.test.mjs) |
@@ -29,6 +30,32 @@ The adapter never stores raw buyer identity, raw payment headers, raw resource U
 - `receiptHash`
 
 That gives operators a receipt that can prove what happened without turning the receipt log into a buyer metadata leak.
+
+## DNA x402 Wrapper
+
+`createPrivateX402ReceiptFromDna()` is the sync point with the DNA x402 rail.
+
+The normal DNA path stays intact:
+
+```text
+quote -> commit -> payment proof -> signed DNA receipt -> paid unlock
+```
+
+The optional Dark Null path wraps the signed DNA receipt after settlement evidence exists:
+
+```text
+signed DNA receipt
+  |
+hash DNA receipt, signature, resource, recipient, mint
+  |
+create Dark Null private receipt envelope
+  |
+return Dark Null receipt hash and replay key
+```
+
+The wrapper stores hashes and the Dark Null private receipt. It does not store the raw DNA receipt, raw resource URL, raw payment headers, or raw buyer metadata.
+
+Use it for paid alpha reveals, private signal rooms, wallet reports, private API access receipts, and append-only receipt chains.
 
 ## Receipt Lock
 

@@ -3,9 +3,11 @@ import assert from "node:assert/strict";
 
 import {
   EMPTY_BODY_SHA256,
+  DNA_X402_PRIVATE_RECEIPT_SCHEMA,
   PRIVATE_X402_RECEIPT_SCHEMA,
   X402_HEADERS,
   createPaymentRequiredHeader,
+  createPrivateX402ReceiptFromDna,
   createPrivateX402Intent,
   createPrivateX402Receipt,
   createPrivateX402RequestBinding,
@@ -86,6 +88,36 @@ function buildReceipt() {
   });
 
   return { intent, paymentRequired, paymentSignatureHeader, paymentResponseHeader, binding, receipt };
+}
+
+function buildDnaReceipt() {
+  const payload = {
+    receiptId: "receipt_dna_1",
+    quoteId: "quote_dna_1",
+    commitId: "commit_dna_1",
+    resource: "https://provider.example/private-alpha?buyer=alice",
+    requestId: "request_dna_1",
+    requestDigest: sha256Hex("POST|/private-alpha|body"),
+    responseDigest: sha256Hex("200|alpha-payload"),
+    shopId: "shop_dna_1",
+    payerCommitment32B: sha256Hex("payer"),
+    recipient: "merchant-vault-devnet",
+    mint: "usdc-devnet-mint",
+    amountAtomic: "2499",
+    feeAtomic: "1",
+    totalAtomic: "2500",
+    settlement: "transfer",
+    settledOnchain: true,
+    txSignature: "2526CKHHajSYmZV2BGquS4K9bNJFuCamgkcCjbps8tWLg5Hub4k2qtL3Frwnos8bhaDoaPcszmzA5CL16Zi7En1d",
+    createdAt: "2026-05-25T12:00:00.000Z",
+  };
+  return {
+    payload,
+    prevHash: "0".repeat(64),
+    receiptHash: sha256Hex({ prevHash: "0".repeat(64), payload }),
+    signerPublicKey: "seller-receipt-pubkey",
+    signature: "seller-receipt-signature",
+  };
 }
 
 test("private x402 intents produce opaque x402 V2 payment requirements", () => {
@@ -210,3 +242,37 @@ test("Solana receipt verifier confirms signatures through an injected connection
   assert.deepEqual(result.failures, []);
 });
 
+test("DNA x402 signed receipts can be wrapped into a Dark Null private receipt path", () => {
+  const dnaReceipt = buildDnaReceipt();
+  const envelope = createPrivateX402ReceiptFromDna({
+    dnaReceipt,
+    observedAt: "2026-05-25T12:00:02.000Z",
+    expiresAt: "2026-05-25T12:05:00.000Z",
+    cluster: "devnet",
+    programId: baseIntentInput.settlement.programId,
+    manifestLabel: "canonical-devnet-root-2",
+    slot: 434395918,
+    repository: {
+      commit: "0123456789abcdef0123456789abcdef01234567",
+      manifestSha256: sha256Hex("manifest"),
+    },
+  });
+
+  assert.equal(envelope.schema, DNA_X402_PRIVATE_RECEIPT_SCHEMA);
+  assert.equal(envelope.normalPath, "dna-x402");
+  assert.equal(envelope.privacyPath, "dark-null");
+  assert.equal(envelope.privacy.rawDnaReceiptStored, false);
+  assert.equal(envelope.privacy.rawResourceStored, false);
+  assert.equal(envelope.receipt.lock.receiptHash, envelope.receiptHash);
+  assert.equal(verifyPrivateX402Receipt(envelope.receipt).ok, true);
+  assert.doesNotMatch(JSON.stringify(envelope), /provider\.example|buyer=alice/);
+
+  const tampered = {
+    ...envelope.receipt,
+    response: {
+      ...envelope.receipt.response,
+      bodyHash: sha256Hex("changed-response"),
+    },
+  };
+  assert.equal(verifyPrivateX402Receipt(tampered).ok, false);
+});

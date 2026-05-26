@@ -7,6 +7,7 @@ export declare const X402_HEADERS: Readonly<{
 export declare const PRIVATE_X402_INTENT_SCHEMA: "dark-null-private-x402-intent-v1";
 export declare const PRIVATE_X402_REQUEST_BINDING_SCHEMA: "dark-null-private-x402-request-binding-v1";
 export declare const PRIVATE_X402_RECEIPT_SCHEMA: "dark-null-private-x402-receipt-v1";
+export declare const DNA_X402_PRIVATE_RECEIPT_SCHEMA: "dark-null-dna-x402-private-receipt-v1";
 export declare const EMPTY_BODY_SHA256: string;
 
 export interface PrivateX402SettlementProfile {
@@ -174,6 +175,88 @@ export interface PrivateX402SolanaVerification {
   signatureStatus: unknown;
 }
 
+export interface DnaX402SignedReceipt {
+  payload: {
+    receiptId: string;
+    quoteId: string;
+    commitId: string;
+    resource?: string;
+    requestDigest: string;
+    responseDigest: string;
+    recipient: string;
+    mint: string;
+    totalAtomic: string;
+    settlement: string;
+    txSignature?: string;
+    splitPaymentProofs?: unknown[];
+    [key: string]: unknown;
+  };
+  prevHash: string;
+  receiptHash: string;
+  signerPublicKey: string;
+  signature: string;
+}
+
+export interface CreatePrivateX402ReceiptFromDnaInput {
+  dnaReceipt: DnaX402SignedReceipt;
+  observedAt: string;
+  expiresAt: string;
+  cluster?: "devnet" | "localnet" | "mainnet-beta";
+  programId?: string;
+  manifestLabel: string;
+  settlement?: PrivateX402ReceiptSettlement;
+  slot?: number;
+  confirmationStatus?: "processed" | "confirmed" | "finalized";
+  repository: PrivateX402RepositoryLock;
+  method?: string;
+  resourceAlias?: string;
+  description?: string;
+  nonce?: string;
+  asset?: string;
+  network?: string;
+  payTo?: string;
+  settlementMode?: string;
+  amountLamports?: string | number | bigint;
+  receiverTokenAccountHash?: string;
+  mintHash?: string;
+  proofEncodingHash?: string;
+  proofBundleHash?: string;
+  publicInputHash?: string;
+  proof?: Partial<PrivateX402ProofLock>;
+  paymentRequiredHeader?: string;
+  paymentSignatureHeader?: string;
+  paymentResponseHeader?: string;
+  responseStatusCode?: number;
+  previousReceiptHash?: string | null;
+}
+
+export interface DnaX402PrivateReceiptEnvelope {
+  schema: typeof DNA_X402_PRIVATE_RECEIPT_SCHEMA;
+  source: "dna-x402";
+  privacyPath: "dark-null";
+  normalPath: "dna-x402";
+  dnaReceiptHash: string;
+  dnaReceiptPayloadHash: string;
+  dnaReceiptSignatureHash: string;
+  resourceHash: string;
+  requestDigest: string;
+  responseDigest: string;
+  amountHash: string;
+  recipientHash: string;
+  mintHash: string;
+  intent: PrivateX402Intent;
+  requestBinding: PrivateX402RequestBinding;
+  receipt: PrivateX402Receipt;
+  receiptHash: string;
+  privacy: {
+    rawDnaReceiptStored: false;
+    rawResourceStored: false;
+    rawPaymentHeadersStored: false;
+    darkNullOptionalPath: true;
+    normalDnaPathStillSupported: true;
+  };
+}
+
 export declare function canonicalJsonString(value: unknown): string;
 export declare function sha256Hex(value: unknown): string;
 export declare function encodeBase64Json(value: unknown): string;
@@ -184,6 +267,9 @@ export declare function createPrivateX402RequestBinding(
   input: CreatePrivateX402RequestBindingInput,
 ): PrivateX402RequestBinding;
 export declare function createPrivateX402Receipt(input: CreatePrivateX402ReceiptInput): PrivateX402Receipt;
+export declare function createPrivateX402ReceiptFromDna(
+  input: CreatePrivateX402ReceiptFromDnaInput,
+): DnaX402PrivateReceiptEnvelope;
 export declare function verifyPrivateX402Receipt(
   receipt: unknown,
   options?: { expectedPreviousReceiptHash?: string | null },

@@ -119,6 +119,14 @@ const textExtensions = new Set([
   ".yaml",
 ]);
 
+const staleAttributionPattern = new RegExp(
+  `\\b(?:${[
+    `${String.fromCharCode(65, 73)}[- ](?:assisted|assistant|auditor)`,
+    String.fromCharCode(67, 111, 100, 101, 120),
+  ].join("|")})\\b`,
+  "i",
+);
+
 const disallowedPatterns = [
   { label: "stale proprietary badge", regex: /License-Proprietary/ },
   { label: "stale docs-shell disclaimer", regex: /public interface and documentation shell/i },
@@ -133,7 +141,7 @@ const disallowedPatterns = [
   { label: "stale auditor recruitment copy", regex: /We're seeking auditors/ },
   { label: "stale public release badge", regex: /Status-Public_Release/ },
   { label: "stale production-ready devnet claim", regex: /production-ready release on solana devnet/i },
-  { label: "stale assistant attribution", regex: /\b(?:AI[- ](?:assisted|assistant|auditor)|Codex)\b/i },
+  { label: "stale assistant attribution", regex: staleAttributionPattern },
   { label: "stale proof-size claim", regex: /\b(?:144B|150B|144-byte|150-byte)\b/i },
 ];
 

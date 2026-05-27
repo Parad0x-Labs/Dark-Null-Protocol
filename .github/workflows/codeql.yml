@@ -14,8 +14,19 @@ permissions:
   security-events: write
 
 jobs:
+  private-repo-gate:
+    name: CodeQL public-repo gate
+    if: ${{ github.event.repository.private == true }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain private repository gate
+        run: |
+          echo "Code scanning is unavailable on this private repository without GitHub Advanced Security."
+          echo "The CodeQL analyzer runs automatically after the repository is public."
+
   analyze:
     name: CodeQL (${{ matrix.language }})
+    if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -27,15 +38,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
+        uses: github/codeql-action/autobuild@v4
 
       - name: Analyze
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
         with:
           category: "/language:${{ matrix.language }}"

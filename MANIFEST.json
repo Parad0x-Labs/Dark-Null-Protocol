@@ -287,8 +287,8 @@
     },
     {
       "path": "docs/AUDITOR_HANDOFF.md",
-      "sha256": "a9d1c72912bbbc5aaaa37e3f11cbbe1ee62b0ffd9090c0bf196143f7e7677b85",
-      "size": 21265
+      "sha256": "69e7c2ff67ea94711111264795eeb1b92d72ceef66597724a5fa3312f86f6a4f",
+      "size": 21260
     },
     {
       "path": "docs/2030_PRIMITIVES.md",
@@ -322,8 +322,8 @@
     },
     {
       "path": "scripts/check-2030-claims.mjs",
-      "sha256": "2cca7f52027bed16115dc7ea1af30590d6e1fa373422db36d9d7a9f57d0e48fc",
-      "size": 7867
+      "sha256": "daaddb0cdc46eafa3b044a8445b562e3d4c3c2b9006b814764659f4ab3a49493",
+      "size": 7982
     },
     {
       "path": "tests/2030-claims.test.mjs",

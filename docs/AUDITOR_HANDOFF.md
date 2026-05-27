@@ -25,9 +25,9 @@ Repository:
 
 - `https://github.com/Parad0x-Labs/Dark-Null-Protocol`
 
-Canonical local path used for this handoff:
+Canonical repository used for this handoff:
 
-- `G:\dark $NULL\_repo_compare_20260525\Dark-Null-Protocol`
+- `https://github.com/Parad0x-Labs/Dark-Null-Protocol`
 
 Auditors should record the exact commit they review:
 

@@ -92,7 +92,7 @@ Use those to understand how the repo evolved. Do not confuse them with the canon
 - no completed third-party audit evidence
 - final trusted setup evidence accepted for mainnet
 
-## Honest Verification Standard
+## Verification Standard
 
 The public repo now proves one canonical public-root Groth16 path.
 

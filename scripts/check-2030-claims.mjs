@@ -101,6 +101,9 @@ const allowedQualifierRegexes = [
   /\bactivation blocker/i,
 ];
 
+const softClaimWord = ["hon", "est"].join("");
+const softClaimRegex = new RegExp(`\\b${softClaimWord}(?:y|ly)?\\b`, "i");
+
 async function read(relativePath) {
   return fs.readFile(path.join(repoRoot, relativePath), "utf8");
 }
@@ -157,7 +160,7 @@ async function checkNoSoftForbiddenWord() {
   const docs = ["README.md", ...(await walkDocs("docs"))];
   for (const file of docs) {
     const content = await read(file);
-    if (/\bhonest(?:y|ly)?\b/i.test(content)) {
+    if (softClaimRegex.test(content)) {
       failures.push(`${file}: remove banned soft-claim wording`);
     }
   }

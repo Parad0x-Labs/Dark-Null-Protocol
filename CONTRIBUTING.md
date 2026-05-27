@@ -1,6 +1,6 @@
 # Contributing to Dark Null Protocol
 
-Thanks for contributing. Keep the repo more honest and more reproducible than you found it.
+Thanks for contributing. Keep the repo more rigorous and more reproducible than you found it.
 
 ## Contribution Areas
 
@@ -35,7 +35,7 @@ python3 -m py_compile client/*.py
 cargo test
 ```
 
-If your machine does not have the Rust or Python dependencies needed for the last two commands, say so in the PR or commit notes instead of pretending they passed.
+If your machine does not have the Rust or Python dependencies needed for the last two commands, say so in the PR or commit notes instead of claiming they passed.
 
 If you touch docs that reference deployments, also update:
 

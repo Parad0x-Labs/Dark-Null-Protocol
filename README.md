@@ -43,6 +43,7 @@ For the delivered-vs-blocked claim boundary, read [`docs/CLAIMS_LEDGER.md`](./do
 For external review, use the single handoff packet in [`docs/AUDITOR_HANDOFF.md`](./docs/AUDITOR_HANDOFF.md).
 For an explicitly unaudited, capped mainnet beta lane, read [`docs/MAINNET_OPEN_BETA.md`](./docs/MAINNET_OPEN_BETA.md).
 For off-chain service operations and the x402 receipt boundary, read [`docs/OFFCHAIN_SWARM.md`](./docs/OFFCHAIN_SWARM.md), [`docs/DNA_X402_INTEGRATION.md`](./docs/DNA_X402_INTEGRATION.md), and [`docs/PRIVATE_X402_PAYMENTS.md`](./docs/PRIVATE_X402_PAYMENTS.md).
+For the public DNA x402 workspace map, read [`docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md`](./docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md).
 For frontier work, read [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md).
 
 ## One Command Bootstrap
@@ -198,6 +199,8 @@ frontier_primitives:
 | privacy-oriented settlement research | deposit flows, root updates, proof artifact verification, and source/security review |
 | public code review | root Rust program, circuits, client helpers, SDK, IDL, and historical evidence |
 | machine-speed per-request API payments | use `dna-x402` for HTTP negotiation and this repo's private x402 receipt primitives for Dark Null settlement binding |
+
+The large agent-commerce workspace lives in [`Parad0x-Labs/dna-x402`](https://github.com/Parad0x-Labs/dna-x402): 343 Cargo workspace members, 10 Solana program entries, the TypeScript x402 package, builder surfaces, and Dark Null integration crates. The repo map is in [`docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md`](./docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md).
 
 ## Review Status
 

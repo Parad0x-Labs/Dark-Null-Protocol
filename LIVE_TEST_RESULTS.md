@@ -154,7 +154,7 @@ Merkle Root:      ba6bf9175193fc439476... (20-level tree)
 
 ---
 
-## How To Review This File Honestly
+## How To Review This File
 
 1. Treat the transaction signatures and Explorer links as historical evidence, not as proof that the current repo reproduces the same flow.
 2. Compare the program ID here with [`docs/PROGRAM_IDS.md`](./docs/PROGRAM_IDS.md).

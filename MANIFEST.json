@@ -102,8 +102,8 @@
     },
     {
       "path": "Cargo.toml",
-      "sha256": "1cca58f12950895cc5a2b301dd86f2a1d40d739adb2c905ec85c0e57fd13aa86",
-      "size": 1061
+      "sha256": "def5f845e34119f753d15e835ccf55ac0087a6578ec6133cafba23eda8be62f5",
+      "size": 1104
     },
     {
       "path": "MAINNET_EVIDENCE.example.json",

@@ -3,6 +3,8 @@ name = "pdx-dark-protocol"
 version = "0.1.0"
 description = "Dark Null canonical privacy settlement root"
 edition = "2021"
+license = "MIT"
+authors = ["Parad0x Labs"]
 
 [lib]
 crate-type = ["cdylib", "lib"]

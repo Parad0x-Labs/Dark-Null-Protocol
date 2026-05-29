@@ -97,8 +97,8 @@
     },
     {
       "path": "docs/DNA_X402_INTEGRATION.md",
-      "sha256": "f86636d171d32282b23872b8d24def45ff010895f139449433b327f1359c6e2b",
-      "size": 3115
+      "sha256": "3802dad5457888bbfc896f64fb654baf31df6e2fe378b75c474c60c381de833b",
+      "size": 4026
     },
     {
       "path": "Cargo.toml",
@@ -267,8 +267,8 @@
     },
     {
       "path": "docs/PRIVATE_X402_PAYMENTS.md",
-      "sha256": "0ca80ed185f6824a1b91b470cd14dee9c1df30da81b8f30aa9c7dd4797ec82f4",
-      "size": 4124
+      "sha256": "55f70090acb0f8159d73fd00d3e608f6b4f13e62fe7d064f72d46c324a152374",
+      "size": 4967
     },
     {
       "path": "scripts/check-x402-receipts.mjs",

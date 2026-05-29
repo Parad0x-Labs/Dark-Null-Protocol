@@ -200,7 +200,7 @@ frontier_primitives:
 | public code review | root Rust program, circuits, client helpers, SDK, IDL, and historical evidence |
 | machine-speed per-request API payments | use `dna-x402` for HTTP negotiation and this repo's private x402 receipt primitives for Dark Null settlement binding |
 
-The large agent-commerce workspace lives in [`Parad0x-Labs/dna-x402`](https://github.com/Parad0x-Labs/dna-x402): 343 Cargo workspace members, 10 Solana program entries, the TypeScript x402 package, builder surfaces, and Dark Null integration crates. The repo map is in [`docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md`](./docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md).
+The large agent-commerce workspace lives in [`Parad0x-Labs/dna-x402`](https://github.com/Parad0x-Labs/dna-x402): 346 Cargo workspace members, 17 Solana program entries, the TypeScript x402 package, NULL Miner SDK, builder surfaces, and Dark Null integration crates. The repo map is in [`docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md`](./docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md).
 
 ## Review Status
 

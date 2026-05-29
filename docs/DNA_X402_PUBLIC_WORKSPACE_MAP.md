@@ -29,12 +29,13 @@ The split prevents two drifting copies of the same code. Dark Null links into DN
 
 | Surface | Public path | Count |
 |---|---:|---:|
-| Cargo workspace members | `Cargo.toml` | 343 |
-| Cargo crate entries | `crates/*` entries in `Cargo.toml` | 311 |
-| tracked crate directories | `crates/` | 309 |
-| Solana program entries | `programs/*` entries in `Cargo.toml` | 10 |
-| tracked program directories | `programs/` | 10 |
+| Cargo workspace members | `Cargo.toml` | 346 |
+| Cargo crate entries | `crates/*` entries in `Cargo.toml` | 327 |
+| tracked crate directories | `crates/` | 327 |
+| Solana program entries | `programs/*` entries in `Cargo.toml` | 17 |
+| tracked program directories | `programs/` | 17 |
 | TypeScript x402 package | `x402/` | 1 |
+| NULL Miner SDK package | `packages/null-miner-sdk/` | 1 |
 | public builder site | `site/` | 1 |
 | local agent/admin UI | `site-agent/` | 1 |
 
@@ -69,6 +70,32 @@ The following local frontier modules are on GitHub under `Parad0x-Labs/dna-x402`
 | `agent-flight-recorder` | `crates/agent-flight-recorder/` |
 | `dark-stealth-note` | `crates/dark-stealth-note/` |
 | `dark_chaff` | `programs/dark_chaff/` |
+| `null-miner-sdk` | `packages/null-miner-sdk/` |
+| `dark-secp256r1-vault` | `programs/dark_secp256r1_vault/` |
+| `dark-null-mint-gate` | `programs/null_mint_gate/` |
+| `dark-null-lottery` | `programs/null_lottery/` |
+
+## Latest DNA x402 Sync
+
+Local validation on 2026-05-29 references DNA x402 commit `297e5844`:
+
+- `null-miner-sdk` build passed.
+- `null-miner-sdk` tests passed: 418/418.
+- `task-marketplace-api` build passed.
+- `task-marketplace-api` tests passed: 16/16.
+- browser extension build passed.
+- packed SDK fresh-install smoke passed for core, browser, x402, zk, privacy, vault, tasks, liquefy, flywheel, and lottery exports.
+- packed SDK fresh-install audit reported zero high-severity issues.
+- Rust regression passed for the new vault, mint-gate, lottery, semaphore, receipt anchor, nullifier record, proof gate, escrow, passport, flywheel, token hook, secp auth, KZG verifier, nullifier-bank statistical/property tests, Poseidon tree, receipt spend, relay router, and fog router.
+- SBF builds passed for `dark_secp256r1_vault`, `dark_null_mint_gate`, and `dark_null_lottery`.
+
+The latest sync adds these DNA-side primitives:
+
+- on-chain encrypted passkey vault storage in `dark_secp256r1_vault`
+- server-free receipt-anchor instruction callback in `null-miner-sdk`
+- Liquefy archive storage payloads and Arweave tag helpers
+- `dark-null-mint-gate` as an on-chain NULL emission claim ledger with nullifier, per-claim, and epoch-cap checks
+- `dark-null-lottery` as a commit-reveal / root-anchored lottery primitive
 
 ## Integration Paths
 

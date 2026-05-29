@@ -88,6 +88,20 @@ server returns PAYMENT-RESPONSE + Dark Null receipt hash
 
 The HTTP negotiation belongs to `dna-x402`. Dark Null owns only the private settlement and receipt-locking layer.
 
+## NULL Miner Sync
+
+DNA x402 commit `297e5844` adds a direct receipt callback to `null-miner-sdk`:
+
+```ts
+onReceiptReady: async (instructionData) => {
+  // host submits the 34-byte receipt_anchor instruction directly to Solana
+}
+```
+
+That path lets a host bypass the marketplace proof endpoint for receipt anchoring when `marketplaceUrl` is not configured. If `marketplaceUrl` is configured, proof submission still goes through the marketplace API. Dark Null private receipts can wrap either path after Solana settlement evidence exists.
+
+The same DNA commit adds on-chain encrypted passkey vault storage, an on-chain NULL emission claim ledger, Liquefy archive storage payload helpers, and a root-anchored lottery primitive. These are integration surfaces for the broader stack; they do not change the Dark Null claim boundary in this repo.
+
 ## Validation
 
 Offline receipt validation:

@@ -55,6 +55,10 @@ The wrapper does not store the raw DNA receipt, raw resource URL, raw payment he
 - Dark Null receipts store hashes, not raw buyer metadata or raw payment headers.
 - DNA signed receipts can be wrapped into Dark Null private receipts with `createPrivateX402ReceiptFromDna()`.
 - Settled receipts bind Solana signature, slot, program id, repository commit, manifest hash, proof hash, and previous receipt hash.
+- DNA x402 commit `297e5844` adds `null-miner-sdk` direct receipt-anchor callbacks so hosts can submit the 34-byte receipt anchor instruction without routing proof submission through the marketplace API.
+- DNA x402 commit `297e5844` adds on-chain encrypted passkey vault storage in `dark_secp256r1_vault`; Dark Null should treat this as agent-key recovery storage, not proof of production passkey authentication until secp256r1 precompile enforcement is wired.
+- DNA x402 commit `297e5844` adds `dark-null-mint-gate`; Dark Null should treat it as an on-chain emission claim ledger with nullifier and epoch-cap checks, not as live NULL minting until SPL mint CPI is enabled and tested.
+- DNA x402 commit `297e5844` adds `dark-null-lottery`; Dark Null should treat it as a root-anchored commit-reveal primitive, not as a fully settled on-chain lottery until token settlement and winner verification are promoted.
 - `npm run check:x402` validates the local receipt lock.
 - `npm run check:x402:devnet` confirms the devnet receipt path against Solana RPC.
 

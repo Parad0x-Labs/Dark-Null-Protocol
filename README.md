@@ -1,12 +1,12 @@
-<p align="center">
-  <img src="./docs/assets/github-header-dark-null.png" alt="Dark Null Protocol - Private settlement proofs on Solana" width="100%" />
-</p>
+# Dark Null Protocol: Canonical Public Devnet Track
 
 ![Status: Canonical Root](https://img.shields.io/badge/Status-Canonical_Root-00C2A8?style=flat-square)
 ![Proofs: Groth16](https://img.shields.io/badge/Proofs-Groth16-111827?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-0F172A?style=flat-square)
 
-# Dark Null Protocol: Canonical Public Devnet Track
+<p align="center">
+  <img src="./docs/assets/github-header-dark-null.png" alt="Dark Null Protocol - Private settlement proofs on Solana" width="100%" />
+</p>
 
 **Private settlement research on Solana, published without pretending more than the repo proves.**
 

@@ -26,6 +26,16 @@ Historical branches and artifact bundles are still published, but they are no lo
 
 **Search tags:** `solana`, `zk-snarks`, `zero-knowledge proofs`, `groth16`, `circom`, `bn254`, `privacy payments`, `anchor`, `snarkjs`, `solana program`
 
+## 🕶️ Why it matters to you
+
+Money on a blockchain is public by default — anyone can see who paid whom, and how much. Dark Null fixes that:
+
+- 🧾 **Private receipts** — prove a payment happened without exposing the amount or the counterparty.
+- 🏢 **Protect your edge** — keep suppliers, payroll, and trading flows off the public ledger.
+- 🔍 **Still verifiable** — published proofs mean "private" never means "just trust us."
+
+Built for apps and teams that need payments to settle privately, with proof. *(Pre-audit — see status below.)*
+
 ### How this fits the Parad0x stack
 
 Parad0x Labs builds Web0 on Solana — money and agents that settle themselves. **You are here: 🕶️ Privacy.**

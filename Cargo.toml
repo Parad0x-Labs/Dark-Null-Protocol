@@ -27,7 +27,7 @@ unexpected_cfgs = { level = "warn", check-cfg = [
 [dependencies]
 anchor-lang = "0.30.1"
 anchor-spl = "0.30.1"
-bytemuck = { version = "1.16.0", features = ["derive", "min_const_generics"] }
+bytemuck = { version = "1.25.0", features = ["derive", "min_const_generics"] }
 base64 = "0.21.7"
 spl-token = "4.0.3"
 groth16-solana = "0.2.0"

@@ -229,3 +229,7 @@ The large agent-commerce workspace lives in [`Parad0x-Labs/dna-x402`](https://gi
 ## License
 
 Everything currently in this repository is released under the MIT License. See [`LICENSE`](./LICENSE).
+
+<p align="center">
+  <img src="./docs/assets/github-footer-parad0xlabs.png" alt="NULL - Parad0xLabs open source systems" width="100%" />
+</p>

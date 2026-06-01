@@ -4,7 +4,9 @@
 ![Proofs: Groth16](https://img.shields.io/badge/Proofs-Groth16-111827?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-0F172A?style=flat-square)
 
-![Dark Null Header](./docs/assets/dnp-header.svg)
+<p align="center">
+  <img src="./docs/assets/github-header-dark-null.png" alt="Parad0x Labs" width="100%" />
+</p>
 
 **Private settlement research on Solana, published without pretending more than the repo proves.**
 
@@ -234,6 +236,10 @@ The large agent-commerce workspace lives in [`Parad0x-Labs/dna-x402`](https://gi
 - The canonical root is now bound by [`MANIFEST.json`](./MANIFEST.json).
 - The current source security model is documented in [`SECURITY_MODEL.md`](./SECURITY_MODEL.md).
 - Historical program IDs are cataloged in [`docs/PROGRAM_IDS.md`](./docs/PROGRAM_IDS.md) instead of being implied as one release.
+
+<p align="center">
+  <img src="./docs/assets/github-footer-parad0xlabs.png" alt="NULL — Parad0x Labs open source systems" width="100%" />
+</p>
 
 ## License
 

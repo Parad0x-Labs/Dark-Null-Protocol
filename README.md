@@ -44,14 +44,15 @@ Built for apps and teams that need payments to settle privately, with proof. *(P
 
 ### How this fits the Parad0x stack
 
-Parad0x Labs builds Web0 on Solana — money and agents that settle themselves. **You are here: 🕶️ Privacy.**
+Parad0x Labs builds Web0 on Solana — money and agents that settle themselves. **You are here: 🕶️ Privacy — the cloak over the x402 rail: same settlement, no payer attached.**
 
 | Layer | Repo | Does |
 |---|---|---|
 | 💸 Payments | [dna-x402](https://github.com/Parad0x-Labs/dna-x402) | x402 rail: quote → pay → verify → receipt → anchor |
 | 🛠️ Build | [dna-x402-builders](https://github.com/Parad0x-Labs/dna-x402-builders) | Hosted kit: turn any API/bot into a paid agent |
 | 🕶️ Privacy | **Dark-Null-Protocol** (this repo) | Groth16 privacy settlement, published proofs |
-| 🗜️ Data | [liquefy](https://github.com/Parad0x-Labs/liquefy) | Columnar compression that beats Zstd + audit trails |
+| 🗜️ Data | [liquefy](https://github.com/Parad0x-Labs/liquefy) | Columnar compression that beats Zstd |
+| 🛡️ Audit | [liquefy-openclaw-integration](https://github.com/Parad0x-Labs/liquefy-openclaw-integration) | Flight recorder: 24 engines + Solana-anchored audit trails |
 | 🎬 Media | [nebula-media](https://github.com/Parad0x-Labs/nebula-media) | Proof-carrying media compression — scene-aware + on-chain receipts |
 | 🧠 Local AI | [nulla-local](https://github.com/Parad0x-Labs/nulla-local) | Local-first agent runtime — your machine, your memory |
 

@@ -75,7 +75,7 @@
 | **Proof B (G2)** | 64 bytes (x-coords only) |
 | **Proof C (G1)** | 32 bytes (x-coord only) |
 | **Public Inputs** | 7 |
-| **Circuit** | Poseidon-based Merkle tree (depth 20) |
+| **Circuit** | MiMCSponge-based Merkle tree (depth 20) |
 
 ---
 
@@ -100,7 +100,7 @@
 
 | Phase | Status | Details |
 |-------|--------|---------|
-| **Secrets Generation** | ✅ PASS | Poseidon hashes computed |
+| **Secrets Generation** | ✅ PASS | MiMCSponge hashes computed |
 | **Shield (Deposit)** | ✅ PASS | On-chain TX confirmed |
 | **ZK Proof** | ✅ PASS | Groth16 proof generated |
 
@@ -119,9 +119,9 @@ Blinded Recipient: 9c8323baa9e710825115... (248 bits)
 
 ### Derived Values
 ```
-Nullifier Hash:   2cf8c81f153c4c070d82... (Poseidon(secret, 0))
-Randomness Hash:  caf18f9bef8b6fade31c... (Poseidon(salt1, salt2, salt3))
-Commitment:       1805f779d8c4239c93b2... (Poseidon(secret, amount, blindedRecipient, randomnessHash))
+Nullifier Hash:   2cf8c81f153c4c070d82... (MiMCSponge(secret, 0))
+Randomness Hash:  caf18f9bef8b6fade31c... (MiMCSponge(salt1, salt2, salt3))
+Commitment:       1805f779d8c4239c93b2... (MiMCSponge(secret, amount, blindedRecipient, randomnessHash))
 Merkle Root:      ba6bf9175193fc439476... (20-level tree)
 ```
 

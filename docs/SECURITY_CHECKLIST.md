@@ -68,7 +68,7 @@
 
 | Auditor | Date | Scope | Status |
 |---------|------|-------|--------|
-| TBD | Q1 2026 | Full Protocol | ⏳ Scheduled |
+| TBD | — | Full Protocol | ⏳ Not yet audited |
 
 ---
 

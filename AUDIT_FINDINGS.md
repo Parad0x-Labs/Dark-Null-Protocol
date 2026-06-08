@@ -17,8 +17,7 @@ Earlier withdrawal designs allowed payout recipient data to remain outside the p
 Current status:
 
 - `prepare_phantom_withdraw` verifies the promoted `[commitment, nullifier, root]` proof shape, then fails closed before payout.
-- `prepare_phantom_withdraw_v2` checks the planned payout-bound public-input layout, then fails closed with `WithdrawV2CircuitNotPromoted`.
-- No public payout route is enabled until amount, receiver token account, and mint are proven by the promoted v2 circuit artifacts.
+- **v2 withdraw is LIVE (unaudited).** `prepare_phantom_withdraw_v2` in the canonical program ([`src/lib.rs`](./src/lib.rs)) binds all 8 payout-bound public inputs, verifies the 8-signal NullProofV2 ([`circuits/vk.json`](./circuits/vk.json) `nPublic=8`), appends the nullifier, and transfers funds on a valid proof (`ZK_VERIFY_V2: payout-bound proof verified and withdrawal paid`). There is **no** `WithdrawV2CircuitNotPromoted` gate in the current code. This payout path is **UNAUDITED** — treat it as experimental; do not use it with funds you cannot afford to lose.
 
 ## Historical Finding: Maturity Binding
 

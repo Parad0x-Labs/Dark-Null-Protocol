@@ -1,8 +1,8 @@
 # Dark Null Protocol: Canonical Public Devnet Track
 
-**Think Tornado Cash — but built for AI agent payments, not just moving ETH around.**
+**Private settlement on Solana, built for AI agent payments — not a mixer.**
 
-Send and receive value on Solana without exposing your transaction history. The amount, the sender, the receiver — none of it visible on-chain. The math proves it was valid. Nobody proves who did it.
+Send and receive value on Solana with on-chain unlinkability: withdrawals are cryptographically unlinkable to the deposits that funded them. The math proves a withdrawal is valid without revealing which deposit it came from. (Deposit amounts and depositors remain visible on-chain — see [`SECURITY_MODEL.md`](./SECURITY_MODEL.md) for the exact privacy boundary.)
 
 ![Status: Canonical Root](https://img.shields.io/badge/Status-Canonical_Root-00C2A8?style=flat-square)
 ![Proofs: Groth16](https://img.shields.io/badge/Proofs-Groth16-111827?style=flat-square)

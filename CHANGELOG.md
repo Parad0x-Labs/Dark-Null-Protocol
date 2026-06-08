@@ -35,7 +35,7 @@ Historical note: older entries below describe devnet milestones and historical r
 
 #### Client-Side Verification
 - **Level 0** — Server lookup confirmation
-- **Level 1** — Commitment derivation (Poseidon hash in browser)
+- **Level 1** — Commitment derivation (MiMCSponge hash in browser)
 - **Level 2** — Full Groth16 proof verification (snarkjs in browser)
 
 #### Receipt Format
@@ -70,7 +70,7 @@ Historical note: older entries below describe devnet milestones and historical r
 - **Bond Economics** — Commit bond + challenger bond for anti-grief
 
 #### Security
-- **Recipient Binding** — Cryptographic binding via domain-separated Poseidon hash
+- **Recipient Binding** — Cryptographic binding via domain-separated MiMCSponge hash
 - **Account Validation** — Submitter/relayer/treasury binding checks
 - **Solvency Checks** — Vault balance validation before all payouts
 - **Checked Arithmetic** — All fee/amount math uses overflow-safe operations
@@ -125,7 +125,7 @@ Historical note: older entries below describe devnet milestones and historical r
 
 ### Security
 - Internal security review completed
-- External audit scheduled Q1 2026
+- External audit: not yet audited (none scheduled)
 - Bug bounty program launched
 
 ### Deployment
@@ -174,8 +174,8 @@ No automatic migration — this preserves privacy by not linking old/new deposit
 
 ## Roadmap
 
-### Q1 2026
-- [ ] Security audit completion
+### Near-term
+- [ ] Security audit (currently unaudited — none scheduled)
 - [ ] Mainnet deployment
 - [ ] npm package publication
 

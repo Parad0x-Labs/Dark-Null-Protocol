@@ -15,7 +15,7 @@ It is still **not** a finished mainnet product from the public materials alone.
 - root updates are now restricted by a dedicated `RootAuthorityConfig` PDA instead of any signer
 - leaves, roots, and nullifiers now hard-fail on window exhaustion instead of silently overwriting old entries
 - the public root now fails closed on payout instead of minting from proof-unbound `amount` / recipient instruction args
-- `prepare_phantom_withdraw_v2` publishes the payout-bound public-input shape, but still fails closed pending v2 artifacts
+- `prepare_phantom_withdraw_v2` is **LIVE and UNAUDITED**: it binds all 8 payout-bound public inputs, verifies the 8-signal NullProofV2 (`circuits/vk.json` `nPublic=8`), and transfers funds on a valid proof — there is no `WithdrawV2CircuitNotPromoted` gate in the current code
 
 ## What Is Still Historical
 
@@ -30,7 +30,7 @@ It is still **not** a finished mainnet product from the public materials alone.
 - no public ops/relayer package with production controls
 - no proof in this repo that every historical deployment maps to the canonical root files now published
 - Merkle root evolution is still computed off-chain and then published by a trusted updater
-- the promoted canonical circuit still binds only `[commitment, nullifier, root]`; payout-bound v2 artifacts are not promoted yet
+- the payout-bound v2 circuit (`circuits/vk.json` `nPublic=8`) and its `prepare_phantom_withdraw_v2` payout path are **LIVE but UNAUDITED** — no completed third-party audit covers this money-moving path
 
 ## Safe Public Claims
 
@@ -38,7 +38,7 @@ It is still **not** a finished mainnet product from the public materials alone.
 - the canonical root artifact set is reproducible and locally verifiable
 - historical material is still published, but it is no longer the main integration target
 - the repo still does **not** prove audit completion or mainnet release readiness
-- the public root prefers fail-closed payout behavior over pretending the current proof bundle safely authorizes mint amount or recipient
+- the legacy `prepare_phantom_withdraw` (v1) path is fail-closed and does not pay out; the v2 `prepare_phantom_withdraw_v2` path is LIVE and UNAUDITED — it authorizes amount and recipient via the 8-signal proof and pays out, so it must not be described as fail-closed or safely gated
 
 ## Unsafe Public Claims
 

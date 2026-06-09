@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Historical note: older entries below describe devnet milestones and historical release framing. They are not the same thing as the current public-root assurance level described in [`README.md`](./README.md), [`PROTOTYPE_STATUS.md`](./PROTOTYPE_STATUS.md), and [`SECURITY_MODEL.md`](./SECURITY_MODEL.md).
 
+### Cross-repo devnet milestone — `dna-x402` private payment rails (four rails)
+
+The sibling `dna-x402` implementation now carries four privacy rails on **devnet**, all merged to its `main` ([Parad0x-Labs/dna-x402](https://github.com/Parad0x-Labs/dna-x402)). On-chain-verified and adversarially ("mayhem") tested:
+
+- **Dark Relay Rail** — ZK shielded pool (V3): hides **sender** (Groth16 membership proof) + **amount** (fixed denominations). In-proof relayer-fee binding (permissionless relayers; the recipient never signs) + denomination buckets. Devnet pool `2L7phWpE8Mkrij6oURj1mQcSPGs3oPL5ytAAQoN65nYY` (supersedes the earlier Phase-2 pool `8iZFKnK…`, now closed). 8/8 e2e.
+- **NullPay** — ed25519 stealth pay-by-`.null`-name: hides the **recipient** (a one-time stealth address resolved from a name's on-chain meta; native ed25519 signing, no trusted setup). Registrar `CpNbE8yec5UQJGTVsiTiQpKFhXfDKQZuGWMzMyFtKkME`. 7/7 e2e.
+- **Fusion** — one shielded-pool withdraw that hides **all three legs at once** (sender + amount + recipient), paying a NullPay stealth address via a permissionless relayer. Verified by the on-chain account list (the payee's wallet is absent from the withdraw tx).
+- **Federated eNULL** — k-of-n BDHKE ecash: hides **sender + amount** with **no trusted setup** (Chaumian blind signatures + threshold DKG; on-chain Ristretto DLEQ via `sol_curve_*` syscalls). Redeem program `BPkhipF5jTTTCwL3bLGjuwnU9F99yBRRES5ToeigRTyb`. A critical cross-vault-drain bug was found in adversarial testing, fixed, and **verified reverting on-chain** before merge.
+
+Scope and posture (unchanged discipline): these are the **`dna-x402` Poseidon / ed25519 / Ristretto implementations**, distinct from this repo's canonical MiMCSponge root. **Unaudited, devnet only, `mainnet_ready=false` throughout.** The ZK rail's verification key is a **beacon-sealed multi-contribution DRY-RUN ceremony — NOT yet trustless** (it awaits independent human contributors). Unlinkability in the demos is **structural** (on-chain presence/absence), not a large-anonymity-set claim. No mainnet deployment and no audit completion is claimed.
+
 ### Cross-repo devnet milestone — `dna-x402` Poseidon shielded pool
 
 The sibling `dna-x402` implementation landed a working BN254 shielded-pool path on **devnet** ([Parad0x-Labs/dna-x402#29](https://github.com/Parad0x-Labs/dna-x402/pull/29)):

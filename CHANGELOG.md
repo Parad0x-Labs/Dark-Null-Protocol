@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Historical note: older entries below describe devnet milestones and historical release framing. They are not the same thing as the current public-root assurance level described in [`README.md`](./README.md), [`PROTOTYPE_STATUS.md`](./PROTOTYPE_STATUS.md), and [`SECURITY_MODEL.md`](./SECURITY_MODEL.md).
 
+### Cross-repo devnet milestone — `dna-x402` Poseidon shielded pool
+
+The sibling `dna-x402` implementation landed a working BN254 shielded-pool path on **devnet** ([Parad0x-Labs/dna-x402#29](https://github.com/Parad0x-Labs/dna-x402/pull/29)):
+
+- a circomlib-matching BN254 **Poseidon** (via the native `sol_poseidon` syscall) now byte-matches the circuit hashing in that implementation, replacing an earlier SHA-256 stub on its on-chain path
+- deposit → real Groth16 withdraw proof → withdraw to a fresh address verifies **on-chain** end-to-end; double-spend, wrong-root, and wrong-recipient all revert with the correct error codes
+- devnet program `8iZFKnKTReSvhKrmrVoZ8fk2H1g3avCPZt9YVtoCkZuA`; evidence committed in that repo
+
+Scope and posture: this is the **Poseidon-hashed `dna-x402` implementation**, distinct from this repo's canonical MiMCSponge root. **Single-party trusted setup (not trustless), unaudited, devnet only.** No mainnet deployment and no audit completion is claimed.
+
 ### Planned
 - Mainnet deployment (pending audit)
 - Multi-region relayer deployment

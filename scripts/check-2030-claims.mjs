@@ -23,6 +23,12 @@ const expectedPrimitives = [
   ["ZK Access Receipts", "prototype"],
   ["Access Pattern Privacy (Piano PIR)", "prototype"],
   ["BDHKE Blind Receipt Tokens", "prototype"],
+  ["Silent Payment Rails", "research"],
+  ["ZK Fiat Settlement Proof", "research"],
+  ["Threshold Blind Mint Federation", "research"],
+  ["Nova / Folding Scheme Accumulation", "research"],
+  ["ZKML Verifiable Inference Receipts", "research"],
+  ["Private Streaming Micropayments", "research"],
 ];
 
 const requiredDocs = [
@@ -72,6 +78,18 @@ const primitiveLineRegexes = [
   /MagicBlock/i,
   /Arcium/i,
   /Jito/i,
+  /silent pay/i,
+  /stealth address/i,
+  /fiat/i,
+  /Stripe/i,
+  /threshold blind/i,
+  /FROST/i,
+  /folding scheme/i,
+  /Nova.*fold/i,
+  /ZKML/i,
+  /inference receipt/i,
+  /streaming.*pay/i,
+  /pay.*stream/i,
 ];
 
 const blockedClaimRegexes = [
@@ -239,6 +257,12 @@ async function checkSpecificBoundaries() {
     "| ZK Access Receipts | `prototype` |",
     "| Access Pattern Privacy (Piano PIR) | `prototype` |",
     "| BDHKE Blind Receipt Tokens | `prototype` |",
+    "| Silent Payment Rails | `research` |",
+    "| ZK Fiat Settlement Proof | `research` |",
+    "| Threshold Blind Mint Federation | `research` |",
+    "| Nova / Folding Scheme Accumulation | `research` |",
+    "| ZKML Verifiable Inference Receipts | `research` |",
+    "| Private Streaming Micropayments | `research` |",
     "| Confidential Token-2022 Linkage Privacy | `blocked` |",
     "blocked while Solana confidential transfer availability is audit-gated",
     "no MagicBlock integration",

@@ -92,8 +92,8 @@
     },
     {
       "path": "docs/CLAIMS_LEDGER.md",
-      "sha256": "f1396825d291c233f3f52d5d848e07c3891e689191910be4043ac7a58b472757",
-      "size": 5210
+      "sha256": "d9f8b6be8c0bf2a5a122fd0fe9ba5249142c08e45ed4b4b79bfb90f1f5e5dae0",
+      "size": 6316
     },
     {
       "path": "docs/DNA_X402_INTEGRATION.md",
@@ -292,8 +292,8 @@
     },
     {
       "path": "docs/2030_PRIMITIVES.md",
-      "sha256": "d1153b7c3b752ece0082d1c7891176b283f1fb9729a9585c0504f14c75aeaccb",
-      "size": 21976
+      "sha256": "5f41c8ea689163099c0da3b604bce021214347f538825858c250160f2a641f0c",
+      "size": 37058
     },
     {
       "path": "docs/COMPRESSED_ANONYMITY_STATE.md",
@@ -322,8 +322,8 @@
     },
     {
       "path": "scripts/check-2030-claims.mjs",
-      "sha256": "84b5154ecd75decc16545ff3906fecf9ab0bb1a210e7edce325908ad31994108",
-      "size": 8285
+      "sha256": "872b84789bc11b744e5b561840b0f1802faef7bb8dde68e6d3243f5b48b879b4",
+      "size": 9112
     },
     {
       "path": "tests/2030-claims.test.mjs",

@@ -61,6 +61,12 @@ This ledger separates delivered claims from blocked claims and roadmap ideas. It
 | ZK Access Receipts | Prototype | HMAC token prototype shipped; ZK circuit for token is the research target |
 | Access Pattern Privacy (Piano PIR) | Prototype | offline hint + online XOR scheme shipped; HTTP PIR server separation is the production target |
 | BDHKE Blind Receipt Tokens | Prototype | blind-sign + DLEQ + spent-registry shipped; on-chain registry + key rotation is the research target |
+| Silent Payment Rails | Research | no scanning protocol, no ephemeral key derivation; stealth-address approach for permanent address-reuse unlinkability is the research target |
+| ZK Fiat Settlement Proof | Research | no fiat integration, no TLS notary deployment; zkTLS attestation from Stripe/Visa confirming payment without card data on-chain is the research target |
+| Threshold Blind Mint Federation | Research | no threshold protocol, no partial blind signature aggregation; FROST k-of-n blind mint federation is the research target |
+| Nova / Folding Scheme Accumulation | Research | no folding circuit, no Nova prover; O(1) amortized incremental proof accumulator beyond SnarkPack O(log N) is the research target |
+| ZKML Verifiable Inference Receipts | Research | no ZK circuit for ML inference, no EZKL integration; ZK proof of model execution bound to x402 payment receipt is the research target |
+| Private Streaming Micropayments | Research | no streaming payment protocol, no hidden-rate contract; continuous hidden-rate payment stream with single settlement anchor is the research target |
 
 ## Rule
 

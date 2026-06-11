@@ -29,6 +29,12 @@ This page is the gated frontier map for Dark Null. It is a design and verificati
 | ZK Access Receipts | `prototype` | `swarm/access-receipt.mjs`, 20 tests, HMAC token bound to proof bundle hash, `npm run test:access-receipts` | HMAC prototype; ZK circuit for token is the research target |
 | Access Pattern Privacy (Piano PIR) | `prototype` | `swarm/piano-pir.mjs`, 15 tests, offline hint phase + online PIR query, `npm run test:pir` | first PIR prototype in any ZK payment system; HTTP server separation is the production target |
 | BDHKE Blind Receipt Tokens | `prototype` | `swarm/blind-token.mjs`, 19 tests, full blind-sign + DLEQ proof + spent registry, `npm run test:blind-tokens` | HMAC-token prototype + DLEQ public verify shipped; on-chain registry + key rotation is the research target |
+| Silent Payment Rails | `research` | stealth-address-inspired ephemeral key derivation per x402 payment — sender and receiver never reuse a public address | no scanning protocol, no key derivation scheme, no sender address privacy implementation |
+| ZK Fiat Settlement Proof | `research` | TLS attestation (DECO/Reclaim-style) derives a ZK credential from Visa/Mastercard/Stripe settlement — card never on-chain | no fiat integration, no TLS notary deployment, not a payment processor |
+| Threshold Blind Mint Federation | `research` | FROST k-of-n partial blind-signing — no single server holds the full mint key | no threshold protocol, no partial signature aggregation, not a validator network |
+| Nova / Folding Scheme Accumulation | `research` | incremental proof accumulator via Nova/HyperNova folding — O(1) amortized prover beyond SnarkPack O(log N) | no folding circuit, no Nova prover, not a recursive verifier |
+| ZKML Verifiable Inference Receipts | `research` | ZK proof of ML model execution with private inputs — x402 receipt proves correct compute, not just payment | no ZK circuit for ML inference, no EZKL integration |
+| Private Streaming Micropayments | `research` | hidden-rate continuous payment stream with a single on-chain anchor — agent bills per-token or per-second privately | no streaming payment protocol, no hidden-rate stream contract |
 
 ## 1. Dark Null x402 Privacy Extension
 
@@ -561,6 +567,275 @@ Exact forbidden marketing language:
 - blocked phrase: `ecash live`
 - blocked phrase: `private receipt layer deployed`
 
+## 15. Silent Payment Rails
+
+status: research
+
+What is already evidenced:
+
+- BDHKE blind tokens (primitive 14) provide unlinkability at the credential layer.
+- x402 receipts bind payer and payee fields that could be replaced with ephemeral derived keys.
+- Bitcoin BIP352 (silent payments) and Zcash shielded addresses demonstrate that stealth-address scanning is a proven cryptographic technique at the network level.
+
+What is not claimed:
+
+- no silent payment scanning protocol
+- no key derivation scheme for x402 participants
+- no ephemeral sender key implementation
+- no scan key infrastructure (requires offline scan + live spend key separation)
+- no chain analysis resistance guarantee beyond the BDHKE layer already shipped
+
+The problem this solves:
+
+Even if each receipt is unlinkable to a payer identity, address reuse across multiple x402 payments to the same API endpoint leaks the agent's behavior pattern on-chain. Silent payment rails derive a fresh ephemeral address per payment using a one-way key derivation from the recipient's public scan key. The sender never reuses an address. The recipient scans once per epoch with a private key. No on-chain observer can link two payments to the same recipient by address.
+
+Activation blockers:
+
+- key derivation scheme for x402 payer/payee ephemeral addresses
+- recipient scanning protocol (offline scan key + live spend key separation)
+- x402 protocol extension for ephemeral sender identity per payment
+- address derivation privacy analysis: timing correlation, chain clustering, network-level metadata
+
+Files/tests required before public claim:
+
+- silent payment key derivation module
+- scan protocol tests
+- timing correlation threat-model doc
+- integration test: x402 flow using ephemeral derived sender address
+- manifest binding for silent payment key material
+
+Exact forbidden marketing language:
+
+- blocked phrase: `silent payments shipped`
+- blocked phrase: `unlinkable payments live`
+- blocked phrase: `stealth address deployed`
+- blocked phrase: `on-chain address reuse closed`
+
+## 16. ZK Fiat Settlement Proof
+
+status: research
+
+What is already evidenced:
+
+- Dark Null issues x402 receipts and blind tokens that can serve as the on-chain credential surface after payment.
+- Off-chain attestation patterns (DECO, TLS notary, Reclaim Protocol, zkTLS) are established research with working implementations.
+- Stripe and Visa expose webhook and API surfaces that confirm payment status — these can be the attestation source.
+
+What is not claimed:
+
+- no Stripe integration
+- no Visa or Mastercard integration
+- no TLS notary or DECO deployment
+- no zkTLS implementation
+- not a payment processor
+- no fiat on-ramp or off-ramp
+
+The problem this solves:
+
+"My grandma pays with her Visa card. The API gets a ZK proof that the payment happened. Her bank sees a fiat charge. Nobody links the bank transaction to the API call." This is the zero-custody fiat gateway: the user's traditional payment system issues a confirmation, a ZK attestation proves it without revealing card data or payer identity, and Dark Null releases a credential on-chain. No fiat bridge in the custodial sense — just a proof.
+
+Activation blockers:
+
+- TLS notary or zkTLS integration to attest Stripe/Visa webhook data
+- ZK proof schema for payment confirmation (amount range, merchant hash, timestamp range)
+- off-chain attestation service design (who runs the notary, key custody model)
+- credential issuance binding: TLS attestation proof → Dark Null blind token or access receipt
+- privacy analysis: what the fiat confirmation reveals vs. what the ZK proof hides
+
+Files/tests required before public claim:
+
+- TLS attestation adapter module
+- payment confirmation ZK proof spec
+- attestation-to-credential binding test
+- privacy boundary analysis (what card metadata leaks in the attestation)
+- integration test: Stripe test-mode payment → ZK proof → Dark Null access receipt
+
+Exact forbidden marketing language:
+
+- blocked phrase: `Visa integration live`
+- blocked phrase: `credit card payments shipped`
+- blocked phrase: `Stripe integration deployed`
+- blocked phrase: `fiat gateway live`
+
+## 17. Threshold Blind Mint Federation
+
+status: research
+
+What is already evidenced:
+
+- `swarm/blind-token.mjs` implements single-mint BDHKE with full DLEQ proof (primitive 14, 19 tests).
+- FROST (Flexible Round-Optimized Schnorr Threshold, Komlo/Goldberg 2020) is a proven threshold Schnorr scheme compatible with the scalar arithmetic used in secp256k1 BDHKE.
+- Threshold blind signing schemes exist in academic literature (Jarecki/Kiayias/Krawczyk/Xu OPAQUE adjacent work).
+
+What is not claimed:
+
+- no threshold signing protocol
+- not a validator network
+- no partial signature aggregation implementation
+- no distributed key generation (DKG) for the mint key
+- no federation of blind mint servers
+
+The problem this solves:
+
+The current BDHKE prototype trusts a single mint key. A compromised or coerced mint server can issue arbitrary tokens. A k-of-n threshold mint means no single server can unilaterally issue a blind token — k servers must each contribute a partial blind signature, and the client aggregates them. The DLEQ proof generalises to threshold: each server proves its partial signature used its declared key share.
+
+Activation blockers:
+
+- threshold key generation and share distribution protocol
+- partial blind signature format (compatible with existing BDHKE secp256k1 math)
+- partial DLEQ proof per server, aggregate verification
+- server liveness and partial-signature timeout handling
+- binding to x402 payment flow: which server set is trusted for a given service
+
+Files/tests required before public claim:
+
+- threshold BDHKE module (partial sign, partial DLEQ, aggregate)
+- DKG or trusted setup for mint key shares
+- partial signature tests: k-of-n threshold, fewer-than-k failure
+- aggregate DLEQ verification tests
+- integration test: x402 payment → threshold mint issuance → unblind → verify
+
+Exact forbidden marketing language:
+
+- blocked phrase: `decentralized mint shipped`
+- blocked phrase: `threshold blind tokens live`
+- blocked phrase: `trustless issuance deployed`
+- blocked phrase: `validator network`
+
+## 18. Nova / Folding Scheme Accumulation
+
+status: research
+
+What is already evidenced:
+
+- `swarm/batch.mjs` implements sequential O(N) batch verification with SnarkPack annotation as the O(log N) research target (primitive 5, 10 tests).
+- Nova (Kothapalli/Setty/Tzialla 2021) and HyperNova (2023) demonstrate that folding schemes can compress unbounded computation into an O(1) amortized proof accumulator — a different approach from SnarkPack aggregation.
+- Protogalaxy (2023) and Sangria extend folding to PLONK-style arithmetisation.
+
+What is not claimed:
+
+- no folding scheme circuit
+- no Nova or HyperNova prover integration
+- no incremental settlement accumulator
+- not a recursive verifier (current batch is sequential O(N))
+- no epoch proof artifact
+
+The problem this solves:
+
+SnarkPack (the current batch research target) aggregates a finite set of Groth16 proofs into one O(log N) proof after the fact. Folding is different: each new Dark Null settlement proof is *folded* into a running accumulator proof with O(1) prover overhead per step. After any number of settlements, there is one constant-size accumulator proof covering all of them. At the limit, the entire payment history of the Dark Null protocol compresses to a single proof that anyone can verify in milliseconds.
+
+Activation blockers:
+
+- folding scheme selection (Nova, HyperNova, Protogalaxy) and circuit compatibility with existing BN254 Groth16
+- incremental public-input accumulator design for nullifiers and roots
+- per-step fold cost analysis at current circuit size
+- cross-batch nullifier uniqueness under the folding accumulator
+- verifier contract on Solana (or off-chain verifier referencing folded accumulator root)
+
+Files/tests required before public claim:
+
+- folding scheme adapter: translate Dark Null Groth16 proof into Nova/HyperNova step input
+- incremental accumulator state tests
+- wrong-fold and tampered-step tests
+- benchmark: fold step overhead vs. sequential O(N) batch at 10/100/1000 proofs
+- manifest binding for folded accumulator artifact
+
+Exact forbidden marketing language:
+
+- blocked phrase: `Nova shipped`
+- blocked phrase: `O(1) settlement live`
+- blocked phrase: `incremental accumulation deployed`
+- blocked phrase: `infinite history in one proof`
+
+## 19. ZKML Verifiable Inference Receipts
+
+status: research
+
+What is already evidenced:
+
+- x402 receipts bind payment to resource identifiers but do not currently prove *what computation* the payment bought.
+- EZKL (2023), Modulus Labs, Orion, and zkSNARKs for neural networks (Garg/Gentry/Halevi/Zhandry 2016 line) demonstrate that Groth16 proofs of neural network forward passes are achievable at research scale.
+- ZK proofs of transformer inference steps are an active area (Axiom, Succinct SP1) with published benchmarks.
+
+What is not claimed:
+
+- no ZK circuit for ML inference
+- no EZKL integration
+- no model commitment scheme
+- no verifiable inference receipt format
+- no private input guarantee for inference data
+
+The problem this solves:
+
+When an AI agent pays for LLM inference via x402, today's receipt proves payment happened — it does not prove the correct model ran on the correct input and produced the declared output. A ZKML inference receipt adds a second layer: the receipt commits to (model hash, input hash, output hash), and a ZK proof certifies the model ran correctly without revealing the input (private data) or model weights (proprietary). For high-stakes agentic workflows — medical, legal, financial — this is the difference between "I paid for AI" and "I can prove which AI said what."
+
+Activation blockers:
+
+- model commitment scheme (hash of quantized weights, circuit parameters)
+- ZK circuit for inference step (EZKL-style or SP1 RISC-V zkVM approach)
+- input privacy model: what the prover needs vs. what the verifier sees
+- receipt schema extension: model commitment + inference proof hash bound to x402 payment
+- benchmark: proof size and generation time for realistic model sizes
+
+Files/tests required before public claim:
+
+- ZKML receipt format spec
+- ZK inference proof adapter (EZKL or SP1 backend)
+- model commitment tests
+- input-privacy boundary tests (what leaks in the proof)
+- integration test: x402 payment → inference → ZKML receipt → verify
+
+Exact forbidden marketing language:
+
+- blocked phrase: `ZKML shipped`
+- blocked phrase: `verifiable AI inference live`
+- blocked phrase: `private ML deployed`
+- blocked phrase: `prove what the AI said`
+
+## 20. Private Streaming Micropayments
+
+status: research
+
+What is already evidenced:
+
+- x402 receipts represent discrete payment events; streaming extends this to continuous payment.
+- `packages/session-channels` in the `dna-x402` workspace explores N-action batching into one settlement, which is directionally adjacent.
+- Private payment channel research (Bolt, Sprites, Zcash payment channels, Nym) demonstrates that hidden-amount state-channel patterns are achievable.
+
+What is not claimed:
+
+- no streaming payment protocol
+- no hidden-rate stream contract
+- no continuous settlement anchor
+- no pay-by-the-token or pay-by-the-second implementation
+
+The problem this solves:
+
+AI agents frequently need to pay continuously rather than in discrete steps — per-token for LLM inference, per-second for GPU compute, per-byte for bandwidth. On-chain these streams expose the rate and accumulation to anyone watching. Private streaming micropayments commit to an encrypted rate and accumulation state, stream updates off-chain, and settle with a single on-chain anchor. Neither the rate, nor the total, nor the intermediate balances are visible. The payer knows what they spent. The payee knows what they received. Nobody else does.
+
+Activation blockers:
+
+- stream opening protocol: rate commitment and initial balance hidden via encryption or ZK
+- off-chain update protocol: each token/second increment updates shared state without on-chain tx
+- on-chain settlement: anchor commits to final balance without revealing rate or history
+- dispute resolution: if one party goes offline, how does the other close fairly without leaking stream details
+- binding to x402 resource identifiers: which API call, which model, which session
+
+Files/tests required before public claim:
+
+- private stream opening module
+- off-chain state update tests
+- settlement anchor tests
+- dispute resolution protocol
+- integration test: continuous x402 inference billing via private stream, single settlement anchor
+
+Exact forbidden marketing language:
+
+- blocked phrase: `private streaming live`
+- blocked phrase: `hidden rate streams deployed`
+- blocked phrase: `pay-by-the-token privately shipped`
+- blocked phrase: `real-time private billing`
+
 ## External Watchlist
 
 These are inputs for design work, not evidence that Dark Null has shipped integrations:
@@ -578,3 +853,12 @@ These are inputs for design work, not evidence that Dark Null has shipped integr
 - Piano PIR (access pattern privacy): `https://eprint.iacr.org/2023/452`
 - SnarkPack (Groth16 aggregation): `https://eprint.iacr.org/2021/529`
 - BDHKE Blind DHKE (Chaum 1982 blind signatures, Cashu nut-00): `https://github.com/cashubtc/nuts/blob/main/00.md`
+- BIP352 Silent Payments (stealth address scanning for Bitcoin): `https://github.com/bitcoin/bips/blob/master/bip-0352.mediawiki`
+- DECO / TLS notary (zkTLS attestation from HTTPS responses): `https://deco.works/`
+- Reclaim Protocol (zkTLS credential proofs from web APIs): `https://www.reclaimprotocol.org/`
+- FROST threshold Schnorr (Komlo/Goldberg 2020): `https://eprint.iacr.org/2020/852`
+- Nova folding scheme (Kothapalli/Setty/Tzialla 2021): `https://eprint.iacr.org/2021/370`
+- HyperNova (Kothapalli/Setty 2023): `https://eprint.iacr.org/2023/573`
+- EZKL (ZK proofs of ONNX ML model execution): `https://github.com/zkonduit/ezkl`
+- Succinct SP1 zkVM (RISC-V ZK VM for ML inference proofs): `https://github.com/succinctlabs/sp1`
+- Bolt (privacy-preserving payment channels): `https://eprint.iacr.org/2016/701`

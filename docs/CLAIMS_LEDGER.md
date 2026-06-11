@@ -15,6 +15,11 @@ This ledger separates delivered claims from blocked claims and roadmap ideas. It
 | Full local validation lane exists | Delivered | `npm run test:all` |
 | Open-beta swarm health surface exists | Delivered | `swarm/server.mjs`, `config/swarm.open-beta.example.json`, `npm run test:swarm` |
 | Private x402 receipt primitives exist | Delivered | `swarm/x402.mjs`, `docs/PRIVATE_X402_PAYMENTS.md`, `npm run test:x402`, `npm run check:x402` |
+| Batch settlement module (sequential O(N)) | Delivered | `swarm/batch.mjs`, 10 tests, dup-nullifier guard, `npm run test:batch` |
+| ZK access receipt prototype | Delivered | `swarm/access-receipt.mjs`, 20 tests, HMAC token bound to proof bundle hash, `npm run test:access-receipts` |
+| Receipt DAG prototype (in-process) | Delivered | `swarm/receipt-dag.mjs`, 17 tests, append/walk/verify/export/import, `npm run test:receipt-dag` |
+| Piano PIR prototype (access pattern privacy) | Delivered | `swarm/piano-pir.mjs`, 15 tests, offline hint phase + online XOR query, `npm run test:pir` |
+| BDHKE blind receipt token prototype | Delivered | `swarm/blind-token.mjs`, 19 tests, blind-sign + DLEQ proof + spent registry, `npm run test:blind-tokens` |
 
 ## Blocked Claims
 
@@ -46,14 +51,16 @@ This ledger separates delivered claims from blocked claims and roadmap ideas. It
 | Compressed Anonymity / Nullifier State | Research | requires compressed-state code, tests, and manifest binding |
 | Receipt DAG / Append-Only Private Receipts | Prototype | requires persistent append-only storage before public service claim |
 | Proof-Carrying Relayer Swarm | Research | not a validator network, not BFT, and not decentralized consensus |
-| Recursive Settlement Batches | Research | requires recursive artifacts, verifier, manifest, and duplicate-nullifier tests |
+| Recursive Settlement Batches | Prototype | sequential O(N) batch verifier shipped; SnarkPack O(log N) aggregation is the research target |
 | Ephemeral Private Payment Sessions | Research | requires real session backend integration evidence |
 | Finality-Aware / Alpenglow-Ready Receipts | Research | requires finality policy code and Solana protocol evidence at implementation time |
 | Confidential Token-2022 Linkage Privacy | Blocked | blocked while Confidential Transfer availability is audit-gated |
 | MPC Sealed Pricing / Private Auctions | Research | not a private compute network; requires external compute integration |
 | MEV-Aware Private Settlement Routes | Research | no MEV-proof or BAM integration claim |
 | x402 Bazaar Private Reputation Receipts | Research | requires Bazaar adapter and metadata-leakage tests |
-| ZK Access Receipts | Research | requires access-receipt protocol, replay policy, and revocation tests |
+| ZK Access Receipts | Prototype | HMAC token prototype shipped; ZK circuit for token is the research target |
+| Access Pattern Privacy (Piano PIR) | Prototype | offline hint + online XOR scheme shipped; HTTP PIR server separation is the production target |
+| BDHKE Blind Receipt Tokens | Prototype | blind-sign + DLEQ + spent-registry shipped; on-chain registry + key rotation is the research target |
 
 ## Rule
 

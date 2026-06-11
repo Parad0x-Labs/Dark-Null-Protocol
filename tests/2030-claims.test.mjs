@@ -34,13 +34,25 @@ test("x402 privacy extension remains private receipt primitives unless integrati
   assert.match(primitives, /external `dna-x402` release commit/);
 });
 
-test("recursive batching and compressed anonymity state stay research-only", async () => {
+test("recursive batching is prototype-only (sequential O(N), no epoch proofs); compressed anonymity stays research", async () => {
   const primitives = await fs.readFile(primitivesPath, "utf8");
 
-  assert.match(primitives, /\| Recursive Settlement Batches \| `research` \|/);
+  // recursive batching upgraded from research to prototype (sequential verifier shipped)
+  assert.match(primitives, /\| Recursive Settlement Batches \| `prototype` \|/);
   assert.match(primitives, /no recursive verifier/);
+  assert.match(primitives, /SnarkPack aggregation is the research target/);
   assert.match(primitives, /\| Compressed Anonymity \/ Nullifier State \| `research` \|/);
   assert.match(primitives, /no compressed-account deployment/);
+});
+
+test("BDHKE blind token prototype boundary — on-chain registry and key rotation are the research target", async () => {
+  const primitives = await fs.readFile(primitivesPath, "utf8");
+  const ledger = await fs.readFile(ledgerPath, "utf8");
+
+  assert.match(primitives, /\| BDHKE Blind Receipt Tokens \| `prototype` \|/);
+  assert.match(primitives, /no on-chain spent-token registry/);
+  assert.match(primitives, /no x402 gateway integration/);
+  assert.match(ledger, /BDHKE Blind Receipt Tokens \| Prototype \|/);
 });
 
 test("Token-2022 confidential transfer remains blocked while availability is audit-gated", async () => {

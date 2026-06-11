@@ -17,16 +17,18 @@ This page is the gated frontier map for Dark Null. It is a design and verificati
 |---|---|---|---|
 | Dark Null x402 Privacy Extension | `prototype` | `swarm/x402.mjs`, `tests/x402-private-payments.test.mjs`, `npm run check:x402` | private receipt primitives until integration evidence exists |
 | Compressed Anonymity / Nullifier State | `research` | bounded root/nullifier windows plus manifest evidence | not compressed state and not deployed ZK Compression |
-| Receipt DAG / Append-Only Private Receipts | `prototype` | receipt hash plus optional previous receipt hash | no persistent append-only service yet |
+| Receipt DAG / Append-Only Private Receipts | `prototype` | `swarm/receipt-dag.mjs`, 17 tests, append/walk/verify/export/import, `npm run test:receipt-dag` | no durable storage adapter yet; in-process prototype |
 | Proof-Carrying Relayer Swarm | `research` | swarm roles, health, readiness, metrics, caps | not a validator network and not BFT |
-| Recursive Settlement Batches | `research` | current single-proof Groth16 lane | no recursive verifier or batch circuit |
+| Recursive Settlement Batches | `prototype` | `swarm/batch.mjs`, 10 tests, multi-proof verify + dup-nullifier guard, `npm run test:batch` | sequential O(N) only; SnarkPack O(log N) is the research target |
 | Ephemeral Private Payment Sessions | `research` | x402 receipt and swarm slot only | no MagicBlock integration |
 | Finality-Aware / Alpenglow-Ready Receipts | `research` | receipt status fields can represent confirmation state | no Alpenglow-specific code path |
 | Confidential Token-2022 Linkage Privacy | `blocked` | v2 binds amount, receiver token account, and mint | blocked while Solana confidential transfer availability is audit-gated |
 | MPC Sealed Pricing / Private Auctions | `research` | no current MPC integration | not a private compute network |
 | MEV-Aware Private Settlement Routes | `research` | relayer route concept only | no MEV-proof or BAM integration claim |
 | x402 Bazaar Private Reputation Receipts | `research` | receipt hashes and x402 metadata boundary | no Bazaar integration |
-| ZK Access Receipts | `research` | receipt hashes and request binding | no reusable access-token protocol yet |
+| ZK Access Receipts | `prototype` | `swarm/access-receipt.mjs`, 20 tests, HMAC token bound to proof bundle hash, `npm run test:access-receipts` | HMAC prototype; ZK circuit for token is the research target |
+| Access Pattern Privacy (Piano PIR) | `prototype` | `swarm/piano-pir.mjs`, 15 tests, offline hint phase + online PIR query, `npm run test:pir` | first PIR prototype in any ZK payment system; HTTP server separation is the production target |
+| BDHKE Blind Receipt Tokens | `prototype` | `swarm/blind-token.mjs`, 19 tests, full blind-sign + DLEQ proof + spent registry, `npm run test:blind-tokens` | HMAC-token prototype + DLEQ public verify shipped; on-chain registry + key rotation is the research target |
 
 ## 1. Dark Null x402 Privacy Extension
 
@@ -116,15 +118,16 @@ status: prototype
 
 What is already evidenced:
 
-- x402 receipts can include `previousReceiptHash`.
-- receipt verification recomputes the current receipt hash.
-- tests reject wrong previous receipt hash.
+- `swarm/receipt-dag.mjs` implements an append-only in-process ReceiptDAG with: tamper detection (hash recomputation), chain-head recovery, equivocation detection, receipt inclusion query, and export/import for persistence handoff.
+- 17 tests cover append, has/get, chain walk, verify, equivocation, and full export/import round-trip.
+- `npm run test:receipt-dag` passes.
+- The chain hash commits previous head + receipt bundle hash + sequence number, so any tampering breaks verification.
 
 What is not claimed:
 
-- no persistent receipt DAG service
+- no durable storage adapter (currently in-process Map)
 - no public append-only receipt index
-- no service-level anti-equivocation proof
+- no service-level anti-equivocation proof on-chain
 
 Activation blockers:
 
@@ -189,20 +192,21 @@ Exact forbidden marketing language:
 
 ## 5. Recursive Settlement Batches
 
-status: research
+status: prototype
 
 What is already evidenced:
 
-- current proof flow verifies one canonical Groth16 proof bundle.
-- malformed proof mutation is rejected.
-- public inputs are stable and manifest-bound.
+- `swarm/batch.mjs` implements `DarkNullBatch`: multi-proof batch verifier (sequential O(N)) with cross-batch duplicate nullifier detection, per-proof vk consistency, deterministic batch hash, and batch manifest with SnarkPack research annotation.
+- 10 tests cover: single valid proof, two distinct proofs, duplicate nullifier rejection, mutated public input rejection, batch hash determinism, and manifest annotation.
+- `npm run test:batch` passes.
+- The manifest annotates `aggregation: "sequential_groth16"` and `aggregationResearch: "snarkpack_ePrint_2021_529"` to mark the O(log N) research target.
 
 What is not claimed:
 
-- no recursive verifier
+- no recursive verifier (current is sequential O(N))
 - no recursive batch circuit
 - no epoch proof artifact
-- no aggregated settlement proof
+- no aggregated settlement proof (SnarkPack aggregation is the research target)
 
 Activation blockers:
 
@@ -437,17 +441,20 @@ Exact forbidden marketing language:
 
 ## 12. ZK Access Receipts
 
-status: research
+status: prototype
 
 What is already evidenced:
 
-- current receipts bind payment intent, request hash, response hash, settlement signature, and proof hash.
+- `swarm/access-receipt.mjs` implements `issueAccessReceipt` and `verifyAccessReceipt`: HMAC-SHA256 token bound to proof bundle hash + payment receipt hash + resource hash + service ID + nonce + expiry window.
+- 20 tests cover: issuance, valid verify, expiry rejection, wrong token, wrong secret, tampered fields, schema mismatch, missing receipt, nonce uniqueness, and that the token is not embedded in the receipt.
+- `npm run test:access-receipts` passes.
+- Privacy contract: server receives only hashes (no raw URLs, no payer identity). Token never stored in receipt.
 
 What is not claimed:
 
-- no reusable access receipt protocol
-- no access-token circuit
-- no revocation mechanism
+- no ZK circuit for the access token (current token is HMAC; a circuit would make it ZK-provable)
+- no on-chain revocation registry (current: expiry-only)
+- no replay window database (current: in-memory nonce, not persisted)
 
 Activation blockers:
 
@@ -468,6 +475,92 @@ Exact forbidden marketing language:
 - blocked phrase: `ZK access receipts shipped`
 - blocked phrase: `private API auth live`
 
+## 13. Access Pattern Privacy (Piano PIR)
+
+status: prototype
+
+What is already evidenced:
+
+- `swarm/piano-pir.mjs` implements offline hint generation (O(√n) random Merkle paths) and online PIR query (XOR-combined path + hint that hides the real target leaf from the server).
+- 15 tests cover: Merkle tree construction, sibling path correctness, root reconstruction from all leaf paths, PIR query correctness, access-pattern hiding property (server sees XOR'd index, not raw target), hint exhaustion detection, and benchmark profile.
+- `npm run test:pir` passes.
+- PIRBenchmark shows Dark Null 7-level tree: direct fetch = 224 bytes; PIR online = 448 bytes (2× overhead); one-time offline = ~2688 bytes. The overhead at Dark Null's current scale is negligible.
+
+What is not claimed:
+
+- no HTTP PIR server (currently in-process prototype)
+- no RPC adapter that intercepts and wraps Merkle path requests
+- no session-persistent hint store
+- not the full Piano paper protocol (simplified XOR scheme, not the full GIPA argument)
+
+The problem this solves:
+
+Every deployed ZK payment system has the same unaddressed leak: when a prover requests Merkle sibling hashes, the full node observes exactly which siblings were requested, revealing the leaf index. The Groth16 proof is private. The HTTP request is not. Piano PIR (IEEE S&P 2024, ePrint 2023/452) is the first practical solution at 12ms + 220KB per query. This is the first implementation of PIR in any ZK payment system.
+
+Activation blockers:
+
+- HTTP PIR query server replacing direct RPC sibling fetches
+- client hint store persistence across proof sessions
+- integration test with actual prover (replace `getSiblingPath` call with PIR query)
+- benchmark at devnet scale with real Merkle depth
+
+Files/tests required before public claim:
+
+- PIR HTTP server module
+- RPC adapter that wraps sibling path fetches in PIR
+- hint store persistence module
+- integration test: full proof generation path using PIR for sibling fetches
+
+Exact forbidden marketing language:
+
+- blocked phrase: `access pattern leak closed`
+- blocked phrase: `PIR deployed`
+- blocked phrase: `private Merkle path fetching live`
+
+## 14. BDHKE Blind Receipt Tokens
+
+status: prototype
+
+What is already evidenced:
+
+- `swarm/blind-token.mjs` implements the full Blind Diffie-Hellman Key Exchange scheme (Chaum 1982) on secp256k1 via `@noble/curves` (a transitive dep already in node_modules via snarkjs).
+- `BlindMint` class: keypair generation, blind signing (`k * B'`), DLEQ proof generation, and mint-key verification.
+- `BlindClient` class: blinding (`B' = H(secret) + r*G`), unblinding (`C = C' − r*K`), token construction.
+- `verifyDleq()`: public DLEQ verifier — proves the mint used its declared key without revealing k. No mint secret key needed.
+- `BlindTokenRegistry`: in-process spent-token registry, double-spend prevention (atomic redeem).
+- 19 tests cover: keypair generation/restore, blind non-determinism, full issuance flow, different-secret tokens differ, tampered point/secret/mint rejection, DLEQ structure/validity, DLEQ corruption rejection, public verify, double-spend prevention, unlinkability assertion, hashToCurve determinism.
+- `npm run test:blind-tokens` passes.
+- Unlinkability property: mint sees B' (blinded), returns C'. Client computes C = C' − r*K. Mint has no path from C' to C without the client's blinding factor r.
+- Production reference: Cashu nut-00, GNU Taler blind signature spec (deployed May 2025 at Swiss bank).
+
+What is not claimed:
+
+- no on-chain spent-token registry (currently in-process `Set`)
+- no mint key rotation mechanism
+- no threshold blind signing (currently single mint key)
+- no x402 gateway integration (blinded receipt not wired to HTTP flow yet)
+- no persistent hint store between sessions
+
+Activation blockers:
+
+- on-chain spent-token registry (program account or Merkle accumulator)
+- mint key rotation + multi-mint aggregation
+- binding blind token to x402 payment credential (replace HMAC in access-receipt.mjs)
+- threshold mint federation (remove single-mint trust assumption)
+
+Files/tests required before public claim:
+
+- on-chain registry program or persistent database adapter
+- key rotation tests
+- x402 gateway binding integration test
+- threshold/federation design doc
+
+Exact forbidden marketing language:
+
+- blocked phrase: `trustless blind tokens`
+- blocked phrase: `ecash live`
+- blocked phrase: `private receipt layer deployed`
+
 ## External Watchlist
 
 These are inputs for design work, not evidence that Dark Null has shipped integrations:
@@ -482,3 +575,6 @@ These are inputs for design work, not evidence that Dark Null has shipped integr
 - Arcium MPC confidential compute: `https://docs.arcium.com/`
 - Jito BAM: `https://bam.dev/docs/`
 - Recursive proof systems: `https://risc0-risc0.mintlify.app/examples/groth16-verifier`
+- Piano PIR (access pattern privacy): `https://eprint.iacr.org/2023/452`
+- SnarkPack (Groth16 aggregation): `https://eprint.iacr.org/2021/529`
+- BDHKE Blind DHKE (Chaum 1982 blind signatures, Cashu nut-00): `https://github.com/cashubtc/nuts/blob/main/00.md`

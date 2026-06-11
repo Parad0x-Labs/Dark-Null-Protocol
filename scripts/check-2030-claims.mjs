@@ -13,14 +13,16 @@ const expectedPrimitives = [
   ["Compressed Anonymity / Nullifier State", "research"],
   ["Receipt DAG / Append-Only Private Receipts", "prototype"],
   ["Proof-Carrying Relayer Swarm", "research"],
-  ["Recursive Settlement Batches", "research"],
+  ["Recursive Settlement Batches", "prototype"],
   ["Ephemeral Private Payment Sessions", "research"],
   ["Finality-Aware / Alpenglow-Ready Receipts", "research"],
   ["Confidential Token-2022 Linkage Privacy", "blocked"],
   ["MPC Sealed Pricing / Private Auctions", "research"],
   ["MEV-Aware Private Settlement Routes", "research"],
   ["x402 Bazaar Private Reputation Receipts", "research"],
-  ["ZK Access Receipts", "research"],
+  ["ZK Access Receipts", "prototype"],
+  ["Access Pattern Privacy (Piano PIR)", "prototype"],
+  ["BDHKE Blind Receipt Tokens", "prototype"],
 ];
 
 const requiredDocs = [
@@ -64,6 +66,9 @@ const primitiveLineRegexes = [
   /BAM/i,
   /Bazaar/i,
   /ZK Access/i,
+  /BDHKE/i,
+  /blind token/i,
+  /ecash/i,
   /MagicBlock/i,
   /Arcium/i,
   /Jito/i,
@@ -229,8 +234,11 @@ async function checkSpecificBoundaries() {
 
   for (const required of [
     "private receipt primitives until integration evidence exists",
-    "| Recursive Settlement Batches | `research` |",
+    "| Recursive Settlement Batches | `prototype` |",
     "| Compressed Anonymity / Nullifier State | `research` |",
+    "| ZK Access Receipts | `prototype` |",
+    "| Access Pattern Privacy (Piano PIR) | `prototype` |",
+    "| BDHKE Blind Receipt Tokens | `prototype` |",
     "| Confidential Token-2022 Linkage Privacy | `blocked` |",
     "blocked while Solana confidential transfer availability is audit-gated",
     "no MagicBlock integration",

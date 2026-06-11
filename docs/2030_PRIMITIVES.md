@@ -569,21 +569,21 @@ Exact forbidden marketing language:
 
 ## 15. Silent Payment Rails
 
-status: research
+status: prototype
 
 What is already evidenced:
 
+- `swarm/silent-pay.mjs` — BIP352-style stealth address derivation: generateSilentPaymentKeys, deriveOneTimeAddress (sender), scanOutput/scanOutputs (recipient). 13 tests pass.
+- Each payment goes to a fresh one-time address derived via ECDH(eph_privkey, scan_pubkey); recipient scans with scan_privkey to discover and spend.
 - BDHKE blind tokens (primitive 14) provide unlinkability at the credential layer.
-- x402 receipts bind payer and payee fields that could be replaced with ephemeral derived keys.
-- Bitcoin BIP352 (silent payments) and Zcash shielded addresses demonstrate that stealth-address scanning is a proven cryptographic technique at the network level.
+- Bitcoin BIP352 and Zcash shielded addresses confirm stealth-address scanning is a proven pattern at the network level.
 
 What is not claimed:
 
-- no silent payment scanning protocol
-- no key derivation scheme for x402 participants
-- no ephemeral sender key implementation
-- no scan key infrastructure (requires offline scan + live spend key separation)
-- no chain analysis resistance guarantee beyond the BDHKE layer already shipped
+- no on-chain integration yet; prototype is pure-crypto off-chain
+- no Solana program for registering scan keys or tracking one-time addresses
+- no production scanning daemon
+- no chain analysis resistance guarantee without the on-chain component
 
 The problem this solves:
 
@@ -659,21 +659,22 @@ Exact forbidden marketing language:
 
 ## 17. Threshold Blind Mint Federation
 
-status: research
+status: prototype
 
 What is already evidenced:
 
+- `swarm/threshold-mint.mjs` — k-of-n BDHKE via Shamir's Secret Sharing + Lagrange interpolation on the curve. shamirSplit, partialSign, aggregatePartialResponses, unblind, verifyToken. 14 tests pass.
+- Tested configurations: 2-of-3 (both {1,2} and {1,3} subsets), 3-of-5, 1-of-n, all-n. k-1 signers produce invalid token (verified).
+- Token format is identical to single-signer BDHKE — same verify path, no API change for consumers.
 - `swarm/blind-token.mjs` implements single-mint BDHKE with full DLEQ proof (primitive 14, 19 tests).
-- FROST (Flexible Round-Optimized Schnorr Threshold, Komlo/Goldberg 2020) is a proven threshold Schnorr scheme compatible with the scalar arithmetic used in secp256k1 BDHKE.
-- Threshold blind signing schemes exist in academic literature (Jarecki/Kiayias/Krawczyk/Xu OPAQUE adjacent work).
+- FROST (Komlo/Goldberg 2020) is a proven threshold Schnorr scheme; this prototype uses the same Lagrange-on-curve aggregation.
 
 What is not claimed:
 
-- no threshold signing protocol
+- no distributed key generation (DKG) — dealer generates and distributes shares
+- no per-signer threshold DLEQ proof (full FROST adds proofs per partial response)
+- no production key ceremony or federation infrastructure
 - not a validator network
-- no partial signature aggregation implementation
-- no distributed key generation (DKG) for the mint key
-- no federation of blind mint servers
 
 The problem this solves:
 
@@ -794,20 +795,21 @@ Exact forbidden marketing language:
 
 ## 20. Private Streaming Micropayments
 
-status: research
+status: prototype
 
 What is already evidenced:
 
+- `swarm/payment-stream.mjs` — payment channel with off-chain tick commitments. openChannel, tick (payer-signed increment), closeChannel (recipient countersign), verifySettlement, tickSupersedes (dispute). 15 tests pass.
+- Tested: multi-tick accumulation, overspend guard, tamper detection, settlement verification, dispute supersede logic.
 - x402 receipts represent discrete payment events; streaming extends this to continuous payment.
-- `packages/session-channels` in the `dna-x402` workspace explores N-action batching into one settlement, which is directionally adjacent.
-- Private payment channel research (Bolt, Sprites, Zcash payment channels, Nym) demonstrates that hidden-amount state-channel patterns are achievable.
+- `packages/session-channels` in the `dna-x402` workspace explores N-action batching into one settlement, directionally adjacent.
+- Private payment channel research (Bolt, Sprites, Zcash payment channels) confirms hidden-amount state-channel patterns are achievable.
 
 What is not claimed:
 
-- no streaming payment protocol
-- no hidden-rate stream contract
-- no continuous settlement anchor
-- no pay-by-the-token or pay-by-the-second implementation
+- no Solana program for on-chain channel open/close yet; settlement verification is off-chain only
+- no hidden-rate stream (tick amounts are visible between payer and recipient; hidden from third parties is the goal of the on-chain anchor)
+- no dispute resolution program on-chain
 
 The problem this solves:
 

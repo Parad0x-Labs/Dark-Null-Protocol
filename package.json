@@ -22,6 +22,9 @@
     "./swarm/receipt-dag": "./swarm/receipt-dag.mjs",
     "./swarm/piano-pir": "./swarm/piano-pir.mjs",
     "./swarm/blind-token": "./swarm/blind-token.mjs",
+    "./swarm/silent-pay": "./swarm/silent-pay.mjs",
+    "./swarm/threshold-mint": "./swarm/threshold-mint.mjs",
+    "./swarm/payment-stream": "./swarm/payment-stream.mjs",
     "./package.json": "./package.json"
   },
   "files": [
@@ -163,7 +166,10 @@
     "test:receipt-dag": "node --test ./tests/receipt-dag.test.mjs",
     "test:pir": "node --test ./tests/piano-pir.test.mjs",
     "test:blind-tokens": "node --test ./tests/blind-token.test.mjs",
-    "test:frontier": "node --test ./tests/zk-access-receipts.test.mjs ./tests/receipt-dag.test.mjs ./tests/piano-pir.test.mjs ./tests/blind-token.test.mjs",
+    "test:silent-pay": "node --test ./tests/silent-pay.test.mjs",
+    "test:threshold-mint": "node --test ./tests/threshold-mint.test.mjs",
+    "test:payment-stream": "node --test ./tests/payment-stream.test.mjs",
+    "test:frontier": "node --test ./tests/zk-access-receipts.test.mjs ./tests/receipt-dag.test.mjs ./tests/piano-pir.test.mjs ./tests/blind-token.test.mjs ./tests/silent-pay.test.mjs ./tests/threshold-mint.test.mjs ./tests/payment-stream.test.mjs",
     "test:python": "node ./scripts/python-compile.mjs",
     "test:python:unit": "node ./scripts/python-pytest.mjs",
     "test:package": "npm pack --dry-run",

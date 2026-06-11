@@ -92,8 +92,8 @@
     },
     {
       "path": "docs/CLAIMS_LEDGER.md",
-      "sha256": "d9f8b6be8c0bf2a5a122fd0fe9ba5249142c08e45ed4b4b79bfb90f1f5e5dae0",
-      "size": 6316
+      "sha256": "1c18edb84de37195fd49c5aee86b9323e26d9c1928ad3e87720068e7959013d1",
+      "size": 6258
     },
     {
       "path": "docs/DNA_X402_INTEGRATION.md",
@@ -132,8 +132,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "77040144203e7a0d20c11ea03310f67498997f1785ec47a5d68432254dad6534",
-      "size": 7714
+      "sha256": "0388702940362625931797abd48e1ade1e19e34e7c8b3d0d9d1387c230f664bc",
+      "size": 8192
     },
     {
       "path": "package-lock.json",
@@ -292,8 +292,8 @@
     },
     {
       "path": "docs/2030_PRIMITIVES.md",
-      "sha256": "5f41c8ea689163099c0da3b604bce021214347f538825858c250160f2a641f0c",
-      "size": 37058
+      "sha256": "560c48ee4c3b1b46a6d2439c57fe8c53d66399fafc80b5ef7eb7b9c7f69499d1",
+      "size": 37977
     },
     {
       "path": "docs/COMPRESSED_ANONYMITY_STATE.md",

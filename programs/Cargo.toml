@@ -1,0 +1,7 @@
+[workspace]
+members = ["silent-pay", "payment-stream", "threshold-fed"]
+resolver = "2"
+
+[workspace.dependencies]
+solana-program = "2.2"
+borsh = { version = "1.5", features = ["derive"] }

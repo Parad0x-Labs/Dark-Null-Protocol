@@ -133,8 +133,13 @@ export class PianoClient {
   buildHints() {
     this._hints = [];
     this._usedHints = new Set();
-    for (let i = 0; i < this._hintCount; i++) {
-      const randomIdx = randomInt(this._tree.size);
+    // Avoid leafIdx === 0: XOR(target, 0) = target, which directly exposes the query.
+    // The tree must have at least 2 leaves for PIR to be meaningful.
+    const maxIdx = this._tree.size;
+    if (maxIdx < 2) throw new Error("tree must have at least 2 leaves for PIR hint generation");
+    while (this._hints.length < this._hintCount) {
+      const randomIdx = randomInt(maxIdx);
+      if (randomIdx === 0) continue;
       const path = this._tree.getSiblingPath(randomIdx);
       this._hints.push({ leafIdx: randomIdx, path });
     }
@@ -159,7 +164,7 @@ export class PianoClient {
   query(targetLeafIdx) {
     if (this._hints.length === 0) throw new Error("buildHints() must be called before query()");
 
-    // pick an unused hint
+    // buildHints() guarantees no leafIdx === 0, so any unused hint is safe to use.
     const availableHints = this._hints.filter((_, i) => !this._usedHints.has(i));
     if (availableHints.length === 0) throw new Error("hint pool exhausted — call buildHints() again");
 

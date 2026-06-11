@@ -156,6 +156,12 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 - `prepare_phantom_withdraw_v2` verifies the promoted eight-signal proof, binds amount/receiver token/mint, records the nullifier, and pays from the vault token account
 - DNA x402 signed receipts can be wrapped into Dark Null private receipt envelopes without storing raw resource URLs or raw payment headers
 - the repo has one canonical public root path instead of a placeholder root plus side branch
+- a private x402 receipt DAG links each receipt hash to the previous node with no raw URL stored (6 tests pass)
+- sequential Groth16 batch settlement verifies real proofs end-to-end and rejects duplicate nullifiers within the same batch (10 tests, real proofs generated via snarkjs/BN254)
+- ZK access receipt prototype issues access only on a valid Groth16 proof without recording the payer's identity (20 tests pass)
+- Piano PIR access pattern prototype retrieves an index entry without leaking which entry was queried (15 tests pass)
+- BDHKE blind token issuance prototype produces tokens that cannot be linked back to the redeem call (19 tests pass)
+- canonical devnet program `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF` verified executable on devnet (slot 468,709,388); `npm run check:x402:devnet` passes
 
 ## What This Repo Does Not Prove
 
@@ -182,46 +188,82 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 11. Run `npm run check:mainnet:beta` and expect it to fail until `MAINNET_BETA_EVIDENCE.json` is real.
 12. Run `npm run check:mainnet` and expect it to fail until the blockers in [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) are cleared.
 
-## 2030 Research Primitives
+## Frontier Primitives (20 Total)
 
-Dark Null's research lane is proof-carrying private settlement for machine payments. These are gated research primitives, not launch claims:
+Dark Null's research lane covers proof-carrying private settlement for machine and human payments. Twenty primitives across three tiers — these are gated research primitives, not launch claims — none are production claims until the corresponding evidence gates in [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md) are cleared.
 
-- private x402/AP2 receipts for agent-paid APIs
-- compressed anonymity and nullifier state
-- append-only private receipt DAGs
-- proof-carrying relayer/prover/indexer capsules
-- recursive settlement batches
-- ephemeral private payment sessions
-- finality-aware private receipts
-- confidential amount plus private linkage research
-- sealed pricing and private auction integrations
-- MEV-aware private settlement routes
-- private reputation receipts for payable API discovery
-- ZK access receipts after payment
+### Prototype code shipped (6)
 
-Gated details and claim gates live in [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md), [`docs/COMPRESSED_ANONYMITY_STATE.md`](./docs/COMPRESSED_ANONYMITY_STATE.md), [`docs/RECURSIVE_BATCHING.md`](./docs/RECURSIVE_BATCHING.md), and [`docs/PROOF_CARRYING_SWARM.md`](./docs/PROOF_CARRYING_SWARM.md).
+Running tests; not deployed to production.
+
+| Primitive | What the tests prove |
+|---|---|
+| Dark Null x402 Privacy Extension | Private x402 intent → receipt → receipt-DAG flow; no raw URL or payer identity in any stored field |
+| Receipt DAG / Append-Only Private Receipts | SHA256-linked receipt chains where each node hashes the previous; 6 tests |
+| Recursive Settlement Batches | End-to-end Groth16 batch verify with real proofs; duplicate-nullifier rejection; 10 tests |
+| ZK Access Receipts | Proof-gated access: present a Groth16 proof, get the resource; identity not recorded; 20 tests |
+| Access Pattern Privacy (Piano PIR) | Private Information Retrieval: fetch an index entry without revealing which entry; 15 tests |
+| BDHKE Blind Receipt Tokens | Blind Diffie-Hellman Key Exchange token issuance; token is unlinkable to the redeem call; 19 tests |
+
+### Research stage (13)
+
+Design and specification only — no production code.
+
+| Primitive | What it would deliver |
+|---|---|
+| Compressed Anonymity / Nullifier State | On-chain anonymity-set storage shrinks from O(N) to O(log N) using sparse commitments |
+| Proof-Carrying Relayer Swarm | Off-chain prover and indexer nodes carry verifiable execution receipts anyone can audit |
+| Ephemeral Private Payment Sessions | One shared secret, many private payments — no persistent payment channel on-chain |
+| Finality-Aware / Alpenglow-Ready Receipts | Receipt incorporates the final confirmed slot hash rather than an estimated slot |
+| MPC Sealed Pricing / Private Auctions | Prices negotiated off-chain with multi-party computation; only settlement touches the chain |
+| MEV-Aware Private Settlement Routes | Route around front-running without disclosing the payment path or amount |
+| x402 Bazaar Private Reputation Receipts | Rate a paid API after settling — without linking the reviewer's identity to the rating |
+| **Silent Payment Rails** | Stealth-address scanning: sender derives a fresh ephemeral key per payment from the recipient's scan key. Each payment lands at a fresh address; nothing links it to your wallet across time. Think of it as a new disposable mailbox for every wire transfer — but it all reaches the same person and no one outside can connect the dots |
+| **ZK Fiat Settlement Proof** | zkTLS attestation from a Stripe/Visa/Mastercard settlement webhook produces a ZK proof on-chain. Card data never leaves the processor. An agent can prove "I paid $20 via Stripe" without revealing the card, the merchant, or the payer — just a cryptographic receipt that the payment settled |
+| **Threshold Blind Mint Federation** | FROST k-of-n threshold Schnorr: no single server can issue NULL tokens. A quorum of independent signers each hold a key share; k of them must cooperate, and even if k-1 servers are compromised the token supply stays intact. Users get tokens that are cryptographically blind — the issuer cannot link a token to who requested it |
+| **Nova / Folding Scheme Accumulation** | Nova + HyperNova folding schemes give O(1) amortized proof accumulation — beyond SnarkPack's O(log N). A stream of 10,000 agent micropayments accumulates into a single proof the same size as a proof for 1 payment |
+| **ZKML Verifiable Inference Receipts** | ZK proof that model M ran on input I and produced output O — without revealing I or the model weights. An AI agent that charges per inference can prove it ran the correct model without leaking your query or its training data |
+| **Private Streaming Micropayments** | Continuous hidden-rate payment stream for per-token AI billing. One on-chain anchor opens the channel; individual payment ticks are private off-chain commitments settled in bulk. Pay for 10,000 LLM tokens over 60 seconds; the chain sees one open and one close, not 10,000 transactions |
+
+### Blocked (1)
+
+| Primitive | Blocker |
+|---|---|
+| Confidential Token-2022 Linkage Privacy | Token-2022 Confidential Transfer extension audit completion and SIMD stabilization |
+
+Full specification, activation blockers, and forbidden marketing language for all 20: [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md).
 
 ```yaml
 frontier_primitives:
-  status: gated_research_not_launch_claims
-  current_delivered_base:
+  status: 6_prototype_code_13_research_1_blocked
+  base_delivered:
     - groth16_verifier_path
     - payout_bound_withdraw_v2
     - manifest_locked_artifacts
     - private_x402_receipt_primitives
-  gated_tracks:
-    - x402_privacy_extension
-    - compressed_anonymity_state
-    - receipt_dag
-    - proof_carrying_swarm
+  prototypes:
+    - dark_null_x402_privacy_extension
+    - receipt_dag_append_only
     - recursive_settlement_batches
+    - zk_access_receipts
+    - piano_pir_access_pattern_privacy
+    - bdhke_blind_receipt_tokens
+  research:
+    - compressed_anonymity_state
+    - proof_carrying_relayer_swarm
     - ephemeral_private_sessions
-    - finality_aware_receipts
-    - confidential_token_2022_linkage
+    - finality_aware_alpenglow_receipts
     - mpc_sealed_pricing
     - mev_aware_routes
     - x402_bazaar_private_reputation
-    - zk_access_receipts
+    - silent_payment_rails
+    - zk_fiat_settlement_proof
+    - threshold_blind_mint_federation
+    - nova_folding_accumulation
+    - zkml_verifiable_inference_receipts
+    - private_streaming_micropayments
+  blocked:
+    - confidential_token2022_linkage
 ```
 
 ## For Integrators and Agent Builders

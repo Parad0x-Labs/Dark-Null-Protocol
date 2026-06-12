@@ -29,12 +29,12 @@ This page is the gated frontier map for Dark Null. It is a design and verificati
 | ZK Access Receipts | `prototype` | `swarm/access-receipt.mjs`, 20 tests, HMAC token bound to proof bundle hash, `npm run test:access-receipts` | HMAC prototype; ZK circuit for token is the research target |
 | Access Pattern Privacy (Piano PIR) | `prototype` | `swarm/piano-pir.mjs`, 15 tests, offline hint phase + online PIR query, `npm run test:pir` | first PIR prototype in any ZK payment system; HTTP server separation is the production target |
 | BDHKE Blind Receipt Tokens | `prototype` | `swarm/blind-token.mjs`, 19 tests, full blind-sign + DLEQ proof + spent registry, `npm run test:blind-tokens` | HMAC-token prototype + DLEQ public verify shipped; on-chain registry + key rotation is the research target |
-| Silent Payment Rails | `research` | stealth-address-inspired ephemeral key derivation per x402 payment — sender and receiver never reuse a public address | no scanning protocol, no key derivation scheme, no sender address privacy implementation |
-| ZK Fiat Settlement Proof | `research` | TLS attestation (DECO/Reclaim-style) derives a ZK credential from Visa/Mastercard/Stripe settlement — card never on-chain | no fiat integration, no TLS notary deployment, not a payment processor |
-| Threshold Blind Mint Federation | `research` | FROST k-of-n partial blind-signing — no single server holds the full mint key | no threshold protocol, no partial signature aggregation, not a validator network |
-| Nova / Folding Scheme Accumulation | `research` | incremental proof accumulator via Nova/HyperNova folding — O(1) amortized prover beyond SnarkPack O(log N) | no folding circuit, no Nova prover, not a recursive verifier |
-| ZKML Verifiable Inference Receipts | `research` | ZK proof of ML model execution with private inputs — x402 receipt proves correct compute, not just payment | no ZK circuit for ML inference, no EZKL integration |
-| Private Streaming Micropayments | `research` | hidden-rate continuous payment stream with a single on-chain anchor — agent bills per-token or per-second privately | no streaming payment protocol, no hidden-rate stream contract |
+| Silent Payment Rails | `prototype` | BIP352-style ECDH stealth-address derivation + scanning; Solana program `9C9F9Y8…` devnet, e2e passes | sender address privacy is identity-dark only; no on-chain scanner, no hidden-rate stream |
+| Fiat Settlement Oracle | `prototype` | on-chain secp256k1_recover verifies oracle signature over settlement receipt; Solana program `DjHQxF5…` devnet, e2e passes | oracle-attested settlement, not zkTLS; zkTLS attestation from Stripe/Visa is the research target |
+| Threshold Blind Mint Federation | `prototype` | k-of-n BDHKE via Shamir + Lagrange; Solana program `C6M8Nux…` devnet, e2e passes | no DKG or per-signer DLEQ proof; full FROST threshold protocol is the research target |
+| Receipt Commitment Accumulator | `prototype` | rolling SHA256 hashv accumulator with finalization gate; Solana program `7VWjpxe…` devnet, e2e passes | not Nova folding; O(1) incremental Nova/HyperNova accumulator is the research target |
+| Oracle-Attested Inference Receipt | `prototype` | on-chain secp256k1_recover verifies oracle signature over model+input+output hashes; Solana program `23yVqL6…` devnet, e2e passes | oracle attestation, not ZK circuit; EZKL-style ZK proof of ML inference is the research target |
+| Private Streaming Micropayments | `prototype` | payment channel with off-chain ticks + on-chain close; Solana program `C5uhvm1…` devnet, e2e passes | no hidden-rate encryption; private rate stream contract is the research target |
 
 ## 1. Dark Null x402 Privacy Extension
 

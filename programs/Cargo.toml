@@ -1,5 +1,5 @@
 [workspace]
-members = ["silent-pay", "payment-stream", "threshold-fed"]
+members = ["silent-pay", "payment-stream", "threshold-fed", "fiat-oracle", "accumulator", "inference"]
 resolver = "2"
 
 [workspace.dependencies]

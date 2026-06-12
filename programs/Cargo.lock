@@ -353,6 +353,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "dark-null-accumulator"
+version = "0.1.0"
+dependencies = [
+ "borsh 1.6.1",
+ "solana-program",
+]
+
+[[package]]
+name = "dark-null-fiat-oracle"
+version = "0.1.0"
+dependencies = [
+ "borsh 1.6.1",
+ "solana-program",
+]
+
+[[package]]
+name = "dark-null-inference"
+version = "0.1.0"
+dependencies = [
+ "borsh 1.6.1",
+ "solana-program",
+]
+
+[[package]]
 name = "dark-null-payment-stream"
 version = "0.1.0"
 dependencies = [

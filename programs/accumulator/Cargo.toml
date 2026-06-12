@@ -1,0 +1,16 @@
+[package]
+name = "dark-null-accumulator"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "dark_null_accumulator"
+
+[features]
+no-entrypoint = []
+default = []
+
+[dependencies]
+solana-program = "2.2"
+borsh = { version = "1.5", features = ["derive"] }

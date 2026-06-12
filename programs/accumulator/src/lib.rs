@@ -61,6 +61,7 @@ pub fn process_instruction(
         0 => init_accumulator(program_id, accounts),
         1 => accumulate_receipt(program_id, accounts, payload),
         2 => finalize_accumulator(program_id, accounts),
+        3 => close_accumulator(program_id, accounts),
         _ => {
             msg!("Unknown instruction discriminant: {}", discriminant);
             Err(ProgramError::InvalidInstructionData)
@@ -224,5 +225,46 @@ fn finalize_accumulator(
     );
 
     state.serialize(&mut &mut data[..])?;
+    Ok(())
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Instruction 3: CloseAccumulator
+// ─────────────────────────────────────────────────────────────────────────────
+// Accounts: [authority (signer+writable), accumulator_pda (writable), destination (writable)]
+// Closes the accumulator PDA, returning rent to destination.
+
+fn close_accumulator(program_id: &Pubkey, accounts: &[AccountInfo]) -> ProgramResult {
+    let account_iter = &mut accounts.iter();
+    let authority = next_account_info(account_iter)?;
+    let accumulator_pda = next_account_info(account_iter)?;
+    let destination = next_account_info(account_iter)?;
+
+    if !authority.is_signer {
+        return Err(ProgramError::MissingRequiredSignature);
+    }
+
+    let seeds: &[&[u8]] = &[PDA_SEED, authority.key.as_ref()];
+    let (expected, _) = Pubkey::find_program_address(seeds, program_id);
+    if expected != *accumulator_pda.key {
+        msg!("CloseAccumulator: PDA mismatch");
+        return Err(ProgramError::InvalidArgument);
+    }
+
+    let state = AccumulatorState::try_from_slice(&accumulator_pda.data.borrow())?;
+    if state.authority != *authority.key {
+        msg!("CloseAccumulator: authority mismatch");
+        return Err(ProgramError::InvalidArgument);
+    }
+
+    let lamports = accumulator_pda.lamports();
+    **accumulator_pda.lamports.borrow_mut() = 0;
+    **destination.lamports.borrow_mut() = destination
+        .lamports()
+        .checked_add(lamports)
+        .ok_or(ProgramError::ArithmeticOverflow)?;
+    accumulator_pda.data.borrow_mut().fill(0);
+
+    msg!("CloseAccumulator: closed, {} lamports returned", lamports);
     Ok(())
 }

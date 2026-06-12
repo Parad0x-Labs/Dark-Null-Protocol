@@ -162,16 +162,20 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 - Piano PIR access pattern prototype retrieves an index entry without leaking which entry was queried (15 tests pass)
 - BDHKE blind token issuance prototype produces tokens that cannot be linked back to the redeem call (19 tests pass)
 - canonical devnet program `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF` verified executable on devnet (slot 468,709,388); `npm run check:x402:devnet` passes
+- six x402 integration programs deployed on devnet and e2e verified: silent-pay (`9C9F9Y8…`), fiat-oracle (`DjHQxF5…`), threshold-fed (`C6M8Nux…`), accumulator (`7VWjpxe…`), inference (`23yVqL6…`), payment-stream (`C5uhvm1…`)
+- full six-program integration demo passes end-to-end on devnet (`node scripts/demo-x402-dark-null.mjs`)
 
-## What This Repo Does Not Prove
+## Mainnet Gates
 
-- third-party audit completion
-- completed mainnet deployment evidence
-- final trusted setup evidence accepted for mainnet
-- that every historical deployment in the repo used the current root files
-- that switching `devnet` to `mainnet` is enough to ship
-- append-only root derivation on-chain; the current source still trusts a privileged root updater
-- append-only Merkle root derivation in-program; the current source still trusts a privileged root updater
+All programs above are devnet. Clearing these gates unlocks a mainnet deployment claim:
+
+- third-party audit of the root ZK program and the `prepare_phantom_withdraw_v2` payout path
+- mainnet deployment evidence committed to `MAINNET_EVIDENCE.json`
+- accepted trusted setup evidence for the BN254 circuit
+- defined key custody model for the privileged root updater (`RootAuthorityConfig` PDA)
+- confirmation that all historical program IDs map to the current published root files
+
+Switching `devnet` to `mainnet` in config alone is not sufficient.
 
 ## Verification Flow
 

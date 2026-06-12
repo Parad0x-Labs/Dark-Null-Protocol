@@ -92,8 +92,8 @@
     },
     {
       "path": "docs/CLAIMS_LEDGER.md",
-      "sha256": "1c18edb84de37195fd49c5aee86b9323e26d9c1928ad3e87720068e7959013d1",
-      "size": 6258
+      "sha256": "b552e4343d3706dd86911dc259923366cdb6d8b6be97f711b1675e925edad001",
+      "size": 6550
     },
     {
       "path": "docs/DNA_X402_INTEGRATION.md",
@@ -292,8 +292,8 @@
     },
     {
       "path": "docs/2030_PRIMITIVES.md",
-      "sha256": "560c48ee4c3b1b46a6d2439c57fe8c53d66399fafc80b5ef7eb7b9c7f69499d1",
-      "size": 37977
+      "sha256": "0c26a77fb1727e2163d3c9e04635187a4c8130aced50038f1abaf8cc17f735b2",
+      "size": 38104
     },
     {
       "path": "docs/COMPRESSED_ANONYMITY_STATE.md",

@@ -4,6 +4,25 @@ Dark Null Protocol is now a **coherent public devnet repo**, not a split between
 
 It is still **not** a finished mainnet product from the public materials alone.
 
+## Devnet Programs (6) — x402 Integration
+
+Six native Solana programs are deployed on devnet and wired into the x402 payment stack:
+
+| Program | Devnet ID | x402 hook |
+|---|---|---|
+| silent-pay | `9C9F9Y8icd7tsnet4HtQU4LTkQMuAWWXAT97rR2eG6wV` | stealth address per payment |
+| fiat-oracle | `DjHQxF5pcZBqZtXX9niFpJsGuAUBs77v4dssuAdyFR4b` | oracle-attested fiat settlement |
+| threshold-fed | `C6M8Nuxo1hj9QjPGAfYSXNwkDQEeRVuGZS4FqtjAQuVJ` | k-of-n NULL mint gate |
+| accumulator | `7VWjpxe2bBHChzMsqvPS8ZFJBRLaGkWTzM3Wrm36tnBd` | rolling receipt commitment per session |
+| inference | `23yVqL6UopoXLv3UihSKQ6EEpuxztWSKcHyKwdC9gM3v` | oracle-attested AI inference receipt |
+| payment-stream | `C5uhvm1SUxrZdzKAc3ZDHkVJbmrt7ntjhai6F7QHK6uP` | per-call billing channel for sessions |
+
+Integration layer: [`integration/programs.mjs`](./integration/programs.mjs) (typed JS helpers for all 6), [`integration/x402-hooks.mjs`](./integration/x402-hooks.mjs) (drop-in `onReceiptFinalized` callbacks).
+
+Live demo (all 6 in one agent session): `node scripts/demo-x402-dark-null.mjs`
+
+---
+
 ## What Is Canonical Now
 
 - [`src/lib.rs`](./src/lib.rs) is the promoted root program and contains a real `Groth16Verifier::new(...).verify()` path

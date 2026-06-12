@@ -190,7 +190,7 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 
 ## Frontier Primitives (20 Total)
 
-Dark Null's research lane covers proof-carrying private settlement for machine and human payments. Twenty primitives across three tiers — these are gated research primitives, not launch claims — none are production claims until the corresponding evidence gates in [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md) are cleared.
+Dark Null's research lane covers proof-carrying private settlement for machine and human payments. Twenty primitives across four tiers — these are gated research primitives, not launch claims — none are production claims until the corresponding evidence gates in [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md) are cleared.
 
 ### Prototype code shipped (6)
 
@@ -205,7 +205,25 @@ Running tests; not deployed to production.
 | Access Pattern Privacy (Piano PIR) | Private Information Retrieval: fetch an index entry without revealing which entry; 15 tests |
 | BDHKE Blind Receipt Tokens | Blind Diffie-Hellman Key Exchange token issuance; token is unlinkable to the redeem call; 19 tests |
 
-### Research stage (13)
+### Devnet programs (6) — wired into x402
+
+Native Solana programs deployed on devnet; each has a passing e2e test and is wired into the x402 payment stack via [`integration/programs.mjs`](./integration/programs.mjs) + [`integration/x402-hooks.mjs`](./integration/x402-hooks.mjs). Run [`scripts/demo-x402-dark-null.mjs`](./scripts/demo-x402-dark-null.mjs) to see all six fire in one agent session.
+
+| Primitive | Program ID (devnet) | What the on-chain program does |
+|---|---|---|
+| Silent Payment Rails | `9C9F9Y8icd7tsnet4HtQU4LTkQMuAWWXAT97rR2eG6wV` | BIP352-style ECDH stealth-address derive + scan; payer address not re-used across calls — not full BIP352; no on-chain scanner |
+| Fiat Settlement Oracle | `DjHQxF5pcZBqZtXX9niFpJsGuAUBs77v4dssuAdyFR4b` | `secp256k1_recover` verifies oracle sig over `SHA256(payment_id ‖ amount ‖ recipient)`; replay-protected receipt PDA — oracle-attested, not zkTLS |
+| Threshold Blind Mint Federation | `C6M8Nuxo1hj9QjPGAfYSXNwkDQEeRVuGZS4FqtjAQuVJ` | k-of-n BDHKE via Shamir + Lagrange; records federation issuance with replay protection — no DKG or per-signer DLEQ proof |
+| Receipt Commitment Accumulator | `7VWjpxe2bBHChzMsqvPS8ZFJBRLaGkWTzM3Wrm36tnBd` | Rolling `SHA256(prev_commitment ‖ receipt_hash)` with finalization gate; one root proves all receipts in a session — SHA256 accumulator, not Nova folding |
+| Oracle-Attested Inference Receipt | `23yVqL6UopoXLv3UihSKQ6EEpuxztWSKcHyKwdC9gM3v` | `secp256k1_recover` verifies oracle sig over `SHA256(model_hash ‖ input_hash ‖ output_hash)`; binds compute to x402 payment — oracle attestation, not EZKL ZK circuit |
+| Private Streaming Micropayments | `C5uhvm1SUxrZdzKAc3ZDHkVJbmrt7ntjhai6F7QHK6uP` | Payment channel: `OpenChannel` funds a PDA, off-chain ticks track per-call spend, `CloseChannel` settles exact accumulated amount — no hidden-rate encryption |
+
+**x402 integration** ([`integration/x402-hooks.mjs`](./integration/x402-hooks.mjs)):
+- `makeAccumulatorHook` — drop-in `onReceiptFinalized` that commits every x402 receipt hash to the on-chain rolling root; one root proves the entire session
+- `makeInferenceHook` — after each AI API call, records oracle-attested inference receipt on-chain; client can verify which model ran
+- `StreamingSession` — wraps the streaming channel into per-call tick billing; session `settle()` does a single on-chain close
+
+### Research stage (7)
 
 Design and specification only — no production code.
 
@@ -218,12 +236,6 @@ Design and specification only — no production code.
 | MPC Sealed Pricing / Private Auctions | Prices negotiated off-chain with multi-party computation; only settlement touches the chain |
 | MEV-Aware Private Settlement Routes | Route around front-running without disclosing the payment path or amount |
 | x402 Bazaar Private Reputation Receipts | Rate a paid API after settling — without linking the reviewer's identity to the rating |
-| **Silent Payment Rails** | Stealth-address scanning: sender derives a fresh ephemeral key per payment from the recipient's scan key. Each payment lands at a fresh address; nothing links it to your wallet across time. Think of it as a new disposable mailbox for every wire transfer — but it all reaches the same person and no one outside can connect the dots |
-| **ZK Fiat Settlement Proof** | zkTLS attestation from a Stripe/Visa/Mastercard settlement webhook produces a ZK proof on-chain. Card data never leaves the processor. An agent can prove "I paid $20 via Stripe" without revealing the card, the merchant, or the payer — just a cryptographic receipt that the payment settled |
-| **Threshold Blind Mint Federation** | FROST k-of-n threshold Schnorr: no single server can issue NULL tokens. A quorum of independent signers each hold a key share; k of them must cooperate, and even if k-1 servers are compromised the token supply stays intact. Users get tokens that are cryptographically blind — the issuer cannot link a token to who requested it |
-| **Nova / Folding Scheme Accumulation** | Nova + HyperNova folding schemes give O(1) amortized proof accumulation — beyond SnarkPack's O(log N). A stream of 10,000 agent micropayments accumulates into a single proof the same size as a proof for 1 payment |
-| **ZKML Verifiable Inference Receipts** | ZK proof that model M ran on input I and produced output O — without revealing I or the model weights. An AI agent that charges per inference can prove it ran the correct model without leaking your query or its training data |
-| **Private Streaming Micropayments** | Continuous hidden-rate payment stream for per-token AI billing. One on-chain anchor opens the channel; individual payment ticks are private off-chain commitments settled in bulk. Pay for 10,000 LLM tokens over 60 seconds; the chain sees one open and one close, not 10,000 transactions |
 
 ### Blocked (1)
 
@@ -235,7 +247,7 @@ Full specification, activation blockers, and forbidden marketing language for al
 
 ```yaml
 frontier_primitives:
-  status: 6_prototype_code_13_research_1_blocked
+  status: 6_prototype_code_6_devnet_programs_7_research_1_blocked
   base_delivered:
     - groth16_verifier_path
     - payout_bound_withdraw_v2
@@ -248,6 +260,13 @@ frontier_primitives:
     - zk_access_receipts
     - piano_pir_access_pattern_privacy
     - bdhke_blind_receipt_tokens
+  devnet_programs:
+    - silent_payment_rails: 9C9F9Y8icd7tsnet4HtQU4LTkQMuAWWXAT97rR2eG6wV
+    - fiat_settlement_oracle: DjHQxF5pcZBqZtXX9niFpJsGuAUBs77v4dssuAdyFR4b
+    - threshold_blind_mint_federation: C6M8Nuxo1hj9QjPGAfYSXNwkDQEeRVuGZS4FqtjAQuVJ
+    - receipt_commitment_accumulator: 7VWjpxe2bBHChzMsqvPS8ZFJBRLaGkWTzM3Wrm36tnBd
+    - oracle_attested_inference_receipt: 23yVqL6UopoXLv3UihSKQ6EEpuxztWSKcHyKwdC9gM3v
+    - private_streaming_micropayments: C5uhvm1SUxrZdzKAc3ZDHkVJbmrt7ntjhai6F7QHK6uP
   research:
     - compressed_anonymity_state
     - proof_carrying_relayer_swarm
@@ -256,12 +275,6 @@ frontier_primitives:
     - mpc_sealed_pricing
     - mev_aware_routes
     - x402_bazaar_private_reputation
-    - silent_payment_rails
-    - zk_fiat_settlement_proof
-    - threshold_blind_mint_federation
-    - nova_folding_accumulation
-    - zkml_verifiable_inference_receipts
-    - private_streaming_micropayments
   blocked:
     - confidential_token2022_linkage
 ```

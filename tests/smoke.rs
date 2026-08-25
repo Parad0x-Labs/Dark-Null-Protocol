@@ -14,7 +14,9 @@ fn verifying_key_metadata_is_live_not_placeholder() {
 
 #[test]
 fn vault_window_layout_is_stable() {
-    assert_eq!(std::mem::size_of::<Vault>(), 8856);
+    // H1 fix moved nullifiers out of the fixed 128-slot window into page PDAs,
+    // shrinking the vault account; the layout must stay pinned at this size.
+    assert_eq!(std::mem::size_of::<Vault>(), 5784);
 }
 
 #[test]

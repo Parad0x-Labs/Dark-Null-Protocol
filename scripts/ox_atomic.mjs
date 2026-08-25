@@ -48,7 +48,7 @@ log("chain leaves:", ni);
 const DEP = 50000000n, ATK = DEP * 2n;
 const mkNote = (amt, sec, bl) => ({ amt, secret: BigInt(sec), blind: BigInt(bl), c: sponge([BigInt(amt), r0, r1, m0, m1, BigInt(bl), BigInt(sec)]) });
 const attackNote = mkNote(ATK, st.attackSecret, st.attackBlinding);
-const honestNote = mkNote(DEP, st.secret, st.blinding);
+let honestNote = mkNote(DEP, st.secret, st.blinding);
 const attackC = be32n(attackNote.c);
 function be32n(v) { return Buffer.from(BigInt(v).toString(16).padStart(64, "0"), "hex"); }
 let aSlot = -1, hSlot = -1;
@@ -93,42 +93,51 @@ function require_g16() { return createRequire(import.meta.url)("../scripts/g16_b
 function beX(v) { return v; }
 function be32n2(v) { return be32n(v); }
 
-if (process.argv[2] === "debug") {
-  const note = attackNote;
-  let { args, publics, proof } = prove(note);
-  // optional B transforms via env
-  const beD = d => Buffer.from(BigInt(d).toString(16).padStart(64, "0"), "hex");
-  // A occupies args[72..136], B occupies args[136..264]
-  let A2 = args.slice(72, 136);
-  if (process.env.OX_A === "raw") A2 = Buffer.concat([beD(proof.pi_a[0]), beD(proof.pi_a[1])]);
-  else if (process.env.OX_A === "xneg") A2 = Buffer.concat([beD((P - BigInt(proof.pi_a[0])) % P), beD(proof.pi_a[1])]);
-  else A2 = Buffer.concat([beD(proof.pi_a[0]), beD((P - BigInt(proof.pi_a[1])) % P)]);
-  let B2 = args.slice(136, 264);
-  if (process.env.OX_B_MODE === "rowswap") B2 = Buffer.concat([beD(proof.pi_b[1][0]), beD(proof.pi_b[1][1]), beD(proof.pi_b[0][0]), beD(proof.pi_b[0][1])]);
-  else if (process.env.OX_B_MODE === "halfswap") B2 = Buffer.concat([beD(proof.pi_b[0][1]), beD(proof.pi_b[0][0]), beD(proof.pi_b[1][1]), beD(proof.pi_b[1][0])]);
-  args = Buffer.concat([args.slice(0, 72), A2, B2, args.slice(264)]);
-  const data = Buffer.concat([
-    disc("debug_pair_terms"),
-    (() => { const pl = args.slice(72); const l = Buffer.alloc(4); l.writeUInt32LE(pl.length); return Buffer.concat([l, pl]); })(),
-  ]);
-  const tx = new Transaction().add(
-    ComputeBudgetProgram.setComputeUnitLimit({ units: 500_000 }),
-    new TransactionInstruction({ programId: PROGRAM_ID, keys: [{ pubkey: payer.publicKey, isSigner: false, isWritable: false }], data }),
-  );
-  try {
-    const sig = await conn.sendTransaction(tx, [payer]);
-    await conn.confirmTransaction(sig, "confirmed");
-    const ti = await conn.getTransaction(sig, { commitment: "confirmed" });
-    console.log("LOGS:");
-    for (const l of ti?.meta?.logMessages ?? []) if (/DBG|invoke|failed/.test(l)) console.log(" ", l);
-    // also print our local expected first-bytes
-    console.log("LOCAL A0..3:", args.slice(64, 68).toString("hex"), "(args layout: amount8|null32|root32|A@72)");
-    console.log("LOCAL A@72..76:", args.slice(72, 76).toString("hex"));
-  } catch (e) {
-    console.log("ERR:", String(e).slice(0, 600));
-  }
+async function rereadLeaves() {
+  let info = null;
+  for (let i = 0; i < 5 && !info; i++) { info = await conn.getAccountInfo(VAULT, "confirmed"); if (!info) await new Promise(r => setTimeout(r, 3000)); }
+  if (!info) throw new Error("vault account unavailable (rpc)");
+  const dd = info.data;
+  const ni = dd.readUInt32LE(8 + 656);
+  const vals = [];
+  for (let i = 0; i < ni; i++) vals.push(BigInt("0x" + Buffer.from(dd.slice(8 + 664 + i * 32, 8 + 664 + (i + 1) * 32)).toString("hex")));
+  while (vals.length < 128) vals.push(0n);
+  return vals;
 }
 
+if (process.argv[2] === "roundtrip") {
+  // Fresh note -> real deposit -> root publish -> full Groth16 withdraw payout.
+  const sec = BigInt("0x" + crypto.randomBytes(30).toString("hex"));
+  const bl = BigInt("0x" + crypto.randomBytes(30).toString("hex"));
+  const note = mkNote(DEP, sec, bl);
+  log(`roundtrip: fresh commitment ${note.c.toString(16).slice(0, 16)}… for ${DEP} lamports`);
+  const VAULT_WSOL = new PublicKey(st.vaultWsol);
+  await send([new TransactionInstruction({ programId: PROGRAM_ID,
+    data: Buffer.concat([disc("deposit_wsol_and_whisper"), u64le(DEP), be32n(note.c),
+      (() => { const n = crypto.randomBytes(48); const l = Buffer.alloc(4); l.writeUInt32LE(n.length); return Buffer.concat([l, n]); })(),
+      crypto.randomBytes(32), Buffer.from([0])]),
+    keys: [
+      { pubkey: VAULT, isSigner: false, isWritable: true },
+      { pubkey: payer.publicKey, isSigner: true, isWritable: true },
+      { pubkey: userWsol, isSigner: false, isWritable: true },
+      { pubkey: VAULT_WSOL, isSigner: false, isWritable: true },
+      { pubkey: TOKEN_PROGRAM, isSigner: false, isWritable: false },
+    ]})]).then(sig => log("deposit tx:", sig)).catch(e => { console.log("RESULT: DEPOSIT_FAIL", String(e).slice(0, 200)); process.exit(1); });
+
+  // refresh tree from chain and publish root
+  leafVals.length = 0; leafVals.push(...(await rereadLeaves()));
+  const ROOTV2 = rootOf(leafVals);
+  await send([new TransactionInstruction({ programId: PROGRAM_ID,
+    data: Buffer.concat([disc("update_root"), be32n(ROOTV2)]), keys: [
+      { pubkey: VAULT, isSigner: false, isWritable: true },
+      { pubkey: RA, isSigner: false, isWritable: false },
+      { pubkey: payer.publicKey, isSigner: true, isWritable: false },
+    ]})]).then(s2 => log("root tx:", s2)).catch(e => log("root:", String(e).includes("6002") ? "already published" : "ERR " + String(e).slice(0, 80)));
+
+  // withdraw the fresh note
+  process.argv[2] = "withdraw"; process.argv[3] = "payout";
+  honestNote = note;
+}
 if (process.argv[2] === "withdraw") {
   const who = process.argv[3]; // "attack" | "payout" (aka honest)
   const note = who === "attack" ? attackNote : honestNote;

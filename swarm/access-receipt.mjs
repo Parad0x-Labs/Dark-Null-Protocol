@@ -23,7 +23,7 @@
  *   - see: docs/2030_PRIMITIVES.md #12 ZK Access Receipts
  */
 
-import { createHash, createHmac, randomBytes } from "node:crypto";
+import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 
 export const ACCESS_RECEIPT_SCHEMA = "dark-null-access-receipt-v1";
 export const ACCESS_TOKEN_VERSION = "hmac-sha256-v1";
@@ -141,8 +141,12 @@ export function verifyAccessReceipt(params) {
   const bindingPayload = `${ACCESS_RECEIPT_SCHEMA}:${receipt.proofBundleHash}:${receipt.paymentReceiptHash}:${receipt.resourceHash}:${receipt.serviceId}:${receipt.nonce}:${receipt.issuedAt}:${receipt.expiresAt}`;
   const expectedToken = createHmac("sha256", tokenSecret).update(bindingPayload).digest("hex");
 
-  // constant-time comparison
-  if (token !== expectedToken) return { valid: false, reason: "token_invalid" };
+  // constant-time comparison (audit M9)
+  const tokenBuf = Buffer.from(token, "hex");
+  const expectedBuf = Buffer.from(expectedToken, "hex");
+  if (tokenBuf.length !== expectedBuf.length || !timingSafeEqual(tokenBuf, expectedBuf)) {
+    return { valid: false, reason: "token_invalid" };
+  }
 
   // binding hash consistency
   const expectedBindingHash = hashHex(bindingPayload);

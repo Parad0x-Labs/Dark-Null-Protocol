@@ -57,7 +57,7 @@ test("program manifest resolves known keys and preserves historical references",
 
   assert.equal(
     resolveProgramId("canonicalDevnet"),
-    "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF",
+    "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV",
   );
 
   const entry = findProgramIdEntry("3hYWUSYmNCzrHNgsE6xo3jKT9GjCFxCpPWXj4Q4imToz");
@@ -69,7 +69,7 @@ test("canonical manifest and network helpers expose one coherent root", () => {
   const artifacts = getCanonicalArtifacts();
   const networks = listSupportedNetworks();
 
-  assert.equal(manifest.program.id, "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF");
+  assert.equal(manifest.program.id, "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV");
   assert.equal(networks.length, 2);
   assert.equal(getNetworkDefinition("devnet")?.rpcUrl, "https://api.devnet.solana.com");
   assert.equal(resolveNetworkConfig("localnet").rpcUrl, "http://127.0.0.1:8899");
@@ -172,7 +172,7 @@ test("anchor helper works with injected modules", async () => {
   });
 
   assert.equal(program.provider, provider);
-  assert.equal(program.programId.toBase58(), "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF");
+  assert.equal(program.programId.toBase58(), "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV");
 });
 
 test("connection helper works with injected web3 module", async () => {
@@ -210,7 +210,7 @@ test("canonical PDA helper derives the vault and root-authority addresses", asyn
     web3: { PublicKey: MockPublicKey },
   });
 
-  assert.equal(pdas.programId, "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF");
-  assert.equal(pdas.vaultPda, "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF:merkle_vault");
-  assert.equal(pdas.rootAuthorityPda, "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF:root_authority");
+  assert.equal(pdas.programId, "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV");
+  assert.equal(pdas.vaultPda, "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV:merkle_vault");
+  assert.equal(pdas.rootAuthorityPda, "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV:root_authority");
 });

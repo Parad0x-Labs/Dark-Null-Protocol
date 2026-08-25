@@ -4,7 +4,7 @@
   "promoted_on": "2026-05-25",
   "program": {
     "name": "paradox",
-    "id": "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF",
+    "id": "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV",
     "cluster": "devnet"
   },
   "source": {
@@ -82,7 +82,7 @@
   "artifacts": [
     {
       "path": "Anchor.toml",
-      "sha256": "6bd8b1cac364afc57bca76d8756b618510c21d73cd9a45a42a56421f7697bcbc",
+      "sha256": "7b1e7c028caa25076137c560cf872c5837621176f2c6455416278455f7eef98c",
       "size": 516
     },
     {
@@ -102,8 +102,8 @@
     },
     {
       "path": "Cargo.toml",
-      "sha256": "def5f845e34119f753d15e835ccf55ac0087a6578ec6133cafba23eda8be62f5",
-      "size": 1104
+      "sha256": "51d44c93a5fe2c44ff7c3ef31e39371d19b0cc1bc903e30b3c2d99cb5a1329c1",
+      "size": 1127
     },
     {
       "path": "MAINNET_EVIDENCE.example.json",
@@ -137,23 +137,23 @@
     },
     {
       "path": "package-lock.json",
-      "sha256": "afc3b874fe17004b8ff402a334a57c59b3834affddedbf4e74e2f9b4850ba7aa",
+      "sha256": "1b3cd786e55faacaff75eca37fad074ea3be46f3c68b1501abca27eee3bd8bbb",
       "size": 40389
     },
     {
       "path": "NETWORKS.json",
-      "sha256": "22828856a7d97f054ac0e2833a138400edeae1d7d84daa777eff69b320efd9e0",
+      "sha256": "027126697a69cda899261e678c0443a4f1b569fead618f7be0f87019f2cf6620",
       "size": 631
     },
     {
       "path": "src/lib.rs",
-      "sha256": "09ce8bcac34649249fc9e3f9e4d9f758903fbb2436dbe7f1499ddcca3ae03034",
-      "size": 18564
+      "sha256": "2e02533415f55d8e88efaa504c04a4309593a0076da650890a1cd4be0d62ec60",
+      "size": 28510
     },
     {
       "path": "src/verifying_key.rs",
-      "sha256": "3e556092494c982cc2d684279c7453f2acadddb6d8521e9d6f7ed0069cf73327",
-      "size": 6842
+      "sha256": "ea66534c079c48bf7a7ca5ddc9ca3b3d0bc66017c9f1dfd442ea9505dfd1bea3",
+      "size": 4330
     },
     {
       "path": "scripts/cargo-test.mjs",
@@ -207,12 +207,12 @@
     },
     {
       "path": "idl/paradox.json",
-      "sha256": "4ceefe1f56c2b3f5bea6aca24bf7cabf84eb61ece1b19a3d00f5415555d46efe",
+      "sha256": "dbdfbc56719b93ac06d232e570ddec5e9c27377eb425f5888b7924f3c2001a97",
       "size": 15286
     },
     {
       "path": "sdk/index.mjs",
-      "sha256": "717b2dccdf5394cba1402fd1d20eff63014a637c55ed2ba629c6ca3c9c61a04e",
+      "sha256": "5f59bcad64535dcbd28bea53228ebc58479e98bf5e5dff09471225fe4547ccfd",
       "size": 15424
     },
     {

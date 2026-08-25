@@ -13,7 +13,7 @@ use solana_program::{
     sysvar::Sysvar,
 };
 
-solana_program::declare_id!("11111111111111111111111111111112");
+solana_program::declare_id!("ByFb6xcQTgG4fai31Zto7qpQve1eBo3cc2qrAJU5tN7k");
 
 // ─────────────────────────────────────────────────────────────────────────────
 // State
@@ -132,8 +132,30 @@ fn init_accumulator(program_id: &Pubkey, accounts: &[AccountInfo]) -> ProgramRes
 // Accounts: [authority (signer), accumulator_pda (writable)]
 // Payload:  receipt_hash [u8; 32]
 
+fn require_valid_accumulator_pda(
+    program_id: &Pubkey,
+    authority: &AccountInfo,
+    accumulator_pda: &AccountInfo,
+) -> ProgramResult {
+    let (expected, _) = Pubkey::find_program_address(
+        &[PDA_SEED, authority.key.as_ref()],
+        program_id,
+    );
+    if expected != *accumulator_pda.key {
+        msg!("Invalid accumulator PDA");
+        return Err(ProgramError::InvalidSeeds);
+    }
+    // Defense-in-depth: the account must be owned by this program, not a
+    // lookalike owned by some other program (audit H5).
+    if accumulator_pda.owner != program_id {
+        msg!("Accumulator PDA not owned by this program");
+        return Err(ProgramError::InvalidAccountOwner);
+    }
+    Ok(())
+}
+
 fn accumulate_receipt(
-    _program_id: &Pubkey,
+    program_id: &Pubkey,
     accounts: &[AccountInfo],
     payload: &[u8],
 ) -> ProgramResult {
@@ -150,12 +172,14 @@ fn accumulate_receipt(
         return Err(ProgramError::MissingRequiredSignature);
     }
 
+    require_valid_accumulator_pda(program_id, authority, accumulator_pda)?;
+
     let mut receipt_hash = [0u8; 32];
     receipt_hash.copy_from_slice(&payload[..32]);
 
-    // Deserialize state
+    // Deserialize state — strict: trailing garbage is rejected.
     let mut data = accumulator_pda.try_borrow_mut_data()?;
-    let mut state = AccumulatorState::deserialize(&mut &data[..])?;
+    let mut state = AccumulatorState::try_from_slice(&data)?;
 
     // Authority check
     if state.authority != *authority.key {
@@ -190,7 +214,7 @@ fn accumulate_receipt(
 // Accounts: [authority (signer), accumulator_pda (writable)]
 
 fn finalize_accumulator(
-    _program_id: &Pubkey,
+    program_id: &Pubkey,
     accounts: &[AccountInfo],
 ) -> ProgramResult {
     let account_iter = &mut accounts.iter();
@@ -201,8 +225,10 @@ fn finalize_accumulator(
         return Err(ProgramError::MissingRequiredSignature);
     }
 
+    require_valid_accumulator_pda(program_id, authority, accumulator_pda)?;
+
     let mut data = accumulator_pda.try_borrow_mut_data()?;
-    let mut state = AccumulatorState::deserialize(&mut &data[..])?;
+    let mut state = AccumulatorState::try_from_slice(&data)?;
 
     // Authority check
     if state.authority != *authority.key {

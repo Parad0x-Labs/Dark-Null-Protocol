@@ -10,6 +10,8 @@ import json
 
 PROTOCOL_ID = b'VOID'
 VERSION = 231
+# Hard cap on decompressed payload size (DoS guard, audit M7).
+MAX_DECOMPRESSED_BYTES = 64 * 1024 * 1024
 
 class NebulaCore:
     def __init__(self):
@@ -28,14 +30,20 @@ class NebulaCore:
         return header + compressed
 
     def decompress(self, blob: bytes) -> dict:
-        """Restores .void format to JSON"""
+        """Restores .void format to JSON (size-capped against decompression bombs)"""
         if not blob.startswith(PROTOCOL_ID):
             raise ValueError("Invalid Nebula Artifact")
 
         header_size = struct.calcsize('>4sBI')
         _, _, orig_size = struct.unpack('>4sBI', blob[:header_size])
 
+        if orig_size > MAX_DECOMPRESSED_BYTES:
+            raise ValueError(
+                f"Declared payload size {orig_size} exceeds cap {MAX_DECOMPRESSED_BYTES}"
+            )
+
         dctx = zstd.ZstdDecompressor()
-        payload = dctx.decompress(blob[header_size:])
+        # Cap output at the declared size so a crafted blob cannot expand to GBs.
+        payload = dctx.decompress(blob[header_size:], max_output_size=orig_size)
 
         return json.loads(payload.decode('utf-8'))

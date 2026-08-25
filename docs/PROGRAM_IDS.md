@@ -6,7 +6,9 @@ Dark Null still contains historical devnet evidence, but the repo now has one **
 
 | Label | Program ID | Where it appears | Notes |
 |---|---|---|---|
-| Canonical promoted devnet root | `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF` | [`../Anchor.toml`](../Anchor.toml), [`../src/lib.rs`](../src/lib.rs), [`../idl/paradox.json`](../idl/paradox.json), [`../MANIFEST.json`](../MANIFEST.json) | Root integration target |
+| Canonical promoted devnet root | `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` | [`../Anchor.toml`](../Anchor.toml), [`../src/lib.rs`](../src/lib.rs), [`../idl/paradox.json`](../idl/paradox.json), [`../MANIFEST.json`](../MANIFEST.json) | Root integration target |
+
+| Legacy promoted root (superseded) | `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF` | historical evidence branches | Superseded by the canonical root above |
 
 ## Historical References
 

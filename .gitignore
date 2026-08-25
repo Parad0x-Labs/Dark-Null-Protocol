@@ -65,3 +65,7 @@ Thumbs.db
 tmp/
 __pycache__/
 *.pyc
+.ox-demo-keypair.json
+
+# Local demo artifacts
+artifacts/

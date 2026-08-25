@@ -11,7 +11,7 @@ use solana_program::{
 };
 use borsh::{BorshDeserialize, BorshSerialize};
 
-solana_program::declare_id!("11111111111111111111111111111112");
+solana_program::declare_id!("J6oHoysM1RGs3yZPXBp9ZUgdYgGQWZf2wKisS1tJQdaQ");
 
 /// Channel state stored in the PDA — 82 bytes total:
 ///   payer:        32
@@ -163,10 +163,15 @@ fn process_open_channel(
 ///   accumulated: u64 le (8 bytes)
 ///
 /// Accounts:
-///   0: payer       writable (receives refund — does NOT need to be signer)
+///   0: payer       writable (receives refund)
 ///   1: recipient   writable (receives accumulated)
 ///   2: channel_pda writable (drained)
 ///   3: system_program (unused but expected for consistency)
+///
+/// Authorization (audit C3): at least one of payer/recipient MUST be a signer.
+/// If the recipient does not co-sign, the payer cannot be trusted to report the
+/// true accumulated amount, so the channel settles at full max_lamports (the
+/// PDA was pre-funded with exactly that).
 fn process_close_channel(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
@@ -178,13 +183,18 @@ fn process_close_channel(
     }
 
     let _seq = u64::from_le_bytes(data[0..8].try_into().unwrap());
-    let accumulated = u64::from_le_bytes(data[8..16].try_into().unwrap());
+    let claimed_accumulated = u64::from_le_bytes(data[8..16].try_into().unwrap());
 
     let account_info_iter = &mut accounts.iter();
     let payer = next_account_info(account_info_iter)?;
     let recipient = next_account_info(account_info_iter)?;
     let channel_pda = next_account_info(account_info_iter)?;
     let _system_program = next_account_info(account_info_iter)?;
+
+    if !payer.is_signer && !recipient.is_signer {
+        msg!("Error: close requires the payer or recipient signature");
+        return Err(ProgramError::MissingRequiredSignature);
+    }
 
     // Load and verify state
     let state: ChannelState = {
@@ -196,6 +206,14 @@ fn process_close_channel(
         msg!("Error: channel is already closed");
         return Err(ProgramError::InvalidAccountData);
     }
+
+    // Without the recipient's signature the claimed amount is untrusted —
+    // settle conservatively at the full funded cap.
+    let accumulated = if recipient.is_signer {
+        claimed_accumulated
+    } else {
+        state.max_lamports
+    };
 
     if accumulated > state.max_lamports {
         msg!(
@@ -229,13 +247,25 @@ fn process_close_channel(
         return Err(ProgramError::InvalidArgument);
     }
 
+    let channel_lamports = **channel_pda.lamports.borrow();
+    let remaining = channel_lamports
+        .checked_sub(accumulated)
+        .ok_or(ProgramError::ArithmeticOverflow)?;
+
     // Direct lamport manipulation — safe because program owns channel_pda
     **channel_pda.lamports.borrow_mut() -= accumulated;
-    **recipient.lamports.borrow_mut() += accumulated;
+    **recipient.lamports.borrow_mut() = recipient
+        .lamports
+        .borrow()
+        .checked_add(accumulated)
+        .ok_or(ProgramError::ArithmeticOverflow)?;
 
-    let remaining = **channel_pda.lamports.borrow();
     **channel_pda.lamports.borrow_mut() -= remaining;
-    **payer.lamports.borrow_mut() += remaining;
+    **payer.lamports.borrow_mut() = payer
+        .lamports
+        .borrow()
+        .checked_add(remaining)
+        .ok_or(ProgramError::ArithmeticOverflow)?;
 
     // Mark closed (zero out data)
     let mut data_ref = channel_pda.try_borrow_mut_data()?;

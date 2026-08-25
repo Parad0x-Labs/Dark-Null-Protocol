@@ -44,7 +44,7 @@ const baseIntentInput = {
   settlement: {
     mode: "dark-null-withdraw-v2",
     cluster: "devnet",
-    programId: "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF",
+    programId: "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV",
     manifestLabel: "canonical-devnet-root-2",
     amountLamports: "2500",
     receiverTokenAccountHash: sha256Hex("receiver-token-account"),

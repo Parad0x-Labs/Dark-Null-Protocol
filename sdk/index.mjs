@@ -16,7 +16,7 @@ const programIdManifest = Object.freeze([
   Object.freeze({
     key: "canonicalDevnet",
     label: "Canonical recovered devnet track",
-    programId: "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF",
+    programId: "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV",
     notes: "Promoted root path with canonical null_proof artifacts and Groth16 verifier",
     sources: Object.freeze(["Anchor.toml", "idl/paradox.json", "MANIFEST.json", "NETWORKS.json"]),
   }),

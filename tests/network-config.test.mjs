@@ -33,7 +33,7 @@ test("canonical artifacts and manifest stay aligned", () => {
   const manifest = getCanonicalManifest();
   const artifacts = getCanonicalArtifacts();
 
-  assert.equal(manifest.program.id, "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF");
+  assert.equal(manifest.program.id, "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV");
   assert.ok(path.normalize(artifacts.manifestPath).endsWith("MANIFEST.json"));
   assert.ok(path.normalize(artifacts.zkeyPath).endsWith(path.normalize(manifest.groth16.zkey)));
   assert.ok(path.normalize(artifacts.wasmPath).endsWith(path.normalize(manifest.groth16.wasm)));
@@ -65,7 +65,7 @@ test("network-config CLI prints verifiable canonical config", () => {
 
   const parsed = JSON.parse(output);
   assert.equal(parsed.network, "devnet");
-  assert.equal(parsed.programId, "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF");
+  assert.equal(parsed.programId, "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV");
   assert.ok(typeof parsed.vaultPda === "string");
   assert.ok(typeof parsed.rootAuthorityPda === "string");
   assert.equal(parsed.checks.length, 7);

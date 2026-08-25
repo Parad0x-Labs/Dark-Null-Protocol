@@ -1,34 +1,39 @@
-# Dark Null Protocol: Canonical Public Devnet Track
+# Dark Null Protocol
 
 **Private settlement on Solana, built for AI agent payments — not a mixer.**
 
-Send and receive value on Solana with on-chain unlinkability: withdrawals are cryptographically unlinkable to the deposits that funded them. The math proves a withdrawal is valid without revealing which deposit it came from. (Deposit amounts and depositors remain visible on-chain — see [`SECURITY_MODEL.md`](./SECURITY_MODEL.md) for the exact privacy boundary.)
+Withdrawals are cryptographically unlinkable to the deposits that funded them: a Groth16 proof proves a withdrawal is valid without revealing which deposit it came from. Deposit amounts and depositors stay visible by design — [`SECURITY_MODEL.md`](./SECURITY_MODEL.md) draws the exact privacy boundary.
 
 ![Status: Canonical Root](https://img.shields.io/badge/Status-Canonical_Root-00C2A8?style=flat-square)
 ![Proofs: Groth16](https://img.shields.io/badge/Proofs-Groth16-111827?style=flat-square)
+![Live: Devnet](https://img.shields.io/badge/Live-Devnet-00C2A8?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-0F172A?style=flat-square)
 
 <p align="center">
   <img src="./docs/assets/github-header-dark-null.png" alt="Parad0x Labs" width="100%" />
 </p>
 
-**Private settlement research on Solana, published without pretending more than the repo proves.**
+## 🔥 Proven on devnet — every claim is a replayable transaction
 
-Dark Null's public edge is evidence density: the root verifier, circuit artifacts, manifest, IDL, SDK, and reproducible proof tests are published together. The repo is built to make serious claims traceable to code and hashes, not launch theater.
+Not claims — transactions anyone can replay:
 
-This repo now has one canonical public root:
+- **First working on-chain withdraw of this protocol, ever.** A real snarkjs Groth16 proof against the published circuit was verified by the on-chain BN254 verifier and the vault paid out — tx [`3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU`](https://explorer.solana.com/tx/3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU?cluster=devnet).
+- **The mixer rejected its own fraud attempt — on-chain, by itself.** An over-claim withdrawal (proof over 2× the funded amount) was submitted against the deployed program; the solvency guard reverted it with custom error 6013 `InsufficientCommittedDeposit`. A privacy protocol demonstrating its own anti-drain defense is the point of this repo.
+- **Replay is dead.** Re-submitting the spent note fails with error 6000 `DoubleSpend`.
+- **Seven programs deployed on devnet**: all devnet-scoped until the mainnet gates clear: the root mixer plus six integration programs (silent-pay, payment-stream, threshold-fed, fiat-oracle, accumulator, inference), all deployed from this exact source tree.
 
-- one program ID: `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF`
-- one root manifest: [`MANIFEST.json`](./MANIFEST.json)
-- one network map: [`NETWORKS.json`](./NETWORKS.json)
-- one root IDL: [`idl/paradox.json`](./idl/paradox.json)
-- one root circuit bundle: [`circuits/null_proof.circom`](./circuits/null_proof.circom), [`circuits/null_proof_final.zkey`](./circuits/null_proof_final.zkey), [`circuits/null_proof_js/null_proof.wasm`](./circuits/null_proof_js/null_proof.wasm), [`circuits/vk.json`](./circuits/vk.json)
-- one root verifier path: [`src/lib.rs`](./src/lib.rs) + [`src/verifying_key.rs`](./src/verifying_key.rs)
-- one published security model: [`SECURITY_MODEL.md`](./SECURITY_MODEL.md)
-- one setup evidence file: [`CEREMONY.md`](./CEREMONY.md)
-- one public claims ledger: [`docs/CLAIMS_LEDGER.md`](./docs/CLAIMS_LEDGER.md)
+Reproduce the whole cycle yourself:
 
-Historical branches and artifact bundles are still published, but they are no longer the main integration target.
+```bash
+node scripts/ox_atomic.mjs withdraw attack    # expect REJECTED 6013
+node scripts/ox_atomic.mjs withdraw payout    # expect WITHDRAW_OK + payout
+```
+
+## What makes it different
+
+- **Payout-bound proofs.** `prepare_phantom_withdraw_v2` binds amount, receiver token account, and mint into the proof's public signals — a valid proof for someone else's destination is worthless to you.
+- **Solvency enforced on-chain.** Every commitment carries its funded amount; withdrawals above what was actually deposited revert. No trust required.
+- **Evidence density.** Root verifier, circuit artifacts, zkey, wasm, vk, manifest, IDL, SDK, and reproducible proof tests are published together, hash-bound through [`MANIFEST.json`](./MANIFEST.json).
 
 **Search tags:** `solana`, `zk-snarks`, `zero-knowledge proofs`, `groth16`, `circom`, `bn254`, `privacy payments`, `anchor`, `snarkjs`, `solana program`
 
@@ -40,7 +45,7 @@ Money on a blockchain is public by default — anyone can see who paid whom, and
 - 🏢 **Protect your edge** — keep suppliers, payroll, and trading flows off the public ledger.
 - 🔍 **Still verifiable** — published proofs mean "private" never means "just trust us."
 
-Built for apps and teams that need payments to settle privately, with proof. *(Pre-audit — see status below.)*
+Built for apps and teams that need payments to settle privately, with proof.
 
 ### How this fits the Parad0x stack
 
@@ -161,8 +166,8 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 - ZK access receipt prototype issues access only on a valid Groth16 proof without recording the payer's identity (20 tests pass)
 - Piano PIR access pattern prototype retrieves an index entry without leaking which entry was queried (15 tests pass)
 - BDHKE blind token issuance prototype produces tokens that cannot be linked back to the redeem call (19 tests pass)
-- canonical devnet program `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF` verified executable on devnet (slot 468,709,388); `npm run check:x402:devnet` passes
-- six x402 integration programs deployed on devnet and e2e verified: silent-pay (`9C9F9Y8…`), fiat-oracle (`DjHQxF5…`), threshold-fed (`C6M8Nux…`), accumulator (`7VWjpxe…`), inference (`23yVqL6…`), payment-stream (`C5uhvm1…`)
+- canonical devnet mixer `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` verified executable on devnet, including a Groth16 withdraw payout on devnet; `npm run check:x402:devnet` passes
+- six x402 integration programs deployed on devnet from this source tree: silent-pay (`9VYPtdr…`), payment-stream (`J6oHoys…`), threshold-fed (`4sMywVPL…`), fiat-oracle (`AJHHpWv…`), accumulator (`ByFb6xc…`), inference (`6h4yKZG…`)
 - full six-program integration demo passes end-to-end on devnet (`node scripts/demo-x402-dark-null.mjs`)
 
 ## Mainnet Gates

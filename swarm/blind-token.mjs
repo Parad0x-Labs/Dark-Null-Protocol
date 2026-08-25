@@ -138,6 +138,26 @@ export class BlindMint {
   }
 
   /**
+   * Produce a DLEQ proof over the unblinded token points (G, K, H(secret), C),
+   * enabling verifyTokenPublic without revealing the secret key.
+   */
+  proveTokenPublic(token) {
+    const { secret, tokenPointHex } = token;
+    const C = secp256k1.ProjectivePoint.fromHex(tokenPointHex);
+    const P = hashToCurvePoint(secret);
+    const r = randomScalar();
+    const R1 = G.multiply(r);   // r*G
+    const R2 = P.multiply(r);   // r*H(secret)
+    const e = publicTokenDleqChallenge(R1, R2, G, this.#publicKey, P, C);
+    const s = scalarMod(r - e * this.#secretKey);
+    return {
+      schema: PUBLIC_TOKEN_DLEQ_SCHEMA,
+      eHex: bigIntTo32Bytes(e).toString("hex"),
+      sHex: bigIntTo32Bytes(s).toString("hex"),
+    };
+  }
+
+  /**
    * Verify a token directly using the mint's secret key.
    * More efficient than DLEQ public verification.
    */
@@ -229,27 +249,44 @@ export function verifyDleq({ blindedPointHex, blindSignatureHex, mintPublicKeyHe
 }
 
 /**
- * Verify a token using only the mint's public key.
- * Requires first verifying DLEQ during issuance (to ensure mint used its key).
+ * Verify a token using only the mint's public key (audit H4 fix).
  *
- * Full public-verify flow:
- *   1. verifyDleq(mintResponse) — confirms the blind sig was correctly formed
- *   2. token = BlindClient.unblind(mintResponse)
- *   3. verifyTokenPublic(token, mintPublicKeyHex) — confirms C = k*H(secret)
- *
- * Note: this is a DLEQ re-check on the final token, not a direct k-multiplication.
- * The mint must have signed correctly (step 1) for this to be meaningful.
- * Without step 1, a malicious mint could issue a token that passes step 3.
+ * Cryptographically, checking C = k*H(secret) with only K = k*G public is the
+ * CDH problem — it cannot be done from (C, P, K) alone. Public verification
+ * therefore requires a DLEQ proof over the final points, produced by the mint
+ * via BlindMint.proveTokenPublic(token). Without a valid proof this function
+ * returns false.
  */
-export function verifyTokenPublic(token, mintPublicKeyHex) {
+const PUBLIC_TOKEN_DLEQ_SCHEMA = "dark-null-dleq-public-v1";
+
+function publicTokenDleqChallenge(R1, R2, G_point, K, P, C) {
+  const h = createHash("sha256");
+  h.update(PUBLIC_TOKEN_DLEQ_SCHEMA);
+  for (const p of [R1, R2, G_point, K, P, C]) h.update(p.toRawBytes(true));
+  return scalarMod(bytesToBigInt(h.digest()));
+}
+
+export function verifyTokenPublic(token, mintPublicKeyHex, publicDleq) {
+  if (!publicDleq) return false;
   if (token.mintPublicKeyHex !== mintPublicKeyHex) return false;
-  const { secret, tokenPointHex } = token;
   try {
-    const C = secp256k1.ProjectivePoint.fromHex(tokenPointHex);
+    const C = secp256k1.ProjectivePoint.fromHex(token.tokenPointHex);
     C.assertValidity();
-    const P = hashToCurvePoint(secret);
+    const P = hashToCurvePoint(token.secret);
     P.assertValidity();
-    return true;
+    const K = secp256k1.ProjectivePoint.fromHex(mintPublicKeyHex);
+    K.assertValidity();
+
+    // Reduce scalars mod n — an attacker may supply out-of-range values.
+    const e = scalarMod(bytesToBigInt(Buffer.from(publicDleq.eHex, "hex")));
+    const s = scalarMod(bytesToBigInt(Buffer.from(publicDleq.sHex, "hex")));
+    if (e === 0n || s === 0n) return false;
+
+    // DLEQ: proves log_P(C) === log_G(K), i.e. C = k*H(secret).
+    // R1 = s*G + e*K,  R2 = s*P + e*C
+    const R1 = G.multiply(s).add(K.multiply(e));
+    const R2 = P.multiply(s).add(C.multiply(e));
+    return publicTokenDleqChallenge(R1, R2, G, K, P, C) === e;
   } catch {
     return false;
   }

@@ -5,10 +5,10 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-paradox = "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF"
+paradox = "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"
 
 [programs.devnet]
-paradox = "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF"
+paradox = "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"
 whisper = "4AQpjBrwsT7Dqm9iupMVBjm4gHKSnKVs13quzxmVAesr"
 ghost_mint = "AedRaM2Pimj9EkWqNx7QMkGXTGLXMbtz1Z96aMkGGmhe"
 

@@ -26,11 +26,11 @@ test("canonical manifest binds promoted root artifacts and program id", async ()
   const vk = JSON.parse(await fs.readFile(path.join(repoRoot, "circuits", "vk.json"), "utf8"));
   const networks = JSON.parse(await fs.readFile(path.join(repoRoot, "NETWORKS.json"), "utf8"));
 
-  assert.equal(manifest.program.id, "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF");
+  assert.equal(manifest.program.id, "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV");
   assert.equal(manifest.program.id, idl.address);
   assert.equal(manifest.program.id, networks.canonicalProgramId);
-  assert.match(rootLib, /declare_id!\("2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF"\);/);
-  assert.match(anchorToml, /\[programs\.devnet\][\s\S]*?paradox = "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF"/);
+  assert.match(rootLib, /declare_id!\("35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"\);/);
+  assert.match(anchorToml, /\[programs\.devnet\][\s\S]*?paradox = "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"/);
   assert.equal(manifest.groth16.n_public, vk.nPublic);
   assert.equal(manifest.groth16.vk_ic_count, vk.IC.length);
   assert.ok(idl.instructions.some((instruction) => instruction.name === "rotate_root_authority"));

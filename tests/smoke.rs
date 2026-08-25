@@ -2,7 +2,7 @@ use pdx_dark_protocol::{verifying_key, RootAuthorityConfig, Vault, VERIFYING_KEY
 
 #[test]
 fn canonical_root_is_bound_to_recovered_devnet_program() {
-    assert_eq!(ID.to_string(), "2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF");
+    assert_eq!(ID.to_string(), "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV");
 }
 
 #[test]

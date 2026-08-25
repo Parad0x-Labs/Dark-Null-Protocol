@@ -14,7 +14,7 @@ use solana_program::{
     sysvar::Sysvar,
 };
 
-solana_program::declare_id!("11111111111111111111111111111112");
+solana_program::declare_id!("AJHHpWv1eD2cq9iRM7RtUyA6C7QpYLgWKa5vUbgRWY7m");
 
 // ── State structs ────────────────────────────────────────────────────────────
 

@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { createRequire } from "node:module";
 import {
   BlindMint,
   BlindClient,
@@ -8,6 +9,9 @@ import {
   verifyDleq,
   verifyTokenPublic,
 } from "../swarm/blind-token.mjs";
+
+const require = createRequire(import.meta.url);
+const { secp256k1 } = require("@noble/curves/secp256k1");
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -165,19 +169,43 @@ test("corrupted DLEQ s scalar fails verification", () => {
   assert.ok(!isValid, "corrupted DLEQ s should fail");
 });
 
-test("verifyTokenPublic accepts structurally valid token", () => {
+test("verifyTokenPublic rejects token without DLEQ proof", () => {
   const mint = new BlindMint();
-  const { token, mintResponse } = fullFlow(mint, "public-verify-test");
+  const { mintResponse, token } = fullFlow(mint, "no-proof");
+  assert.ok(!verifyTokenPublic(token, mintResponse.mintPublicKeyHex));
+});
 
-  assert.ok(verifyTokenPublic(token, mintResponse.mintPublicKeyHex));
+test("verifyTokenPublic accepts token with valid public DLEQ proof", () => {
+  const mint = new BlindMint();
+  const { mintResponse, token } = fullFlow(mint, "public-verify");
+  const proof = mint.proveTokenPublic(token);
+  assert.ok(verifyTokenPublic(token, mintResponse.mintPublicKeyHex, proof));
+});
+
+test("verifyTokenPublic rejects forged token even with a proof for another token", () => {
+  const mint = new BlindMint();
+  const { mintResponse, token } = fullFlow(mint, "forgery-a");
+  const proof = mint.proveTokenPublic(token);
+
+  // Forge: same shape, different secret — no valid proof exists for it.
+  const forged = { ...token, secret: "forged-secret" };
+  assert.ok(!verifyTokenPublic(forged, mintResponse.mintPublicKeyHex, proof));
+
+  // Tampered point with the original secret must also fail.
+  const tampered = {
+    ...token,
+    tokenPointHex: secp256k1.ProjectivePoint.BASE.toHex(true),
+  };
+  assert.ok(!verifyTokenPublic(tampered, mintResponse.mintPublicKeyHex, proof));
 });
 
 test("verifyTokenPublic rejects token with wrong mint public key", () => {
   const mint = new BlindMint();
   const otherMint = new BlindMint();
   const { token } = fullFlow(mint, "wrong-mint-key-test");
+  const proof = mint.proveTokenPublic(token);
 
-  assert.ok(!verifyTokenPublic(token, otherMint.publicKeyHex));
+  assert.ok(!verifyTokenPublic(token, otherMint.publicKeyHex, proof));
 });
 
 test("BlindTokenRegistry: first redeem returns true, second returns false", () => {

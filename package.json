@@ -185,8 +185,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@coral-xyz/anchor": "^0.29.0",
-    "@solana/web3.js": "^1.98.4"
+    "@coral-xyz/anchor": "^0.32.1",
+    "@solana/web3.js": "^1.99.0"
   },
   "devDependencies": {
     "circomlib": "^2.0.5",

@@ -132,13 +132,13 @@
     },
     {
       "path": "package.json",
-      "sha256": "0388702940362625931797abd48e1ade1e19e34e7c8b3d0d9d1387c230f664bc",
-      "size": 8192
+      "sha256": "d579b46682c4e5bb97dee97d1ee665ce3449680ddc8ce84a6802305aaf6b2c5c",
+      "size": 8279
     },
     {
       "path": "package-lock.json",
-      "sha256": "1b3cd786e55faacaff75eca37fad074ea3be46f3c68b1501abca27eee3bd8bbb",
-      "size": 40389
+      "sha256": "95e6d988010d08a9b4368011d87001371d46dec3ce7c52e61848ebcf84b6414d",
+      "size": 40757
     },
     {
       "path": "NETWORKS.json",

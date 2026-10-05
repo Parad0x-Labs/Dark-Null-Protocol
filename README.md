@@ -18,9 +18,9 @@ Withdrawals are cryptographically unlinkable to the deposits that funded them: a
 Not claims — transactions anyone can replay:
 
 - **First working on-chain withdraw of this protocol, ever.** A real snarkjs Groth16 proof against the published circuit was verified by the on-chain BN254 verifier and the vault paid out — tx [`3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU`](https://explorer.solana.com/tx/3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU?cluster=devnet).
-- **The mixer rejected its own fraud attempt — on-chain, by itself.** An over-claim withdrawal (proof over 2× the funded amount) was submitted against the deployed program; the solvency guard reverted it with custom error 6013 `InsufficientCommittedDeposit`. A privacy protocol demonstrating its own anti-drain defense is the point of this repo.
+- **The shielded pool rejected its own fraud attempt — on-chain, by itself.** An over-claim withdrawal (proof over 2× the funded amount) was submitted against the deployed program; the solvency guard reverted it with custom error 6013 `InsufficientCommittedDeposit`. A privacy protocol demonstrating its own anti-drain defense is the point of this repo.
 - **Replay is dead.** Re-submitting the spent note fails with error 6000 `DoubleSpend`.
-- **Seven programs deployed on devnet**: all devnet-scoped until the mainnet gates clear: the root mixer plus six integration programs (silent-pay, payment-stream, threshold-fed, fiat-oracle, accumulator, inference), all deployed from this exact source tree.
+- **Seven programs deployed on devnet**: all devnet-scoped until the mainnet gates clear: the root shielded-pool program plus six integration programs (silent-pay, payment-stream, threshold-fed, fiat-oracle, accumulator, inference), all deployed from this exact source tree.
 
 Reproduce the whole cycle yourself:
 
@@ -54,14 +54,14 @@ Parad0x Labs builds Web0 on Solana — money and agents that settle themselves. 
 | Layer | Repo | Does |
 |---|---|---|
 | 💸 Payments | [dna-x402](https://github.com/Parad0x-Labs/dna-x402) | x402 rail: quote → pay → verify → receipt → anchor |
-| 🛠️ Build | [dna-x402-builders](https://github.com/Parad0x-Labs/dna-x402-builders) | Hosted kit: turn any API/bot into a paid agent |
+| 🛠️ Build | dna-x402-builders (private repository) | Hosted kit: turn any API/bot into a paid agent |
 | 🕶️ Privacy | **Dark-Null-Protocol** (this repo) | Groth16 privacy settlement, published proofs |
-| 🗜️ Data | [liquefy](https://github.com/Parad0x-Labs/liquefy) | Columnar compression that beats Zstd |
+| 🗜️ Data | liquefy (private repository) | Columnar compression |
 | 🛡️ Audit | [liquefy-openclaw-integration](https://github.com/Parad0x-Labs/liquefy-openclaw-integration) | Flight recorder: 24 engines + Solana-anchored audit trails |
-| 🎬 Media | [nebula-media](https://github.com/Parad0x-Labs/nebula-media) | Proof-carrying media compression — scene-aware + on-chain receipts |
-| 🧠 Local AI | [nulla-local](https://github.com/Parad0x-Labs/nulla-local) | Local-first agent runtime — your machine, your memory |
+| 🎬 Media | nebula-media (private repository) | Proof-carrying media compression — scene-aware + on-chain receipts |
+| 🧠 Runtime | [VOOL](https://github.com/Parad0x-Labs/vool) | Daily-user AI runtime — local-first, cloud when you choose |
 
-**See it live** (a consumer app running on these rails): **[parad0xlabs.com](https://parad0xlabs.com)**
+Project site: **[parad0xlabs.com](https://parad0xlabs.com)** · canonical deployment status for the Parad0x Labs program set: [web0 PROGRAMS.md](https://github.com/Parad0x-Labs/web0/blob/main/docs/PROGRAMS.md)
 
 ## Market Position
 
@@ -78,7 +78,7 @@ Dark Null is the compact, evidence-first Solana privacy settlement track:
 For launch copy and positioning, read [`docs/LAUNCH_NARRATIVE.md`](./docs/LAUNCH_NARRATIVE.md). For the release gate, read [`docs/MAINNET_READINESS.md`](./docs/MAINNET_READINESS.md) and [`docs/MAINNET_RUNBOOK.md`](./docs/MAINNET_RUNBOOK.md).
 For the delivered-vs-blocked claim boundary, read [`docs/CLAIMS_LEDGER.md`](./docs/CLAIMS_LEDGER.md).
 For external review, use the single handoff packet in [`docs/AUDITOR_HANDOFF.md`](./docs/AUDITOR_HANDOFF.md).
-For an explicitly unaudited, capped mainnet beta lane, read [`docs/MAINNET_OPEN_BETA.md`](./docs/MAINNET_OPEN_BETA.md).
+For the gated mainnet beta procedure, read [`docs/MAINNET_OPEN_BETA.md`](./docs/MAINNET_OPEN_BETA.md). No Dark Null program is deployed on mainnet today; the canonical program is on devnet.
 For off-chain service operations and the x402 receipt boundary, read [`docs/OFFCHAIN_SWARM.md`](./docs/OFFCHAIN_SWARM.md), [`docs/DNA_X402_INTEGRATION.md`](./docs/DNA_X402_INTEGRATION.md), and [`docs/PRIVATE_X402_PAYMENTS.md`](./docs/PRIVATE_X402_PAYMENTS.md).
 For the public DNA x402 workspace map, read [`docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md`](./docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md).
 For frontier work, read [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md).
@@ -166,7 +166,7 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 - ZK access receipt prototype issues access only on a valid Groth16 proof without recording the payer's identity (20 tests pass)
 - Piano PIR access pattern prototype retrieves an index entry without leaking which entry was queried (15 tests pass)
 - BDHKE blind token issuance prototype produces tokens that cannot be linked back to the redeem call (19 tests pass)
-- canonical devnet mixer `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` verified executable on devnet, including a Groth16 withdraw payout on devnet; `npm run check:x402:devnet` passes
+- canonical devnet shielded-pool program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` verified executable on devnet, including a Groth16 withdraw payout on devnet; `npm run check:x402:devnet` passes
 - six x402 integration programs deployed on devnet from this source tree: silent-pay (`9VYPtdr…`), payment-stream (`J6oHoys…`), threshold-fed (`4sMywVPL…`), fiat-oracle (`AJHHpWv…`), accumulator (`ByFb6xc…`), inference (`6h4yKZG…`)
 - full six-program integration demo passes end-to-end on devnet (`node scripts/demo-x402-dark-null.mjs`)
 
@@ -215,6 +215,8 @@ Running tests; not deployed to production.
 | BDHKE Blind Receipt Tokens | Blind Diffie-Hellman Key Exchange token issuance; token is unlinkable to the redeem call; 19 tests |
 
 ### Devnet programs (6) — wired into x402
+
+> Earlier devnet deployment of these primitives (generation-1 deploy key). The current devnet deployments built from this source tree are listed in the status section above.
 
 Native Solana programs deployed on devnet; each has a passing e2e test and is wired into the x402 payment stack via [`integration/programs.mjs`](./integration/programs.mjs) + [`integration/x402-hooks.mjs`](./integration/x402-hooks.mjs). Run [`scripts/demo-x402-dark-null.mjs`](./scripts/demo-x402-dark-null.mjs) to see all six fire in one agent session.
 

@@ -32,7 +32,7 @@ npm install @coral-xyz/anchor @solana/web3.js
 
 The canonical manifest key is `canonicalDevnet`, which resolves to:
 
-`2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF`
+`35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV`
 
 ## Proof Encoding
 

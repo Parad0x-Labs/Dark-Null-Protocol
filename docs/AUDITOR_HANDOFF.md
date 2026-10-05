@@ -118,7 +118,9 @@ The canonical program is an Anchor/Solana program represented by:
 
 The current canonical devnet program id is:
 
-- `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF`
+- `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV`
+
+Earlier devnet deployment (superseded): `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF`
 
 The network default remains devnet by design. That is not a mainnet shortcut. `NETWORKS.json` keeps devnet/localnet as the current canonical networks, and the mainnet evidence gates remain blocked.
 

@@ -24,7 +24,7 @@ The canonical root is bound by:
 
 From those files you can verify:
 
-- the current root program ID is `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF`
+- the current root program ID is `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` (earlier devnet deployment: `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF`)
 - the root IDL and root source match that program ID
 - the root proving artifacts are hash-bound in one manifest
 

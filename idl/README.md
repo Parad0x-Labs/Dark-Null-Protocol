@@ -6,7 +6,7 @@ This directory contains the canonical public IDL for the promoted root program.
 
 | File | Description |
 |---|---|
-| `paradox.json` | Canonical root IDL for program `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF` |
+| `paradox.json` | Canonical root IDL for program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` |
 
 The older docs-track IDL was moved to [`../historical/root-toy-prototype/idl`](../historical/root-toy-prototype/idl).
 
@@ -19,7 +19,7 @@ import idl from "./paradox.json";
 
 const program = new Program(
   idl as Idl,
-  new PublicKey("2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF"),
+  new PublicKey("35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"),
   provider as AnchorProvider
 );
 ```

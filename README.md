@@ -13,12 +13,12 @@ Withdrawals are cryptographically unlinkable to the deposits that funded them: a
   <img src="./docs/assets/github-header-dark-null.png" alt="Parad0x Labs" width="100%" />
 </p>
 
-## 🔥 Proven on devnet — every claim is a replayable transaction
+## 🔥 Proven on devnet — reproducible against the deployed program
 
-Not claims — transactions anyone can replay:
+The payout below is a landed devnet transaction on the canonical program `35GMe13…`. The two rejections are reproduced by the script further down against the same deployed program; they are rejected at preflight, so no failed transaction is recorded on-chain.
 
-- **First working on-chain withdraw of this protocol, ever.** A real snarkjs Groth16 proof against the published circuit was verified by the on-chain BN254 verifier and the vault paid out — tx [`3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU`](https://explorer.solana.com/tx/3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU?cluster=devnet).
-- **The shielded pool rejected its own fraud attempt — on-chain, by itself.** An over-claim withdrawal (proof over 2× the funded amount) was submitted against the deployed program; the solvency guard reverted it with custom error 6013 `InsufficientCommittedDeposit`. A privacy protocol demonstrating its own anti-drain defense is the point of this repo.
+- **Working on-chain withdraw.** A real snarkjs Groth16 proof against the published circuit was verified by the on-chain BN254 verifier and the vault paid out — tx [`3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU`](https://explorer.solana.com/tx/3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU?cluster=devnet).
+- **The shielded pool rejects an over-claim.** An over-claim withdrawal (proof over 2× the funded amount) was submitted against the deployed program; the solvency guard reverted it with custom error 6013 `InsufficientCommittedDeposit`. A privacy protocol demonstrating its own anti-drain defense is the point of this repo.
 - **Replay is dead.** Re-submitting the spent note fails with error 6000 `DoubleSpend`.
 - **Seven programs deployed on devnet**: all devnet-scoped until the mainnet gates clear: the root shielded-pool program plus six integration programs (silent-pay, payment-stream, threshold-fed, fiat-oracle, accumulator, inference), all deployed from this exact source tree.
 
@@ -61,7 +61,7 @@ Parad0x Labs builds Web0 on Solana — money and agents that settle themselves. 
 | 🎬 Media | nebula-media (private repository) | Proof-carrying media compression — scene-aware + on-chain receipts |
 | 🧠 Runtime | [VOOL](https://github.com/Parad0x-Labs/vool) | Daily-user AI runtime — local-first, cloud when you choose |
 
-Project site: **[parad0xlabs.com](https://parad0xlabs.com)** · canonical deployment status for the Parad0x Labs program set: [web0 PROGRAMS.md](https://github.com/Parad0x-Labs/web0/blob/main/docs/PROGRAMS.md)
+Project site: **[parad0xlabs.com](https://parad0xlabs.com)** · canonical deployment inventory for the Parad0x Labs program set is available to reviewers on request.
 
 ## Market Position
 
@@ -112,17 +112,17 @@ npm run config:json:devnet
 
 Canonical defaults also live in [`.env.example`](./.env.example).
 
-## npm SDK
+## JavaScript SDK
+
+The SDK (package name `@dark-null/protocol`) is used from a clone of this repository; it is not published to the npm registry. Entry points: [`sdk/index.mjs`](./sdk/index.mjs) and [`sdk/index.d.ts`](./sdk/index.d.ts).
 
 ```bash
-npm install @dark-null/protocol
+git clone https://github.com/Parad0x-Labs/Dark-Null-Protocol
+cd Dark-Null-Protocol
+sh scripts/bootstrap.sh
 ```
 
-For Anchor-based integrations:
-
-```bash
-npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
-```
+For Anchor-based integrations, add `@coral-xyz/anchor` and `@solana/web3.js` to your own project.
 
 ## What Is Canonical
 
@@ -140,6 +140,17 @@ npm install @dark-null/protocol @coral-xyz/anchor @solana/web3.js
 | JavaScript SDK | [`sdk/index.mjs`](./sdk/index.mjs), [`sdk/index.d.ts`](./sdk/index.d.ts) |
 | Python helper client | [`client/dark_client.py`](./client/dark_client.py) |
 | Canonical proof-flow test | [`tests/canonical-proof-flow.test.mjs`](./tests/canonical-proof-flow.test.mjs) |
+
+### Devnet deployment generations
+
+Two generations of this program set are deployed on devnet. Integrate against the current one; the earlier one stays deployed so historical evidence remains checkable.
+
+| Generation | Root shielded-pool program | Integration programs | Status |
+|---|---|---|---|
+| Current (since 2026-08-25) | `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` — matches `declare_id!` in [`src/lib.rs`](./src/lib.rs), [`MANIFEST.json`](./MANIFEST.json), [`NETWORKS.json`](./NETWORKS.json), [`Anchor.toml`](./Anchor.toml); upgrade authority `4cTBfB8v…` | silent-pay `9VYPtdr…`, payment-stream `J6oHoys…`, threshold-fed `4sMywVPL…`, fiat-oracle `AJHHpWv…`, accumulator `ByFb6xc…`, inference `6h4yKZG…` | Canonical devnet root; integration target |
+| Earlier (generation-1 deploy key `F6Fr…`) | `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF` — source preserved in [`historical/null-mint`](./historical/null-mint) | the six programs listed under [Devnet programs (6)](#devnet-programs-6--wired-into-x402) | Still deployed on devnet; superseded |
+
+Some older docs and helper READMEs still cite `2stas3c…`; where they differ, `MANIFEST.json` and [`docs/PROGRAM_IDS.md`](./docs/PROGRAM_IDS.md) are authoritative.
 
 ## What Is Historical
 
@@ -298,7 +309,7 @@ frontier_primitives:
 | public code review | root Rust program, circuits, client helpers, SDK, IDL, and historical evidence |
 | machine-speed per-request API payments | use `dna-x402` for HTTP negotiation and this repo's private x402 receipt primitives for Dark Null settlement binding |
 
-The large agent-commerce workspace lives in [`Parad0x-Labs/dna-x402`](https://github.com/Parad0x-Labs/dna-x402): 346 Cargo workspace members, 17 Solana program entries, the TypeScript x402 package, NULL Miner SDK, builder surfaces, and Dark Null integration crates. The repo map is in [`docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md`](./docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md).
+The large agent-commerce workspace lives in [`Parad0x-Labs/dna-x402`](https://github.com/Parad0x-Labs/dna-x402): 362 Cargo workspace members (334 crates, 28 Solana program crates), the TypeScript x402 package, NULL Miner SDK, builder surfaces, and Dark Null integration crates. The repo map is in [`docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md`](./docs/DNA_X402_PUBLIC_WORKSPACE_MAP.md).
 
 ## Review Status
 

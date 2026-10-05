@@ -90,7 +90,7 @@ const connection = new Connection("https://api.devnet.solana.com");
 const provider = new AnchorProvider(connection, wallet, {});
 const program = new Program(
   idl as Idl,
-  new PublicKey("2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF"),
+  new PublicKey("35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"),
   provider
 );
 ```

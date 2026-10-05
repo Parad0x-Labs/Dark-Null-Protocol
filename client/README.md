@@ -13,7 +13,7 @@ This directory now carries a **canonical root helper client**, not a toy-root tr
 
 ## What `dark_client.py` Matches
 
-- program ID `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF`
+- program ID `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` (read from `NETWORKS.json`)
 - canonical network config from [`../NETWORKS.json`](../NETWORKS.json)
 - canonical root circuit artifacts under [`../circuits`](../circuits)
 - canonical root IDL semantics from [`../idl/paradox.json`](../idl/paradox.json)

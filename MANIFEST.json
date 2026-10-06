@@ -131,8 +131,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "830651c83f363e38cfd7352ac5c15f28cc03b4780a14a2d76c799a5201b87fce",
-      "size": 8360
+      "sha256": "0e5c839be9678fe1ee96a0ee3261c4bf5c3589879406deb6aad7510d2311a0a5",
+      "size": 8452
     },
     {
       "path": "package-lock.json",

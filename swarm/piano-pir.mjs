@@ -31,7 +31,7 @@
  * - benchmark against the full Dark Null Merkle tree depth (currently 7 levels)
  */
 
-import { createHash, randomBytes } from "node:crypto";
+import { createHash, randomInt } from "node:crypto";
 
 export const PIR_SCHEMA = "dark-null-piano-pir-v1";
 export const MERKLE_DEPTH = 7; // Dark Null canonical circuit depth
@@ -138,8 +138,8 @@ export class PianoClient {
     const maxIdx = this._tree.size;
     if (maxIdx < 2) throw new Error("tree must have at least 2 leaves for PIR hint generation");
     while (this._hints.length < this._hintCount) {
-      const randomIdx = randomInt(maxIdx);
-      if (randomIdx === 0) continue;
+      // crypto.randomInt uses rejection sampling, so every index in [1, maxIdx) is equally likely.
+      const randomIdx = randomInt(1, maxIdx);
       const path = this._tree.getSiblingPath(randomIdx);
       this._hints.push({ leafIdx: randomIdx, path });
     }
@@ -209,11 +209,6 @@ function xorPaths(a, b) {
     for (let j = 0; j < bufA.length; j++) xored[j] = bufA[j] ^ bufB[j];
     return xored.toString("hex");
   });
-}
-
-function randomInt(max) {
-  const bytes = randomBytes(4);
-  return bytes.readUInt32BE(0) % max;
 }
 
 /**

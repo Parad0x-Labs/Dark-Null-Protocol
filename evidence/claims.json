@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "repository": "Parad0x-Labs/Dark-Null-Protocol",
+  "snapshot": {
+    "default_branch": "main",
+    "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+    "observed_at": "2026-10-06T08:23:22Z",
+    "method": "GitHub API for the default-branch head; npm registry metadata (read-only) for publication; read-only devnet RPC for deployments and the cited transaction"
+  },
+  "claims": [
+    {
+      "id": "dark-null.groth16-withdraw",
+      "plain_claim": "The root program pays a withdrawal only after an on-chain Groth16 proof over eight public inputs verifies.",
+      "component": "root Anchor program (src/lib.rs)",
+      "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+      "source_paths": [
+        "src/lib.rs",
+        "src/verifying_key.rs",
+        "circuits/null_proof.circom",
+        "circuits/vk.json",
+        "MANIFEST.json"
+      ],
+      "implementation_status": "prototype",
+      "package_version": null,
+      "publication_status": "not-applicable",
+      "network": "devnet",
+      "program_id": "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV",
+      "deployed_build_hash": null,
+      "source_build_match": "unknown",
+      "authority_assumptions": [
+        "Upgrade authority 4cTBfB8vJK8YiCBcVrvZV4wx89AFzGEbm7LLghJsNUyD (devnet) can replace the program.",
+        "Single-party development trusted setup for circuits/null_proof_final.zkey."
+      ],
+      "evidence_checked_at": "2026-10-06T08:26:58Z",
+      "proof_files": [
+        "tests/canonical-proof-flow.test.mjs",
+        "tests/malformed-proof.test.mjs",
+        "tests/verification-key-consistency.test.mjs",
+        "MANIFEST.json"
+      ],
+      "test_command": "npm ci --ignore-scripts && npm test && npm run test:proof && npm run release:verify",
+      "test_run": null,
+      "mocks_or_skips": [],
+      "demonstrated_properties": [
+        "verifier: groth16-solana Groth16Verifier over the alt_bn128 syscalls with the embedded VERIFYING_KEY (vk.json SHA-256 6abfff44...3d63a)",
+        "circuit, zkey, wasm and vk.json pinned by SHA-256 in MANIFEST.json",
+        "devnet transaction 3wXv6wGS... (slot 487904628) invoked this program ID and succeeded"
+      ],
+      "not_demonstrated": [
+        "that the current devnet bytes are the build that ran 3wXv6wGS...: the program was last deployed at slot 487918755, after that transaction",
+        "a reproducible build hash binding devnet bytes to this commit",
+        "a multi-party trusted setup",
+        "mainnet deployment (none)"
+      ],
+      "operational_limitations": [
+        "Anchor.toml [programs.devnet] still lists whisper 4AQpjB... and ghost_mint AedRaM..., which devnet RPC reports as closed."
+      ],
+      "supersedes": null
+    },
+    {
+      "id": "dark-null.payout-binding",
+      "plain_claim": "prepare_phantom_withdraw_v2 binds the proof to the amount, receiver token account and mint.",
+      "component": "root Anchor program (src/lib.rs)",
+      "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+      "source_paths": [
+        "src/lib.rs",
+        "circuits/null_proof.circom"
+      ],
+      "implementation_status": "implemented",
+      "package_version": null,
+      "publication_status": "not-applicable",
+      "network": null,
+      "program_id": null,
+      "deployed_build_hash": null,
+      "source_build_match": "not-applicable",
+      "authority_assumptions": [],
+      "evidence_checked_at": "2026-10-06",
+      "proof_files": [
+        "tests/canonical-proof-flow.test.mjs",
+        "docs/CLAIMS_LEDGER.md"
+      ],
+      "test_command": "npm test",
+      "test_run": null,
+      "mocks_or_skips": [],
+      "demonstrated_properties": [
+        "amount, receiver token account and mint are public inputs 3 to 7; a proof for one destination does not verify for another",
+        "commitment accounting refuses a withdrawal above the amount deposited against the commitment"
+      ],
+      "not_demonstrated": [
+        "hiding of amount, receiver or mint: these are public by construction (see docs/PRIVACY_PROPERTIES.md)"
+      ],
+      "operational_limitations": [],
+      "supersedes": null
+    },
+    {
+      "id": "dark-null.privacy-properties",
+      "plain_claim": "Which deposit and withdrawal fields an on-chain observer can see, and which properties the prototype protects.",
+      "component": "root Anchor program and circuit",
+      "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+      "source_paths": [
+        "src/lib.rs",
+        "circuits/null_proof.circom"
+      ],
+      "implementation_status": "prototype",
+      "package_version": null,
+      "publication_status": "not-applicable",
+      "network": null,
+      "program_id": null,
+      "deployed_build_hash": null,
+      "source_build_match": "not-applicable",
+      "authority_assumptions": [
+        "Groth16 soundness, and the single setup participant discarded its toxic waste."
+      ],
+      "evidence_checked_at": "2026-10-06",
+      "proof_files": [
+        "docs/PRIVACY_PROPERTIES.md",
+        "tests/privacy_linkage.rs",
+        "tests/privacy-linkage.test.mjs"
+      ],
+      "test_command": "cargo test --locked --test privacy_linkage && npm test",
+      "test_run": null,
+      "mocks_or_skips": [
+        "The Rust harness writes initialize-time accounts directly; deposits, root update and withdrawal run through the program entrypoint without a validator."
+      ],
+      "demonstrated_properties": [
+        "possession of a deposited note opening is required to withdraw",
+        "nullifier replay is refused",
+        "payout cannot be redirected",
+        "note secrets stay private witness inputs"
+      ],
+      "not_demonstrated": [
+        "deposit to withdrawal unlinkability: the withdrawal's public input 0 equals the deposit commitment, so the spent deposit is identifiable",
+        "amount confidentiality",
+        "an anonymity set: a depth-7 tree has 128 leaf positions, which is capacity, not a measured set"
+      ],
+      "operational_limitations": [
+        "Describe the current path as a devnet proof-verified withdrawal prototype with public payout fields."
+      ],
+      "supersedes": null
+    },
+    {
+      "id": "dark-null.integration-programs",
+      "plain_claim": "Six native integration programs from programs/ are deployed on devnet.",
+      "component": "programs/",
+      "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+      "source_paths": [
+        "programs/silent-pay/src/lib.rs",
+        "programs/payment-stream/src/lib.rs",
+        "programs/threshold-fed/src/lib.rs",
+        "programs/fiat-oracle/src/lib.rs",
+        "programs/accumulator/src/lib.rs",
+        "programs/inference/src/lib.rs"
+      ],
+      "implementation_status": "prototype",
+      "package_version": null,
+      "publication_status": "not-applicable",
+      "network": "devnet",
+      "program_id": null,
+      "program_ids": {
+        "silent-pay": "9VYPtdr19RDBVTV1WJ1stkCisucre2Bvcpt91KyfYszR",
+        "payment-stream": "J6oHoysM1RGs3yZPXBp9ZUgdYgGQWZf2wKisS1tJQdaQ",
+        "threshold-fed": "4sMywVPL5waxniQDs5pDuhc1E4uUWjqh1ob17fY82VQz",
+        "fiat-oracle": "AJHHpWv1eD2cq9iRM7RtUyA6C7QpYLgWKa5vUbgRWY7m",
+        "accumulator": "ByFb6xcQTgG4fai31Zto7qpQve1eBo3cc2qrAJU5tN7k",
+        "inference": "6h4yKZGFYHAVkctUVqD4wrXCYeostHBhG6T3FCVAqr3f"
+      },
+      "deployed_build_hash": null,
+      "source_build_match": "unknown",
+      "authority_assumptions": [
+        "Each program's upgrade authority equals its own program address (observed 2026-10-06)."
+      ],
+      "evidence_checked_at": "2026-10-06T08:26:58Z",
+      "proof_files": [
+        "docs/CLAIMS_LEDGER.md",
+        "scripts/e2e-silent-pay.mjs",
+        "scripts/e2e-payment-stream.mjs",
+        "scripts/e2e-threshold-fed.mjs",
+        "scripts/e2e-fiat-oracle.mjs",
+        "scripts/e2e-accumulator.mjs",
+        "scripts/e2e-inference.mjs"
+      ],
+      "test_command": "node scripts/e2e-silent-pay.mjs",
+      "test_run": null,
+      "mocks_or_skips": [],
+      "demonstrated_properties": [
+        "all six program accounts exist on devnet (last deployed between slots 487904982 and 487905446)"
+      ],
+      "not_demonstrated": [
+        "ZK properties: fiat-oracle and inference verify oracle signatures, accumulator is a rolling SHA-256 hash, not a folding scheme",
+        "build hashes binding devnet bytes to this commit",
+        "end-to-end runs in this review pass"
+      ],
+      "operational_limitations": [],
+      "supersedes": null
+    },
+    {
+      "id": "dark-null.private-x402-receipts",
+      "plain_claim": "Private x402 receipt primitives wrap a DNA x402 signed receipt without storing raw URLs or payment headers.",
+      "component": "swarm/x402.mjs",
+      "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+      "source_paths": [
+        "swarm/x402.mjs",
+        "docs/PRIVATE_X402_PAYMENTS.md"
+      ],
+      "implementation_status": "implemented",
+      "package_version": null,
+      "publication_status": "not-applicable",
+      "network": null,
+      "program_id": null,
+      "deployed_build_hash": null,
+      "source_build_match": "not-applicable",
+      "authority_assumptions": [],
+      "evidence_checked_at": "2026-10-06",
+      "proof_files": [
+        "tests/x402-private-payments.test.mjs",
+        "scripts/check-x402-receipts.mjs"
+      ],
+      "test_command": "npm run test:x402 && npm run check:x402",
+      "test_run": null,
+      "mocks_or_skips": [],
+      "demonstrated_properties": [
+        "resource URL stored as a hash; receipt locks header hashes, proof bundle hash and previous receipt hash"
+      ],
+      "not_demonstrated": [
+        "a hosted x402 merchant gateway",
+        "on-chain privacy of the underlying payment"
+      ],
+      "operational_limitations": [
+        "Runs locally in the SDK."
+      ],
+      "supersedes": null
+    },
+    {
+      "id": "dark-null.frontier-prototypes",
+      "plain_claim": "Six frontier modules (receipt DAG, batch settlement, ZK access receipts, Piano PIR, blind tokens, x402 privacy extension) exist as local prototypes with tests.",
+      "component": "swarm/",
+      "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+      "source_paths": [
+        "swarm/receipt-dag.mjs",
+        "swarm/batch.mjs",
+        "swarm/access-receipt.mjs",
+        "swarm/piano-pir.mjs",
+        "swarm/blind-token.mjs",
+        "docs/2030_PRIMITIVES.md"
+      ],
+      "implementation_status": "prototype",
+      "package_version": null,
+      "publication_status": "not-applicable",
+      "network": null,
+      "program_id": null,
+      "deployed_build_hash": null,
+      "source_build_match": "not-applicable",
+      "authority_assumptions": [],
+      "evidence_checked_at": "2026-10-06",
+      "proof_files": [
+        "docs/CLAIMS_LEDGER.md"
+      ],
+      "test_command": "npm run test:frontier",
+      "test_run": null,
+      "mocks_or_skips": [],
+      "demonstrated_properties": [
+        "in-process modules with unit tests"
+      ],
+      "not_demonstrated": [
+        "persistent services or deployments",
+        "the ZK access receipt uses an HMAC token, not a ZK circuit",
+        "batch settlement is sequential O(N) verification, not aggregation"
+      ],
+      "operational_limitations": [],
+      "supersedes": null
+    },
+    {
+      "id": "dark-null.sdk-package",
+      "plain_claim": "The JavaScript SDK @dark-null/protocol is used from a clone of this repository.",
+      "component": "sdk/",
+      "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+      "source_paths": [
+        "sdk/index.mjs",
+        "sdk/index.d.ts"
+      ],
+      "implementation_status": "implemented",
+      "package_version": {
+        "name": "@dark-null/protocol",
+        "package_json": "package.json",
+        "git_version": "1.2.1",
+        "npm_latest": null,
+        "npm_checked_at": "2026-10-06T08:23:41Z"
+      },
+      "publication_status": "not-published",
+      "network": null,
+      "program_id": null,
+      "deployed_build_hash": null,
+      "source_build_match": "not-applicable",
+      "authority_assumptions": [],
+      "evidence_checked_at": "2026-10-06",
+      "proof_files": [
+        "sdk/index.test.mjs"
+      ],
+      "test_command": "npm run test:sdk",
+      "test_run": null,
+      "mocks_or_skips": [],
+      "demonstrated_properties": [
+        "proof and public-input encoders, network config, IDL export"
+      ],
+      "not_demonstrated": [
+        "npm publication (the package name is not on the registry)"
+      ],
+      "operational_limitations": [],
+      "supersedes": null
+    },
+    {
+      "id": "dark-null.separate-from-dna-crates",
+      "plain_claim": "The Dark Null verifier is a separate program from the similarly named dark-* crates and programs in dna-x402.",
+      "component": "repository boundary",
+      "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+      "source_paths": [
+        "src/lib.rs",
+        "Cargo.toml"
+      ],
+      "implementation_status": "implemented",
+      "package_version": null,
+      "publication_status": "not-applicable",
+      "network": null,
+      "program_id": null,
+      "deployed_build_hash": null,
+      "source_build_match": "not-applicable",
+      "authority_assumptions": [],
+      "evidence_checked_at": "2026-10-06",
+      "proof_files": [
+        "https://github.com/Parad0x-Labs/dna-x402/blob/main/docs/DARK_CRATES_STATUS.md"
+      ],
+      "test_command": null,
+      "test_run": null,
+      "mocks_or_skips": [],
+      "demonstrated_properties": [
+        "no Cargo dependency in either direction",
+        "the only shared artifact is circuits/vk.json, byte-identical to dna-x402 evidence/zk/vk.json"
+      ],
+      "not_demonstrated": [
+        "a finding about one repository's crates applies to the other; each is assessed separately"
+      ],
+      "operational_limitations": [],
+      "supersedes": null
+    },
+    {
+      "id": "dark-null.mainnet",
+      "plain_claim": "A Dark Null program is deployed on mainnet.",
+      "component": "deployment",
+      "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+      "source_paths": [
+        "docs/CLAIMS_LEDGER.md"
+      ],
+      "implementation_status": "planned",
+      "package_version": null,
+      "publication_status": "not-applicable",
+      "network": null,
+      "program_id": null,
+      "deployed_build_hash": null,
+      "source_build_match": "not-applicable",
+      "authority_assumptions": [],
+      "evidence_checked_at": "2026-10-06",
+      "proof_files": [
+        "docs/CLAIMS_LEDGER.md"
+      ],
+      "test_command": null,
+      "test_run": null,
+      "mocks_or_skips": [],
+      "demonstrated_properties": [],
+      "not_demonstrated": [
+        "any mainnet deployment; the gates are listed in docs/CLAIMS_LEDGER.md (Blocked Claims)"
+      ],
+      "operational_limitations": [],
+      "supersedes": null
+    }
+  ]
+}

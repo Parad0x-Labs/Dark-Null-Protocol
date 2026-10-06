@@ -1,6 +1,7 @@
 # Dark NULL v2: Private Agent Payments on Agave (DESIGN_2027)
 
-status: design. Branch `design/agentic-private-payments-2027`. Written 2026-10-06.
+status: design. Branch `design/agentic-private-payments-2027`. Written 2026-10-06. Updated 2026-10-06 with the
+Phase 0 measurements in [`PHASE0_RESULTS.md`](./PHASE0_RESULTS.md) ([M] values below cite it).
 Companions: [`PLAN_2027.md`](./PLAN_2027.md) (build plan, gates, port plan) and
 [`CLAIMS_POLICY.md`](./CLAIMS_POLICY.md) (what may be said, when).
 
@@ -12,8 +13,8 @@ HTTP resources through x402. Four layers:
 1. **Shielded pool v2.** Poseidon note commitments in an on-chain depth-32 Merkle tree updated with the
    `sol_poseidon` syscall. A single universal 2-in/2-out join-split circuit with in-circuit value
    conservation and 64-bit range checks. Position-bound nullifiers. Groth16 over BN254 on devnet, verified
-   with the `alt_bn128` syscalls. The mainnet track is a PLONK-family verifier with no circuit-specific
-   setup (section 8). Deposit and spend are unlinkable, in-pool amounts are hidden, any amount is
+   with the `alt_bn128` syscalls. The mainnet track is Groth16 with a public multi-party phase-2 ceremony
+   (section 8; Phase 0 measured PLONK proving at 73.6 s for the Phase 1 circuit). Deposit and spend are unlinkable, in-pool amounts are hidden, any amount is
    allowed, and a relayer pays the fees.
 2. **Agent payment branches inside the same circuit:**
    - delegated agent keys bounded by a principal's spend policy (per-payment cap, merchant allowlist,
@@ -94,7 +95,7 @@ them is described as "first". Each gets publication wording only after its gate 
 | N3 | **Association-set membership proofs on Solana, with ragequit** | 0xbow Privacy Pools (Ethereum); Rings operator policies | Cryptographic exit rather than an operator gate, on Solana, combined with join-split label rules (section 5.7) |
 | N4 | **Quote-bound private receipts.** The x402 quote binding hash enters the proof's `ext_data_hash`. Merchant-signed receipts and agent-signed vouchers chain into one log, and its salted head is anchored at epoch close | DNA x402 signed receipt chain (public settlement); repo `swarm/x402.mjs` (hash-only receipts after a public payment) | The receipt is bound to a private settlement instead of to a public transfer |
 | N5 | **Syscall-only verification inside Agave budgets.** Every on-chain curve and hash operation is a syscall, and per-transaction CU is benchmarked (B2) | groth16-solana and Light (syscall verifiers) | A design rule plus an enforced budget, not a new primitive |
-| N6 | **No Dark NULL-operated trusted setup.** PLONK-family verification over Perpetual Powers of Tau, conditional on spike S-PLONK and gate B5 | Railgun / Privacy Pools (public phase-2 ceremonies); Zcash (Halo2, no setup) | Universal SRS reused directly; no circuit-specific phase 2 |
+| N6 | **No Dark NULL-operated trusted setup.** Mainnet keys come from a public multi-party phase 2 on Perpetual Powers of Tau (changed by Phase 0: a PLONK prover meeting B1 is a research item, R-PLONK-PROVER), with gate B5 | Railgun / Privacy Pools (public phase-2 ceremonies); Zcash (Halo2, no setup) | Universal SRS reused directly; no circuit-specific phase 2 |
 
 The pool layer (item 1 of section 0) is at parity with deployed systems such as Privacy Cash. It is a
 prerequisite, not a novelty claim.
@@ -182,7 +183,7 @@ the proof-authorizing key and the spend-authorizing key.
 | `seed` | 32 random bytes, generated locally | wallet layer only | Root secret, never exported |
 | `ask` | BabyJubJub scalar, `HKDF(seed, "dnull-ask" ‖ account_index)` | wallet layer only | Spend authorization (signs `sighash`) |
 | `ak` | `ask * G_bjj` (public point) | prover, public | Verification key for the in-circuit signature check |
-| `pk` | `Poseidon(DS_PK, ak.x, ak.y)` | public | Spend identifier inside owner fields |
+| `pk` | `Poseidon(DS_PK, ak.x, ak.y, nk)` | public | Spend identifier inside owner fields. Binding `nk` here makes the nullifier key a property of the note's owner; without it a spender could pick a second `nk` and derive a second valid nullifier for one note (Phase 0 finding F-NK) |
 | `nk` | `Poseidon(DS_NK, HKDF(seed, "dnull-nk" ‖ account_index))` | prover | Nullifier key (viewing-level: detects spends, cannot spend) |
 | `ivk` | X25519 secret, `HKDF(seed, "dnull-ivk" ‖ account_index ‖ diversifier)` | prover | Decrypts incoming notes |
 | `ovk` | `HKDF(seed, "dnull-ovk" ‖ account_index)` | prover | Encrypts sender-side copies and disclosure records |
@@ -291,8 +292,15 @@ cannot change any field without invalidating the proof.
 | Association branch: label membership depth 20, two paths (cross-label merge; section 5.7) | ~10k |
 | **Total** | **~43-49k**, below 2^16 (65,536) |
 
-Prover time at 2^16 is an estimate of about 1-3 s native and about 3-8 s in a browser [E], measured in
-B1. Every branch's constraints are always present. That cost buys shape uniformity (G4). If B1 misses
+Measured in Phase 0 [M]:
+- the principal-branch skeleton (`spikes/p0/circuits/transact_v2_skeleton.circom`) is 23,155 constraints;
+- a full-size proxy with the channel EdDSA, allowlist and association paths added is 40,914 constraints.
+
+Native Groth16 proving (arkworks, 4 vCPU of an Apple M4):
+- skeleton: p50 260 ms, 108 MB;
+- full-size proxy: p50 433 ms, 184 MB (1,291 ms single-threaded).
+
+The browser figure (about 3-8 s) remains [E]. Every branch's constraints are always present. That cost buys shape uniformity (G4). If B1 misses
 its gate, the fallback is two circuits (plain / agent), with the leak documented.
 
 ### 5.4 Merkle tree and Poseidon budget
@@ -514,17 +522,19 @@ No edits to dna-x402 in this task. The paths are listed for Phase 2.
 ### 7.3 Verifier
 
 - **Devnet Phases 1-4.** Groth16 via groth16-solana: [V] 78,293 CU for 1 public input, 108,762 for 8
-  (README, 2026-09-23).
+  (README, 2026-09-23). [M] 81,282 CU per instruction on devnet for the Phase 1 skeleton with 1 public input
+  (PHASE0_RESULTS section 2).
 - **Syscall facts used.** [V] agave `execution_budget.rs`, identical at tag v4.3.0:
   - G1 add 334, G1 mul 3,840;
   - pairing 36,364 for the first pair + 12,121 per extra pair;
   - G1 decompress 398, G2 decompress 13,610.
 - **Proof encoding.** Send uncompressed (256 B): G2 decompression would cost 13,610 CU, and a V1
   transaction has room for the extra 128 B.
-- **Mainnet-track verifier.** PLONK-family over BN254 with the PPoT SRS (section 8), subject to spike
-  S-PLONK.
-- **No in-BPF field-heavy arithmetic** except Fiat-Shamir and Lagrange evaluation, which only a PLONK
-  verifier needs. S-PLONK measures exactly that cost.
+- **Mainnet-track verifier.** Groth16, keys from a public multi-party phase 2 (section 8.2).
+- **No in-BPF field-heavy arithmetic.** S-PLONK measured what a PLONK verifier adds:
+  - [M] 121,615 CU of BPF Fr arithmetic;
+  - 37,848 CU of transcript;
+  - 328,447 CU in total.
 
 ### 7.4 Nullifier storage (the dominant cost)
 
@@ -532,9 +542,9 @@ Every transact records two nullifiers, dummies included (G4).
 
 | Option | Lookup | Storage cost per nullifier | Trust / liveness | Phase |
 |---|---|---|---|---|
-| A. PDA per nullifier (`["nf", pool, nf]`, 0 data) | O(1), atomic create-fails-if-exists | Rent-exempt minimum for a 0-byte account [E] (0.00089 SOL under the default rent parameters), never reclaimable | None beyond the program | P1 default |
-| B. Sharded open-addressing hash-set accounts (up to 10 MiB each, [V] account limit) | O(1) expected | ~32 B x rent per byte / load factor [E], about 4x cheaper than A at 50% load | None | P1.5 candidate |
-| C. Light V2 address tree (height 40) as a uniqueness set | Non-inclusion via Light validity proof | Not rent-based; protocol and forester fees [U] | Light forester liveness; CPI into Light system program (~100k CU proof, [V] docs) | P1.5 candidate |
+| A. PDA per nullifier (`["nf", pool, nf]`, 0 data) | O(1), atomic create-fails-if-exists. [M] 1,727 CU per insert | Rent-exempt minimum for a 0-byte account: [M] 650,240 lamports (devnet and mainnet, 2026-10-06), never reclaimable | None beyond the program | P1 default |
+| B. Sharded open-addressing hash-set accounts (up to 10 MiB each, [V] account limit) | O(1) expected. [M] 111-217 CU per insert up to 90% load; average probes 6.4 at 60-90% | [M] 164,846 lamports per 32-byte slot: 2.0x cheaper than A at 50% load, 3.0x at a 75% cap (recommended), 3.5x at 90%. Pages are pre-funded and write-locked per insert | None | P3 candidate |
+| C. Light V2 address tree (height 40) as a uniqueness set | Non-inclusion via Light validity proof | Not rent-based. Light documentation (read 2026-10-06): 10,000 lamports per new address, 5,000 per state tree per instruction, ~200k CU per transaction. Not measured: devnet needs a keyed indexer endpoint | Light forester liveness; CPI into Light system program (~100k CU proof, [V] docs) | P1.5 candidate |
 | D. Evolving / epoch nullifiers (Bowe and Miers, ePrint 2025/2031) | Prunable sets | Lowest | Research | R-track |
 
 Consequence: at option A costs, a batch-mode close is dominated by rent, not compute. B3 decides
@@ -579,8 +589,12 @@ Defense in depth on top of in-circuit conservation:
   (three 160 B ciphertexts plus fixed fields), about 12 accounts, plus signature and header.
 - V1 is the primary format. Fallback: a legacy/v0 transaction (1,232 B, [V] solana-sdk `PACKET_DATA_SIZE`)
   with a compressed proof and an address lookup table.
-- End-to-end acceptance of V1 transactions by RPC/TPU has not been exercised [U]. Spike S-TXV1 in P0
-  covers it.
+- [M] V1 is accepted end to end through public devnet RPC:
+  - a 4,096-byte V1 transaction finalized;
+  - 4,097 bytes is rejected by RPC;
+  - 3,914 bytes of instruction data are available to one signer and one program.
+- [M] The V1 config must set `loaded_accounts_data_size_limit` (and the compute-unit limit). An absent value
+  means 0 and the transaction fails with `MaxLoadedAccountsDataSizeExceeded` (PHASE0_RESULTS section 1).
 
 ## 8. Setup: universal SRS, no Dark NULL-operated ceremony
 
@@ -603,14 +617,23 @@ Perpetual Powers of Tau transcript inherits the transcript's trust. **That is no
 | Track | Artifact | Trust | Status label |
 |---|---|---|---|
 | Devnet P1-P4 | Groth16, development phase 2 | Operator can forge; devnet only | `dev-setup` in MANIFEST.json |
-| Mainnet track, preferred | PLONK or fflonk over BN254 using the PPoT phase-1 powers directly (no circuit-specific phase) | At least one uncompromised PPoT contributor | Requires S-PLONK + B5 |
-| Mainnet track, fallback | Groth16 with a public multi-party phase 2 (external contributors, beacon) | At least one uncompromised phase-2 contributor | Owner decision; this is a ceremony |
+| Mainnet track, preferred (changed by Phase 0) | Groth16 with a public multi-party phase 2 (external contributors, beacon) on PPoT phase 1 | At least one uncompromised phase-2 contributor | Owner decision D-SETUP; this is a ceremony |
+| Research (R-PLONK-PROVER) | PLONK over BN254 using the PPoT powers directly (no circuit-specific phase) | At least one uncompromised PPoT contributor | On-chain verify passes K-PLONK; adopt only with a prover that meets B1 |
+
+Reason for the change [M]:
+- PLONK verification fits: 328,447 CU in a 1,015-byte transaction.
+- Proving the Phase 1 skeleton with circom + snarkjs PLONK takes 73.6 s (255,466 gates, 1.5 GB), against 0.26 s for
+  native Groth16.
+- fflonk verification costs 1,195,874 CU.
+- Details in PHASE0_RESULTS sections 2 and 4.
 
 ### 8.3 SRS provenance
 
 - PPoT supports up to 2^28 ([V] ethereum.org Perpetual Powers of Tau page).
 - The Hermez `powersOfTau28_hez_final.ptau` contains the first 54 PPoT contributions plus a beacon ([V]
   Hermez VERIFY notes).
+- Phase 0 used the PSE PPoT files `ppot_0080_16.ptau` and `ppot_0080_18.ptau` (80 contributions); hashes are in
+  `bench/results/p0/2026-10-06/artifacts.sha256`. The Hermez download bucket returned HTTP 403 on 2026-10-06.
 - The circuit needs about 2^16 powers. The blake2b hash of the ptau slice and the derived verifying key
   are bound into `MANIFEST.json`.
 - B5 is a script any third party runs to re-derive the verifying key from the public ptau and the
@@ -621,13 +644,19 @@ Perpetual Powers of Tau transcript inherits the transcript's trust. **That is no
 
 ### 8.4 PLONK-family cost on Solana
 
-Estimate [E], to be measured in S-PLONK:
+Measured on devnet in Phase 0 [M] (PHASE0_RESULTS section 2):
 
-- fflonk: one 2-pair pairing (48,485 CU [V formula]) plus about 5 G1 multiplications (19,200 CU [V
-  cost]) plus BPF field arithmetic for the transcript and Lagrange evaluation (unmeasured). Estimated
-  total 150-300k CU.
-- Proof size: about 600-770 B, which fits a V1 transaction.
-- No deployed PLONK or fflonk verifier with published CU on Solana was found [U].
+| Verifier | CU | Transcript | BPF Fr arithmetic | G1 syscalls | Pairing |
+|---|---|---|---|---|---|
+| Groth16 (groth16-solana), 1 input | 81,282 | n/a | n/a | n/a | n/a |
+| PLONK, inverse hint, 2^15 / 2^18 | 328,447 / 334,896 | 37,848 | 121,615 | 119,237 | 49,062 |
+| PLONK, on-chain inversion, 2^15 | 382,594 | 37,848 | 175,766 | 119,237 | 49,062 |
+| fflonk, 2^15 | 1,195,874 | 61,551 | 1,050,331 | 34,266 | 49,058 |
+
+- Proof size: PLONK and fflonk 768 B; a PLONK verify instruction fits a 1,015-byte V1 transaction and a legacy
+  transaction.
+- The earlier fflonk estimate (150-300k CU) did not hold: fflonk replaces G1 multiplications with BPF field
+  arithmetic, which costs more on Solana.
 - Kill rule K-PLONK: if verification exceeds 600k CU or cannot fit a single V1 transaction, keep Groth16
   and take the ceremony fallback.
 
@@ -658,19 +687,21 @@ No v1 state migrates; users of v1 withdraw on v1.
 |---|---|---|
 | Max CU per transaction | 1,400,000; default 200,000 per instruction | [V] agave `execution_budget.rs` |
 | Groth16 verify, 1 public input | 78,293 CU | [V] groth16-solana README |
+| Groth16 verify, 1 public input, transact_v2 skeleton on devnet | 81,282 CU | [M] PHASE0_RESULTS section 2 |
+| PLONK verify, 1 public input, on devnet | 328,447 CU | [M] PHASE0_RESULTS section 2 |
 | Groth16 verify, 8 public inputs | 108,762 CU | [V] same |
 | Groth16 verify of a wrapped settlement proof on devnet | 85,274 CU (tx `5NgqqVEAwQeuDfyeT2WrrpaW9QY1r5NxsibxJAtuhNtmyNyvY6TkmtQ36v2WGuTi1pq186zJ9m9Qo7rECAypqLvg`) | [M] prior internal research, 2026-08-26 |
 | Settle with nullifier ledger write (test validator, Agave 4.2.1) | 94,352 CU; replay rejected at 3,070 CU | [M] prior internal research, 2026-08-26 |
 | `pi` Poseidon(12) | 9,326 CU | [V] formula |
 | Tree insert (32 x Poseidon(2)) | 25,152 CU | [V] formula |
 | `ext_data` sha256 (~700 B) | ~800 CU | [V] formula |
-| 2 nullifier records (option A) | ~10-15k CU | [E] |
+| 2 nullifier records (option A) | 3,454 CU + 1,300,480 lamports rent | [M] PHASE0_RESULTS section 3 |
 | Token transfer CPI | ~5-8k CU | [E] |
 | Framework overhead (Anchor zero-copy) | ~10-30k CU | [E] |
-| **transact total** | **~140-170k CU** (about 8x headroom under 1.4M) | [E]; gate B2 at 400k |
+| **transact total** | **~135-160k CU** (about 9x headroom under 1.4M) | [E] from the measured verify, Poseidon and nullifier components plus the CPI and framework estimates; gate B2 at 400k |
 | transact size | ~1.4 KB (V1) | [E] |
-| Circuit | ~43-49k constraints | [E]; gate B1 |
-| Proving time | 1-3 s native, 3-8 s browser | [E]; gate B1 |
+| Circuit | 23,155 constraints (skeleton); 40,914 (full-size proxy) | [M] PHASE0_RESULTS section 4; gate B1 |
+| Proving time | native Groth16 p50 260 ms (skeleton) / 433 ms (full-size proxy), 4 vCPU; browser 3-8 s | [M] native; [E] browser; gate B1 |
 | Voucher sign + verify | < 1 ms each | [E]; gate B6-lat |
 | Folding step (Sonobe Nova + CycleFold, 128 steps, Apple laptop, unoptimized) | ~340 ms per step | [M] prior internal research, 2026-08-26 |
 | Sonobe on-chain decider circuit | ~11.9M constraints for a 500k-constraint step (CycleFold part 5.1M) | [V] sonobe.pse.dev `design/nova-decider-onchain.html` |
@@ -716,8 +747,9 @@ v2 removes the conflict instead of re-optimizing it:
 | ID | Question | Kill rule |
 |---|---|---|
 | R-FOLD-CHAIN | On-chain verification of a folded multi-merchant epoch proof with hidden witness. Candidates: Nova ZK via folding with a random instance ([V] microsoft/Nova README), commitments checked natively through KZG pairings, CycleFold on Grumpkin in-circuit (native, ~1.1M constraints [E] prior internal research) | Drop if the wrap exceeds 2M constraints, proving exceeds 120 s on a 16-core server, or verification exceeds 600k CU. Channel settlement stays the mechanism |
-| R-PLONK | PLONK/fflonk verify CU on Solana | K-PLONK (section 8.4) |
-| R-NULL | Nullifier storage cost (7.4) | If neither B nor C lowers per-nullifier cost below 25% of option A, batch mode is claimed only at N where B3 shows break-even |
+| R-PLONK | PLONK/fflonk verify CU on Solana | Measured in Phase 0: PLONK 328,447 CU passes K-PLONK; fflonk 1,195,874 CU fails it (section 8.4) |
+| R-PLONK-PROVER | A PLONK-family prover with custom Poseidon/EdDSA gates for `transact_v2` (circom + snarkjs PLONK: 255,466 gates, 73.6 s [M]) | Adopt the no-ceremony track only if the full-size circuit proves at p50 at most 3 s within 2 GB and verifies at most 600k CU on devnet with the matching transcript; otherwise the ceremony track stands |
+| R-NULL | Nullifier storage cost (7.4) | If neither B nor C lowers per-nullifier cost below 25% of option A, batch mode is claimed only at N where B3 shows break-even. Phase 0 [M]: B reaches 33.8% of A at a 75% load cap and 28.2% at 90%; C is unmeasured (documentation lists 10,000 lamports per address) |
 | R-ASSOC | Revocation semantics for merged labels (5.7) | If bounded lineage exceeds the 2^16 circuit budget, ship refresh labels and state the revocation limit |
 | R-SCAN | Note discovery cost for merchants with many channels | If scanning exceeds 1 s per 10k transactions on a laptop, add a hint index or oblivious sync (Bowe and Miers, ePrint 2025/2031) |
 | R-PQ | Post-quantum migration (Binius64 / LatticeFold+ / hash-based wrap) | Watch item only; no dependency |

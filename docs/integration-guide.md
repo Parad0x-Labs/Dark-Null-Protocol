@@ -53,10 +53,7 @@ If you bypass the SDK, bind the root directly using [`../MANIFEST.json`](../MANI
 
 If you want older harnesses or earlier flows, inspect:
 
-- [`../historical/null-mint`](../historical/null-mint)
 - [`../historical/root-toy-prototype`](../historical/root-toy-prototype)
-- [`../tests/dark_null_v1_full_e2e.ts`](../tests/dark_null_v1_full_e2e.ts)
-- [`../tests/full_cycle_e2e.ts`](../tests/full_cycle_e2e.ts)
 
 These are historical aids, not the current integration target.
 

@@ -1,10 +1,6 @@
 export interface ProgramIdEntry {
   key:
     | "canonicalDevnet"
-    | "v20Prototype"
-    | "v17Legacy"
-    | "v18DocsTrack"
-    | "fullCycleArtifact"
     | "pythonClientSnapshot";
   label: string;
   programId: string;
@@ -23,7 +19,8 @@ export interface CanonicalManifest {
   };
   source: {
     promoted_from: string;
-    recovered_manifest: string;
+    security_model: string;
+    hardening: string[];
   };
   groth16: {
     protocol: string;

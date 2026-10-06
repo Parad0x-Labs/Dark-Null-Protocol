@@ -53,7 +53,13 @@ test("IDL helpers expose published instruction metadata", () => {
 
 test("program manifest resolves known keys and preserves historical references", () => {
   const manifest = getProgramIdManifest();
-  assert.ok(manifest.length >= 5);
+  assert.deepEqual(
+    manifest.map((entry) => entry.key),
+    ["canonicalDevnet", "pythonClientSnapshot"],
+  );
+  for (const retiredKey of ["v20Prototype", "v17Legacy", "v18DocsTrack", "fullCycleArtifact"]) {
+    assert.equal(findProgramIdEntry(retiredKey), null);
+  }
 
   assert.equal(
     resolveProgramId("canonicalDevnet"),

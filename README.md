@@ -141,24 +141,21 @@ For Anchor-based integrations, add `@coral-xyz/anchor` and `@solana/web3.js` to 
 | Python helper client | [`client/dark_client.py`](./client/dark_client.py) |
 | Canonical proof-flow test | [`tests/canonical-proof-flow.test.mjs`](./tests/canonical-proof-flow.test.mjs) |
 
-### Devnet deployment generations
+### Devnet deployment
 
-Two generations of this program set are deployed on devnet. Integrate against the current one; the earlier one stays deployed so historical evidence remains checkable.
+Integrate against this devnet program set:
 
 | Generation | Root shielded-pool program | Integration programs | Status |
 |---|---|---|---|
 | Current (since 2026-08-25) | `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` — matches `declare_id!` in [`src/lib.rs`](./src/lib.rs), [`MANIFEST.json`](./MANIFEST.json), [`NETWORKS.json`](./NETWORKS.json), [`Anchor.toml`](./Anchor.toml); upgrade authority `4cTBfB8v…` | silent-pay `9VYPtdr…`, payment-stream `J6oHoys…`, threshold-fed `4sMywVPL…`, fiat-oracle `AJHHpWv…`, accumulator `ByFb6xc…`, inference `6h4yKZG…` | Canonical devnet root; integration target |
-| Earlier (generation-1 deploy key `F6Fr…`) | `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF` — source preserved in [`historical/null-mint`](./historical/null-mint) | the six programs listed under [Devnet programs (6)](#devnet-programs-6--wired-into-x402) | Still deployed on devnet; superseded |
 
-Some older docs and helper READMEs still cite `2stas3c…`; where they differ, `MANIFEST.json` and [`docs/PROGRAM_IDS.md`](./docs/PROGRAM_IDS.md) are authoritative.
+Where any doc differs, `MANIFEST.json` and [`docs/PROGRAM_IDS.md`](./docs/PROGRAM_IDS.md) are authoritative.
 
 ## What Is Historical
 
 | Area | Historical path |
 |---|---|
-| Promoted provenance branch | [`historical/null-mint`](./historical/null-mint) |
 | Archived toy public root | [`historical/root-toy-prototype`](./historical/root-toy-prototype) |
-| Older full-cycle artifact bundle | [`LIVE_TEST_RESULTS.md`](./LIVE_TEST_RESULTS.md), [`full_cycle_results.json`](./full_cycle_results.json) |
 
 ## What This Repo Does Prove
 
@@ -227,18 +224,16 @@ Running tests; not deployed to production.
 
 ### Devnet programs (6) — wired into x402
 
-> Earlier devnet deployment of these primitives (generation-1 deploy key). The current devnet deployments built from this source tree are listed in the status section above.
-
-Native Solana programs deployed on devnet; each has a passing e2e test and is wired into the x402 payment stack via [`integration/programs.mjs`](./integration/programs.mjs) + [`integration/x402-hooks.mjs`](./integration/x402-hooks.mjs). Run [`scripts/demo-x402-dark-null.mjs`](./scripts/demo-x402-dark-null.mjs) to see all six fire in one agent session.
+Native Solana programs deployed on devnet from this source tree; each has an e2e script in [`scripts/`](./scripts) and is wired into the x402 payment stack via [`integration/programs.mjs`](./integration/programs.mjs) + [`integration/x402-hooks.mjs`](./integration/x402-hooks.mjs). Run [`scripts/demo-x402-dark-null.mjs`](./scripts/demo-x402-dark-null.mjs) to see all six fire in one agent session.
 
 | Primitive | Program ID (devnet) | What the on-chain program does |
 |---|---|---|
-| Silent Payment Rails | `9C9F9Y8icd7tsnet4HtQU4LTkQMuAWWXAT97rR2eG6wV` | BIP352-style ECDH stealth-address derive + scan; payer address not re-used across calls — not full BIP352; no on-chain scanner |
-| Fiat Settlement Oracle | `DjHQxF5pcZBqZtXX9niFpJsGuAUBs77v4dssuAdyFR4b` | `secp256k1_recover` verifies oracle sig over `SHA256(payment_id ‖ amount ‖ recipient)`; replay-protected receipt PDA — oracle-attested, not zkTLS |
-| Threshold Blind Mint Federation | `C6M8Nuxo1hj9QjPGAfYSXNwkDQEeRVuGZS4FqtjAQuVJ` | k-of-n BDHKE via Shamir + Lagrange; records federation issuance with replay protection — no DKG or per-signer DLEQ proof |
-| Receipt Commitment Accumulator | `7VWjpxe2bBHChzMsqvPS8ZFJBRLaGkWTzM3Wrm36tnBd` | Rolling `SHA256(prev_commitment ‖ receipt_hash)` with finalization gate; one root proves all receipts in a session — SHA256 accumulator, not Nova folding |
-| Oracle-Attested Inference Receipt | `23yVqL6UopoXLv3UihSKQ6EEpuxztWSKcHyKwdC9gM3v` | `secp256k1_recover` verifies oracle sig over `SHA256(model_hash ‖ input_hash ‖ output_hash)`; binds compute to x402 payment — oracle attestation, not EZKL ZK circuit |
-| Private Streaming Micropayments | `C5uhvm1SUxrZdzKAc3ZDHkVJbmrt7ntjhai6F7QHK6uP` | Payment channel: `OpenChannel` funds a PDA, off-chain ticks track per-call spend, `CloseChannel` settles exact accumulated amount — no hidden-rate encryption |
+| Silent Payment Rails | `9VYPtdr19RDBVTV1WJ1stkCisucre2Bvcpt91KyfYszR` | BIP352-style ECDH stealth-address derive + scan; payer address not re-used across calls — not full BIP352; no on-chain scanner |
+| Fiat Settlement Oracle | `AJHHpWv1eD2cq9iRM7RtUyA6C7QpYLgWKa5vUbgRWY7m` | `secp256k1_recover` verifies oracle sig over `SHA256(payment_id ‖ amount ‖ recipient)`; replay-protected receipt PDA — oracle-attested, not zkTLS |
+| Threshold Blind Mint Federation | `4sMywVPL5waxniQDs5pDuhc1E4uUWjqh1ob17fY82VQz` | k-of-n BDHKE via Shamir + Lagrange; records federation issuance with replay protection — no DKG or per-signer DLEQ proof |
+| Receipt Commitment Accumulator | `ByFb6xcQTgG4fai31Zto7qpQve1eBo3cc2qrAJU5tN7k` | Rolling `SHA256(prev_commitment ‖ receipt_hash)` with finalization gate; one root proves all receipts in a session — SHA256 accumulator, not Nova folding |
+| Oracle-Attested Inference Receipt | `6h4yKZGFYHAVkctUVqD4wrXCYeostHBhG6T3FCVAqr3f` | `secp256k1_recover` verifies oracle sig over `SHA256(model_hash ‖ input_hash ‖ output_hash)`; binds compute to x402 payment — oracle attestation, not EZKL ZK circuit |
+| Private Streaming Micropayments | `J6oHoysM1RGs3yZPXBp9ZUgdYgGQWZf2wKisS1tJQdaQ` | Payment channel: `OpenChannel` funds a PDA, off-chain ticks track per-call spend, `CloseChannel` settles exact accumulated amount — no hidden-rate encryption |
 
 **x402 integration** ([`integration/x402-hooks.mjs`](./integration/x402-hooks.mjs)):
 - `makeAccumulatorHook` — drop-in `onReceiptFinalized` that commits every x402 receipt hash to the on-chain rolling root; one root proves the entire session
@@ -283,12 +278,12 @@ frontier_primitives:
     - piano_pir_access_pattern_privacy
     - bdhke_blind_receipt_tokens
   devnet_programs:
-    - silent_payment_rails: 9C9F9Y8icd7tsnet4HtQU4LTkQMuAWWXAT97rR2eG6wV
-    - fiat_settlement_oracle: DjHQxF5pcZBqZtXX9niFpJsGuAUBs77v4dssuAdyFR4b
-    - threshold_blind_mint_federation: C6M8Nuxo1hj9QjPGAfYSXNwkDQEeRVuGZS4FqtjAQuVJ
-    - receipt_commitment_accumulator: 7VWjpxe2bBHChzMsqvPS8ZFJBRLaGkWTzM3Wrm36tnBd
-    - oracle_attested_inference_receipt: 23yVqL6UopoXLv3UihSKQ6EEpuxztWSKcHyKwdC9gM3v
-    - private_streaming_micropayments: C5uhvm1SUxrZdzKAc3ZDHkVJbmrt7ntjhai6F7QHK6uP
+    - silent_payment_rails: 9VYPtdr19RDBVTV1WJ1stkCisucre2Bvcpt91KyfYszR
+    - fiat_settlement_oracle: AJHHpWv1eD2cq9iRM7RtUyA6C7QpYLgWKa5vUbgRWY7m
+    - threshold_blind_mint_federation: 4sMywVPL5waxniQDs5pDuhc1E4uUWjqh1ob17fY82VQz
+    - receipt_commitment_accumulator: ByFb6xcQTgG4fai31Zto7qpQve1eBo3cc2qrAJU5tN7k
+    - oracle_attested_inference_receipt: 6h4yKZGFYHAVkctUVqD4wrXCYeostHBhG6T3FCVAqr3f
+    - private_streaming_micropayments: J6oHoysM1RGs3yZPXBp9ZUgdYgGQWZf2wKisS1tJQdaQ
   research:
     - compressed_anonymity_state
     - proof_carrying_relayer_swarm

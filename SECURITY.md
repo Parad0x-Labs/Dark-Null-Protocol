@@ -42,7 +42,6 @@ If you report an issue that depends on unpublished infrastructure or unpublished
 If your report depends on a historical branch or artifact bundle, say which track you mean:
 
 - canonical root
-- [`historical/null-mint`](./historical/null-mint)
 - [`historical/root-toy-prototype`](./historical/root-toy-prototype)
 
 ## No Funded Bug Bounty Yet

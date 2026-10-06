@@ -8,8 +8,7 @@
     "cluster": "devnet"
   },
   "source": {
-    "promoted_from": "historical/null-mint",
-    "recovered_manifest": "historical/null-mint/MANIFEST.json",
+    "promoted_from": "recovered null-mint/paradox devnet branch",
     "security_model": "SECURITY_MODEL.md",
     "hardening": [
       "root-authority-pda",
@@ -92,13 +91,13 @@
     },
     {
       "path": "docs/CLAIMS_LEDGER.md",
-      "sha256": "b552e4343d3706dd86911dc259923366cdb6d8b6be97f711b1675e925edad001",
-      "size": 6550
+      "sha256": "6be6da69852d0720d3e5877afb0e7e657375c291337543a7325c3882c07ed60f",
+      "size": 6703
     },
     {
       "path": "docs/DNA_X402_INTEGRATION.md",
-      "sha256": "3802dad5457888bbfc896f64fb654baf31df6e2fe378b75c474c60c381de833b",
-      "size": 4026
+      "sha256": "d3ae1126b788c7d1ab3f69147ad6ac08ad3c92804df88e0809459da7fbe3b05a",
+      "size": 4136
     },
     {
       "path": "Cargo.toml",
@@ -132,8 +131,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "ebe3386f9f7702cbf2bf21521f279073a642a650155b151d75108e83c421ed0d",
-      "size": 8279
+      "sha256": "4b94d0fcd2955c64d5a34da90d4868f8c1d7c5f7a29d51acb0c9411b7c67091e",
+      "size": 8182
     },
     {
       "path": "package-lock.json",
@@ -212,13 +211,13 @@
     },
     {
       "path": "sdk/index.mjs",
-      "sha256": "8c481d415c83b4cc32c7713f80566feb22f0b1d8cef3086638a15d25241b7cfa",
-      "size": 15448
+      "sha256": "a79dfa731efb106e77bd43b83d20a3cf9c3e04d93dae66b81c23f0d416328430",
+      "size": 14290
     },
     {
       "path": "sdk/index.d.ts",
-      "sha256": "b382e843431997ac2165a1897643cf078738c4d0634c01d771a341b822a3f613",
-      "size": 5357
+      "sha256": "242d3215f569e1f0e5292cdc21a8f411aef73166b42525613733791e66871428",
+      "size": 5292
     },
     {
       "path": "client/dark_client.py",
@@ -267,13 +266,13 @@
     },
     {
       "path": "docs/PRIVATE_X402_PAYMENTS.md",
-      "sha256": "55f70090acb0f8159d73fd00d3e608f6b4f13e62fe7d064f72d46c324a152374",
-      "size": 4967
+      "sha256": "e1c692618a4e541388337b93b264b3f2d0e92ecd6791b0d5cdeeeb7ff8688465",
+      "size": 5077
     },
     {
       "path": "scripts/check-x402-receipts.mjs",
-      "sha256": "233e80bf2521415b0989fcab91991c82959288486606bdc59476d7c6f0df2b4f",
-      "size": 10007
+      "sha256": "03babdd67fa791d68786154d9896591f13fee7b3fc055c4aa9c613e8e40dd977",
+      "size": 10032
     },
     {
       "path": "swarm/x402.mjs",
@@ -287,13 +286,13 @@
     },
     {
       "path": "docs/AUDITOR_HANDOFF.md",
-      "sha256": "f349ee112227a55645c10f834179aebcf194a4f48b4d59cbd02bf75ead789adf",
-      "size": 21348
+      "sha256": "d0ed265e9199102765a131e848288f89dfdb39f987c852efe94627da4324730c",
+      "size": 21126
     },
     {
       "path": "docs/2030_PRIMITIVES.md",
-      "sha256": "0c26a77fb1727e2163d3c9e04635187a4c8130aced50038f1abaf8cc17f735b2",
-      "size": 38104
+      "sha256": "dcbae42e64d8bdc862a23f703a59a1a4ff3b97d0494d4589dd65c674ce6c709b",
+      "size": 38287
     },
     {
       "path": "docs/COMPRESSED_ANONYMITY_STATE.md",

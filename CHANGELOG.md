@@ -11,14 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Historical note: older entries below describe devnet milestones and historical release framing. They are not the same thing as the current public-root assurance level described in [`README.md`](./README.md), [`PROTOTYPE_STATUS.md`](./PROTOTYPE_STATUS.md), and [`SECURITY_MODEL.md`](./SECURITY_MODEL.md).
 
-### Cross-repo devnet milestone — `dna-x402` private payment rails (four rails)
+### Cross-repo milestone — `dna-x402` private payment rails (four rails)
 
-The sibling `dna-x402` implementation now carries four privacy rails on **devnet**, all merged to its `main` ([Parad0x-Labs/dna-x402](https://github.com/Parad0x-Labs/dna-x402)). On-chain-verified and adversarially ("mayhem") tested:
+The sibling `dna-x402` implementation carries four privacy rails in code with tests, all merged to its `main` ([Parad0x-Labs/dna-x402](https://github.com/Parad0x-Labs/dna-x402)). Their earlier devnet deployments were retired; a devnet redeploy under a fresh key is pending.
 
-- **Dark Relay Rail** — ZK shielded pool (V3): hides **sender** (Groth16 membership proof) + **amount** (fixed denominations). In-proof relayer-fee binding (permissionless relayers; the recipient never signs) + denomination buckets. Devnet pool `2L7phWpE8Mkrij6oURj1mQcSPGs3oPL5ytAAQoN65nYY` (supersedes the earlier Phase-2 pool `8iZFKnK…`, now closed). 8/8 e2e.
-- **NullPay** — ed25519 stealth pay-by-`.null`-name: hides the **recipient** (a one-time stealth address resolved from a name's on-chain meta; native ed25519 signing, no trusted setup). Registrar `CpNbE8yec5UQJGTVsiTiQpKFhXfDKQZuGWMzMyFtKkME`. 7/7 e2e.
-- **Fusion** — one shielded-pool withdraw that hides **all three legs at once** (sender + amount + recipient), paying a NullPay stealth address via a permissionless relayer. Verified by the on-chain account list (the payee's wallet is absent from the withdraw tx).
-- **Federated eNULL** — k-of-n BDHKE ecash: hides **sender + amount** with **no trusted setup** (Chaumian blind signatures + threshold DKG; on-chain Ristretto DLEQ via `sol_curve_*` syscalls). Redeem program `BPkhipF5jTTTCwL3bLGjuwnU9F99yBRRES5ToeigRTyb`. A critical cross-vault-drain bug was found in adversarial testing, fixed, and **verified reverting on-chain** before merge.
+- **Dark Relay Rail** — ZK shielded pool (V3): hides **sender** (Groth16 membership proof) + **amount** (fixed denominations). In-proof relayer-fee binding (permissionless relayers; the recipient never signs) + denomination buckets.
+- **NullPay** — ed25519 stealth pay-by-`.null`-name: hides the **recipient** (a one-time stealth address resolved from a name's on-chain meta; native ed25519 signing, no trusted setup). Pay-by-name to a one-time stealth address is implemented in code with tests; a devnet redeploy under a fresh key is pending.
+- **Fusion** — one shielded-pool withdraw designed to hide **all three legs at once** (sender + amount + recipient), paying a NullPay stealth address via a permissionless relayer.
+- **Federated eNULL** — k-of-n BDHKE ecash: hides **sender + amount** with **no trusted setup** (Chaumian blind signatures + threshold DKG; on-chain Ristretto DLEQ via `sol_curve_*` syscalls). A critical cross-vault-drain bug was found in adversarial testing and fixed before merge.
 
 Scope and posture (unchanged discipline): these are the **`dna-x402` Poseidon / ed25519 / Ristretto implementations**, distinct from this repo's canonical MiMCSponge root. **Unaudited, devnet only, `mainnet_ready=false` throughout.** The ZK rail's verification key is a **beacon-sealed multi-contribution DRY-RUN ceremony — NOT yet trustless** (it awaits independent human contributors). Unlinkability in the demos is **structural** (on-chain presence/absence), not a large-anonymity-set claim. No mainnet deployment and no audit completion is claimed.
 
@@ -106,10 +106,6 @@ Scope and posture: this is the **Poseidon-hashed `dna-x402` implementation**, di
 - Challenge window: 64 slots (~25 seconds)
 - Public inputs: 6 → 4 (salts now private)
 
-### Devnet Transactions
-- CommitUnshieldV20: [View](https://solscan.io/tx/5c4K8M6JJqHBYzAXv9B3t7YL1xNwWnKzJkN8pFcM2qQxXvZ1tRvWnYbNmHs3vLxT?cluster=devnet)
-- FinalizeUnshieldV20: [View](https://solscan.io/tx/2t6RCxXABDVRCumgMruhkt8T59bsxH6Rb44c1KwwTdHWjjeh2hVx4e4tV5aV7nCdzCqKixkt3bqyyc9QAfbZUSvB?cluster=devnet)
-
 ---
 
 ## [1.0.0] - 2026-01-09
@@ -150,9 +146,7 @@ Scope and posture: this is the **Poseidon-hashed `dna-x402` implementation**, di
 - Bug bounty program launched
 
 ### Deployment
-- **Program ID**: `AeinEiBRodoCLJwdiXNd2fWXM49cByxhCsLW8DyRqCVe`
-- **Network**: Solana Devnet
-- **Relayer**: https://relayer-falling-dust-5746.fly.dev/
+- **Network**: Solana Devnet (deployment retired)
 
 ---
 
@@ -164,8 +158,6 @@ Scope and posture: this is the **Poseidon-hashed `dna-x402` implementation**, di
 - Basic shield/unshield functionality
 - Merkle tree management
 - Fixed denominations
-
-**Program ID**: `Ajdw9GaNN39P9mj6uqiAxAnYRS4wC1rQh2C7wguvJArB`
 
 ---
 

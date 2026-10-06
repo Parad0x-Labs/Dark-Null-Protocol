@@ -61,12 +61,12 @@ This ledger separates delivered claims from blocked claims and roadmap ideas. It
 | ZK Access Receipts | Prototype | HMAC token prototype shipped; ZK circuit for token is the research target |
 | Access Pattern Privacy (Piano PIR) | Prototype | offline hint + online XOR scheme shipped; HTTP PIR server separation is the production target |
 | BDHKE Blind Receipt Tokens | Prototype | blind-sign + DLEQ + spent-registry shipped; on-chain registry + key rotation is the research target |
-| Silent Payment Rails | Prototype | `swarm/silent-pay.mjs` (13 tests) + Solana program `9C9F9Y8…` devnet, e2e passes; BIP352-style ECDH stealth-address derive + scan — no on-chain scanner yet |
-| ZK Fiat Settlement Proof | Research | oracle-attested fiat receipt on Solana program `DjHQxF5…` devnet, e2e passes; secp256k1_recover verifies oracle signature — not zkTLS; zkTLS attestation from Stripe/Visa is the ZK research target |
-| Threshold Blind Mint Federation | Prototype | `swarm/threshold-mint.mjs` (14 tests) + Solana program `C6M8Nux…` devnet, e2e passes; k-of-n BDHKE via Shamir + Lagrange — no per-signer DLEQ proof yet |
-| Nova / Folding Scheme Accumulation | Research | rolling SHA256 hashv accumulator on Solana program `7VWjpxe…` devnet proves the receipt commitment pattern — not folding scheme; O(1) incremental Nova/HyperNova is the research target |
-| ZKML Verifiable Inference Receipts | Research | oracle-attested inference receipt on Solana program `23yVqL6…` devnet, e2e passes — oracle signature, not ZK circuit; EZKL-style proof of inference is the research target |
-| Private Streaming Micropayments | Prototype | `swarm/payment-stream.mjs` (15 tests) + Solana program `C5uhvm1…` devnet, e2e passes; payment channel with off-chain ticks + on-chain close — no hidden-rate encryption yet |
+| Silent Payment Rails | Prototype | `swarm/silent-pay.mjs` (13 tests) + Solana program `9VYPtdr…` devnet, e2e script `scripts/e2e-silent-pay.mjs`; BIP352-style ECDH stealth-address derive + scan — no on-chain scanner yet |
+| ZK Fiat Settlement Proof | Research | oracle-attested fiat receipt on Solana program `AJHHpWv…` devnet, e2e script `scripts/e2e-fiat-oracle.mjs`; secp256k1_recover verifies oracle signature — not zkTLS; zkTLS attestation from Stripe/Visa is the ZK research target |
+| Threshold Blind Mint Federation | Prototype | `swarm/threshold-mint.mjs` (14 tests) + Solana program `4sMywVPL…` devnet, e2e script `scripts/e2e-threshold-fed.mjs`; k-of-n BDHKE via Shamir + Lagrange — no per-signer DLEQ proof yet |
+| Nova / Folding Scheme Accumulation | Research | rolling SHA256 hashv accumulator on Solana program `ByFb6xc…` devnet proves the receipt commitment pattern — not folding scheme; O(1) incremental Nova/HyperNova is the research target |
+| ZKML Verifiable Inference Receipts | Research | oracle-attested inference receipt on Solana program `6h4yKZG…` devnet, e2e script `scripts/e2e-inference.mjs` — oracle signature, not ZK circuit; EZKL-style proof of inference is the research target |
+| Private Streaming Micropayments | Prototype | `swarm/payment-stream.mjs` (15 tests) + Solana program `J6oHoys…` devnet, e2e script `scripts/e2e-payment-stream.mjs`; payment channel with off-chain ticks + on-chain close — no hidden-rate encryption yet |
 
 ## Rule
 

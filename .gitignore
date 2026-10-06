@@ -26,13 +26,6 @@ vkey*.json
 !circuits/dark_transfer.wasm
 !circuits/dark_transfer.r1cs
 !circuits/dark_transfer.sym
-!historical/null-mint/circuits/null_proof_final.zkey
-!historical/null-mint/circuits/null_proof_js/
-!historical/null-mint/circuits/null_proof_js/generate_witness.js
-!historical/null-mint/circuits/null_proof_js/null_proof.wasm
-!historical/null-mint/circuits/null_proof_js/witness_calculator.js
-!historical/null-mint/circuits/null_proof.r1cs
-!historical/null-mint/circuits/null_proof.sym
 !circuits/null_proof_final.zkey
 !circuits/null_proof_js/
 !circuits/null_proof_js/generate_witness.js

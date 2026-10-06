@@ -10,12 +10,12 @@ Six native Solana programs are deployed on devnet and wired into the x402 paymen
 
 | Program | Devnet ID | x402 hook |
 |---|---|---|
-| silent-pay | `9C9F9Y8icd7tsnet4HtQU4LTkQMuAWWXAT97rR2eG6wV` | stealth address per payment |
-| fiat-oracle | `DjHQxF5pcZBqZtXX9niFpJsGuAUBs77v4dssuAdyFR4b` | oracle-attested fiat settlement |
-| threshold-fed | `C6M8Nuxo1hj9QjPGAfYSXNwkDQEeRVuGZS4FqtjAQuVJ` | k-of-n NULL mint gate |
-| accumulator | `7VWjpxe2bBHChzMsqvPS8ZFJBRLaGkWTzM3Wrm36tnBd` | rolling receipt commitment per session |
-| inference | `23yVqL6UopoXLv3UihSKQ6EEpuxztWSKcHyKwdC9gM3v` | oracle-attested AI inference receipt |
-| payment-stream | `C5uhvm1SUxrZdzKAc3ZDHkVJbmrt7ntjhai6F7QHK6uP` | per-call billing channel for sessions |
+| silent-pay | `9VYPtdr19RDBVTV1WJ1stkCisucre2Bvcpt91KyfYszR` | stealth address per payment |
+| fiat-oracle | `AJHHpWv1eD2cq9iRM7RtUyA6C7QpYLgWKa5vUbgRWY7m` | oracle-attested fiat settlement |
+| threshold-fed | `4sMywVPL5waxniQDs5pDuhc1E4uUWjqh1ob17fY82VQz` | k-of-n NULL mint gate |
+| accumulator | `ByFb6xcQTgG4fai31Zto7qpQve1eBo3cc2qrAJU5tN7k` | rolling receipt commitment per session |
+| inference | `6h4yKZGFYHAVkctUVqD4wrXCYeostHBhG6T3FCVAqr3f` | oracle-attested AI inference receipt |
+| payment-stream | `J6oHoysM1RGs3yZPXBp9ZUgdYgGQWZf2wKisS1tJQdaQ` | per-call billing channel for sessions |
 
 Integration layer: [`integration/programs.mjs`](./integration/programs.mjs) (typed JS helpers for all 6), [`integration/x402-hooks.mjs`](./integration/x402-hooks.mjs) (drop-in `onReceiptFinalized` callbacks).
 
@@ -38,9 +38,7 @@ Live demo (all 6 in one agent session): `node scripts/demo-x402-dark-null.mjs`
 
 ## What Is Still Historical
 
-- [`historical/null-mint`](./historical/null-mint) is the sanitized provenance branch the root was promoted from
 - [`historical/root-toy-prototype`](./historical/root-toy-prototype) preserves the earlier public toy-root materials so they stop polluting the main path
-- [`LIVE_TEST_RESULTS.md`](./LIVE_TEST_RESULTS.md) and the older full-cycle harnesses remain historical evidence, not the canonical root release story
 
 ## What Still Blocks Mainnet-Grade Claims
 

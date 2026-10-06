@@ -153,7 +153,7 @@
     "config:localnet": "node ./scripts/network-config.mjs --network localnet --check",
     "config:json:devnet": "node ./scripts/network-config.mjs --network devnet --json --check",
     "config:json:localnet": "node ./scripts/network-config.mjs --network localnet --json --check",
-    "test:artifacts": "node --test ./tests/verification-key-consistency.test.mjs ./tests/canonical-manifest.test.mjs ./tests/canonical-proof-flow.test.mjs ./tests/historical-null-mint-consistency.test.mjs ./tests/historical-null-mint-manifest.test.mjs",
+    "test:artifacts": "node --test ./tests/verification-key-consistency.test.mjs ./tests/canonical-manifest.test.mjs ./tests/canonical-proof-flow.test.mjs",
     "test:config": "node --test ./tests/network-config.test.mjs",
     "test:proof": "node --test ./tests/proof-encoding.test.mjs ./tests/malformed-proof.test.mjs ./tests/mainnet-readiness.test.mjs ./tests/mainnet-evidence.test.mjs ./tests/mainnet-beta-evidence.test.mjs",
     "test:security": "npm audit",

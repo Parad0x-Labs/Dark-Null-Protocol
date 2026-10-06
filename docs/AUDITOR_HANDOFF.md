@@ -68,9 +68,7 @@ The current review scope should include:
 
 Historical folders are review context, not the current launch target:
 
-- `historical/null-mint`
 - `historical/root-toy-prototype`
-- older result bundles such as `LIVE_TEST_RESULTS.md`, `full_cycle_results.json`, and `api_e2e_results.json`
 
 ## What The Repo Proves Today
 
@@ -119,8 +117,6 @@ The canonical program is an Anchor/Solana program represented by:
 The current canonical devnet program id is:
 
 - `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV`
-
-Earlier devnet deployment (superseded): `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF`
 
 The network default remains devnet by design. That is not a mainnet shortcut. `NETWORKS.json` keeps devnet/localnet as the current canonical networks, and the mainnet evidence gates remain blocked.
 

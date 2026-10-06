@@ -24,7 +24,7 @@ The canonical root is bound by:
 
 From those files you can verify:
 
-- the current root program ID is `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` (earlier devnet deployment: `2stas3cZYnBiWpndcTXQDGLXwfQ7kjEYYrW52DsUAcxF`)
+- the current root program ID is `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV`
 - the root IDL and root source match that program ID
 - the root proving artifacts are hash-bound in one manifest
 
@@ -77,9 +77,7 @@ Those verify the promoted root crate and the canonical Python helper client.
 
 Historical provenance is still published at:
 
-- [`historical/null-mint`](./historical/null-mint)
 - [`historical/root-toy-prototype`](./historical/root-toy-prototype)
-- [`LIVE_TEST_RESULTS.md`](./LIVE_TEST_RESULTS.md)
 
 Use those to understand how the repo evolved. Do not confuse them with the canonical root.
 

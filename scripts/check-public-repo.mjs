@@ -30,12 +30,6 @@ const requiredFiles = [
   "sdk/index.mjs",
   "sdk/index.d.ts",
   "sdk/README.md",
-  "historical/null-mint/README.md",
-  "historical/null-mint/MANIFEST.json",
-  "historical/null-mint/Anchor.toml",
-  "historical/null-mint/programs/paradox/src/lib.rs",
-  "historical/null-mint/idl/paradox.json",
-  "historical/null-mint/verification_key_latest.json",
   "tests/verification-key-consistency.test.mjs",
   "tests/canonical-manifest.test.mjs",
   "tests/canonical-proof-flow.test.mjs",
@@ -47,8 +41,6 @@ const requiredFiles = [
   "tests/swarm-config.test.mjs",
   "tests/x402-private-payments.test.mjs",
   "tests/2030-claims.test.mjs",
-  "tests/historical-null-mint-consistency.test.mjs",
-  "tests/historical-null-mint-manifest.test.mjs",
   "client/dark_client.py",
   "client/README.md",
   "circuits/null_proof.circom",
@@ -230,7 +222,7 @@ async function checkPackageMetadata() {
   ) {
     failures.push("package.json must export ./swarm/x402 with types and default paths");
   }
-  if (!packageJson.scripts || packageJson.scripts["test:artifacts"] !== "node --test ./tests/verification-key-consistency.test.mjs ./tests/canonical-manifest.test.mjs ./tests/canonical-proof-flow.test.mjs ./tests/historical-null-mint-consistency.test.mjs ./tests/historical-null-mint-manifest.test.mjs") {
+  if (!packageJson.scripts || packageJson.scripts["test:artifacts"] !== "node --test ./tests/verification-key-consistency.test.mjs ./tests/canonical-manifest.test.mjs ./tests/canonical-proof-flow.test.mjs") {
     failures.push("package.json must expose scripts.test:artifacts");
   }
   if (!packageJson.scripts || packageJson.scripts["test:config"] !== "node --test ./tests/network-config.test.mjs") {

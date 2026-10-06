@@ -98,7 +98,7 @@ onReceiptReady: async (instructionData) => {
 }
 ```
 
-That path lets a host bypass the marketplace proof endpoint for receipt anchoring when `marketplaceUrl` is not configured. If `marketplaceUrl` is configured, proof submission still goes through the marketplace API. Dark Null private receipts can wrap either path after Solana settlement evidence exists.
+That path lets a host bypass the marketplace proof endpoint for receipt anchoring when `marketplaceUrl` is not configured. If `marketplaceUrl` is configured, proof submission still goes through the marketplace API. Dark Null private receipts can wrap either path after Solana settlement evidence exists. On-chain receipt anchoring is unavailable until the `receipt_anchor` program is redeployed under a fresh key.
 
 The same DNA commit adds on-chain encrypted passkey vault storage, an on-chain NULL emission claim ledger, Liquefy archive storage payload helpers, and a root-anchored lottery primitive. These are integration surfaces for the broader stack; they do not change the Dark Null claim boundary in this repo.
 

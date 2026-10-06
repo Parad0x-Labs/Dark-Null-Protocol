@@ -65,19 +65,22 @@ function gitCommit() {
   }).trim();
 }
 
-async function readFullCycleResult() {
-  return JSON.parse(await fs.readFile(path.join(repoRoot, "full_cycle_results.json"), "utf8"));
-}
+// Reference settlement: the prepare_phantom_withdraw_v2 payout on the canonical
+// devnet program (MANIFEST.json program.id), linked from README.md.
+const CANONICAL_DEVNET_SETTLEMENT = Object.freeze({
+  sig: "3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU",
+  slot: 487904628,
+  amountLamports: 50000000,
+});
 
-async function buildReceipt({ devnet = false, settlementSlot = null, confirmationStatus = "finalized" } = {}) {
+async function buildReceipt({ settlementSlot = null, confirmationStatus = "finalized" } = {}) {
   const manifest = JSON.parse(await fs.readFile(path.join(repoRoot, "MANIFEST.json"), "utf8"));
   const manifestSha256 = await stableSha256("MANIFEST.json");
   const proofEncodingHash = sha256Hex(manifest.proof_encoding);
-  const fullCycle = await readFullCycleResult();
-  const tx = fullCycle.transactions.shield;
-  const programId = devnet ? fullCycle.programId : manifest.program.id;
+  const tx = CANONICAL_DEVNET_SETTLEMENT;
+  const programId = manifest.program.id;
   const slot = settlementSlot ?? tx.slot;
-  const amount = fullCycle.amounts.depositLamports.toString();
+  const amount = tx.amountLamports.toString();
 
   const intent = createPrivateX402Intent({
     method: "POST",
@@ -147,8 +150,7 @@ async function buildReceipt({ devnet = false, settlementSlot = null, confirmatio
 }
 
 async function getDevnetSignatureStatus(connection) {
-  const fullCycle = await readFullCycleResult();
-  const tx = fullCycle.transactions.shield;
+  const tx = CANONICAL_DEVNET_SETTLEMENT;
   const response = await connection.getSignatureStatuses([tx.sig], {
     searchTransactionHistory: true,
   });
@@ -217,7 +219,6 @@ async function main() {
       ? "finalized"
       : (devnetStatus?.confirmationStatus ?? "finalized");
   const built = await buildReceipt({
-    devnet: args.devnet,
     settlementSlot: devnetStatus?.chainSlot ?? null,
     confirmationStatus: effectiveConfirmation,
   });

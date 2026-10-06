@@ -39,7 +39,13 @@
         "MANIFEST.json"
       ],
       "test_command": "npm ci --ignore-scripts && npm test && npm run test:proof && npm run release:verify",
-      "test_run": null,
+      "test_run": {
+        "result": "pass",
+        "date": "2026-10-06",
+        "environment": "node:22 container, network off after npm ci --ignore-scripts, commit 17e44f4",
+        "command": "npm test && npm run test:proof && npm run release:verify",
+        "note": "npm test 158 of 158 node tests plus repo checks; test:proof 10 of 10; release:verify passed. cargo test not run in this pass."
+      },
       "mocks_or_skips": [],
       "demonstrated_properties": [
         "verifier: groth16-solana Groth16Verifier over the alt_bn128 syscalls with the embedded VERIFYING_KEY (vk.json SHA-256 6abfff44...3d63a)",
@@ -80,7 +86,13 @@
         "docs/CLAIMS_LEDGER.md"
       ],
       "test_command": "npm test",
-      "test_run": null,
+      "test_run": {
+        "result": "pass",
+        "date": "2026-10-06",
+        "environment": "node:22 container, network off after npm ci --ignore-scripts, commit 17e44f4",
+        "command": "npm test && npm run test:proof && npm run release:verify",
+        "note": "npm test 158 of 158 node tests plus repo checks; test:proof 10 of 10; release:verify passed. cargo test not run in this pass."
+      },
       "mocks_or_skips": [],
       "demonstrated_properties": [
         "amount, receiver token account and mint are public inputs 3 to 7; a proof for one destination does not verify for another",
@@ -118,7 +130,13 @@
         "tests/privacy-linkage.test.mjs"
       ],
       "test_command": "cargo test --locked --test privacy_linkage && npm test",
-      "test_run": null,
+      "test_run": {
+        "result": "partial",
+        "date": "2026-10-06",
+        "environment": "node:22 container, network off after npm ci --ignore-scripts, commit 17e44f4",
+        "command": "npm test",
+        "note": "tests/privacy-linkage.test.mjs passed within npm test; the Rust harness (cargo test --test privacy_linkage) was not run in this pass."
+      },
       "mocks_or_skips": [
         "The Rust harness writes initialize-time accounts directly; deposits, root update and withdrawal run through the program entrypoint without a validator."
       ],
@@ -216,7 +234,13 @@
         "scripts/check-x402-receipts.mjs"
       ],
       "test_command": "npm run test:x402 && npm run check:x402",
-      "test_run": null,
+      "test_run": {
+        "result": "pass",
+        "date": "2026-10-06",
+        "environment": "node:22 container, network off after npm ci --ignore-scripts, commit 17e44f4",
+        "command": "npm test && npm run test:proof && npm run release:verify",
+        "note": "npm test 158 of 158 node tests plus repo checks; test:proof 10 of 10; release:verify passed. cargo test not run in this pass."
+      },
       "mocks_or_skips": [],
       "demonstrated_properties": [
         "resource URL stored as a hash; receipt locks header hashes, proof bundle hash and previous receipt hash"
@@ -256,7 +280,13 @@
         "docs/CLAIMS_LEDGER.md"
       ],
       "test_command": "npm run test:frontier",
-      "test_run": null,
+      "test_run": {
+        "result": "pass",
+        "date": "2026-10-06",
+        "environment": "node:22 container, network off after npm ci --ignore-scripts, commit 17e44f4",
+        "command": "npm test && npm run test:proof && npm run release:verify",
+        "note": "npm test 158 of 158 node tests plus repo checks; test:proof 10 of 10; release:verify passed. cargo test not run in this pass."
+      },
       "mocks_or_skips": [],
       "demonstrated_properties": [
         "in-process modules with unit tests"
@@ -297,7 +327,13 @@
         "sdk/index.test.mjs"
       ],
       "test_command": "npm run test:sdk",
-      "test_run": null,
+      "test_run": {
+        "result": "pass",
+        "date": "2026-10-06",
+        "environment": "node:22 container, network off after npm ci --ignore-scripts, commit 17e44f4",
+        "command": "npm test && npm run test:proof && npm run release:verify",
+        "note": "npm test 158 of 158 node tests plus repo checks; test:proof 10 of 10; release:verify passed. cargo test not run in this pass."
+      },
       "mocks_or_skips": [],
       "demonstrated_properties": [
         "proof and public-input encoders, network config, IDL export"

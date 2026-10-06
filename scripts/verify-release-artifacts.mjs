@@ -48,15 +48,24 @@ async function verifyRequiredReleaseFiles() {
   return failures;
 }
 
+// Read files directly and treat ENOENT as "missing" instead of checking for
+// existence first, so there is no window between the check and the read.
+function isMissing(error) {
+  return error?.code === "ENOENT";
+}
+
 async function verifyChecksumsFileIfPresent() {
+  let content;
   try {
-    await fs.access(checksumsPath);
-  } catch {
-    return [];
+    content = await fs.readFile(checksumsPath, "utf8");
+  } catch (error) {
+    if (isMissing(error)) {
+      return [];
+    }
+    throw error;
   }
 
   const failures = [];
-  const content = await fs.readFile(checksumsPath, "utf8");
   for (const line of content.split(/\r?\n/).filter(Boolean)) {
     const match = /^([a-f0-9]{64})  \*(.+)$/.exec(line);
     if (!match) {
@@ -65,15 +74,17 @@ async function verifyChecksumsFileIfPresent() {
     }
 
     const [, expected, file] = match;
-    const fullPath = path.join(repoRoot, file);
+    let actual;
     try {
-      await fs.access(fullPath);
-    } catch {
-      failures.push(`${file}: checksum target missing`);
-      continue;
+      actual = await sha256(file);
+    } catch (error) {
+      if (isMissing(error)) {
+        failures.push(`${file}: checksum target missing`);
+        continue;
+      }
+      throw error;
     }
 
-    const actual = await sha256(file);
     if (actual !== expected) {
       failures.push(`${file}: checksum file expected ${expected}, got ${actual}`);
     }

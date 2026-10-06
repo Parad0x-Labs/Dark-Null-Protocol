@@ -247,25 +247,30 @@ fn process_close_channel(
         return Err(ProgramError::InvalidArgument);
     }
 
-    let channel_lamports = **channel_pda.lamports.borrow();
+    let channel_lamports = channel_pda.lamports();
     let remaining = channel_lamports
         .checked_sub(accumulated)
         .ok_or(ProgramError::ArithmeticOverflow)?;
 
-    // Direct lamport manipulation — safe because program owns channel_pda
-    **channel_pda.lamports.borrow_mut() -= accumulated;
-    **recipient.lamports.borrow_mut() = recipient
-        .lamports
-        .borrow()
+    // Direct lamport manipulation — safe because program owns channel_pda.
+    // Each balance is read into a local before its RefCell is borrowed mutably:
+    // `**x.lamports.borrow_mut() = x.lamports.borrow() + ..` holds a mutable and an
+    // immutable borrow of the same RefCell at once and panics ("already borrowed"),
+    // which made every CloseChannel fail. Reads happen after the previous write so
+    // the arithmetic stays correct even if two account slots alias one account.
+    **channel_pda.try_borrow_mut_lamports()? = 0; // accumulated + remaining == channel_lamports
+
+    let recipient_balance = recipient
+        .lamports()
         .checked_add(accumulated)
         .ok_or(ProgramError::ArithmeticOverflow)?;
+    **recipient.try_borrow_mut_lamports()? = recipient_balance;
 
-    **channel_pda.lamports.borrow_mut() -= remaining;
-    **payer.lamports.borrow_mut() = payer
-        .lamports
-        .borrow()
+    let payer_balance = payer
+        .lamports()
         .checked_add(remaining)
         .ok_or(ProgramError::ArithmeticOverflow)?;
+    **payer.try_borrow_mut_lamports()? = payer_balance;
 
     // Mark closed (zero out data)
     let mut data_ref = channel_pda.try_borrow_mut_data()?;
@@ -280,4 +285,105 @@ fn process_close_channel(
     );
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const RENT: u64 = 1_461_600;
+    const MAX: u64 = 5_000_000;
+
+    struct Accs {
+        program_id: Pubkey,
+        payer: Pubkey,
+        recipient: Pubkey,
+        channel: Pubkey,
+        sys: Pubkey,
+        data: Vec<u8>,
+    }
+
+    fn setup() -> Accs {
+        let program_id = Pubkey::new_unique();
+        let payer = Pubkey::new_unique();
+        let recipient = Pubkey::new_unique();
+        let nonce = [7u8; 8];
+        let (channel, bump) = Pubkey::find_program_address(
+            &[b"stream-v1", payer.as_ref(), recipient.as_ref(), &nonce],
+            &program_id,
+        );
+        let state = ChannelState { payer, recipient, max_lamports: MAX, nonce, is_open: true, bump };
+        let data = borsh::to_vec(&state).unwrap();
+        assert_eq!(data.len(), ChannelState::LEN);
+        Accs { program_id, payer, recipient, channel, sys: Pubkey::default(), data }
+    }
+
+    fn close_ix(seq: u64, accumulated: u64) -> Vec<u8> {
+        let mut d = vec![1u8];
+        d.extend_from_slice(&seq.to_le_bytes());
+        d.extend_from_slice(&accumulated.to_le_bytes());
+        d
+    }
+
+    /// Runs CloseChannel and returns (payer, recipient, channel) balances after.
+    fn run_close(a: &mut Accs, payer_signs: bool, recipient_signs: bool, accumulated: u64) -> (ProgramResult, u64, u64, u64) {
+        let (mut pl, mut rl, mut cl, mut sl) = (10_000_000u64, 3_000_000u64, MAX + RENT, 1u64);
+        let (mut pd, mut rd, mut sd): (Vec<u8>, Vec<u8>, Vec<u8>) = (vec![], vec![], vec![]);
+        let sys_owner = Pubkey::default();
+        let accounts = vec![
+            AccountInfo::new(&a.payer, payer_signs, true, &mut pl, &mut pd, &sys_owner, false, 0),
+            AccountInfo::new(&a.recipient, recipient_signs, true, &mut rl, &mut rd, &sys_owner, false, 0),
+            AccountInfo::new(&a.channel, false, true, &mut cl, &mut a.data, &a.program_id, false, 0),
+            AccountInfo::new(&a.sys, false, false, &mut sl, &mut sd, &sys_owner, true, 0),
+        ];
+        let res = process_instruction(&a.program_id, &accounts, &close_ix(1, accumulated));
+        let out = (accounts[0].lamports(), accounts[1].lamports(), accounts[2].lamports());
+        (res, out.0, out.1, out.2)
+    }
+
+    #[test]
+    fn close_with_recipient_signature_pays_accumulated_and_refunds_rest() {
+        let mut a = setup();
+        let (res, p, r, c) = run_close(&mut a, true, true, 1_250_000);
+        res.expect("close must not fail (previously panicked: RefCell already borrowed)");
+        assert_eq!(r, 3_000_000 + 1_250_000);
+        assert_eq!(p, 10_000_000 + (MAX + RENT - 1_250_000));
+        assert_eq!(c, 0);
+        assert!(a.data.iter().all(|b| *b == 0), "channel data zeroed");
+    }
+
+    #[test]
+    fn close_by_payer_alone_settles_at_full_cap() {
+        let mut a = setup();
+        let (res, p, r, c) = run_close(&mut a, true, false, 1);
+        res.expect("payer-only close");
+        assert_eq!(r, 3_000_000 + MAX);
+        assert_eq!(p, 10_000_000 + RENT);
+        assert_eq!(c, 0);
+    }
+
+    #[test]
+    fn lamports_are_conserved() {
+        let mut a = setup();
+        let before = 10_000_000 + 3_000_000 + MAX + RENT;
+        let (res, p, r, c) = run_close(&mut a, false, true, MAX);
+        res.unwrap();
+        assert_eq!(p + r + c, before);
+    }
+
+    #[test]
+    fn close_without_any_signature_is_rejected() {
+        let mut a = setup();
+        let (res, p, r, c) = run_close(&mut a, false, false, 0);
+        assert_eq!(res, Err(ProgramError::MissingRequiredSignature));
+        assert_eq!((p, r, c), (10_000_000, 3_000_000, MAX + RENT));
+    }
+
+    #[test]
+    fn over_cap_accumulated_is_rejected() {
+        let mut a = setup();
+        let (res, _, _, c) = run_close(&mut a, true, true, MAX + 1);
+        assert_eq!(res, Err(ProgramError::InvalidArgument));
+        assert_eq!(c, MAX + RENT);
+    }
 }

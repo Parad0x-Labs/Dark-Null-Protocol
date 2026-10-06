@@ -329,5 +329,75 @@
       "sha256": "638fa35991c6de6f2163e9d111b5a0e228737307be11105a63f48bd9c96392d9",
       "size": 4267
     }
-  ]
+  ],
+  "dark_null_v2": {
+    "status": "dev-setup",
+    "note": "Groth16 dev-setup: single-operator phase 2 on PPoT; the operator can forge proofs. Devnet only (V2_SPEC 7.6, DESIGN 8.1).",
+    "circuit": "transact_v2 (V2_SPEC 7, principal branch)",
+    "compiler": {
+      "name": "circom",
+      "version": "2.2.3",
+      "flags": "--O2",
+      "binary": "circom-linux-amd64",
+      "sha256": "85342c7ff332d948df7c0c50ecf201e6129349aef550ce873f3c811b79fe53a3",
+      "url": "https://github.com/iden3/circom/releases/download/v2.2.3/circom-linux-amd64"
+    },
+    "circomlib": "2.0.5",
+    "snarkjs": "0.7.6",
+    "constraints": 23167,
+    "n_public": 1,
+    "vk_hash": "098eb04131454b87e0ab343130fbd76d75cc30d96b77c0c21ff3a6f094674e40",
+    "ptau": {
+      "name": "ppot_0080_16.ptau",
+      "url": "https://pse-trusted-setup-ppot.s3.eu-central-1.amazonaws.com/pot28_0080/ppot_0080_16.ptau",
+      "sha256": "ed3622a7c79b0b49aadd134ebbc5b77df8c8c59bccebdfd0d9bf2c1a51561cf9",
+      "blake2b512": "9532c6c04a21335577713724b6d46c266a93aa621b78882b8b64b26f3080a8f0d974aded00c4d781adbdf493a45c51db455108f7aeedb49971569d57a56971c3",
+      "size": 75590802,
+      "in_git": false
+    },
+    "artifacts": [
+      {
+        "path": "circuits/v2/transact_v2.circom",
+        "role": "source",
+        "tag": "dev-setup",
+        "sha256": "d8260fec68f66c5ac3762962bc6ae0d6c69c5b463b1cfd48730cfe510f2f4c49",
+        "size": 9424
+      },
+      {
+        "path": "circuits/v2/build/transact_v2.r1cs",
+        "role": "r1cs",
+        "tag": "dev-setup",
+        "sha256": "9e5ee5d9957b505cfe0136f5626cc20611623f4572d2d897277c26056354f8c9",
+        "size": 11643044
+      },
+      {
+        "path": "circuits/v2/build/transact_v2.wasm",
+        "role": "wasm",
+        "tag": "dev-setup",
+        "sha256": "5f9ba4733b0416fe3ce4e1865af499250e905b509757719ce16d4d638a239604",
+        "size": 7253981
+      },
+      {
+        "path": "circuits/v2/build/transact_v2_dev.zkey",
+        "role": "zkey",
+        "tag": "dev-setup",
+        "sha256": "7e89212cee2f5cce336cd473b30308d27b8b0169719def8c906b0db3f44535e0",
+        "size": 16525864
+      },
+      {
+        "path": "circuits/v2/build/vk.json",
+        "role": "vk",
+        "tag": "dev-setup",
+        "sha256": "c9c9771db2fdeacf6c5351d6113812d4720d7b157cc23cff721cc750214ffc16",
+        "size": 2924
+      },
+      {
+        "path": "programs/dark-null-pool-v2/src/vk.rs",
+        "role": "program-vk",
+        "tag": "dev-setup",
+        "sha256": "a74af3c7bc30b72f3a1fb64b971c670dc3b9b34615b285ab82e955954788721d",
+        "size": 9181
+      }
+    ]
+  }
 }

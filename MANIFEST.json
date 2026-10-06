@@ -91,13 +91,13 @@
     },
     {
       "path": "docs/CLAIMS_LEDGER.md",
-      "sha256": "6be6da69852d0720d3e5877afb0e7e657375c291337543a7325c3882c07ed60f",
-      "size": 6703
+      "sha256": "6131d98fe6c2a600fb62f5abed123b8d9bbcbc65f9aeec14b34eb6060eeea7e4",
+      "size": 7273
     },
     {
       "path": "docs/DNA_X402_INTEGRATION.md",
-      "sha256": "d3ae1126b788c7d1ab3f69147ad6ac08ad3c92804df88e0809459da7fbe3b05a",
-      "size": 4136
+      "sha256": "592cc29119218aa498c29bbcc58a0a10472d57ad238894f96192d2ca0ed64933",
+      "size": 4257
     },
     {
       "path": "Cargo.toml",
@@ -131,8 +131,8 @@
     },
     {
       "path": "package.json",
-      "sha256": "4b94d0fcd2955c64d5a34da90d4868f8c1d7c5f7a29d51acb0c9411b7c67091e",
-      "size": 8182
+      "sha256": "830651c83f363e38cfd7352ac5c15f28cc03b4780a14a2d76c799a5201b87fce",
+      "size": 8360
     },
     {
       "path": "package-lock.json",
@@ -166,8 +166,8 @@
     },
     {
       "path": "scripts/check-claims-evidence.mjs",
-      "sha256": "094e9d507f56bc75fca30e763c1d4dde4148a04a972a71c91ecfcb9ce4965368",
-      "size": 5981
+      "sha256": "96f341e9ef10684b35a4922295316f31e12a3452ecb720f1aa48570b90b83bac",
+      "size": 6485
     },
     {
       "path": "scripts/check-mainnet-beta-evidence.mjs",
@@ -266,8 +266,8 @@
     },
     {
       "path": "docs/PRIVATE_X402_PAYMENTS.md",
-      "sha256": "e1c692618a4e541388337b93b264b3f2d0e92ecd6791b0d5cdeeeb7ff8688465",
-      "size": 5077
+      "sha256": "5aed5969746bae21b15df61b7f4c4b80e7a042094f04cd211bd76bec0074aafd",
+      "size": 5255
     },
     {
       "path": "scripts/check-x402-receipts.mjs",
@@ -286,8 +286,8 @@
     },
     {
       "path": "docs/AUDITOR_HANDOFF.md",
-      "sha256": "d0ed265e9199102765a131e848288f89dfdb39f987c852efe94627da4324730c",
-      "size": 21126
+      "sha256": "02f9cff8b940c7786066325354b0e6be6157d2ae6fe9baf034cb406367e8073e",
+      "size": 21338
     },
     {
       "path": "docs/2030_PRIMITIVES.md",
@@ -311,13 +311,13 @@
     },
     {
       "path": "docs/PARADOX_STACK.md",
-      "sha256": "5a5b80f3fc20ae408a689708d627a0ce865515f8b4d0f3fead6997d603740715",
-      "size": 2963
+      "sha256": "79c4848a2988bb6b7e7d7d4d8b4c8e58d0d0316959df6d581735ec5aeea3f1ca",
+      "size": 3118
     },
     {
       "path": "docs/architecture.md",
-      "sha256": "b0bbd65ac3bd2b7c7622cea9529ddc1d093ef8e19b8d206b5982ea2824f15934",
-      "size": 4653
+      "sha256": "8147ca09717917bb0c9f2b8ebfe32428aaca0da62d413f6344940cdde8101c50",
+      "size": 4924
     },
     {
       "path": "scripts/check-2030-claims.mjs",

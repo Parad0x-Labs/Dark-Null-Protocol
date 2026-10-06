@@ -4,12 +4,12 @@ This document is the single handoff packet for an external technical review of t
 
 ## Current Status
 
-Dark Null is an evidence-first Solana private settlement prototype with:
+Dark Null is an evidence-first Solana privacy research prototype with:
 
 - a canonical public devnet root program binding
 - a Groth16 verifier path in Rust
 - a Circom circuit and canonical proof artifacts
-- a payout-bound withdraw v2 path
+- a payout-bound withdraw v2 path whose public inputs include the note commitment, amount, receiver token account and mint, so a withdrawal is linkable to its deposit ([`PRIVACY_PROPERTIES.md`](./PRIVACY_PROPERTIES.md), `tests/privacy_linkage.rs`)
 - SDK public-input encoders
 - public manifest hash binding
 - release checksum and SBOM generation

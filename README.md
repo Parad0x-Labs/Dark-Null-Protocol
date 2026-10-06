@@ -1,14 +1,14 @@
-<p align="center"><img src=".github/readme/banner.svg" alt="Dark Null Protocol — Private settlement on Solana, proven with Groth16" width="100%"></p>
+<p align="center"><img src=".github/readme/banner.svg" alt="Dark Null Protocol — Proof-verified withdrawals on Solana with Groth16" width="100%"></p>
 
-**Dark Null is a privacy settlement protocol for Solana, built for apps and AI agents that need payments to settle privately, with proof. It is not a mixer.**
+**Dark Null is a Solana privacy research protocol. Its root program is a devnet prototype for proof-verified withdrawals: every payout is checked on-chain by a Groth16 proof.**
 
-Money on a blockchain is public by default: anyone can see who paid whom. With Dark Null, a withdrawal cannot be linked to the deposit that funded it, yet every payout is still checked on-chain by a zero-knowledge proof. Deposit amounts and depositors stay visible by design; [`SECURITY_MODEL.md`](./SECURITY_MODEL.md) draws the exact privacy boundary.
+In the current construction the payout fields (amount, receiver token account, mint) and the note commitment are public, so a withdrawal is linkable to its deposit; unlinkable withdrawals are planned protocol work. What the prototype provides and what it does not is listed property by property in [`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md), next to a test that reproduces the linkage from public data; [`SECURITY_MODEL.md`](./SECURITY_MODEL.md) covers the trust model.
 
 ## At a glance
 
-| Groth16 payout on devnet | Drain and replay refused | 154 tests, 10/10 proof tests |
-|---|---|---|
-| A real proof was verified by the on-chain BN254 verifier and the vault paid out: tx [`3wXv6wGS…`](https://explorer.solana.com/tx/3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU?cluster=devnet), slot 487904628. | Against the deployed program, an over-claim is rejected with error 6013 `InsufficientCommittedDeposit` and a re-submitted spent note with 6000 `DoubleSpend`. | `npm test` runs 154 tests plus the repo checks; `npm run test:proof` passes 10/10. Both run offline. |
+| Groth16 payout on devnet | Drain and replay refused | 158 tests, 10/10 proof tests | Privacy boundary |
+|---|---|---|---|
+| A real proof was verified by the on-chain BN254 verifier and the vault paid out: tx [`3wXv6wGS…`](https://explorer.solana.com/tx/3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU?cluster=devnet), slot 487904628. | Against the deployed program, an over-claim is rejected with error 6013 `InsufficientCommittedDeposit` and a re-submitted spent note with 6000 `DoubleSpend`. | `npm test` runs 158 tests plus the repo checks; `npm run test:proof` passes 10/10. Both run offline. | Amount, receiver token account, mint and note commitment are public, so a withdrawal is linkable to its deposit. Reproduced by `tests/privacy_linkage.rs`; see [`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md). |
 
 [![CI](https://github.com/Parad0x-Labs/Dark-Null-Protocol/actions/workflows/ci.yml/badge.svg)](https://github.com/Parad0x-Labs/Dark-Null-Protocol/actions/workflows/ci.yml)
 ![Network: devnet](https://img.shields.io/badge/network-devnet-92aa7c?style=flat&labelColor=0a0a0a)
@@ -20,15 +20,15 @@ Money on a blockchain is public by default: anyone can see who paid whom. With D
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#111111','primaryTextColor':'#f0efeb','primaryBorderColor':'#92aa7c','lineColor':'#a3a3a3','secondaryColor':'#0a0a0a','tertiaryColor':'#0a0a0a','fontFamily':'JetBrains Mono, monospace'}}}%%
 flowchart LR
-    A[Depositor funds the pool] --> B[Shielded pool stores a commitment]
+    A[Depositor funds the vault] --> B[Program records commitment and amount]
     B --> C[Client builds a Groth16 proof locally]
     C --> D[On-chain verifier checks proof, funds and nullifier]
     D --> E[Vault pays the receiver]
 ```
 
-1. A deposit goes into the shielded pool, which records a commitment carrying the funded amount.
-2. To withdraw, the client builds a Groth16 proof that the withdrawal is valid, without revealing which deposit it came from.
-3. The proof binds amount, receiver token account and mint (`prepare_phantom_withdraw_v2`), so a proof for someone else's destination is worthless to you.
+1. A deposit moves tokens into the vault and records the note commitment and the deposited amount in public program state.
+2. To withdraw, the client builds a Groth16 proof that it knows the opening of a deposited commitment. The commitment is a public input of the proof, so the withdrawal identifies the deposit it spends.
+3. The proof binds amount, receiver token account and mint (`prepare_phantom_withdraw_v2`) as public inputs, so a proof for someone else's destination is worthless to you. The receiver wallet signs the withdrawal.
 4. The program checks the proof, refuses anything above what was deposited, records the nullifier so the note cannot be spent twice, then pays out.
 
 ## Quickstart
@@ -60,7 +60,7 @@ Entry points: [`sdk/index.mjs`](./sdk/index.mjs) and [`sdk/index.d.ts`](./sdk/in
 | JavaScript SDK and Python helper client | **Usable today** | From a clone; not published to the npm registry |
 | Private x402 receipt primitives | **Usable today** | [`swarm/x402.mjs`](./swarm/x402.mjs); wraps DNA x402 signed receipts with no raw URL or payment header stored |
 | Frontier prototypes (6) | **Usable today** | Prototype code with local tests; not deployed to production. See [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md) |
-| Shielded-pool program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` | **Devnet** | Canonical devnet root and integration target; matches `declare_id!` in [`src/lib.rs`](./src/lib.rs); upgrade authority `4cTBfB8v…` |
+| Root program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` (deposit vault, proof-verified withdrawal) | **Devnet** | Canonical devnet root and integration target; matches `declare_id!` in [`src/lib.rs`](./src/lib.rs); upgrade authority `4cTBfB8v…`; withdrawals are linkable to deposits ([`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md)) |
 | Six integration programs | **Devnet** | silent-pay `9VYPtdr…`, payment-stream `J6oHoys…`, threshold-fed `4sMywVPL…`, fiat-oracle `AJHHpWv…`, accumulator `ByFb6xc…`, inference `6h4yKZG…`; deployed from this source tree |
 | On-chain receipt anchoring (`receipt_anchor`, in dna-x402) | **Built · redeploy pending** | Unavailable until the `receipt_anchor` program is redeployed under a fresh key |
 | Research-stage primitives (7) and one blocked primitive | **Planned** | Design and specification only; Confidential Token-2022 linkage is blocked on Token-2022 Confidential Transfer extension audit completion and SIMD stabilization |
@@ -74,7 +74,7 @@ Where any doc differs, [`MANIFEST.json`](./MANIFEST.json) and [`docs/PROGRAM_IDS
 
 | Path | What lives there |
 |---|---|
-| [`src/`](./src) | Root Anchor program: shielded pool, Groth16 verifier, `prepare_phantom_withdraw_v2` |
+| [`src/`](./src) | Root Anchor program: deposit vault, Groth16 verifier, `prepare_phantom_withdraw_v2` |
 | [`circuits/`](./circuits) | `null_proof.circom`, final zkey, wasm witness generator, `vk.json` |
 | [`sdk/`](./sdk) | JavaScript SDK (`@dark-null/protocol`) with types |
 | [`client/`](./client) | Python helper client and proof packer |
@@ -106,6 +106,7 @@ flowchart LR
 | `npm run test:proof` | Proof encoding, malformed proofs, mainnet readiness and evidence gates |
 | `npm run test:batch` | Sequential Groth16 batch settlement with real snarkjs proofs |
 | `npm run check:claims` | Claim boundary scan across README, docs and SDK |
+| `cargo test --locked --test privacy_linkage` | Deposit-to-withdrawal linkage reproduction through the program entrypoint and on-chain verifier |
 | `FULL_VALIDATION=1 sh scripts/bootstrap.sh` | Everything in `npm run test:all`, including Rust, Python and release checks |
 | `npm run check:x402:devnet` | Checks the canonical devnet settlement when RPC access is available |
 
@@ -152,6 +153,7 @@ frontier_primitives:
 | Topic | Doc |
 |---|---|
 | Devnet proof cycle, canonical paths, verification flow, mainnet gates | [`docs/PROJECT_DETAIL.md`](./docs/PROJECT_DETAIL.md) |
+| Privacy properties, public fields, linkage test | [`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md) |
 | Program IDs | [`docs/PROGRAM_IDS.md`](./docs/PROGRAM_IDS.md) |
 | Private x402 payments and the DNA x402 receipt boundary | [`docs/PRIVATE_X402_PAYMENTS.md`](./docs/PRIVATE_X402_PAYMENTS.md), [`docs/DNA_X402_INTEGRATION.md`](./docs/DNA_X402_INTEGRATION.md) |
 | External review packet | [`docs/AUDITOR_HANDOFF.md`](./docs/AUDITOR_HANDOFF.md) |
@@ -161,6 +163,6 @@ frontier_primitives:
 
 ## Security
 
-Report issues to `security@parad0xlabs.com`; scope and process are in [`SECURITY.md`](./SECURITY.md). The privacy boundary and threat model are in [`SECURITY_MODEL.md`](./SECURITY_MODEL.md), and the review history is in [`INTERNAL_REVIEW.md`](./INTERNAL_REVIEW.md) and [`docs/PROJECT_DETAIL.md`](./docs/PROJECT_DETAIL.md#review-status). Released under the MIT License, see [`LICENSE`](./LICENSE).
+Report issues to `security@parad0xlabs.com`; scope and process are in [`SECURITY.md`](./SECURITY.md). The privacy boundary is in [`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md), the threat model in [`SECURITY_MODEL.md`](./SECURITY_MODEL.md), and the review history is in [`INTERNAL_REVIEW.md`](./INTERNAL_REVIEW.md) and [`docs/PROJECT_DETAIL.md`](./docs/PROJECT_DETAIL.md#review-status). Released under the MIT License, see [`LICENSE`](./LICENSE).
 
 Parad0x Labs · [parad0xlabs.com](https://parad0xlabs.com)

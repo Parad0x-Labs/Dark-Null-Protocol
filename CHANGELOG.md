@@ -11,14 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Historical note: older entries below describe devnet milestones and historical release framing. They are not the same thing as the current public-root assurance level described in [`README.md`](./README.md), [`PROTOTYPE_STATUS.md`](./PROTOTYPE_STATUS.md), and [`SECURITY_MODEL.md`](./SECURITY_MODEL.md).
 
+### Privacy boundary of the canonical root, documented and tested
+
+- `docs/PRIVACY_PROPERTIES.md`: property matrix for the root program (possession, replay resistance, payout binding, note-secret confidentiality, unlinkability, amount and recipient confidentiality, anonymity set, trusted setup, root updater).
+- `tests/privacy_linkage.rs` and `tests/privacy-linkage.test.mjs`: two deposits with distinct notes and one real-proof withdrawal; an observer with public data only links the withdrawal to its deposit by commitment equality. The tests assert this current behaviour.
+- Public wording corrected: the root program is a devnet prototype for proof-verified withdrawals; the payout fields (amount, receiver token account, mint) and the note commitment are public, so a withdrawal is linkable to its deposit in the current construction. Unlinkable withdrawals are planned protocol work.
+
 ### Cross-repo milestone — `dna-x402` private payment rails (four rails)
 
 The sibling `dna-x402` implementation carries four privacy rails in code with tests, all merged to its `main` ([Parad0x-Labs/dna-x402](https://github.com/Parad0x-Labs/dna-x402)). Their earlier devnet deployments were retired; a devnet redeploy under a fresh key is pending.
 
-- **Dark Relay Rail** — ZK shielded pool (V3): hides **sender** (Groth16 membership proof) + **amount** (fixed denominations). In-proof relayer-fee binding (permissionless relayers; the recipient never signs) + denomination buckets.
-- **NullPay** — ed25519 stealth pay-by-`.null`-name: hides the **recipient** (a one-time stealth address resolved from a name's on-chain meta; native ed25519 signing, no trusted setup). Pay-by-name to a one-time stealth address is implemented in code with tests; a devnet redeploy under a fresh key is pending.
-- **Fusion** — one shielded-pool withdraw designed to hide **all three legs at once** (sender + amount + recipient), paying a NullPay stealth address via a permissionless relayer.
-- **Federated eNULL** — k-of-n BDHKE ecash: hides **sender + amount** with **no trusted setup** (Chaumian blind signatures + threshold DKG; on-chain Ristretto DLEQ via `sol_curve_*` syscalls). A critical cross-vault-drain bug was found in adversarial testing and fixed before merge.
+- **Dark Relay Rail** — fixed-denomination shielded pool (V3): the withdrawal proves Groth16 membership without publishing the deposit commitment, so linkage is limited to the set of deposits in the same pool; every withdrawal moves the same public denomination; the recipient address is public. In-proof relayer-fee binding (permissionless relayers; the recipient never signs) + denomination buckets.
+- **NullPay** — ed25519 stealth pay-by-`.null`-name: pays a one-time stealth address resolved from a name's on-chain meta, so the receiving address is not linked to the name (the address itself is on-chain; native ed25519 signing, no trusted setup). Pay-by-name to a one-time stealth address is implemented in code with tests; a devnet redeploy under a fresh key is pending.
+- **Fusion** — one fixed-denomination pool withdrawal paying a NullPay stealth address via a permissionless relayer, combining the two properties above.
+- **Federated eNULL** — k-of-n BDHKE ecash: designed so issuance and redemption are unlinkable, with **no trusted setup** (Chaumian blind signatures + threshold DKG; on-chain Ristretto DLEQ via `sol_curve_*` syscalls). A critical cross-vault-drain bug was found in adversarial testing and fixed before merge.
 
 Scope and posture (unchanged discipline): these are the **`dna-x402` Poseidon / ed25519 / Ristretto implementations**, distinct from this repo's canonical MiMCSponge root. **Unaudited, devnet only, `mainnet_ready=false` throughout.** The ZK rail's verification key is a **beacon-sealed multi-contribution DRY-RUN ceremony — NOT yet trustless** (it awaits independent human contributors). Unlinkability in the demos is **structural** (on-chain presence/absence), not a large-anonymity-set claim. No mainnet deployment and no audit completion is claimed.
 

@@ -85,7 +85,7 @@ The current root program is a settlement prototype, not a generic network.
 
 Delivered behavior:
 
-- shield records commitments
+- deposit records the note commitment and the deposited amount per commitment
 - root updates are authority-controlled and bounded
 - legacy proof-unbound withdraw fails closed
 - `prepare_phantom_withdraw_v2` verifies the promoted eight-input proof shape
@@ -95,6 +95,7 @@ Delivered behavior:
 Known limits:
 
 - root derivation is not append-only in-program yet
+- the payout fields (amount, receiver token account, mint) and the note commitment are public, so a withdrawal is linkable to its deposit in the current construction; see [`PRIVACY_PROPERTIES.md`](./PRIVACY_PROPERTIES.md)
 - root updates still rely on a privileged updater
 - final mainnet setup evidence is not published
 - no completed third-party audit is published

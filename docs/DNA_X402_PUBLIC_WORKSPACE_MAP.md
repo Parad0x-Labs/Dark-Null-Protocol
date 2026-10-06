@@ -21,7 +21,7 @@ DNA x402 owns the agent-commerce workspace:
 - route, fee, receipt, nullifier, and no-custody Rust primitives
 - Solana program workspace around receipt anchoring, proof gates, transfer hooks, chaff, and nullifier records
 
-The split prevents two drifting copies of the same code. Dark Null links into DNA for agent commerce; DNA links into Dark Null for private settlement.
+The split prevents two drifting copies of the same code. Dark Null links into DNA for agent commerce; DNA links into Dark Null for proof-bound settlement.
 
 ## Public DNA x402 Inventory
 

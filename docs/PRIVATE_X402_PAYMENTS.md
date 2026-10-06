@@ -81,12 +81,12 @@ client sends PAYMENT-SIGNATURE
   |
 dna-x402 verifies or settles the payment side
   |
-Dark Null relayer/client settles private proof-bound payout when needed
+Dark Null client settles a proof-bound payout when needed (payout fields public)
   |
 server returns PAYMENT-RESPONSE + Dark Null receipt hash
 ```
 
-The HTTP negotiation belongs to `dna-x402`. Dark Null owns only the private settlement and receipt-locking layer.
+The HTTP negotiation belongs to `dna-x402`. Dark Null owns only the proof-bound settlement and receipt-locking layer. The settlement path is a devnet prototype: amount, receiver token account, mint and note commitment are public ([`PRIVACY_PROPERTIES.md`](./PRIVACY_PROPERTIES.md)).
 
 ## NULL Miner Sync
 

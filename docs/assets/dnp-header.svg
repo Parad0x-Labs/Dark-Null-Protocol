@@ -27,7 +27,7 @@
   <rect x="72" y="62" width="220" height="34" rx="17" fill="#170C27" stroke="#6FC9FF"/>
   <text x="96" y="85" fill="#BCE4FF" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">PRIVATE SOLANA SETTLEMENT</text>
   <text x="72" y="162" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="800">Dark Null Protocol</text>
-  <text x="72" y="220" fill="#E9DFFE" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700">Private settlement. Challengeable security.</text>
+  <text x="72" y="220" fill="#E9DFFE" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700">Proof-verified withdrawals. Devnet prototype.</text>
   <text x="72" y="262" fill="#C5B8E8" font-family="Arial, Helvetica, sans-serif" font-size="25">Shield - Commit - Finalize</text>
   <text x="72" y="316" fill="#C9C2E8" font-family="Arial, Helvetica, sans-serif" font-size="22">Optimistic-ZK with a separate latency profile.</text>
   <g>

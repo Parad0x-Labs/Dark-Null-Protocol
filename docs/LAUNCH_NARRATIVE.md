@@ -1,10 +1,10 @@
 # Launch Narrative
 
-Dark Null is the evidence-first Solana privacy settlement root: a compact Groth16 proof stack, a published verifier path, canonical artifacts, and a repo-level refusal to claim more than the proofs and tests support.
+Dark Null is an evidence-first Solana privacy research root: a compact Groth16 proof stack, a published verifier path, canonical artifacts, and a repo-level refusal to claim more than the proofs and tests support.
 
 ## Short Positioning
 
-Dark Null is built for teams that want private settlement primitives on Solana without inheriting a validator network, a vague audit story, or a pile of unverifiable claims.
+Dark Null is built for teams that want verifiable privacy research primitives on Solana without inheriting a validator network, a vague audit story, or a pile of unverifiable claims.
 
 The public root is intentionally narrow:
 
@@ -23,6 +23,7 @@ The public root is intentionally narrow:
 - The SDK exposes canonical artifact paths, proof encoding metadata, and v2 public-input encoders.
 - The setup boundary is explicit in `CEREMONY.md`; the current evidence is development-grade until final mainnet setup evidence exists.
 - The v2 payout path verifies amount, receiver token account, and mint before transfer.
+- The privacy boundary is stated and tested: the payout fields (amount, receiver token account, mint) and the note commitment are public, so a withdrawal is linkable to its deposit in the current construction ([`PRIVACY_PROPERTIES.md`](./PRIVACY_PROPERTIES.md)).
 - Release integrity scripts generate and verify checksums and SBOM material.
 - CI now includes public checks, proof hardening, strict npm audit gating, CodeQL, and release integrity workflows.
 
@@ -35,13 +36,15 @@ The public root is intentionally narrow:
 - append-only on-chain root derivation
 - that historical deployments are equivalent to the current canonical root
 - that switching a config value from devnet to mainnet is a release plan
+- that a withdrawal cannot be linked to its deposit, or that amounts, senders or recipients are hidden (not true for the current construction; unlinkable withdrawals are planned protocol work)
+- an anonymity set size (128 is the leaf capacity, not an anonymity set)
 
 ## Public Copy
 
 Use these lines when describing the project publicly:
 
 ```text
-Dark Null is an evidence-first Solana privacy settlement root with a published Groth16 verifier path, canonical artifact manifest, reproducible proof tests, and payout-bound v2 withdrawals.
+Dark Null is an evidence-first Solana privacy research root: a devnet prototype for proof-verified withdrawals with a published Groth16 verifier path, canonical artifact manifest, reproducible proof tests, and payout-bound v2 withdrawals. The payout fields and the note commitment are public, so withdrawals are linkable to deposits today.
 ```
 
 ```text

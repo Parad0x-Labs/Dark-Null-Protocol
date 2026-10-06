@@ -56,6 +56,7 @@ const allowedQualifiers = [
   /\bcan\b/i,
   /\bevaluate/i,
   /\bout of scope\b/i,
+  /\bplanned\b/i,
 ];
 
 const sensitiveClaims = [
@@ -69,6 +70,8 @@ const sensitiveClaims = [
   { label: "private compute claim", regex: /\bprivate compute\b/i },
   { label: "bridge product claim", regex: /\bsolana bridge\b/i },
   { label: "Sigstore release claim", regex: /\bsigstore[- ]signed\b/i },
+  { label: "deposit-withdrawal unlinkability claim", regex: /\b(?:cannot be linked to (?:the|its) deposit|breaks? the deposit\W{1,3}withdrawal link|unlinkable withdrawals?|withdrawals? (?:are|is) unlinkable)\b/i },
+  { label: "hidden amount or counterparty claim", regex: /\b(?:sender, recipient,? and amount|amounts? (?:are |is |stay |stays )?hidden|hides? (?:the )?(?:amount|sender|recipient))\b/i },
 ];
 
 async function pathExists(relativePath) {
@@ -133,6 +136,7 @@ async function checkClaimsLedger() {
     "| Validator network | Not a current claim |",
     "| BFT consensus layer | Not a current claim |",
     "| Private compute | Not a current claim |",
+    "| Deposit-to-withdrawal unlinkability (root program) | Not a current claim;",
   ]) {
     if (!ledger.includes(required)) {
       failures.push(`${ledgerPath}: missing claims-ledger row: ${required}`);

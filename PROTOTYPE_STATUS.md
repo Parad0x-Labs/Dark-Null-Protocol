@@ -47,11 +47,13 @@ Live demo (all 6 in one agent session): `node scripts/demo-x402-dark-null.mjs`
 - no public ops/relayer package with production controls
 - no proof in this repo that every historical deployment maps to the canonical root files now published
 - Merkle root evolution is still computed off-chain and then published by a trusted updater
+- deposit-to-withdrawal unlinkability is not provided: the note commitment, amount, receiver token account and mint are public inputs of the withdrawal, so each withdrawal is linkable to its deposit ([`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md)); unlinkable withdrawals are planned protocol work
 - the payout-bound v2 circuit (`circuits/vk.json` `nPublic=8`) and its `prepare_phantom_withdraw_v2` payout path are **LIVE but UNAUDITED** — no completed third-party audit covers this money-moving path
 
 ## Safe Public Claims
 
 - the root repo now publishes one canonical Groth16 path
+- the root program is a devnet prototype for proof-verified withdrawals; the payout fields (amount, receiver token account, mint) and the note commitment are public, so a withdrawal is linkable to its deposit
 - the canonical root artifact set is reproducible and locally verifiable
 - historical material is still published, but it is no longer the main integration target
 - the repo still does **not** prove audit completion or mainnet release readiness
@@ -64,3 +66,6 @@ Live demo (all 6 in one agent session): `node scripts/demo-x402-dark-null.mjs`
 - "just switch devnet to mainnet"
 - "all historical program IDs are the same deployment"
 - "the repo alone proves production security"
+- "a withdrawal cannot be linked to the deposit that funded it" (not true for the current construction)
+- "amounts, senders or recipients are hidden" (not true for the current construction)
+- "anonymity set of 128" (128 is leaf capacity, not an anonymity set)

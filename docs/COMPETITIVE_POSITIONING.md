@@ -23,7 +23,7 @@ Dark Null's strongest lane is Solana-native settlement with a small BN254 Groth1
 
 ## Public Message
 
-Dark Null is the evidence-first privacy settlement root for Solana: compact Groth16 proofs, canonical artifacts, reproducible tests, and no unsupported audit or launch claims.
+Dark Null is the evidence-first privacy research root for Solana: compact Groth16 proofs, canonical artifacts, reproducible tests, and no unsupported audit or launch claims. Its root program is a devnet prototype for proof-verified withdrawals; the payout fields (amount, receiver token account, mint) and the note commitment are public, so a withdrawal is linkable to its deposit in the current construction ([`PRIVACY_PROPERTIES.md`](./PRIVACY_PROPERTIES.md)).
 
 Use the aggressive line only where the repo backs it:
 
@@ -50,4 +50,4 @@ Use the aggressive line only where the repo backs it:
 
 ## Market Narrative
 
-Dark Null is not trying to be a generic validator network. It is the compact, evidence-first Solana privacy settlement track: fewer moving parts, smaller proof target, public artifacts, and no fake readiness claims. The product standard is simple: if the repo cannot prove it, the docs must call it roadmap.
+Dark Null is not trying to be a generic validator network. It is the compact, evidence-first Solana privacy research track: fewer moving parts, smaller proof target, public artifacts, and no fake readiness claims. The product standard is simple: if the repo cannot prove it, the docs must call it roadmap.

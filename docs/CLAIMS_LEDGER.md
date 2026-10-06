@@ -11,6 +11,7 @@ This ledger separates delivered claims from blocked claims and roadmap ideas. It
 | Canonical public-input shape has eight signals | Delivered | `MANIFEST.json`, `circuits/vk.json`, SDK encoders, Rust source, IDL, proof-flow tests |
 | Legacy withdraw fails closed | Delivered | `src/lib.rs`, IDL, Rust tests |
 | Payout v2 binds amount, receiver token account, and mint | Delivered | `src/lib.rs`, SDK encoders, IDL, proof-flow tests |
+| Privacy boundary of the root program is stated and tested | Delivered | `docs/PRIVACY_PROPERTIES.md`, `tests/privacy_linkage.rs`, `tests/privacy-linkage.test.mjs` |
 | Public artifact hashes are stable across platforms | Delivered | `.gitattributes`, `MANIFEST.json`, release verification scripts |
 | Full local validation lane exists | Delivered | `npm run test:all` |
 | Open-beta swarm health surface exists | Delivered | `swarm/server.mjs`, `config/swarm.open-beta.example.json`, `npm run test:swarm` |
@@ -40,6 +41,9 @@ This ledger separates delivered claims from blocked claims and roadmap ideas. It
 | BFT consensus layer | Not a current claim |
 | Private compute | Not a current claim |
 | Separate bridge product | Not a current claim |
+| Deposit-to-withdrawal unlinkability (root program) | Not a current claim; withdrawals are linkable by commitment, unlinkable withdrawals are planned protocol work |
+| Hidden amounts (root program) | Not a current claim; amounts are public at deposit and withdrawal |
+| Hidden sender or recipient (root program) | Not a current claim; depositor, receiver signer and receiver token account are public |
 | Sigstore-signed public release | Not a current claim until tagged release evidence exists |
 | x402 merchant gateway | Not a current claim until `dna-x402` evidence exists |
 

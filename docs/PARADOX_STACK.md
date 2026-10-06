@@ -5,7 +5,7 @@
 | Product | Role | Use it for | Do not confuse it with |
 |---|---|---|---|
 | [`dna-x402`](https://github.com/Parad0x-Labs/dna-x402) | fast payment rail | x402 payment flows, paid APIs, signed receipts, anchoring | privacy settlement protocol |
-| [`Dark-Null-Protocol`](https://github.com/Parad0x-Labs/Dark-Null-Protocol) | privacy settlement protocol | optimistic-ZK settlement, challengeable privacy flows | machine-speed x402 hot path |
+| [`Dark-Null-Protocol`](https://github.com/Parad0x-Labs/Dark-Null-Protocol) | privacy research protocol | Groth16 proof-verified withdrawals on devnet; payout fields and note commitment public, withdrawals linkable to deposits ([`PRIVACY_PROPERTIES.md`](./PRIVACY_PROPERTIES.md)) | machine-speed x402 hot path |
 | [`liquefy-openclaw-integration`](https://github.com/Parad0x-Labs/liquefy-openclaw-integration) | compression + audit layer | trace vaults, verified restore, audit trails, agent data protection | payment rail or settlement protocol |
 
 ## Frontier Convergence
@@ -26,7 +26,7 @@ These are gated research primitives for the broader Parad0x stack. They are not 
 ## Fast Routing Guide
 
 - Choose **dna-x402** for `402 -> pay -> retry -> receipt` commerce flows.
-- Choose **Dark Null Protocol** for privacy-sensitive settlement with a different latency profile.
+- Choose **Dark Null Protocol** for proof-verified withdrawal research; it does not hide amounts, recipients or the deposit link today.
 - Choose **Liquefy** for compression, auditability, and verified recovery of AI/agent artifacts.
 
 ## LLM Quick Parse

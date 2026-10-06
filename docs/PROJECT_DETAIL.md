@@ -7,9 +7,9 @@ This page holds the detail that used to live in the top-level [`README.md`](../R
 The payout below is a landed devnet transaction on the canonical program `35GMe13…`. The two rejections are reproduced by the script further down against the same deployed program; they are rejected at preflight, so no failed transaction is recorded on-chain.
 
 - **Working on-chain withdraw.** A real snarkjs Groth16 proof against the published circuit was verified by the on-chain BN254 verifier and the vault paid out: tx [`3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU`](https://explorer.solana.com/tx/3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU?cluster=devnet).
-- **The shielded pool rejects an over-claim.** An over-claim withdrawal (proof over 2x the funded amount) was submitted against the deployed program; the solvency guard reverted it with custom error 6013 `InsufficientCommittedDeposit`. A privacy protocol demonstrating its own anti-drain defense is the point of this repo.
+- **The vault rejects an over-claim.** An over-claim withdrawal (proof over 2x the funded amount) was submitted against the deployed program; the solvency guard reverted it with custom error 6013 `InsufficientCommittedDeposit`.
 - **Replay is dead.** Re-submitting the spent note fails with error 6000 `DoubleSpend`.
-- **Seven programs deployed on devnet**: all devnet-scoped until the mainnet gates clear: the root shielded-pool program plus six integration programs (silent-pay, payment-stream, threshold-fed, fiat-oracle, accumulator, inference), all deployed from this exact source tree.
+- **Seven programs deployed on devnet**: all devnet-scoped until the mainnet gates clear: the root program plus six integration programs (silent-pay, payment-stream, threshold-fed, fiat-oracle, accumulator, inference), all deployed from this exact source tree.
 
 Reproduce the whole cycle yourself:
 
@@ -22,29 +22,28 @@ node scripts/ox_atomic.mjs withdraw payout    # expect WITHDRAW_OK + payout
 
 - **Payout-bound proofs.** `prepare_phantom_withdraw_v2` binds amount, receiver token account, and mint into the proof's public signals. A valid proof for someone else's destination is worthless to you.
 - **Solvency enforced on-chain.** Every commitment carries its funded amount; withdrawals above what was actually deposited revert. No trust required.
+- **Privacy boundary stated and tested.** Amount, receiver token account, mint and note commitment are public, so a withdrawal is linkable to its deposit in the current construction; [`PRIVACY_PROPERTIES.md`](./PRIVACY_PROPERTIES.md) lists each property with the test that checks it.
 - **Evidence density.** Root verifier, circuit artifacts, zkey, wasm, vk, manifest, IDL, SDK, and reproducible proof tests are published together, hash-bound through [`MANIFEST.json`](../MANIFEST.json).
 
 **Search tags:** `solana`, `zk-snarks`, `zero-knowledge proofs`, `groth16`, `circom`, `bn254`, `privacy payments`, `anchor`, `snarkjs`, `solana program`
 
 ## Why it matters
 
-Money on a blockchain is public by default: anyone can see who paid whom, and how much. Dark Null addresses that:
+Money on a blockchain is public by default: anyone can see who paid whom, and how much. Dark Null is research toward private settlement on Solana. Its root program is a devnet prototype for proof-verified withdrawals; the payout fields (amount, receiver token account, mint) and the note commitment are public, so a withdrawal is linkable to its deposit in the current construction. Unlinkable withdrawals are planned protocol work.
 
-- **Private receipts.** Prove a payment happened without exposing the amount or the counterparty.
-- **Protect your edge.** Keep suppliers, payroll, and trading flows off the public ledger.
-- **Still verifiable.** Published proofs mean "private" never means "just trust us."
-
-Built for apps and teams that need payments to settle privately, with proof.
+- **Proof-verified payouts.** The vault pays only after an on-chain Groth16 verifier accepts the withdrawal proof.
+- **Private receipt primitives.** [`swarm/x402.mjs`](../swarm/x402.mjs) wraps DNA x402 signed receipts without storing raw resource URLs or payment headers (local prototype).
+- **Still verifiable.** Circuits, keys, tests and the privacy property matrix are published, so each claim can be checked.
 
 ## How this fits the Parad0x stack
 
-Parad0x Labs builds Web0 on Solana: money and agents that settle themselves. Dark Null is the privacy layer, the cloak over the x402 rail: same settlement, no payer attached.
+Parad0x Labs builds Web0 on Solana: money and agents that settle themselves. Dark Null is the privacy research layer next to the x402 rail; its root program verifies Groth16 withdrawal proofs on devnet, with the payout fields public.
 
 | Layer | Repo | Does |
 |---|---|---|
 | Payments | [dna-x402](https://github.com/Parad0x-Labs/dna-x402) | x402 rail: quote, pay, verify, receipt, anchor |
 | Build | dna-x402-builders (private repository) | Hosted kit: turn any API/bot into a paid agent |
-| Privacy | **Dark-Null-Protocol** (this repo) | Groth16 privacy settlement, published proofs |
+| Privacy | **Dark-Null-Protocol** (this repo) | Groth16 proof-verified withdrawals (devnet prototype), published proofs |
 | Data | liquefy (private repository) | Columnar compression |
 | Audit trail | [liquefy-openclaw-integration](https://github.com/Parad0x-Labs/liquefy-openclaw-integration) | Flight recorder: 24 engines + Solana-anchored audit trails |
 | Media | nebula-media (private repository) | Proof-carrying media compression, scene-aware, with on-chain receipts |
@@ -54,7 +53,7 @@ Project site: **[parad0xlabs.com](https://parad0xlabs.com)**. The canonical depl
 
 ## Market position
 
-Dark Null is the compact, evidence-first Solana privacy settlement track:
+Dark Null is the compact, evidence-first Solana privacy research track:
 
 - `256-byte` current `groth16-solana` verifier ABI
 - `128-byte` compressed proof target
@@ -63,6 +62,7 @@ Dark Null is the compact, evidence-first Solana privacy settlement track:
 - explicit trusted-setup evidence with a mainnet blocker until final setup evidence exists
 - payout-bound v2 withdraw path proving amount, receiver token account, and mint
 - public launch gate that blocks unsupported mainnet claims
+- stated privacy boundary: withdrawals are linkable to deposits in the current construction ([`PRIVACY_PROPERTIES.md`](./PRIVACY_PROPERTIES.md))
 
 For launch copy and positioning, read [`LAUNCH_NARRATIVE.md`](./LAUNCH_NARRATIVE.md). For the release gate, read [`MAINNET_READINESS.md`](./MAINNET_READINESS.md) and [`MAINNET_RUNBOOK.md`](./MAINNET_RUNBOOK.md).
 For the delivered-vs-blocked claim boundary, read [`CLAIMS_LEDGER.md`](./CLAIMS_LEDGER.md).
@@ -127,7 +127,7 @@ For Anchor-based integrations, add `@coral-xyz/anchor` and `@solana/web3.js` to 
 
 Integrate against this devnet program set:
 
-| Generation | Root shielded-pool program | Integration programs | Status |
+| Generation | Root program | Integration programs | Status |
 |---|---|---|---|
 | Current (since 2026-08-25) | `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV`, matches `declare_id!` in [`src/lib.rs`](../src/lib.rs), [`MANIFEST.json`](../MANIFEST.json), [`NETWORKS.json`](../NETWORKS.json), [`Anchor.toml`](../Anchor.toml); upgrade authority `4cTBfB8v…` | silent-pay `9VYPtdr…`, payment-stream `J6oHoys…`, threshold-fed `4sMywVPL…`, fiat-oracle `AJHHpWv…`, accumulator `ByFb6xc…`, inference `6h4yKZG…` | Canonical devnet root; integration target |
 
@@ -156,7 +156,8 @@ Where any doc differs, `MANIFEST.json` and [`PROGRAM_IDS.md`](./PROGRAM_IDS.md) 
 - ZK access receipt prototype issues access only on a valid Groth16 proof without recording the payer's identity (20 tests pass)
 - Piano PIR access pattern prototype retrieves an index entry without leaking which entry was queried (15 tests pass)
 - BDHKE blind token issuance prototype produces tokens that cannot be linked back to the redeem call (19 tests pass)
-- canonical devnet shielded-pool program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` verified executable on devnet, including a Groth16 withdraw payout on devnet; `npm run check:x402:devnet` passes
+- a public observer links each withdrawal to its deposit by commitment equality; amount, receiver token account and mint are public (`tests/privacy_linkage.rs`, `tests/privacy-linkage.test.mjs`)
+- canonical devnet root program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` verified executable on devnet, including a Groth16 withdraw payout on devnet; `npm run check:x402:devnet` passes
 - six x402 integration programs deployed on devnet from this source tree: silent-pay (`9VYPtdr…`), payment-stream (`J6oHoys…`), threshold-fed (`4sMywVPL…`), fiat-oracle (`AJHHpWv…`), accumulator (`ByFb6xc…`), inference (`6h4yKZG…`)
 - full six-program integration demo passes end-to-end on devnet (`node scripts/demo-x402-dark-null.mjs`)
 

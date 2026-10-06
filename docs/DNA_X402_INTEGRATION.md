@@ -4,7 +4,7 @@ Dark Null should integrate with `dna-x402` as a payment settlement primitive, no
 
 ## Boundary
 
-`dna-x402` owns HTTP payment negotiation, API gating, agent payment UX, facilitator calls, and merchant-side middleware. Dark Null owns proof-bound private settlement and receipt locking.
+`dna-x402` owns HTTP payment negotiation, API gating, agent payment UX, facilitator calls, and merchant-side middleware. Dark Null owns proof-bound settlement (a devnet prototype whose payout fields and note commitment are public; see [`PRIVACY_PROPERTIES.md`](./PRIVACY_PROPERTIES.md)) and receipt locking.
 
 There are now two explicit paths:
 
@@ -24,7 +24,7 @@ dna-x402 middleware creates payment intent
   |
 Dark Null adapter hashes the intent and binds replay key
   |
-Dark Null client shields or proves settlement
+Dark Null client deposits or proves settlement
   |
 relayer submits proof-bound payout when needed
   |

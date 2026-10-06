@@ -41,6 +41,10 @@ const requiredFiles = [
   "tests/swarm-config.test.mjs",
   "tests/x402-private-payments.test.mjs",
   "tests/2030-claims.test.mjs",
+  "tests/privacy-linkage.test.mjs",
+  "tests/privacy_linkage.rs",
+  "tests/fixtures/privacy-linkage.json",
+  "scripts/generate-privacy-linkage-fixture.mjs",
   "client/dark_client.py",
   "client/README.md",
   "circuits/null_proof.circom",
@@ -65,6 +69,7 @@ const requiredFiles = [
   "docs/PRIVATE_X402_PAYMENTS.md",
   "docs/RECURSIVE_BATCHING.md",
   "docs/PROGRAM_IDS.md",
+  "docs/PRIVACY_PROPERTIES.md",
   "scripts/check-2030-claims.mjs",
   "scripts/cargo-test.mjs",
   "scripts/bootstrap.sh",
@@ -270,6 +275,12 @@ async function checkPackageMetadata() {
   if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run check:claims")) {
     failures.push("package.json test script must include npm run check:claims");
   }
+  if (!packageJson.scripts || packageJson.scripts["test:privacy"] !== "node --test ./tests/privacy-linkage.test.mjs") {
+    failures.push("package.json must expose scripts.test:privacy");
+  }
+  if (!packageJson.scripts || !packageJson.scripts.test.includes("npm run test:privacy")) {
+    failures.push("package.json test script must include npm run test:privacy");
+  }
   if (!packageJson.scripts || packageJson.scripts["test:proof"] !== "node --test ./tests/proof-encoding.test.mjs ./tests/malformed-proof.test.mjs ./tests/mainnet-readiness.test.mjs ./tests/mainnet-evidence.test.mjs ./tests/mainnet-beta-evidence.test.mjs") {
     failures.push("package.json must expose scripts.test:proof");
   }
@@ -390,6 +401,9 @@ async function checkDocs() {
   }
   if (!readme.includes("docs/2030_PRIMITIVES.md")) {
     failures.push("README.md: missing 2030 primitives doc link");
+  }
+  if (!readme.includes("docs/PRIVACY_PROPERTIES.md")) {
+    failures.push("README.md: missing privacy properties doc link");
   }
   if (!readme.includes("npm run check:x402")) {
     failures.push("README.md: missing private x402 receipt check command");

@@ -30,11 +30,14 @@ npm run test:all
 | [`canonical-manifest.test.mjs`](./canonical-manifest.test.mjs) | root manifest binding test |
 | [`verification-key-consistency.test.mjs`](./verification-key-consistency.test.mjs) | root verifier/vk consistency test |
 | [`smoke.rs`](./smoke.rs) | active Rust smoke test for the promoted root crate |
+| [`privacy_linkage.rs`](./privacy_linkage.rs) | runs deposits, root update and a real-proof `prepare_phantom_withdraw_v2` through the program entrypoint; an observer over public data links the withdrawal to its deposit (asserts the current behaviour) |
+| [`privacy-linkage.test.mjs`](./privacy-linkage.test.mjs) | binds the linkage fixture to the circuit artifacts, verifies its proof with snarkjs, re-derives the commitments, runs the same observer over the public signals |
 
 ## Reproduction Limits
 
 - the canonical root proof-flow test proves the current root circuit, zkey, and vk are internally consistent
 - it does not prove a mainnet deployment or an external audit
+- the linkage tests document a privacy limitation; see [`../docs/PRIVACY_PROPERTIES.md`](../docs/PRIVACY_PROPERTIES.md)
 
 ## Related Files
 

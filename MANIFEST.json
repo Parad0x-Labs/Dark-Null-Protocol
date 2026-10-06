@@ -132,13 +132,13 @@
     },
     {
       "path": "package.json",
-      "sha256": "d579b46682c4e5bb97dee97d1ee665ce3449680ddc8ce84a6802305aaf6b2c5c",
+      "sha256": "ebe3386f9f7702cbf2bf21521f279073a642a650155b151d75108e83c421ed0d",
       "size": 8279
     },
     {
       "path": "package-lock.json",
-      "sha256": "95e6d988010d08a9b4368011d87001371d46dec3ce7c52e61848ebcf84b6414d",
-      "size": 40757
+      "sha256": "f31653b1f8df720996ff0ee940879d2e7a3af19491d26e978ca11e3d1aa8c098",
+      "size": 39085
     },
     {
       "path": "NETWORKS.json",
@@ -212,8 +212,8 @@
     },
     {
       "path": "sdk/index.mjs",
-      "sha256": "5f59bcad64535dcbd28bea53228ebc58479e98bf5e5dff09471225fe4547ccfd",
-      "size": 15424
+      "sha256": "8c481d415c83b4cc32c7713f80566feb22f0b1d8cef3086638a15d25241b7cfa",
+      "size": 15448
     },
     {
       "path": "sdk/index.d.ts",

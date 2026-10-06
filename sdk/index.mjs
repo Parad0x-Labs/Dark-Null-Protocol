@@ -454,13 +454,14 @@ export async function createAnchorProgram({
   const resolvedProgramId = resolveProgramId(manifestKey ?? programId);
   const anchorModule = anchor ?? (await import("@coral-xyz/anchor"));
   const AnchorProgram = anchorModule.Program ?? anchorModule.default?.Program;
-  const PublicKey = anchorModule.web3?.PublicKey ?? anchorModule.default?.web3?.PublicKey;
 
-  if (!AnchorProgram || !PublicKey) {
-    throw new Error("Anchor module does not expose Program and web3.PublicKey");
+  if (!AnchorProgram) {
+    throw new Error("Anchor module does not expose Program");
   }
 
-  return new AnchorProgram(getIdl(), new PublicKey(resolvedProgramId), provider);
+  // The published IDL uses the Anchor 0.30+ format, where Program reads the
+  // program address from the IDL itself: new Program(idl, provider).
+  return new AnchorProgram({ ...getIdl(), address: resolvedProgramId }, provider);
 }
 
 export async function createConnection(rpcUrl, web3Module) {

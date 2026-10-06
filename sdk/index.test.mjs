@@ -143,20 +143,9 @@ test("verifier shape and proof bundle helpers reject drift", () => {
 });
 
 test("anchor helper works with injected modules", async () => {
-  class MockPublicKey {
-    constructor(value) {
-      this.value = value;
-    }
-
-    toBase58() {
-      return this.value;
-    }
-  }
-
   class MockProgram {
-    constructor(idl, programId, provider) {
+    constructor(idl, provider) {
       this.idl = idl;
-      this.programId = programId;
       this.provider = provider;
     }
   }
@@ -167,12 +156,30 @@ test("anchor helper works with injected modules", async () => {
     manifestKey: "canonicalDevnet",
     anchor: {
       Program: MockProgram,
-      web3: { PublicKey: MockPublicKey },
     },
   });
 
   assert.equal(program.provider, provider);
+  assert.equal(program.idl.address, "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV");
+  assert.ok(program.idl.instructions.length > 0);
+});
+
+test("anchor helper builds a real Program from the published IDL", async () => {
+  const anchor = await import("@coral-xyz/anchor");
+  const keypair = anchor.web3.Keypair.generate();
+  const wallet = {
+    publicKey: keypair.publicKey,
+    signTransaction: async (tx) => tx,
+    signAllTransactions: async (txs) => txs,
+  };
+  // Constructing a Connection does not contact the RPC endpoint.
+  const connection = new anchor.web3.Connection("http://127.0.0.1:8899");
+  const provider = new anchor.AnchorProvider(connection, wallet, {});
+
+  const program = await createAnchorProgram({ provider, manifestKey: "canonicalDevnet" });
+
   assert.equal(program.programId.toBase58(), "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV");
+  assert.equal(typeof program.methods.updateRoot, "function");
 });
 
 test("connection helper works with injected web3 module", async () => {

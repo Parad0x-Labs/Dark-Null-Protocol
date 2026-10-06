@@ -10,7 +10,7 @@ boundary is also kept in [`docs/CLAIMS_LEDGER.md`](./docs/CLAIMS_LEDGER.md).
 |---|---|
 | Commit checked | `57e353fee8986698359a53b6d659093cc70acd28` (`main`, observed 2026-10-06 08:23 UTC) |
 | npm registry checked | 2026-10-06 08:23 UTC (`@dark-null/protocol` is not published) |
-| Devnet checked | 2026-10-06 08:26 UTC |
+| Devnet checked | 2026-10-06 08:26 UTC; canonical proof cycle rerun 08:44 UTC ([evidence](./evidence/devnet-2026-10-06/README.md)) |
 
 Read in this order: this page, then [`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md) (what an on-chain observer sees), then
 [`SECURITY_MODEL.md`](./SECURITY_MODEL.md) and [`src/lib.rs`](./src/lib.rs).
@@ -43,8 +43,8 @@ deployed. **Not established** lists what a reader should not infer.
 <!-- claims-table:start (generated from evidence/claims.json; edit the registry, then run scripts/check-claims-registry.mjs --write) -->
 | ID | Capability | Exists in source | Demonstrated | Where it runs | Not established |
 |---|---|---|---|---|---|
-| `dark-null.groth16-withdraw` | The root program pays a withdrawal only after an on-chain Groth16 proof over eight public inputs verifies. | prototype: `src/lib.rs` | verifier: groth16-solana Groth16Verifier over the alt_bn128 syscalls with the embedded VERIFYING_KEY (vk.json SHA-256 6abfff44...3d63a); circuit, zkey, wasm and vk.json pinned by SHA-256 in MANIFEST.json; devnet transaction 3wXv6wGS... (slot 487904628) invoked this program ID and succeeded (test: pass 2026-10-06) | devnet `35GM…KuwV` | that the current devnet bytes are the build that ran 3wXv6wGS...: the program was last deployed at slot 487918755, after that transaction; a reproducible build hash binding devnet bytes to this commit; a multi-party trusted setup; mainnet deployment (none) |
-| `dark-null.payout-binding` | prepare_phantom_withdraw_v2 binds the proof to the amount, receiver token account and mint. | implemented: `src/lib.rs` | amount, receiver token account and mint are public inputs 3 to 7; a proof for one destination does not verify for another; commitment accounting refuses a withdrawal above the amount deposited against the commitment (test: pass 2026-10-06) | local / off-chain | hiding of amount, receiver or mint: these are public by construction (see docs/PRIVACY_PROPERTIES.md) |
+| `dark-null.groth16-withdraw` | The root program pays a withdrawal only after an on-chain Groth16 proof over eight public inputs verifies. | prototype: `src/lib.rs` | verifier: groth16-solana Groth16Verifier over the alt_bn128 syscalls with the embedded VERIFYING_KEY (vk.json SHA-256 6abfff44...3d63a); circuit, zkey, wasm and vk.json pinned by SHA-256 in MANIFEST.json; devnet transaction 3wXv6wGS... (slot 487904628) invoked this program ID and succeeded; 2026-10-06 canonical cycle on the current devnet bytes (last deployed slot 487918755): fresh deposit 7LSFx3jQ... (slot 508036692), update_root HKgabjg1... (508036696), Groth16 withdraw 2GfxoE9r... (508036706) paid 50,000,000 lamports; same run: a withdrawal of twice the committed deposit is refused with 6013 InsufficientCommittedDeposit and a re-submitted spent note with 6000 DoubleSpend (both at preflight) (test: pass 2026-10-06) | devnet `35GM…KuwV` | a reproducible build hash binding the current devnet bytes to a commit; a multi-party trusted setup; mainnet deployment (none) |
+| `dark-null.payout-binding` | prepare_phantom_withdraw_v2 binds the proof to the amount, receiver token account and mint. | implemented: `src/lib.rs` | amount, receiver token account and mint are public inputs 3 to 7; a proof for one destination does not verify for another; commitment accounting refuses a withdrawal above the amount deposited against the commitment; on devnet 2026-10-06 the deployed program refused a withdrawal of twice the committed deposit (6013 InsufficientCommittedDeposit) (test: pass 2026-10-06) | local / off-chain | hiding of amount, receiver or mint: these are public by construction (see docs/PRIVACY_PROPERTIES.md) |
 | `dark-null.privacy-properties` | Which deposit and withdrawal fields an on-chain observer can see, and which properties the prototype protects. | prototype: `src/lib.rs` | possession of a deposited note opening is required to withdraw; nullifier replay is refused; payout cannot be redirected; note secrets stay private witness inputs (test: partial 2026-10-06) | local / off-chain | deposit to withdrawal unlinkability: the withdrawal's public input 0 equals the deposit commitment, so the spent deposit is identifiable; amount confidentiality; an anonymity set: a depth-7 tree has 128 leaf positions, which is capacity, not a measured set |
 | `dark-null.integration-programs` | Six native integration programs from programs/ are deployed on devnet. | prototype: `programs/silent-pay/src/lib.rs` | all six program accounts exist on devnet (last deployed between slots 487904982 and 487905446) | devnet (6 programs) | ZK properties: fiat-oracle and inference verify oracle signatures, accumulator is a rolling SHA-256 hash, not a folding scheme; build hashes binding devnet bytes to this commit; end-to-end runs in this review pass |
 | `dark-null.private-x402-receipts` | Private x402 receipt primitives wrap a DNA x402 signed receipt without storing raw URLs or payment headers. | implemented: `swarm/x402.mjs` | resource URL stored as a hash; receipt locks header hashes, proof bundle hash and previous receipt hash (test: pass 2026-10-06) | local / off-chain | a hosted x402 merchant gateway; on-chain privacy of the underlying payment |
@@ -59,8 +59,11 @@ deployed. **Not established** lists what a reader should not infer.
 - Root program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` on devnet, upgrade authority
   `4cTBfB8vJK8YiCBcVrvZV4wx89AFzGEbm7LLghJsNUyD`, last deployed in slot 487918755.
 - The proof-verified payout transaction cited in the README (`3wXv6wGS…`, slot 487904628) succeeded against
-  this program ID before that last deployment. A build hash tying the current devnet bytes to a commit is not
-  recorded yet.
+  this program ID before that last deployment.
+- On 2026-10-06 the canonical cycle ran against the current bytes: fresh deposit, `update_root` and a Groth16
+  withdraw that paid 50,000,000 lamports (`2GfxoE9r…`, slot 508036706); an over-claim (6013) and a spent note
+  (6000) were refused. Signatures in [`evidence/devnet-2026-10-06/`](./evidence/devnet-2026-10-06/README.md).
+  A build hash tying the current devnet bytes to a commit is not recorded yet.
 - No Dark Null program is deployed on mainnet.
 
 ## Reproduce

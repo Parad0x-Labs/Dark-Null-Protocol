@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-10-06",
+  "cluster": "devnet",
+  "program": "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV",
+  "programLastDeployedSlot": 487918755,
+  "suites": [
+    {
+      "suite": "darknull-canonical-proof-cycle",
+      "result": "PASS",
+      "pass": 3,
+      "fail": 0,
+      "txs": 3,
+      "file": "evidence/devnet-2026-10-06/darknull-canonical-proof-cycle.json"
+    },
+    {
+      "suite": "darknull-check-x402-devnet",
+      "result": "PASS",
+      "pass": 1,
+      "fail": 0,
+      "txs": 1,
+      "file": "evidence/devnet-2026-10-06/darknull-check-x402-devnet.json"
+    }
+  ],
+  "pass": 4,
+  "fail": 0,
+  "note": "Integration-program runs from the same day are recorded with their redeploy under a fresh key."
+}

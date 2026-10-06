@@ -1,0 +1,52 @@
+{
+  "suite": "darknull-canonical-proof-cycle",
+  "repo": "Dark-Null-Protocol@57e353f",
+  "cluster": "devnet",
+  "rpc": "https://api.devnet.solana.com",
+  "command": "node scripts/ox_atomic.mjs withdraw attack | withdraw payout | roundtrip",
+  "programId": {
+    "dark_null (canonical)": "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"
+  },
+  "result": "PASS",
+  "pass": 3,
+  "fail": 0,
+  "timestamp": "2026-10-06T08:43:58Z",
+  "signatures": [
+    {
+      "sig": "7LSFx3jQbvUwGbh71vv5PTZ8z8bjRZiXppkwGAAc4DVA3SCSVfAEy1Dn1BYzx2Am3Ge47FG4rrTcBimoCZoWFTB",
+      "slot": 508036692,
+      "err": null,
+      "explorer": "https://explorer.solana.com/tx/7LSFx3jQbvUwGbh71vv5PTZ8z8bjRZiXppkwGAAc4DVA3SCSVfAEy1Dn1BYzx2Am3Ge47FG4rrTcBimoCZoWFTB?cluster=devnet"
+    },
+    {
+      "sig": "HKgabjg1PUT77Vkttugvf7hFbg1wcmzEA96FbFke1pMPjtxkbFVGLhmvM6qsp1z3PdcAdFHCTPqTtqmTKVFuWXp",
+      "slot": 508036696,
+      "err": null,
+      "explorer": "https://explorer.solana.com/tx/HKgabjg1PUT77Vkttugvf7hFbg1wcmzEA96FbFke1pMPjtxkbFVGLhmvM6qsp1z3PdcAdFHCTPqTtqmTKVFuWXp?cluster=devnet"
+    },
+    {
+      "sig": "2GfxoE9rj58xTc5Qbgazj4n4g733NYQuZ3aDYbHMcNT8q2GxHDkmRb2jv2REFmi2x6asBo8yx3pi3zoQGfe5SYZc",
+      "slot": 508036706,
+      "err": null,
+      "explorer": "https://explorer.solana.com/tx/2GfxoE9rj58xTc5Qbgazj4n4g733NYQuZ3aDYbHMcNT8q2GxHDkmRb2jv2REFmi2x6asBo8yx3pi3zoQGfe5SYZc?cluster=devnet"
+    }
+  ],
+  "tests": [
+    {
+      "t": "over-claim (2x deposit) withdraw",
+      "r": "PASS REJECTED 6013 InsufficientCommittedDeposit (preflight)"
+    },
+    {
+      "t": "re-submit the already-spent payout note",
+      "r": "PASS REJECTED 6000 DoubleSpend (preflight)"
+    },
+    {
+      "t": "roundtrip: fresh deposit -> update_root -> Groth16 withdraw",
+      "r": "PASS WITHDRAW_OK, payout 50000000 lamports"
+    }
+  ],
+  "notes": [
+    "Signer = Dark Null devnet deployer/root authority 4cTB\u2026 (key streamed into a tmpfs sandbox and removed after the run). Note state from the live-demo state file of the canonical devnet deployment. 4cTB paid 15000 lamports in fees."
+  ],
+  "slot": 508036706
+}

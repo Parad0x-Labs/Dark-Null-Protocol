@@ -1,0 +1,27 @@
+{
+  "suite": "darknull-check-x402-devnet",
+  "repo": "Dark-Null-Protocol@57e353f",
+  "cluster": "devnet",
+  "rpc": "https://api.devnet.solana.com",
+  "command": "npm run check:x402:devnet",
+  "programId": {
+    "dark_null (canonical)": "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"
+  },
+  "result": "PASS",
+  "pass": 1,
+  "fail": 0,
+  "timestamp": "2026-10-06T08:41:44Z",
+  "signatures": [
+    {
+      "sig": "3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU",
+      "slot": 487904628,
+      "err": null,
+      "explorer": "https://explorer.solana.com/tx/3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU?cluster=devnet"
+    }
+  ],
+  "tests": [],
+  "notes": [
+    "Canonical settlement 3wXv6wGS\u2026 finalized at slot 487904628; program account executable."
+  ],
+  "slot": 487904628
+}

@@ -31,12 +31,15 @@
         "Upgrade authority 4cTBfB8vJK8YiCBcVrvZV4wx89AFzGEbm7LLghJsNUyD (devnet) can replace the program.",
         "Single-party development trusted setup for circuits/null_proof_final.zkey."
       ],
-      "evidence_checked_at": "2026-10-06T08:26:58Z",
+      "evidence_checked_at": "2026-10-06T10:30:00Z",
       "proof_files": [
         "tests/canonical-proof-flow.test.mjs",
         "tests/malformed-proof.test.mjs",
         "tests/verification-key-consistency.test.mjs",
-        "MANIFEST.json"
+        "MANIFEST.json",
+        "evidence/devnet-2026-10-06/README.md",
+        "evidence/devnet-2026-10-06/darknull-canonical-proof-cycle.json",
+        "evidence/devnet-2026-10-06/darknull-check-x402-devnet.json"
       ],
       "test_command": "npm ci --ignore-scripts && npm test && npm run test:proof && npm run release:verify",
       "test_run": {
@@ -44,17 +47,18 @@
         "date": "2026-10-06",
         "environment": "node:22 container, network off after npm ci --ignore-scripts, commit 17e44f4",
         "command": "npm test && npm run test:proof && npm run release:verify",
-        "note": "npm test 158 of 158 node tests plus repo checks; test:proof 10 of 10; release:verify passed. cargo test not run in this pass."
+        "note": "npm test 158 of 158 node tests plus repo checks; test:proof 10 of 10; release:verify passed. cargo test not run in this pass. Devnet: canonical proof cycle 3 of 3 and check:x402:devnet 1 of 1 on 2026-10-06 (evidence/devnet-2026-10-06)."
       },
       "mocks_or_skips": [],
       "demonstrated_properties": [
         "verifier: groth16-solana Groth16Verifier over the alt_bn128 syscalls with the embedded VERIFYING_KEY (vk.json SHA-256 6abfff44...3d63a)",
         "circuit, zkey, wasm and vk.json pinned by SHA-256 in MANIFEST.json",
-        "devnet transaction 3wXv6wGS... (slot 487904628) invoked this program ID and succeeded"
+        "devnet transaction 3wXv6wGS... (slot 487904628) invoked this program ID and succeeded",
+        "2026-10-06 canonical cycle on the current devnet bytes (last deployed slot 487918755): fresh deposit 7LSFx3jQ... (slot 508036692), update_root HKgabjg1... (508036696), Groth16 withdraw 2GfxoE9r... (508036706) paid 50,000,000 lamports",
+        "same run: a withdrawal of twice the committed deposit is refused with 6013 InsufficientCommittedDeposit and a re-submitted spent note with 6000 DoubleSpend (both at preflight)"
       ],
       "not_demonstrated": [
-        "that the current devnet bytes are the build that ran 3wXv6wGS...: the program was last deployed at slot 487918755, after that transaction",
-        "a reproducible build hash binding devnet bytes to this commit",
+        "a reproducible build hash binding the current devnet bytes to a commit",
         "a multi-party trusted setup",
         "mainnet deployment (none)"
       ],
@@ -83,7 +87,8 @@
       "evidence_checked_at": "2026-10-06",
       "proof_files": [
         "tests/canonical-proof-flow.test.mjs",
-        "docs/CLAIMS_LEDGER.md"
+        "docs/CLAIMS_LEDGER.md",
+        "evidence/devnet-2026-10-06/darknull-canonical-proof-cycle.json"
       ],
       "test_command": "npm test",
       "test_run": {
@@ -96,7 +101,8 @@
       "mocks_or_skips": [],
       "demonstrated_properties": [
         "amount, receiver token account and mint are public inputs 3 to 7; a proof for one destination does not verify for another",
-        "commitment accounting refuses a withdrawal above the amount deposited against the commitment"
+        "commitment accounting refuses a withdrawal above the amount deposited against the commitment",
+        "on devnet 2026-10-06 the deployed program refused a withdrawal of twice the committed deposit (6013 InsufficientCommittedDeposit)"
       ],
       "not_demonstrated": [
         "hiding of amount, receiver or mint: these are public by construction (see docs/PRIVACY_PROPERTIES.md)"

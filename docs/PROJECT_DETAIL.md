@@ -129,7 +129,7 @@ Integrate against this devnet program set:
 
 | Generation | Root program | Integration programs | Status |
 |---|---|---|---|
-| Current (since 2026-08-25) | `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV`, matches `declare_id!` in [`src/lib.rs`](../src/lib.rs), [`MANIFEST.json`](../MANIFEST.json), [`NETWORKS.json`](../NETWORKS.json), [`Anchor.toml`](../Anchor.toml); upgrade authority `4cTBfB8v…` | silent-pay `9VYPtdr…`, payment-stream `J6oHoys…`, threshold-fed `4sMywVPL…`, fiat-oracle `AJHHpWv…`, accumulator `ByFb6xc…`, inference `6h4yKZG…` | Canonical devnet root; integration target |
+| Current (since 2026-08-25) | `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV`, matches `declare_id!` in [`src/lib.rs`](../src/lib.rs), [`MANIFEST.json`](../MANIFEST.json), [`NETWORKS.json`](../NETWORKS.json), [`Anchor.toml`](../Anchor.toml); upgrade authority `4cTBfB8v…` | silent-pay `2FvaRhp…`, payment-stream `EduZQkG…`, threshold-fed `CjcnLYP1…`, fiat-oracle `3VQsCtr…`, accumulator `FX2YSq6…`, inference `GSkQrJ8…` | Canonical devnet root; integration target |
 
 Where any doc differs, `MANIFEST.json` and [`PROGRAM_IDS.md`](./PROGRAM_IDS.md) are authoritative.
 
@@ -158,7 +158,7 @@ Where any doc differs, `MANIFEST.json` and [`PROGRAM_IDS.md`](./PROGRAM_IDS.md) 
 - BDHKE blind token issuance prototype produces tokens that cannot be linked back to the redeem call (19 tests pass)
 - a public observer links each withdrawal to its deposit by commitment equality; amount, receiver token account and mint are public (`tests/privacy_linkage.rs`, `tests/privacy-linkage.test.mjs`)
 - canonical devnet root program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` verified executable on devnet, including a Groth16 withdraw payout on devnet; `npm run check:x402:devnet` passes
-- six x402 integration programs deployed on devnet from this source tree: silent-pay (`9VYPtdr…`), payment-stream (`J6oHoys…`), threshold-fed (`4sMywVPL…`), fiat-oracle (`AJHHpWv…`), accumulator (`ByFb6xc…`), inference (`6h4yKZG…`)
+- six x402 integration programs deployed on devnet from this source tree: silent-pay (`2FvaRhp…`), payment-stream (`EduZQkG…`), threshold-fed (`CjcnLYP1…`), fiat-oracle (`3VQsCtr…`), accumulator (`FX2YSq6…`), inference (`GSkQrJ8…`); redeployed under fresh keys on 2026-10-06, Devnet (2026-10-06): 34/34 e2e checks ([evidence](../evidence/devnet-2026-10-06/README.md))
 - full six-program integration demo passes end-to-end on devnet (`node scripts/demo-x402-dark-null.mjs`)
 
 ## Mainnet gates
@@ -207,16 +207,16 @@ Running tests; not deployed to production.
 
 ### Devnet programs (6), wired into x402
 
-Native Solana programs deployed on devnet from this source tree; each has an e2e script in [`scripts/`](../scripts) and is wired into the x402 payment stack via [`integration/programs.mjs`](../integration/programs.mjs) + [`integration/x402-hooks.mjs`](../integration/x402-hooks.mjs). Run [`scripts/demo-x402-dark-null.mjs`](../scripts/demo-x402-dark-null.mjs) to see all six fire in one agent session.
+Native Solana programs deployed on devnet from this source tree (redeployed under fresh keys on 2026-10-06; Devnet (2026-10-06): 34/34 e2e checks, [evidence](../evidence/devnet-2026-10-06/README.md)); each has an e2e script in [`scripts/`](../scripts) and is wired into the x402 payment stack via [`integration/programs.mjs`](../integration/programs.mjs) + [`integration/x402-hooks.mjs`](../integration/x402-hooks.mjs). Run [`scripts/demo-x402-dark-null.mjs`](../scripts/demo-x402-dark-null.mjs) to see all six fire in one agent session.
 
 | Primitive | Program ID (devnet) | What the on-chain program does |
 |---|---|---|
-| Silent Payment Rails | `9VYPtdr19RDBVTV1WJ1stkCisucre2Bvcpt91KyfYszR` | BIP352-style ECDH stealth-address derive + scan; payer address not re-used across calls; not full BIP352; no on-chain scanner |
-| Fiat Settlement Oracle | `AJHHpWv1eD2cq9iRM7RtUyA6C7QpYLgWKa5vUbgRWY7m` | `secp256k1_recover` verifies oracle sig over `SHA256(payment_id ‖ amount ‖ recipient)`; replay-protected receipt PDA; oracle-attested, not zkTLS |
-| Threshold Blind Mint Federation | `4sMywVPL5waxniQDs5pDuhc1E4uUWjqh1ob17fY82VQz` | k-of-n BDHKE via Shamir + Lagrange; records federation issuance with replay protection; no DKG or per-signer DLEQ proof |
-| Receipt Commitment Accumulator | `ByFb6xcQTgG4fai31Zto7qpQve1eBo3cc2qrAJU5tN7k` | Rolling `SHA256(prev_commitment ‖ receipt_hash)` with finalization gate; one root proves all receipts in a session; SHA256 accumulator, not Nova folding |
-| Oracle-Attested Inference Receipt | `6h4yKZGFYHAVkctUVqD4wrXCYeostHBhG6T3FCVAqr3f` | `secp256k1_recover` verifies oracle sig over `SHA256(model_hash ‖ input_hash ‖ output_hash)`; binds compute to x402 payment; oracle attestation, not EZKL ZK circuit |
-| Private Streaming Micropayments | `J6oHoysM1RGs3yZPXBp9ZUgdYgGQWZf2wKisS1tJQdaQ` | Payment channel: `OpenChannel` funds a PDA, off-chain ticks track per-call spend, `CloseChannel` settles exact accumulated amount; no hidden-rate encryption |
+| Silent Payment Rails | `2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED` | BIP352-style ECDH stealth-address derive + scan; payer address not re-used across calls; not full BIP352; no on-chain scanner |
+| Fiat Settlement Oracle | `3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw` | `secp256k1_recover` verifies oracle sig over `SHA256(payment_id ‖ amount ‖ recipient)`; replay-protected receipt PDA; oracle-attested, not zkTLS |
+| Threshold Blind Mint Federation | `CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ` | k-of-n BDHKE via Shamir + Lagrange; records federation issuance with replay protection; no DKG or per-signer DLEQ proof |
+| Receipt Commitment Accumulator | `FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y` | Rolling `SHA256(prev_commitment ‖ receipt_hash)` with finalization gate; one root proves all receipts in a session; SHA256 accumulator, not Nova folding |
+| Oracle-Attested Inference Receipt | `GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB` | `secp256k1_recover` verifies oracle sig over `SHA256(model_hash ‖ input_hash ‖ output_hash)`; binds compute to x402 payment; oracle attestation, not EZKL ZK circuit |
+| Private Streaming Micropayments | `EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP` | Payment channel: `OpenChannel` funds a PDA, off-chain ticks track per-call spend, `CloseChannel` settles exact accumulated amount; no hidden-rate encryption |
 
 **x402 integration** ([`integration/x402-hooks.mjs`](../integration/x402-hooks.mjs)):
 

@@ -10,12 +10,14 @@ Six native Solana programs are deployed on devnet and wired into the x402 paymen
 
 | Program | Devnet ID | x402 hook |
 |---|---|---|
-| silent-pay | `9VYPtdr19RDBVTV1WJ1stkCisucre2Bvcpt91KyfYszR` | stealth address per payment |
-| fiat-oracle | `AJHHpWv1eD2cq9iRM7RtUyA6C7QpYLgWKa5vUbgRWY7m` | oracle-attested fiat settlement |
-| threshold-fed | `4sMywVPL5waxniQDs5pDuhc1E4uUWjqh1ob17fY82VQz` | k-of-n NULL mint gate |
-| accumulator | `ByFb6xcQTgG4fai31Zto7qpQve1eBo3cc2qrAJU5tN7k` | rolling receipt commitment per session |
-| inference | `6h4yKZGFYHAVkctUVqD4wrXCYeostHBhG6T3FCVAqr3f` | oracle-attested AI inference receipt |
-| payment-stream | `J6oHoysM1RGs3yZPXBp9ZUgdYgGQWZf2wKisS1tJQdaQ` | per-call billing channel for sessions |
+| silent-pay | `2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED` | stealth address per payment |
+| fiat-oracle | `3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw` | oracle-attested fiat settlement |
+| threshold-fed | `CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ` | k-of-n NULL mint gate |
+| accumulator | `FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y` | rolling receipt commitment per session |
+| inference | `GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB` | oracle-attested AI inference receipt |
+| payment-stream | `EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP` | per-call billing channel for sessions |
+
+Redeployed under fresh program keys on 2026-10-06 (upgrade authority `9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q`). Devnet (2026-10-06): 34/34 e2e checks across the six programs ([evidence](./evidence/devnet-2026-10-06/README.md)).
 
 Integration layer: [`integration/programs.mjs`](./integration/programs.mjs) (typed JS helpers for all 6), [`integration/x402-hooks.mjs`](./integration/x402-hooks.mjs) (drop-in `onReceiptFinalized` callbacks).
 

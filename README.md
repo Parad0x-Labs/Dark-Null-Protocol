@@ -63,7 +63,7 @@ Entry points: [`sdk/index.mjs`](./sdk/index.mjs) and [`sdk/index.d.ts`](./sdk/in
 | Private x402 receipt primitives | **Usable today** | [`swarm/x402.mjs`](./swarm/x402.mjs); wraps DNA x402 signed receipts with no raw URL or payment header stored |
 | Frontier prototypes (6) | **Usable today** | Prototype code with local tests; not deployed to production. See [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md) |
 | Root program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` (deposit vault, proof-verified withdrawal) | **Devnet** | Canonical devnet root and integration target (last deployed at slot 487918755, after the cited proof transaction at slot 487904628); matches `declare_id!` in [`src/lib.rs`](./src/lib.rs); upgrade authority `4cTBfB8v…`; withdrawals are linkable to deposits ([`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md)) |
-| Six integration programs | **Devnet** | silent-pay `9VYPtdr…`, payment-stream `J6oHoys…`, threshold-fed `4sMywVPL…`, fiat-oracle `AJHHpWv…`, accumulator `ByFb6xc…`, inference `6h4yKZG…`; deployed from this source tree |
+| Six integration programs | **Devnet** | silent-pay `2FvaRhp…`, payment-stream `EduZQkG…`, threshold-fed `CjcnLYP1…`, fiat-oracle `3VQsCtr…`, accumulator `FX2YSq6…`, inference `GSkQrJ8…`; redeployed from this source tree under fresh keys on 2026-10-06. Devnet (2026-10-06): 34/34 e2e checks ([evidence](./evidence/devnet-2026-10-06/README.md)) |
 | On-chain receipt anchoring (`receipt_anchor`, in dna-x402) | **Devnet** | `HSdEQWunzPtNqdzv5HfXuA3zwPLpgTXRyfbndnGamhXs`, redeployed under a fresh key on 2026-10-06 (dna-x402 `configs/devnet.oss.json`); callers name the program, there is no default |
 | Research-stage primitives (7) and one blocked primitive | **Planned** | Design and specification only; Confidential Token-2022 linkage is blocked on Token-2022 Confidential Transfer extension audit completion and SIMD stabilization |
 | Mainnet deployment | **Planned** | No Dark Null program is deployed on mainnet today; the gates are listed in [`docs/PROJECT_DETAIL.md`](./docs/PROJECT_DETAIL.md#mainnet-gates) |
@@ -132,12 +132,12 @@ frontier_primitives:
     - piano_pir_access_pattern_privacy
     - bdhke_blind_receipt_tokens
   devnet_programs:
-    - silent_payment_rails: 9VYPtdr19RDBVTV1WJ1stkCisucre2Bvcpt91KyfYszR
-    - fiat_settlement_oracle: AJHHpWv1eD2cq9iRM7RtUyA6C7QpYLgWKa5vUbgRWY7m
-    - threshold_blind_mint_federation: 4sMywVPL5waxniQDs5pDuhc1E4uUWjqh1ob17fY82VQz
-    - receipt_commitment_accumulator: ByFb6xcQTgG4fai31Zto7qpQve1eBo3cc2qrAJU5tN7k
-    - oracle_attested_inference_receipt: 6h4yKZGFYHAVkctUVqD4wrXCYeostHBhG6T3FCVAqr3f
-    - private_streaming_micropayments: J6oHoysM1RGs3yZPXBp9ZUgdYgGQWZf2wKisS1tJQdaQ
+    - silent_payment_rails: 2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED
+    - fiat_settlement_oracle: 3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw
+    - threshold_blind_mint_federation: CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ
+    - receipt_commitment_accumulator: FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y
+    - oracle_attested_inference_receipt: GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB
+    - private_streaming_micropayments: EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP
   research:
     - compressed_anonymity_state
     - proof_carrying_relayer_swarm

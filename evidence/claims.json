@@ -166,7 +166,7 @@
       "id": "dark-null.integration-programs",
       "plain_claim": "Six native integration programs from programs/ are deployed on devnet.",
       "component": "programs/",
-      "source_sha": "57e353fee8986698359a53b6d659093cc70acd28",
+      "source_sha": "fa53ed16aef87e8296287ebe7dcdf8a166f04815",
       "source_paths": [
         "programs/silent-pay/src/lib.rs",
         "programs/payment-stream/src/lib.rs",
@@ -181,19 +181,19 @@
       "network": "devnet",
       "program_id": null,
       "program_ids": {
-        "silent-pay": "9VYPtdr19RDBVTV1WJ1stkCisucre2Bvcpt91KyfYszR",
-        "payment-stream": "J6oHoysM1RGs3yZPXBp9ZUgdYgGQWZf2wKisS1tJQdaQ",
-        "threshold-fed": "4sMywVPL5waxniQDs5pDuhc1E4uUWjqh1ob17fY82VQz",
-        "fiat-oracle": "AJHHpWv1eD2cq9iRM7RtUyA6C7QpYLgWKa5vUbgRWY7m",
-        "accumulator": "ByFb6xcQTgG4fai31Zto7qpQve1eBo3cc2qrAJU5tN7k",
-        "inference": "6h4yKZGFYHAVkctUVqD4wrXCYeostHBhG6T3FCVAqr3f"
+        "silent-pay": "2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED",
+        "payment-stream": "EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP",
+        "threshold-fed": "CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ",
+        "fiat-oracle": "3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw",
+        "accumulator": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+        "inference": "GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB"
       },
       "deployed_build_hash": null,
       "source_build_match": "unknown",
       "authority_assumptions": [
-        "Each program's upgrade authority equals its own program address (observed 2026-10-06)."
+        "Each program's upgrade authority is 9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q (devnet deployer key, read back with solana program show on 2026-10-06)."
       ],
-      "evidence_checked_at": "2026-10-06T08:26:58Z",
+      "evidence_checked_at": "2026-10-06T18:38:15Z",
       "proof_files": [
         "docs/CLAIMS_LEDGER.md",
         "scripts/e2e-silent-pay.mjs",
@@ -201,18 +201,33 @@
         "scripts/e2e-threshold-fed.mjs",
         "scripts/e2e-fiat-oracle.mjs",
         "scripts/e2e-accumulator.mjs",
-        "scripts/e2e-inference.mjs"
+        "scripts/e2e-inference.mjs",
+        "evidence/devnet-2026-10-06/README.md",
+        "evidence/devnet-2026-10-06/darknull-integration-deploy.json",
+        "evidence/devnet-2026-10-06/darknull-silent-pay.json",
+        "evidence/devnet-2026-10-06/darknull-payment-stream.json",
+        "evidence/devnet-2026-10-06/darknull-threshold-fed.json",
+        "evidence/devnet-2026-10-06/darknull-fiat-oracle.json",
+        "evidence/devnet-2026-10-06/darknull-accumulator.json",
+        "evidence/devnet-2026-10-06/darknull-inference.json"
       ],
-      "test_command": "node scripts/e2e-silent-pay.mjs",
-      "test_run": null,
+      "test_command": "scripts/e2e-<program>.mjs for each of the six programs, graded from the ledger (dna-x402 scripts/devnet-e2e/run-darknull-e2e.sh)",
+      "test_run": {
+        "result": "pass",
+        "date": "2026-10-06",
+        "environment": "devnet; node:22 tmpfs container, fresh payer",
+        "command": "sh run-darknull-e2e.sh (six scripts/e2e-*.mjs, every printed signature read back with getTransaction)",
+        "note": "Devnet (2026-10-06): 34/34 checks: silent-pay 5/5, payment-stream 6/6, threshold-fed 5/5, fiat-oracle 3/3, accumulator 10/10, inference 5/5."
+      },
       "mocks_or_skips": [],
       "demonstrated_properties": [
-        "all six program accounts exist on devnet (last deployed between slots 487904982 and 487905446)"
+        "all six programs redeployed on devnet on 2026-10-06 under fresh program keys (deploy slots 508178279 to 508179935)",
+        "for each program, solana program dump returned bytes whose SHA-256 equals the deployed .so, with dataLen equal to the .so size (evidence/devnet-2026-10-06/darknull-integration-deploy.json)",
+        "Devnet (2026-10-06): 34/34 e2e checks across the six programs, outcomes read from getTransaction"
       ],
       "not_demonstrated": [
         "ZK properties: fiat-oracle and inference verify oracle signatures, accumulator is a rolling SHA-256 hash, not a folding scheme",
-        "build hashes binding devnet bytes to this commit",
-        "end-to-end runs in this review pass"
+        "build hashes binding devnet bytes to this commit"
       ],
       "operational_limitations": [],
       "supersedes": null

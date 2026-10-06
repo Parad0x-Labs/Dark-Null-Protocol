@@ -1,0 +1,23 @@
+{
+ "r1cs": "build/transact_v2.r1cs",
+ "header": {
+  "wires": 23240,
+  "public_outputs": 1,
+  "public_inputs": 0,
+  "private_inputs": 94,
+  "labels": 85878,
+  "constraints": 23167
+ },
+ "expected": {
+  "constraints": 23167,
+  "public_outputs": 1,
+  "public_inputs": 0,
+  "baseline": 23166,
+  "review_delta": {
+   "R1": 1,
+   "R2": 3,
+   "R3": -3
+  }
+ },
+ "pass": true
+}

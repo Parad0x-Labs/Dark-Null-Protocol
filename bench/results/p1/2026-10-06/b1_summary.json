@@ -1,0 +1,70 @@
+{
+ "gate": "B1: p50 <= 3 s, peak RAM <= 2 GB",
+ "native_meets_b1": true,
+ "rows": [
+  {
+   "name": "native end to end (C++ witness + arkworks prove, incl. process start and zkey load), 4 thread(s)",
+   "runs": 15,
+   "p50_ms": 247.2,
+   "p95_ms": 294.4,
+   "peak_rss_mb": 46.1,
+   "all_verified": true
+  },
+  {
+   "name": "arkworks prove only, 4 thread(s)",
+   "runs": 15,
+   "p50_ms": 214.2,
+   "p95_ms": 260.7,
+   "peak_rss_mb": 46.1,
+   "all_verified": true
+  },
+  {
+   "name": "native C++ witness only (fresh process, single-threaded; RSS not sampled), runs of the 4-thread series",
+   "runs": 15,
+   "p50_ms": 14.8,
+   "p95_ms": 22,
+   "peak_rss_mb": null,
+   "all_verified": true
+  },
+  {
+   "name": "native end to end (C++ witness + arkworks prove, incl. process start and zkey load), 1 thread(s)",
+   "runs": 15,
+   "p50_ms": 711.3,
+   "p95_ms": 724.2,
+   "peak_rss_mb": 43.2,
+   "all_verified": true
+  },
+  {
+   "name": "arkworks prove only, 1 thread(s)",
+   "runs": 15,
+   "p50_ms": 675.9,
+   "p95_ms": 688.7,
+   "peak_rss_mb": 43.2,
+   "all_verified": true
+  },
+  {
+   "name": "native C++ witness only (fresh process, single-threaded; RSS not sampled), runs of the 1-thread series",
+   "runs": 15,
+   "p50_ms": 14.3,
+   "p95_ms": 16,
+   "peak_rss_mb": null,
+   "all_verified": true
+  },
+  {
+   "name": "snarkjs end to end (WASM witness + prove)",
+   "runs": 12,
+   "p50_ms": 2300.9,
+   "p95_ms": 2581.6,
+   "peak_rss_mb": 366.8,
+   "all_verified": true
+  },
+  {
+   "name": "snarkjs WASM witness only",
+   "runs": 12,
+   "p50_ms": 158.7,
+   "p95_ms": 183.9,
+   "peak_rss_mb": 366.8,
+   "all_verified": true
+  }
+ ]
+}

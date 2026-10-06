@@ -1,0 +1,30 @@
+{
+ "native": "circom 2.2.3 --c --no_asm, g++ -O3",
+ "steps": [
+  {
+   "step": "deposit",
+   "wires": 23240,
+   "differing_wires": 0,
+   "native_r1cs_satisfied": true,
+   "pi": "0x1f6943359e74ff14d71c4e1e35f52abfb98b9567867999f2b1fb6135e2a40d1e",
+   "pi_match": true
+  },
+  {
+   "step": "transfer",
+   "wires": 23240,
+   "differing_wires": 0,
+   "native_r1cs_satisfied": true,
+   "pi": "0x15c7931fa20b6bcfbe2120630b34acf93e931a090f17d13b796470c0d438e561",
+   "pi_match": true
+  },
+  {
+   "step": "withdraw",
+   "wires": 23240,
+   "differing_wires": 0,
+   "native_r1cs_satisfied": true,
+   "pi": "0x012fa03ea670b00b841ff4bce5a35cdda279ac259cdab91aa36a75e71f9c5b60",
+   "pi_match": true
+  }
+ ],
+ "pass": true
+}

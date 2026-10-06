@@ -1,0 +1,209 @@
+{
+ "circuit": "circuits/v2/transact_v2.circom",
+ "reference": "spikes/p0/circuits/transact_v2_spec.circom",
+ "valid": [
+  {
+   "step": "deposit",
+   "expected": "0x1f6943359e74ff14d71c4e1e35f52abfb98b9567867999f2b1fb6135e2a40d1e",
+   "pi": "0x1f6943359e74ff14d71c4e1e35f52abfb98b9567867999f2b1fb6135e2a40d1e",
+   "js_pi": "0x1f6943359e74ff14d71c4e1e35f52abfb98b9567867999f2b1fb6135e2a40d1e",
+   "match": true,
+   "r1cs_satisfied": true,
+   "reference_pi_match": true
+  },
+  {
+   "step": "transfer",
+   "expected": "0x15c7931fa20b6bcfbe2120630b34acf93e931a090f17d13b796470c0d438e561",
+   "pi": "0x15c7931fa20b6bcfbe2120630b34acf93e931a090f17d13b796470c0d438e561",
+   "js_pi": "0x15c7931fa20b6bcfbe2120630b34acf93e931a090f17d13b796470c0d438e561",
+   "match": true,
+   "r1cs_satisfied": true,
+   "reference_pi_match": true
+  },
+  {
+   "step": "withdraw",
+   "expected": "0x012fa03ea670b00b841ff4bce5a35cdda279ac259cdab91aa36a75e71f9c5b60",
+   "pi": "0x012fa03ea670b00b841ff4bce5a35cdda279ac259cdab91aa36a75e71f9c5b60",
+   "js_pi": "0x012fa03ea670b00b841ff4bce5a35cdda279ac259cdab91aa36a75e71f9c5b60",
+   "match": true,
+   "r1cs_satisfied": true,
+   "reference_pi_match": true
+  }
+ ],
+ "tampered": [
+  {
+   "id": "W1",
+   "step": "transfer",
+   "what": "dummy input label differs from input 0 label (C6)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template TransactV2_476 line: 190",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W2",
+   "step": "deposit",
+   "what": "deposit output without the deposit label (C6)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template TransactV2_476 line: 194",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W3",
+   "step": "deposit",
+   "what": "deposit spending a real note: input 0 of value 1 placed in the tree under the claimed root (C6)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template TransactV2_476 line: 186",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W4",
+   "step": "transfer",
+   "what": "output label differs from input label (C6)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template TransactV2_476 line: 194",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W5",
+   "step": "transfer",
+   "what": "signature scalar S + 1 (C7)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template ForceEqualIfEnabled_396 line: 56",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W6",
+   "step": "transfer",
+   "what": "ext_data_hash changed after signing (C7)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template ForceEqualIfEnabled_396 line: 56",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W7",
+   "step": "transfer",
+   "what": "output value + 1 (C4 conservation)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template TransactV2_476 line: 177",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W8",
+   "step": "withdraw",
+   "what": "public_asset = 0 on a withdraw (C5)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template TransactV2_476 line: 179",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W9",
+   "step": "transfer",
+   "what": "membership sibling tampered (C2)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template TransactV2_476 line: 145",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W10",
+   "step": "withdraw",
+   "what": "wrong leaf index for a real input (C2)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template TransactV2_476 line: 145",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W11",
+   "step": "withdraw",
+   "what": "second nk for the same owner (C1, F-NK)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template TransactV2_476 line: 145",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W12",
+   "step": "transfer",
+   "what": "ak off the curve (C1)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template BabyCheck_0 line: 82",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W13",
+   "step": "transfer",
+   "what": "output value 2^64, other output wraps (C3 range)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template Num2Bits_75 line: 38",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W14",
+   "step": "withdraw",
+   "what": "one note spent twice in one transact, value counted twice (R1)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template AssertNonZero_225 line: 73",
+   "reference": "accept",
+   "reference_expected": "accept",
+   "reference_r1cs_satisfied": true
+  },
+  {
+   "id": "W15",
+   "step": "deposit",
+   "what": "small-order ak (order 8) with R8 = S*B8, no ask (R5, circomlib (4*A).x != 0 check)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template EdDSAPoseidonVerifier_397 line: 83",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W16",
+   "step": "transfer",
+   "what": "R8 off the curve (R2)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template BabyCheck_0 line: 82",
+   "reference": "reject",
+   "reference_expected": "reject",
+   "reference_r1cs_satisfied": null
+  },
+  {
+   "id": "W17",
+   "step": "transfer",
+   "what": "non-zero assoc_root in a Phase 1 proof (R3)",
+   "rejected": true,
+   "error": "Error: Assert Failed. Error in template TransactV2_476 line: 226",
+   "reference": "accept",
+   "reference_expected": "accept",
+   "reference_r1cs_satisfied": true
+  }
+ ],
+ "all_valid_match": true,
+ "all_tampered_rejected": true,
+ "reference_as_expected": true,
+ "pass": true
+}

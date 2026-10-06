@@ -1,0 +1,38 @@
+template instances: 477
+warning[CA02]: In template "CompConstant(2736030358979909402780800718157159386076813972158567259200215660948447373040)": Array of subcomponent input/output signals num2bits.out contains a total of 134 signals that do not appear in any constraint of the father component
+ = For example: num2bits.out[0], num2bits.out[100].
+
+warning[CA02]: In template "CompConstant(21888242871839275222246405745257275088548364400416034343698204186575808495616)": Array of subcomponent input/output signals num2bits.out contains a total of 134 signals that do not appear in any constraint of the father component
+ = For example: num2bits.out[0], num2bits.out[100].
+
+warning[CA02]: In template "EscalarMulAny(254)": Array of subcomponent input/output signals segments[1].dbl contains a total of 2 signals that do not appear in any constraint of the father component
+ = For example: segments[1].dbl[0], segments[1].dbl[1].
+
+warning[CA02]: In template "EscalarMulFix(253,[5299619240641551281634865583518297030282874472190772894086521144482721001553,16950150798460657717958625567821834550301663161624707787222815936182638968203])": Array of subcomponent input/output signals segments[1].dbl contains a total of 2 signals that do not appear in any constraint of the father component
+ = For example: segments[1].dbl[0], segments[1].dbl[1].
+
+warning[CA02]: In template "TransactV2(32)": Array of subcomponent input/output signals outRange[0].out contains a total of 64 signals that do not appear in any constraint of the father component
+ = For example: outRange[0].out[0], outRange[0].out[10].
+
+warning[CA02]: In template "TransactV2(32)": Array of subcomponent input/output signals inRange[0].out contains a total of 64 signals that do not appear in any constraint of the father component
+ = For example: inRange[0].out[0], inRange[0].out[10].
+
+warning[CA02]: In template "TransactV2(32)": Array of subcomponent input/output signals outRange[1].out contains a total of 64 signals that do not appear in any constraint of the father component
+ = For example: outRange[1].out[0], outRange[1].out[10].
+
+warning[CA02]: In template "TransactV2(32)": Array of subcomponent input/output signals inRange[1].out contains a total of 64 signals that do not appear in any constraint of the father component
+ = For example: inRange[1].out[0], inRange[1].out[10].
+
+non-linear constraints: 23167
+linear constraints: 0
+public inputs: 0
+private inputs: 94 (92 belong to witness)
+public outputs: 1
+wires: 23240
+labels: 85878
+Written successfully: /w/build/transact_v2.r1cs
+Written successfully: /w/build/transact_v2.sym
+Written successfully: /w/build/transact_v2_cpp/transact_v2.cpp and /w/build/transact_v2_cpp/transact_v2.dat
+Written successfully: /w/build/transact_v2_cpp/main.cpp, circom.hpp, calcwit.hpp, calcwit.cpp, fr.hpp, fr.cpp and Makefile
+Written successfully: /w/build/transact_v2_js/transact_v2.wasm
+Everything went okay

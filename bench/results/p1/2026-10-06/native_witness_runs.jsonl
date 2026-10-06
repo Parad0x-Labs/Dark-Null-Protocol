@@ -1,0 +1,62 @@
+{"kind":"native_witness","step":"deposit","run":1,"exit":0,"ms":16.106}
+{"kind":"native_witness","step":"deposit","run":2,"exit":0,"ms":15.840}
+{"kind":"native_witness","step":"deposit","run":3,"exit":0,"ms":15.142}
+{"kind":"native_witness","step":"deposit","run":4,"exit":0,"ms":14.562}
+{"kind":"native_witness","step":"deposit","run":5,"exit":0,"ms":14.271}
+{"kind":"native_witness","step":"deposit","run":6,"exit":0,"ms":14.565}
+{"kind":"native_witness","step":"deposit","run":7,"exit":0,"ms":14.507}
+{"kind":"native_witness","step":"deposit","run":8,"exit":0,"ms":15.412}
+{"kind":"native_witness","step":"deposit","run":9,"exit":0,"ms":14.807}
+{"kind":"native_witness","step":"deposit","run":10,"exit":0,"ms":15.237}
+{"kind":"native_witness","step":"deposit","run":11,"exit":0,"ms":14.249}
+{"kind":"native_witness","step":"deposit","run":12,"exit":0,"ms":14.898}
+{"kind":"native_witness","step":"deposit","run":13,"exit":0,"ms":14.723}
+{"kind":"native_witness","step":"deposit","run":14,"exit":0,"ms":14.831}
+{"kind":"native_witness","step":"deposit","run":15,"exit":0,"ms":14.439}
+{"kind":"native_witness","step":"transfer","run":1,"exit":0,"ms":15.348}
+{"kind":"native_witness","step":"transfer","run":2,"exit":0,"ms":15.412}
+{"kind":"native_witness","step":"transfer","run":3,"exit":0,"ms":15.046}
+{"kind":"native_witness","step":"transfer","run":4,"exit":0,"ms":14.306}
+{"kind":"native_witness","step":"transfer","run":5,"exit":0,"ms":14.383}
+{"kind":"native_witness","step":"transfer","run":6,"exit":0,"ms":14.393}
+{"kind":"native_witness","step":"transfer","run":7,"exit":0,"ms":14.637}
+{"kind":"native_witness","step":"transfer","run":8,"exit":0,"ms":14.765}
+{"kind":"native_witness","step":"transfer","run":9,"exit":0,"ms":14.427}
+{"kind":"native_witness","step":"transfer","run":10,"exit":0,"ms":15.355}
+{"kind":"native_witness","step":"transfer","run":11,"exit":0,"ms":15.365}
+{"kind":"native_witness","step":"transfer","run":12,"exit":0,"ms":14.933}
+{"kind":"native_witness","step":"transfer","run":13,"exit":0,"ms":15.227}
+{"kind":"native_witness","step":"transfer","run":14,"exit":0,"ms":14.607}
+{"kind":"native_witness","step":"transfer","run":15,"exit":0,"ms":16.677}
+{"kind":"native_witness","step":"withdraw","run":1,"exit":0,"ms":15.005}
+{"kind":"native_witness","step":"withdraw","run":2,"exit":0,"ms":15.757}
+{"kind":"native_witness","step":"withdraw","run":3,"exit":0,"ms":15.524}
+{"kind":"native_witness","step":"withdraw","run":4,"exit":0,"ms":15.971}
+{"kind":"native_witness","step":"withdraw","run":5,"exit":0,"ms":14.522}
+{"kind":"native_witness","step":"withdraw","run":6,"exit":0,"ms":14.849}
+{"kind":"native_witness","step":"withdraw","run":7,"exit":0,"ms":15.551}
+{"kind":"native_witness","step":"withdraw","run":8,"exit":0,"ms":17.250}
+{"kind":"native_witness","step":"withdraw","run":9,"exit":0,"ms":15.718}
+{"kind":"native_witness","step":"withdraw","run":10,"exit":0,"ms":14.731}
+{"kind":"native_witness","step":"withdraw","run":11,"exit":0,"ms":14.652}
+{"kind":"native_witness","step":"withdraw","run":12,"exit":0,"ms":14.560}
+{"kind":"native_witness","step":"withdraw","run":13,"exit":0,"ms":14.826}
+{"kind":"native_witness","step":"withdraw","run":14,"exit":0,"ms":14.564}
+{"kind":"native_witness","step":"withdraw","run":15,"exit":0,"ms":14.097}
+{"kind":"native_tampered","id":"W1","exit":134,"rejected":true,"error":"Failed assert in template/function TransactV2 line 190"}
+{"kind":"native_tampered","id":"W10","exit":134,"rejected":true,"error":"Failed assert in template/function TransactV2 line 145"}
+{"kind":"native_tampered","id":"W11","exit":134,"rejected":true,"error":"Failed assert in template/function TransactV2 line 145"}
+{"kind":"native_tampered","id":"W12","exit":134,"rejected":true,"error":"Failed assert in template/function BabyCheck line 82"}
+{"kind":"native_tampered","id":"W13","exit":134,"rejected":true,"error":"Failed assert in template/function Num2Bits line 38"}
+{"kind":"native_tampered","id":"W14","exit":134,"rejected":true,"error":"Failed assert in template/function AssertNonZero line 73"}
+{"kind":"native_tampered","id":"W15","exit":134,"rejected":true,"error":"Failed assert in template/function EdDSAPoseidonVerifier line 83"}
+{"kind":"native_tampered","id":"W16","exit":134,"rejected":true,"error":"Failed assert in template/function BabyCheck line 82"}
+{"kind":"native_tampered","id":"W17","exit":134,"rejected":true,"error":"Failed assert in template/function TransactV2 line 226"}
+{"kind":"native_tampered","id":"W2","exit":134,"rejected":true,"error":"Failed assert in template/function TransactV2 line 194"}
+{"kind":"native_tampered","id":"W3","exit":134,"rejected":true,"error":"Failed assert in template/function TransactV2 line 186"}
+{"kind":"native_tampered","id":"W4","exit":134,"rejected":true,"error":"Failed assert in template/function TransactV2 line 194"}
+{"kind":"native_tampered","id":"W5","exit":134,"rejected":true,"error":"Failed assert in template/function ForceEqualIfEnabled line 56"}
+{"kind":"native_tampered","id":"W6","exit":134,"rejected":true,"error":"Failed assert in template/function ForceEqualIfEnabled line 56"}
+{"kind":"native_tampered","id":"W7","exit":134,"rejected":true,"error":"Failed assert in template/function TransactV2 line 177"}
+{"kind":"native_tampered","id":"W8","exit":134,"rejected":true,"error":"Failed assert in template/function TransactV2 line 179"}
+{"kind":"native_tampered","id":"W9","exit":134,"rejected":true,"error":"Failed assert in template/function TransactV2 line 145"}

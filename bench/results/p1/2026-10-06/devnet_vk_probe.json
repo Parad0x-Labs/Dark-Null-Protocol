@@ -1,0 +1,244 @@
+{
+ "program": "3UobuWHZicPCuxAwiQeoxbsprvt6EPWwZmaqVzQs2q9W",
+ "date": "2026-10-06T11:58:06.140Z",
+ "cluster": "devnet",
+ "runs": {
+  "calibrate": {
+   "label": "CU mark calibration",
+   "signature": "5pnNhNxAoqrb1BvJLnJ3pCKQQ17B6wPH5QRp5EtzmVxJwTLrUx8xXbd3VdK7uCuUyLekEe9pUWnW7JmwgqZNS5Mz",
+   "explorer": "https://explorer.solana.com/tx/5pnNhNxAoqrb1BvJLnJ3pCKQQ17B6wPH5QRp5EtzmVxJwTLrUx8xXbd3VdK7uCuUyLekEe9pUWnW7JmwgqZNS5Mz?cluster=devnet",
+   "tx_bytes": 183,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 226,
+   "cu_program": 226,
+   "marks": [
+    199884,
+    199783
+   ],
+   "log64": []
+  },
+  "vk_hash": {
+   "label": "VK_HASH: sol_sha256(VK_BYTES) == VK_HASH",
+   "signature": "63rEePio6pz1p6g1qjEkbbvB1spnDU4ik1PT3aabMdD5CWyoxct5qMQ3FvEmxqwWnKmHkWaHVKCGkgzip6xLBtE6",
+   "explorer": "https://explorer.solana.com/tx/63rEePio6pz1p6g1qjEkbbvB1spnDU4ik1PT3aabMdD5CWyoxct5qMQ3FvEmxqwWnKmHkWaHVKCGkgzip6xLBtE6?cluster=devnet",
+   "tx_bytes": 183,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 529,
+   "cu_program": 529,
+   "marks": [],
+   "log64": [
+    [
+     2,
+     1,
+     0,
+     0,
+     0
+    ]
+   ]
+  },
+  "snarkjs-deposit": {
+   "label": "VERIFY snarkjs-deposit",
+   "signature": "5cXyVMTnmCWVHtHJRg3JRsE17uFTXmrz3uqvk1xCHwosbnLmPMrfUNH6r6dZhrYvoChJVb8ayJDdoVwtCTpftqGd",
+   "explorer": "https://explorer.solana.com/tx/5cXyVMTnmCWVHtHJRg3JRsE17uFTXmrz3uqvk1xCHwosbnLmPMrfUNH6r6dZhrYvoChJVb8ayJDdoVwtCTpftqGd?cluster=devnet",
+   "tx_bytes": 471,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 79155,
+   "cu_program": 79155,
+   "marks": [
+    199884,
+    120961
+   ],
+   "log64": [
+    [
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "verify_cu": 78822
+  },
+  "snarkjs-transfer": {
+   "label": "VERIFY snarkjs-transfer",
+   "signature": "4FqVY7fSooNMdu1B4t47FJTKbvjQBNRr9vUn1rf3pcHCusNjhkPXrVwgVJLwhi2goZY1vNCPS5GMzbXjUi1TfPot",
+   "explorer": "https://explorer.solana.com/tx/4FqVY7fSooNMdu1B4t47FJTKbvjQBNRr9vUn1rf3pcHCusNjhkPXrVwgVJLwhi2goZY1vNCPS5GMzbXjUi1TfPot?cluster=devnet",
+   "tx_bytes": 471,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 79155,
+   "cu_program": 79155,
+   "marks": [
+    199884,
+    120961
+   ],
+   "log64": [
+    [
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "verify_cu": 78822
+  },
+  "snarkjs-withdraw": {
+   "label": "VERIFY snarkjs-withdraw",
+   "signature": "2mBHGT44EHdQnD1o47T2ZLHYWMkrH5T5PpVPH3JZfdpikFgK9q1nSzoqKu5aigrEEZxxnet1xtxupe8jsabPuCx3",
+   "explorer": "https://explorer.solana.com/tx/2mBHGT44EHdQnD1o47T2ZLHYWMkrH5T5PpVPH3JZfdpikFgK9q1nSzoqKu5aigrEEZxxnet1xtxupe8jsabPuCx3?cluster=devnet",
+   "tx_bytes": 471,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 79155,
+   "cu_program": 79155,
+   "marks": [
+    199884,
+    120961
+   ],
+   "log64": [
+    [
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "verify_cu": 78822
+  },
+  "arkworks-deposit": {
+   "label": "VERIFY arkworks-deposit",
+   "signature": "3ZGWmT6NSdo412mgezWB6Fp2bGMwfttYM1PgFzNP9yhbgJxTNexhJsrtWuGQffKcoLhujSfeZSeD57XKxgmwtF9Z",
+   "explorer": "https://explorer.solana.com/tx/3ZGWmT6NSdo412mgezWB6Fp2bGMwfttYM1PgFzNP9yhbgJxTNexhJsrtWuGQffKcoLhujSfeZSeD57XKxgmwtF9Z?cluster=devnet",
+   "tx_bytes": 471,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 79155,
+   "cu_program": 79155,
+   "marks": [
+    199884,
+    120961
+   ],
+   "log64": [
+    [
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "verify_cu": 78822
+  },
+  "arkworks-transfer": {
+   "label": "VERIFY arkworks-transfer",
+   "signature": "3vKEbud5cUwhzawgxjvcuj4HzxajwqMjRk1UYSvoU6fkznAsv9DgwxHq3hhEfuRxJFzdpguohrwiNEkBdwoezikM",
+   "explorer": "https://explorer.solana.com/tx/3vKEbud5cUwhzawgxjvcuj4HzxajwqMjRk1UYSvoU6fkznAsv9DgwxHq3hhEfuRxJFzdpguohrwiNEkBdwoezikM?cluster=devnet",
+   "tx_bytes": 471,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 79155,
+   "cu_program": 79155,
+   "marks": [
+    199884,
+    120961
+   ],
+   "log64": [
+    [
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "verify_cu": 78822
+  },
+  "arkworks-withdraw": {
+   "label": "VERIFY arkworks-withdraw",
+   "signature": "34bFASFLDiLiY53n1w81GVefEocUkMw46gu2A4eSBnkEErk7ZvcL6Qni2AnzMyP1FXK2qRMqqtMWmPBQSRvK7fzQ",
+   "explorer": "https://explorer.solana.com/tx/34bFASFLDiLiY53n1w81GVefEocUkMw46gu2A4eSBnkEErk7ZvcL6Qni2AnzMyP1FXK2qRMqqtMWmPBQSRvK7fzQ?cluster=devnet",
+   "tx_bytes": 471,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 79155,
+   "cu_program": 79155,
+   "marks": [
+    199884,
+    120961
+   ],
+   "log64": [
+    [
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "verify_cu": 78822
+  }
+ },
+ "reject": [
+  {
+   "label": "changed pi",
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 769
+     }
+    ]
+   },
+   "units": 78956,
+   "rejected": true
+  },
+  {
+   "label": "pi >= r",
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 770
+     }
+    ]
+   },
+   "units": 150,
+   "rejected": true
+  },
+  {
+   "label": "changed proof C",
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 769
+     }
+    ]
+   },
+   "units": 78905,
+   "rejected": true
+  }
+ ],
+ "mark_cost_cu": 101,
+ "summary": {
+  "proofs_verified": 6,
+  "verify_cu_min": 78822,
+  "verify_cu_max": 78822,
+  "program_cu_max": 79155,
+  "all_rejections_rejected": true,
+  "fees_lamports": 40000
+ }
+}

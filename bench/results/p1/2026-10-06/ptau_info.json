@@ -1,0 +1,328 @@
+{
+ "power": 16,
+ "ceremony_power": 28,
+ "contributions": [
+  {
+   "index": 1,
+   "type": "contribution",
+   "next_challenge_blake2b": "5e72e26e38b46d067b797eb5929e18e7eda11ae0cf429bb8c04af72d8a2633b5625f8cbebb07b61b510403d4bf644357a80ea08d7d5cc04d58a8aa4d2d9084ea"
+  },
+  {
+   "index": 2,
+   "type": "contribution",
+   "next_challenge_blake2b": "9ff247f138a1175105137aced8c9766c5eeccef35b892c62c55eae787301991b05b66649b00c48f27501b30d1538f5d80e2da3edf163a9785fba5b47352f7d04"
+  },
+  {
+   "index": 3,
+   "type": "contribution",
+   "next_challenge_blake2b": "01401c5e781fc7c8aae99b160f14a86b16a0a5e319d48fd04eaba3db8a0fefa7bf0854bc9bf6789336b8680f261151bc1d2aca163aa74c5019c817bfdbc4d21d"
+  },
+  {
+   "index": 4,
+   "type": "contribution",
+   "next_challenge_blake2b": "635b55a6a0c3c8096843c9abc06f40f0e60fac21df00b5c2e2edbcc2e4f4e0c2f4d196f9b34b95be43e9f905723e6a58da92df24f2035d853841ce4f3518ee60"
+  },
+  {
+   "index": 5,
+   "type": "contribution",
+   "next_challenge_blake2b": "a7b3c130cd8dbd26769cfbcbe4c9a4ef9055d13bac93285481c1007cacf51d29c00dd146d73a667047f65200ae227e01d589c60904d263a41f5f187d03fcc692"
+  },
+  {
+   "index": 6,
+   "type": "contribution",
+   "next_challenge_blake2b": "3e1140e566971cbde6308dc3d3f2ef4e2c36bb4db16704ed0ffd26ee7d80cccef2b46aa46feadf3e2da8c43eccf7588a09e6cd9485a4dd0520af752db0f24128"
+  },
+  {
+   "index": 7,
+   "type": "contribution",
+   "next_challenge_blake2b": "10e6b25c4b066b59a5b837d2460a78b159edb6cb2018ae0aa74b7555499c9690b16b4f3899fa8147b9bc46025b634eef8e998fa244f9fe644df29ee9a0944e7a"
+  },
+  {
+   "index": 8,
+   "type": "contribution",
+   "next_challenge_blake2b": "af1d28b6e1c2e68f5c871f3e01856f252ef4f745a3e39e3d2aa3bc407f82b4a5feb2ba4c303f90fb15c869290611b732be31f29a15e5d6096f555cd0683e5421"
+  },
+  {
+   "index": 9,
+   "type": "contribution",
+   "next_challenge_blake2b": "7fde382d1bc12ae7d3d99879648e416b0540f39d5e8f4945229a7faae97c36309d54bf8bb8a0813c67f89d199b2111b90adb93c26b80fdd4e3fe3640860b7731"
+  },
+  {
+   "index": 10,
+   "type": "contribution",
+   "next_challenge_blake2b": "ac8908658234b4f0b8f4e3c30f6acc3438d3f297734b62b9c7b1157f93d7eed2ba05c59de663cebc080490763cfbee1e5e2311237714661e67b43cca921da027"
+  },
+  {
+   "index": 11,
+   "type": "contribution",
+   "next_challenge_blake2b": "f36bf3037f19f750dc8edb45305220484090acb512e96c50149618fa007d3b8fd9103148f6d5c5d262449ca1b332b43cf8d6afb271bf2a1124bcf4b2143f0477"
+  },
+  {
+   "index": 12,
+   "type": "contribution",
+   "next_challenge_blake2b": "e83607eb942b3ac1394dfb2a36b465a03bcea042a8bceafe16daa05d7dc143ddd9c3e8077490083bbe2839ad8be6bbddf1e90896d14eab370ea33fd0c0d3c11e"
+  },
+  {
+   "index": 13,
+   "type": "contribution",
+   "next_challenge_blake2b": "a85053ff17c3c395e4c6ede74fe7df4d85e64700bff1a066c429a515db5fbbb404958b999304c2aeb8b537d355a386519fb531f734e8bd17eeb7c85caab3501e"
+  },
+  {
+   "index": 14,
+   "type": "contribution",
+   "next_challenge_blake2b": "ad1d6f7d105fe75156ae95ab9c2890945aca055261902a80eb6b5f7c98996f805575ba0d05dfddc8df75506cb22911a4182a852b4ee4953d25c37841cee60084"
+  },
+  {
+   "index": 15,
+   "type": "contribution",
+   "next_challenge_blake2b": "1dcfa3a32135ab8d1adca012b01a4e6342be7688022183fb0e28d1ac762dcf3a4bf2cf2571f83624c37cbaa530676bd80fa00411c6e586e547a70d954085d4cd"
+  },
+  {
+   "index": 16,
+   "type": "contribution",
+   "next_challenge_blake2b": "af608b45968651500c5b4f091ea38f34fa7bee9b75192c28719e200da483cc1de9db8db42c73de9e92fb47ac8a4554e8e91044b1a9d471abb67b64fa7eb9337d"
+  },
+  {
+   "index": 17,
+   "type": "contribution",
+   "next_challenge_blake2b": "89a6b171315d452299b25f19a8fd5ff840d15b67623953cdc8eb0c2273d2a277026e16bebacebd22d3b72a44b1091b5a0a33d2bab1546e9dfd42a01dbdd0596b"
+  },
+  {
+   "index": 18,
+   "type": "contribution",
+   "next_challenge_blake2b": "729cd42c9fa0328dd3faa58e5fdd80b994270562af70a380f017bb9a6099d7428865b173824c754710d2ccf0667508f4e7bf5f3330660b5b1dda4364256926fc"
+  },
+  {
+   "index": 19,
+   "type": "contribution",
+   "next_challenge_blake2b": "5bfc69715a5f57d29170410c04cfb19db079de9da94f9b81770d7cfd6cfb7b14d05e3268596722a6546a40b679194ce9682d395623a664a9a7d836c967a41d7d"
+  },
+  {
+   "index": 20,
+   "type": "contribution",
+   "next_challenge_blake2b": "0ba142a6f4403ff41d6ab3396708f4d0d5e567f32d6b293bdcdad33509533246a475da20b0cf3f2fb4bff3bb6d82ccf47f43d5ea6623de4257d65f3fbe285915"
+  },
+  {
+   "index": 21,
+   "type": "contribution",
+   "next_challenge_blake2b": "dfcaaa519ada2419256d73b41d9448154ff1b6875874d44cf4e18be8e933966e08db79db4087885678138e60d3c82a9a7d50735c449af38a76d9ac9c81af7e2a"
+  },
+  {
+   "index": 22,
+   "type": "contribution",
+   "next_challenge_blake2b": "14e4fe7759391f2c6988e7902abd6343cc27d25980883aec39a88d1e415610b225e0aa5ac1ec9f5a40b699894767ac75983e5ca5441ebbc6ca66a61d049c9112"
+  },
+  {
+   "index": 23,
+   "type": "contribution",
+   "next_challenge_blake2b": "7474dc21f794d4acfe75ceb736774ca05df34e5940646583c12d4f7205f7cf40aa45aef89f0da9acf8ef1b4eb398638e4dc845571a3e2e9f1c92615d68ba80d5"
+  },
+  {
+   "index": 24,
+   "type": "contribution",
+   "next_challenge_blake2b": "ab45d9d9de4a950da97ae2b1d20fb7c61b6d10986cb02d418a8be0c64e2c99d6c000a914c03d9ab271ee07c0990a41fb569714202c380711d722350cc19a1152"
+  },
+  {
+   "index": 25,
+   "type": "contribution",
+   "next_challenge_blake2b": "bbe7103c4d477e6831055c9503d66ae04d6cedd7509e2478bd5675550f265017b54f10c1fb8b721728c2e505110e5bbfc9911702d9ef1416b76bb4a343c0fe90"
+  },
+  {
+   "index": 26,
+   "type": "contribution",
+   "next_challenge_blake2b": "10bdaa1281af44088d52f74ea0a6857410c43fdacf11a54b123c14e990501cbc91267417db60661ebf911d30bd800684e2ce8ddcc3ee68c0e37640fa22553b98"
+  },
+  {
+   "index": 27,
+   "type": "contribution",
+   "next_challenge_blake2b": "f71e9315058c1c88ba4cd22e01f86242d81b5e74de829ad88bd7ecef475ca3ced59eaa777e2ebfd314c38bde84a47ebfc31432529c978b84b25cddf7a6212371"
+  },
+  {
+   "index": 28,
+   "type": "contribution",
+   "next_challenge_blake2b": "aa470426518e2a2e287b1b18927674315646e93dd4f2ec4bd5beb54e0d78f3319e98e46a0d50dcf73f06bb7e7258a752635d176e8101350d3d61108a58e08962"
+  },
+  {
+   "index": 29,
+   "type": "contribution",
+   "next_challenge_blake2b": "e70de5afe726056f7018fd3d9c48c756f05a952fd5cf3c276e87c5ccf84f315e948d77ebb4bfde3e48a00ee1ccea08fff7ac523136d9b0f3df13c24c3831970a"
+  },
+  {
+   "index": 30,
+   "type": "contribution",
+   "next_challenge_blake2b": "f70c28295e85dff9c2109a7e8f6d34511b2199b684670acca460d26a3a944b934e65635c811bd65fbd833147d27bcfada8b0548ea5bef2081c684910a8f6fe95"
+  },
+  {
+   "index": 31,
+   "type": "contribution",
+   "next_challenge_blake2b": "7695680fc6eb5d11e31b48bea122428a11cf5429d54b7d9dcd24c8799876ae616850f2320f68964db26e04dd06ce5747965e7f41aefa1eec790e95665c0e6342"
+  },
+  {
+   "index": 32,
+   "type": "contribution",
+   "next_challenge_blake2b": "daa7c3b5570966a71180db03c0d76def00395cb695c90736d9c7c2408bc76b33bda8ee88f495b77d1927a94d37e6772689e7cb8a1796c8635c1153fc6d6b6f42"
+  },
+  {
+   "index": 33,
+   "type": "contribution",
+   "next_challenge_blake2b": "5e4226c9b037c98d6207ee8f8056c651d368621574dcf7ac67cf690843dc80724f8c8f627d3a0e334d82934e24d17e89300c767f91c03ca213742e0d25c6ac09"
+  },
+  {
+   "index": 34,
+   "type": "contribution",
+   "next_challenge_blake2b": "8fddfae2385f5fc1f6def277e341ccb2c3a78108e2d7efdd77c556b56305e6122fe0bb4f27a1674329d8fbb0c9520076ae8ee1b15da13eff58914d28de9459be"
+  },
+  {
+   "index": 35,
+   "type": "contribution",
+   "next_challenge_blake2b": "33247048366e62285a69d257601f1ee52aa5d1238b0fceb8aaaca087614dfa956eb377b9683bb55116ece5d4023e3e3f5b1549931048ba07b5a4b37c463e9b2c"
+  },
+  {
+   "index": 36,
+   "type": "contribution",
+   "next_challenge_blake2b": "e406add76da9abd4d2bd81b3e6fbf7213fdeb18d3a3b8b3ec35a0a0dc04bcc19c7c943628bdc1f9c974a60532f5fe053fc53a956a11f0b40990cc734f0d496d1"
+  },
+  {
+   "index": 37,
+   "type": "contribution",
+   "next_challenge_blake2b": "8d77dba2eada39e22a75a8ad8c0f40f80dcefa594c6a89ea28f448df8bced1b53ee80e039247d88f9efb734ecbaf9245badd91775e8b1dd607725db7facf734b"
+  },
+  {
+   "index": 38,
+   "type": "contribution",
+   "next_challenge_blake2b": "ac95544f0e1eab300cbd826c7ce0ccf558559b95cf450ed10f472063fa50bb5e159734c0a50cdd1a8413eb92a7b4947e6e66b8d0cdb3a19c85897e42ee1811e1"
+  },
+  {
+   "index": 39,
+   "type": "contribution",
+   "next_challenge_blake2b": "79043f5f7a2e81a2e7aca5bfc02a375f6b3beb0c5aa7e3f8b942201af3e0d43eb33efd3a10b103238a93eaad3462180e56eea585e4f307153df06e81d6150275"
+  },
+  {
+   "index": 40,
+   "type": "contribution",
+   "next_challenge_blake2b": "b262f934ab2368ccaa86772d586040a51d284338d9f41f47833c19a4335d4fc6e8e8eccd17723291b92bb3484ef6f6d199563e61b2a49634e081d7c544e5bfed"
+  },
+  {
+   "index": 41,
+   "type": "contribution",
+   "next_challenge_blake2b": "41c03ca86cc9df98d80073e693c09d4642cbadb7a8752934049db2dd7901652399d1e13d90ab9b5457860f55914efe1ff87f7b5e7fc86993774a72360aaa716a"
+  },
+  {
+   "index": 42,
+   "type": "contribution",
+   "next_challenge_blake2b": "294dc1ce3c381dee7a12ab138813ba7dc61ba46f8e1b6165ee23c623af42f0a45a0909515558548a85c7b1b812156ff4cb14eb7d0aa9b35b4ffdecaa2bcfe37c"
+  },
+  {
+   "index": 43,
+   "type": "contribution",
+   "next_challenge_blake2b": "0598526172c5fecea3ff71a55af413444256991725ad31481231c4cf765d9ecd9fd681c4f7a25717bb2eab3449bb4417059498b9f5a5e4bab630424f2c0d3605"
+  },
+  {
+   "index": 44,
+   "type": "contribution",
+   "next_challenge_blake2b": "c13dedda076022e6be2d634da910930c2154b00299d4db5c5462f13fd5fb19f48cda31bb63e65a6fcdc6b4820cc6a4addbfe7ed2446beab8b63b72141fdc0c80"
+  },
+  {
+   "index": 45,
+   "type": "contribution",
+   "next_challenge_blake2b": "939038cd2dc5a1c020f368d2bfad8686950fdf7ec2d2e192a7d595093068816bbecd914ba293dd8acb6d18c7b5116b66ea54d915d47a89ccfbe2d5a3444dfbed"
+  },
+  {
+   "index": 46,
+   "type": "contribution",
+   "next_challenge_blake2b": "5aac215da5d5efcbc8badb5967fd43b5b9b0a9ecf653fc5bd8604a05869ecce320d3dafc42de3eef05ec318f94e08552c386b7e16a340f0fe9004f9352fd1a61"
+  },
+  {
+   "index": 47,
+   "type": "contribution",
+   "next_challenge_blake2b": "5d38986e613436f8f29f713f967a083c730a1d341a1d2c0ffe7c29ca3e1b618440412cff8eeab16b5a14bf421763e61b3cefdf6ca571502756331ffb960fa61e"
+  },
+  {
+   "index": 48,
+   "type": "contribution",
+   "next_challenge_blake2b": "ede3b130b045333f3de41950aedc7006e8fa2d287faa24d5fc4a7338c631a52f8d47199d4649b153f175eb1d0863c83fa0d746a66f774d086743c4d4d136cfe0"
+  },
+  {
+   "index": 49,
+   "type": "contribution",
+   "next_challenge_blake2b": "025d2ee94c4cf08f6a2adeff90075f4df4c296322e6fa910815813ab5e30f5b72d88b8b9bda180ed03c26cd52705ee1f17d615f9aa3d9a564434d457d00c95d9"
+  },
+  {
+   "index": 50,
+   "type": "contribution",
+   "next_challenge_blake2b": "e6571d37a66e7fbdebd3ba936bd8c23c140bb178fb3296572bed8709063e3610e99a51983f793bc2b84d76edf286d6e780cc879bab7e1c6a61bf8a9f8fd160d7"
+  },
+  {
+   "index": 51,
+   "type": "contribution",
+   "next_challenge_blake2b": "01e99205db3311bf535b3316e265050a062a4491f43c0e1460bfe0ceacf196d6b78559b8015a346340aea8d503f2d9b9a6e1b3f0a54d2d22d4ed1d9216c09402"
+  },
+  {
+   "index": 52,
+   "type": "contribution",
+   "next_challenge_blake2b": "3f02cb8d89177b2e9ffe3b1bbe0a8f43154eb9602e8985f6c84314a3d47dfd60e098313db52d7a0860de14030aae4a49644588143daf0779fadf6d9f2526df43"
+  },
+  {
+   "index": 53,
+   "type": "contribution",
+   "next_challenge_blake2b": "fbad44fcea6d50527004656304093552d29be00d7fcd2d627e07c1b015c6eb974ea9262caa4633cd306c7f557d839c78f9a408c95cfaef06f916e37d182ae94b"
+  },
+  {
+   "index": 54,
+   "type": "contribution",
+   "next_challenge_blake2b": "00d0b99a5ccb65afa5872f825f2388f32f6fd96ed1e58e83cb921037447d980d7bfb8a0811d90a3601846bbcee2216aeaec90e60e2490e5d09ea36bf3222840f"
+  },
+  {
+   "index": 55,
+   "type": "contribution",
+   "next_challenge_blake2b": "48ef8f27918a7ba3559e6da1c9dd21683d076efb012ce397b348c83bbd89c207ae5d695fa20918e73bd86e369c861774afaf5c1ae35f24e636f7e066fada8b64"
+  },
+  {
+   "index": 56,
+   "type": "contribution",
+   "next_challenge_blake2b": "51c5e9b09a72aa53d7f6eb770de99db2f4b03a5ab2a1199e19803c5e7fccdfafaa5b2796374402794eb41fc21e88c53f8cbf3314a65c0007a6b8ae72c5b8b309"
+  },
+  {
+   "index": 57,
+   "type": "contribution",
+   "next_challenge_blake2b": "44ba2e773f563893da5c365cd93141b03ac4220eb32cec9fccd0e856bff230b965b96c82b12ae0919254c200dcdfb13b9916063305577912d0ae65475e036015"
+  },
+  {
+   "index": 58,
+   "type": "contribution",
+   "next_challenge_blake2b": "31ba0fbb3d34ae6827697322ad2955437087422280cf33736a23f8320d680a44127a47a046d670808957fb8ec4f5b9254dc003619879f7e3e8d852dd6517dd2d"
+  },
+  {
+   "index": 59,
+   "type": "contribution",
+   "next_challenge_blake2b": "67d7bcbdb2d4ad0ed9f5bae33097fb904d51e5bee76a9d7de3ebdd6c74d0e16812687f1cb0f634e475ef14449f18959fa3a4603b7819b1fa5d10ab893810fb33",
+   "name": "soham-zemse"
+  },
+  {
+   "index": 60,
+   "type": "contribution",
+   "next_challenge_blake2b": "d9ec6fad4a7a7e3358a0c4bed7171622c9c60a91a12a38144af908f42c147aec7b459a95f901a65b00fe485c66d2856407721e796908eb488f1d1dddd0afa2e8",
+   "name": "atheartengineer"
+  },
+  {
+   "index": 61,
+   "type": "contribution",
+   "next_challenge_blake2b": "4bf672f3ba1de1bb6105e1ab88359612cdf09cb2d154f371937f85ec0cf25e0a10ec88efa3019065850a2e96048bf9ef5f68aa75fcfe26faa120c465d3954174",
+   "name": "carter-feldman"
+  },
+  {
+   "index": 62,
+   "type": "beacon",
+   "next_challenge_blake2b": "3381a48f5d99da6901fc5a56220c168248babbd8306e4e41d3ad2424ec8a436ca43e17bd260305eb32ebb722eea44451e51baa81933af03f263a112f044f5e5a",
+   "iterations_exp": 31,
+   "beacon_hash": "af941599f6d640b5b4b6116d3ded861b3362a964c390edc270aef45ba17b67148fb3d7ab901a68b1528c9bb3e16721cc000dda5d8466f4aa4a1c8ca9eb57d05e6c2d2e780d6a793df90a1ebd076bb3dd9b7d4075e3e68b36b86c1fb7c4feeded"
+  }
+ ],
+ "published": {
+  "beacon_hash": "af941599f6d640b5b4b6116d3ded861b3362a964c390edc270aef45ba17b67148fb3d7ab901a68b1528c9bb3e16721cc000dda5d8466f4aa4a1c8ca9eb57d05e6c2d2e780d6a793df90a1ebd076bb3dd9b7d4075e3e68b36b86c1fb7c4feeded",
+  "beacon_iterations_exp": 31,
+  "c0080_new_challenge_blake2b": "4bf672f3ba1de1bb6105e1ab88359612cdf09cb2d154f371937f85ec0cf25e0a10ec88efa3019065850a2e96048bf9ef5f68aa75fcfe26faa120c465d3954174"
+ },
+ "beacon_matches_published": true,
+ "c0080_next_challenge_matches_published": true
+}

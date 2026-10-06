@@ -1,0 +1,13 @@
+{
+ "host": { "cpu": "Apple M4", "cores": 10, "memory_gb": 24, "os": "macOS (Darwin 25.5.0)" },
+ "sandbox_vm": { "runtime": "Colima (Lima) VM, docker", "arch": "aarch64", "vcpus": 4, "memory_gb": 8, "note": "shared with other workloads during the runs; about 1.5-4.5 GB free" },
+ "containers": {
+  "circom_compile": { "image": "ubuntu:24.04 (linux/amd64 under emulation)", "circom": "2.2.3 official release circom-linux-amd64, sha256 85342c7ff332d948df7c0c50ecf201e6129349aef550ce873f3c811b79fe53a3", "network": "none" },
+  "snarkjs": { "image": "node:22-bookworm-slim (arm64)", "node": "v22.23.3", "snarkjs": "0.7.6", "circomlib": "2.0.5", "circomlibjs": "0.1.7", "install": "npm ci --ignore-scripts; network disconnected after fetch" },
+  "native_witness": { "image": "node:22-bookworm-slim (arm64) + g++ 12.2.0, libgmp-dev 6.2.1, nlohmann-json3-dev 3.11.2 (Debian bookworm)", "build": "circom --c --no_asm, g++ -O3", "network": "disconnected before build" },
+  "arkworks_prover": { "image": "rust:1.86-slim-bookworm (dnax-sbf-build)", "rustc": "1.86.0", "crates": "ark-groth16 0.5.0 (parallel), ark-bn254 0.5.0; vendored, --offline --locked", "binary_sha256": "ce06c731feef048c033de4f430ed05c3f251fcfda827361cae19b2495e4bd800" },
+  "sbf_probe": { "image": "rust:1.86-slim-bookworm (dnax-sbf-build)", "cargo_build_sbf": "4.1.0", "platform_tools": "v1.54", "groth16_solana": "0.2.0", "pinocchio": "0.9.3", "so_sha256": "1afcc430fda5c1d0c8e05a38264aed3fd3c9671e33f90bb44b9f4678fa204e17" }
+ },
+ "devnet": { "rpc": "https://api.devnet.solana.com", "client_cli_for_deploys": "solana-cli 4.2.1 (Agave)" },
+ "mapping_note": "Timings are from 4 vCPU of an Apple M4 inside a Linux VM; a 4-core 2021+ laptop is expected to be slower [E]. B1 runs report rayon threads 4 and 1."
+}

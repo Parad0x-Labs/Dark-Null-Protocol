@@ -9,8 +9,6 @@ paradox = "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"
 
 [programs.devnet]
 paradox = "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"
-whisper = "4AQpjBrwsT7Dqm9iupMVBjm4gHKSnKVs13quzxmVAesr"
-ghost_mint = "AedRaM2Pimj9EkWqNx7QMkGXTGLXMbtz1Z96aMkGGmhe"
 
 [registry]
 url = "https://api.apr.dev"

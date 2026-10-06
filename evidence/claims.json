@@ -59,7 +59,7 @@
         "mainnet deployment (none)"
       ],
       "operational_limitations": [
-        "Anchor.toml [programs.devnet] still lists whisper 4AQpjB... and ghost_mint AedRaM..., which devnet RPC reports as closed."
+        "Anchor.toml [programs.devnet] lists only paradox; the closed whisper and ghost_mint devnet entries were removed on 2026-10-06."
       ],
       "supersedes": null
     },

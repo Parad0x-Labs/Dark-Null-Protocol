@@ -81,8 +81,8 @@
   "artifacts": [
     {
       "path": "Anchor.toml",
-      "sha256": "7b1e7c028caa25076137c560cf872c5837621176f2c6455416278455f7eef98c",
-      "size": 516
+      "sha256": "ebd6194e8742d0d467de72d1c68b4bd9edbdbbc66fd196ba20528ed01b4ee494",
+      "size": 399
     },
     {
       "path": "CEREMONY.md",

@@ -32,7 +32,7 @@ does not cover later code (re-run after the last change, then cite).
 - Estimates are labelled `estimate` in docs and never appear in launch copy.
 - No "first" / "only" / "unique" claims unless a dated survey row in DESIGN_2027.md section 2 shows no
   existing system with the property, and the survey is less than 30 days old at publication.
-- No token-value, buy-pressure, or yield language anywhere.
+- No token-value, token-demand or yield language anywhere.
 - No statements about third-party security review status beyond what the release evidence files
   record.
 - Never call devnet artifacts mainnet artifacts. Devnet proving keys made with a development setup are

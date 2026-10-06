@@ -1,0 +1,46 @@
+[
+  {
+    "label": "B2-negative-tampered-sig",
+    "err": {
+      "InstructionError": [
+        0,
+        {
+          "Custom": 259
+        }
+      ]
+    },
+    "logs": [
+      "Program log: x402batch: rejected",
+      "Program CyNw8DWqEmZuWvPQuXPtohS2zuVMGaCEfLMasXYBwgfd consumed 17785 of 1400000 compute units",
+      "Program CyNw8DWqEmZuWvPQuXPtohS2zuVMGaCEfLMasXYBwgfd failed: custom program error: 0x103"
+    ]
+  },
+  {
+    "label": "B1-negative-tampered-sig",
+    "err": {
+      "InstructionError": [
+        0,
+        {
+          "Custom": 2
+        }
+      ]
+    },
+    "logs": []
+  },
+  {
+    "label": "B2-negative-replay",
+    "err": {
+      "InstructionError": [
+        0,
+        {
+          "Custom": 259
+        }
+      ]
+    },
+    "logs": [
+      "Program log: x402batch: rejected",
+      "Program CyNw8DWqEmZuWvPQuXPtohS2zuVMGaCEfLMasXYBwgfd consumed 8979 of 1400000 compute units",
+      "Program CyNw8DWqEmZuWvPQuXPtohS2zuVMGaCEfLMasXYBwgfd failed: custom program error: 0x103"
+    ]
+  }
+]

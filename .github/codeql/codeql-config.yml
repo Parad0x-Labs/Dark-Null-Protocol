@@ -1,0 +1,11 @@
+name: Dark Null CodeQL config
+
+# Query suites are selected in .github/workflows/codeql.yml. This file only
+# excludes code that is not maintained by hand.
+paths-ignore:
+  # Archived prior-generation sources kept for provenance; not built, tested
+  # as code, or shipped in the npm package.
+  - historical/**
+  # circom-generated witness calculators. The canonical copy is hash-pinned in
+  # MANIFEST.json and must stay byte-identical to the circom output.
+  - "**/*_js/witness_calculator.js"

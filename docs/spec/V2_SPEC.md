@@ -35,6 +35,8 @@ branches, association sets, ragequit, and the mainnet setup ceremony.
 | `dark-null-transcript` (Rust, `no_std`) | [`crates/dark-null-transcript`](../../crates/dark-null-transcript) | Encodings, preimages, `ext_data`, instruction layout, tree insertion, KDF byte rules, address codec |
 | Vector generator (JS) | [`vectors/v2/tools`](../../vectors/v2/tools) | Independent implementation 1 (circomlibjs, node:crypto, @noble/curves, @scure/base) |
 | Reference circuit | [`spikes/p0/circuits/transact_v2_spec.circom`](../../spikes/p0/circuits/transact_v2_spec.circom) | The section 7 constraint groups; checked against V-E2E |
+| Phase 1 circuit | [`circuits/v2/transact_v2.circom`](../../circuits/v2/transact_v2.circom) | The reference circuit plus review findings R1-R3 ([`REVIEW_NOTES.md`](../../circuits/v2/REVIEW_NOTES.md)); interface I1 |
+| Program | [`programs/dark-null-pool-v2`](../../programs/dark-null-pool-v2) | Section 8 on `dark-null-transcript` and the I1 verifying key; interface I3 |
 | Devnet probe | [`spikes/p0/probe_v2`](../../spikes/p0/probe_v2), [`spikes/p0/scripts/s_probe_v2.mjs`](../../spikes/p0/scripts/s_probe_v2.mjs) | Runs the crate on chain with `sol_poseidon` / `sol_sha256` |
 
 ## 1. Notation and primitives
@@ -444,9 +446,23 @@ that transact kinds stay indistinguishable apart from the public legs (DESIGN G4
 - **C7 spend authorization.** `sighash` per 7.2 from `nf`, `cm_out` and the statement fields;
   `EdDSAPoseidonVerifier(enabled = 1, A = ak, R8 = sig_R8, S = sig_S, M = sighash)`.
 - **C8 statement.** `pi = Poseidon(DS_PI, root, nf0, nf1, cm_out0, cm_out1, public_amount, public_asset, ext_data_hash, now_epoch, deposit_label, assoc_root)`.
+- **C9 review hardening** (WP-CIRCUIT code review, [`REVIEW_NOTES.md`](../../circuits/v2/REVIEW_NOTES.md)):
+  - **R1** `nf0 != nf1` (`AssertNonZero(nf0 - nf1)`): without it one note in both input slots counts twice in C4.
+  - **R2** `R8` of the spend signature is on BabyJubJub (`BabyCheck(sig_R8)`); circomlib's verifier does not check it.
+  - **R3** `assoc_root === 0`: Phase 1 has no association branch, so a non-zero `assoc_root` would claim a check that
+    never ran.
 
-[M] 23,166 R1CS constraints (circom 2.2.3 `--O2`), 3 V-E2E witnesses satisfy it with `pi` equal to the vectors, and 13
-tampered witnesses (each group C1-C7) fail: [`witness_check_v2_spec.json`](../../bench/results/p0/2026-10-06/witness_check_v2_spec.json).
+  The program enforces R1 (`E_DUPLICATE_NULLIFIER`, 8.5 step 1) and R3 (`E_ASSOC_DISABLED`, step 2) again.
+
+[M] Reference circuit (C1-C8): 23,166 R1CS constraints (circom 2.2.3 `--O2`); 3 V-E2E witnesses satisfy it with `pi`
+equal to the vectors and 13 tampered witnesses (each group C1-C7) fail:
+[`witness_check_v2_spec.json`](../../bench/results/p0/2026-10-06/witness_check_v2_spec.json).
+
+[M] Phase 1 circuit [`transact_v2.circom`](../../circuits/v2/transact_v2.circom) (C1-C9): **23,167** constraints, the
+reference plus a review delta of +1 (R1 +1, R2 +3, R3 -3; [`constraint_count.json`](../../bench/results/p1/2026-10-06/constraint_count.json)).
+The 3 V-E2E witnesses give the V-E2E `pi`; 17 tampered witnesses W1-W17 fail, where W14 (one note spent twice) and W17
+(`assoc_root != 0`) pass the reference circuit
+([`witness_check_transact_v2.json`](../../bench/results/p1/2026-10-06/witness_check_transact_v2.json)).
 
 ### 7.6 Soundness notes
 
@@ -485,7 +501,8 @@ Program-owned accounts begin with an 8-byte account discriminator. Layouts are `
 | 9 | 1 | `bump` |
 | 10 | 1 | `paused` (0/1) |
 | 11 | 1 | `flags` (bit 0 `require_assoc`, MUST be 0 in Phase 1) |
-| 12 | 4 | padding |
+| 12 | 1 | `vault_auth_bump`: canonical bump of the vault authority PDA (8.1 Vault) |
+| 13 | 3 | padding |
 | 16 | 32 | `authority` (devnet/beta admin; disclosed) |
 | 48 | 32 | `pool_nonce` |
 | 80 | 32 | `pool_id` |
@@ -531,7 +548,9 @@ Program-owned accounts begin with an 8-byte account discriminator. Layouts are `
 | 144 | 48 | reserved |
 
 **Vault**: a token account at `["dark-null-vault", pool_config, mint]` for `mint`, authority = vault authority PDA
-`["dark-null-vault-auth", pool_config]` (one authority per pool). Token-2022 vaults are created with `ImmutableOwner`.
+`["dark-null-vault-auth", pool_config]` (one authority per pool). Token-2022 vaults are created with `ImmutableOwner`:
+170 bytes (165-byte base, `AccountType`, `ImmutableOwner` TLV header), `InitializeImmutableOwner` then
+`InitializeAccount3`. SPL Token vaults are 165 bytes, `InitializeAccount3`.
 
 **Nullifier record**: `["dark-null-nf", pool_config, BE32(nf)]`, 0 data bytes, owner = the pool program (8.6).
 
@@ -635,6 +654,52 @@ The address table of a transact has 14 entries (13 accounts plus the program id)
 Steps 1-9 are pure and identical to the reference model in
 [`tests/prover_malicious.rs`](../../crates/dark-null-transcript/tests/prover_malicious.rs).
 
+#### 8.5.1 Implementation rules (WP-PROGRAM, normative for `dark-null-pool-v2`)
+
+These rules fill in what the steps above leave open. The program follows them and its tests pin them.
+
+- **Before step 1.** `paused` lives in `pool_config`, so the program loads it before anything else: owner = program, 256 bytes,
+  discriminator, version, and the address equals `["dark-null-pool", pool_nonce, bump]` with the stored nonce and bump.
+  Any failure there, or an account list other than exactly 13, is `E_ACCOUNT_MISMATCH` (it precedes `E_PAUSED`).
+  `E_PAUSED` precedes every data check.
+- **Step 1.** `root_hint >= 256` is `E_UNKNOWN_ROOT`. A transact that names another instruction's discriminator never
+  reaches `transact`; an unknown or short discriminator is `E_BAD_IX`.
+- **Step 3 order.**
+  1. `submitter` signer and writable; `pool_config` writable.
+  2. `tree` equals `pool_config.tree`, owned by the program, writable.
+  3. `mint_state`: owned by the program, 192 bytes, discriminator, version, and the address equals
+     `["dark-null-mint", pool_config, mint_state.mint, mint_state.bump]`. The layout has no pool field, so the address
+     is what binds a mint state to its pool.
+  4. `vault == mint_state.vault`, writable; `mint == mint_state.mint`.
+  5. `vault_authority` equals `["dark-null-vault-auth", pool_config, pool_config.vault_auth_bump]`.
+  6. `token_program` per `token_program_kind`; `system_program`.
+  7. `public_token_account` and `relayer_fee_account` equal the `ext_data` keys and are writable.
+
+  Each failure above is `E_ACCOUNT_MISMATCH`. Then:
+  8. Both token accounts are owned by the token program, have the token-account layout (SPL Token: 165 bytes;
+     Token-2022: 165 bytes or `AccountType::Account` at offset 165), name `mint`, and are `Initialized`; else
+     `E_TOKEN_ACCOUNT_INVALID`.
+  9. The canonical record PDAs for `nf0`, `nf1` (8.6) equal accounts 7 and 8, writable; else `E_NULLIFIER_ACCOUNT`.
+
+  Step 11 then applies the spent predicate and creates the records.
+- **Writable flags** of 8.4 are checked. A message marks an account writable if any of its entries is, so a vault
+  that appears at index 6 of a deposit is writable whatever index 3 says.
+- **Replay of a deposit.** After a deposit lands, `deposit_counter` has moved, so a replay derives another
+  `deposit_label` and `pi` (step 9) and fails at step 10 with `E_PROOF_INVALID`; only a spend replay reaches
+  `E_NULLIFIER_SPENT` (13.2 S9).
+- **`pi >= r`** cannot come out of `sol_poseidon`; the check before the verifier stays (`E_NONCANONICAL_FIELD`).
+- **`E_DEPOSIT_DELTA`** cannot fire for a mint that passed the 8.7 allowlist (no transfer fee, no hook); it stays as
+  defence in depth.
+- **F-PREFUND for every PDA.** `pool_config`, `tree`, `mint_state` and the vault are created with the same
+  create-or-adopt rule as nullifier records (8.6), so a pre-funded address cannot block initialization.
+- **Admin and setup errors.**
+  - `initialize_pool`: `epoch_seconds = 0` or a wrong data length is `E_BAD_IX`. A wrong PDA, a pool that already
+    exists or a wrong system program is `E_ACCOUNT_MISMATCH`.
+  - `register_mint`: a signer other than `authority` is `E_UNAUTHORIZED`. An already registered mint, a mint not owned
+    by the named token program, an SPL Token mint that is not exactly 82 bytes, or an uninitialized mint is
+    `E_ACCOUNT_MISMATCH`. Malformed Token-2022 TLV data is `E_MINT_EXTENSION_REJECTED`.
+  - `set_paused`: a value other than 0 or 1 is `E_BAD_IX`.
+
 ### 8.6 Nullifier store, option A
 
 - Record address: canonical PDA `["dark-null-nf", pool_config, BE32(nf)]`. The program derives it with
@@ -651,8 +716,10 @@ Steps 1-9 are pure and identical to the reference model in
   nullifier is visible in a pending transaction), which makes `CreateAccount` fail. If the account is owned by the
   System program with 0 data, the program instead tops it up to the rent-exempt minimum, then `Allocate(0)` and
   `Assign(program)` with the PDA seeds. Any other state is `E_NULLIFIER_ACCOUNT`.
-- Cost: [M] 1,727 CU per create (PHASE0_RESULTS section 3) plus the PDA search; 650,240 lamports rent per record,
-  never reclaimed. No instruction closes a record.
+- Cost: [M] 1,727 CU per create (PHASE0_RESULTS section 3) plus the PDA search. In the program, [M] 5,936 CU for
+  creating both records (step 11; the PDA search is part of step 3), PHASE1_RESULTS WP-PROGRAM. Rent per record is the
+  cluster's rent-exempt minimum for 0 bytes: 650,240 lamports on devnet and mainnet on 2026-10-06 (890,880 under the
+  default rent of `solana-program-test` 1.18.26). It is never reclaimed; no instruction closes a record.
 
 ### 8.7 Mints and the solvency guard
 
@@ -668,6 +735,10 @@ Everything else is rejected (`E_MINT_EXTENSION_REJECTED`), including: `TransferF
 `PermanentDelegate`, `ConfidentialTransferMint`, `ConfidentialTransferFeeConfig`, `ConfidentialMintBurn`,
 `NonTransferable`, `MintCloseAuthority`, `Pausable`, `DefaultAccountState(Frozen)`, and any extension type unknown to
 the pinned `spl-token-2022` version. An allowlist (not a blocklist) keeps future extension types out by default.
+The pin is the `ExtensionType` numbering of spl-token-2022 8.x (values 0-27); the program accepts exactly values 6
+(with state `Initialized`), 10, 18-23 and 25. Account-level types found in a mint (2, 5, 7, 8, 11, 13, 15, 17, 27) are
+rejected too. TLV framing follows `spl_token_2022::extension::get_tlv_data_info`: an `Uninitialized` type ends the list,
+one trailing byte is free space, and a truncated header or value is rejected.
 A classic freeze authority is accepted and recorded in `freeze_authority_present`; the API shows it (the issuer can
 freeze the vault for every user of that mint).
 
@@ -685,6 +756,8 @@ Solvency guard (defense in depth over C4):
   manifest-bound `dev-setup` artifacts (`scripts/generate-verifying-key.mjs`); `vk_hash` is stored in `PoolConfig`
   and served by `GET /v1/health`.
 - [M] 81,282 CU per verify on devnet for the Phase 1 skeleton (PHASE0_RESULTS section 2).
+- [M] 78,822 CU per verify on devnet with the I1 key through groth16-solana 0.2.0 (PHASE1_RESULTS WP-CIRCUIT), and
+  78,892 CU for step 10 inside `transact` on the `solana-program-test` 1.18.26 runtime (PHASE1_RESULTS WP-PROGRAM).
 
 ### 8.9 Error codes
 
@@ -729,6 +802,8 @@ Anchor-style custom codes. The API column is what the local core reports when it
 
 ### 8.11 Compute and transaction budget
 
+Phase 0 estimate:
+
 | Component | CU | Label |
 |---|---|---|
 | Groth16 verify, 1 public input | 81,282 | [M] PHASE0_RESULTS 2 |
@@ -738,6 +813,24 @@ Anchor-style custom codes. The API column is what the local core reports when it
 | Two token transfers (CPI) | about 10-16k | [E] |
 | Account checks, framework | about 10-30k | [E] |
 | **transact total** | **about 155-185k** | [E] from the measured parts; gate B2 at 400k |
+
+[M] `dark-null-pool-v2` on the `solana-program-test` 1.18.26 runtime, V-E2E steps with the I1 proofs, measured with a
+`cu-trace` build (100 CU per marker removed); totals from the release build (PHASE1_RESULTS WP-PROGRAM):
+
+| Steps of 8.5 | Deposit | Transfer (fee only) | Withdraw (recipient + fee) |
+|---|---|---|---|
+| 1-4 parse, accounts (three PDA checks), nullifier PDA search, fee rules | 10,418 | 16,425 | 10,409 |
+| 5-6 root, epoch | 246 | 246 | 246 |
+| 7-9 `ext_data_hash`, deposit label, `pi` | 11,851 | 11,328 | 11,328 |
+| 10 Groth16 | 78,892 | 78,892 | 78,892 |
+| 11 two nullifier records | 5,936 | 5,936 | 5,936 |
+| 12 tree insertion, events | 32,954 | 32,181 | 32,178 |
+| 13 public leg | 8,284 | 8,164 | 16,362 |
+| 14 solvency | 18 | 18 | 18 |
+| Entrypoint, dispatch, return | 3,760 | 3,760 | 3,955 |
+| **transact total (release build)** | **152,362** | **156,954** | **159,328** |
+
+The transfer's step 1-4 cost is higher because its `nf1` record has bump 251, so the PDA search makes 5 attempts.
 
 ## 9. Transactions and relayers
 
@@ -754,8 +847,11 @@ Anchor-style custom codes. The API column is what the local core reports when it
     ProgramData account of every upgradeable program invoked (pool, token program), plus 32 KiB, rounded up to a
     multiple of 32 KiB, at most 64 MiB.
   - Priority fee (config bits 0-1) MAY be set; it is part of the fee quote.
-- Size: about 1.72 KB for a transact with one signature and a priority fee [E from 8.4: 1,131 data bytes, 14
-  addresses], below the 4,096-byte limit [M]. A legacy (1,232-byte) fallback is not specified for Phase 1.
+- Size: **1,718 bytes** for a transact with one signature, the compute-unit and loaded-accounts-data-size limits and a
+  priority fee, and 1,710 bytes without the priority fee (1,131 data bytes, 13 account indices, 14 addresses). These
+  are computed with the V1 layout above, which reproduces the 188- and 196-byte devnet cases of PHASE0_RESULTS
+  section 1. Both are below the 4,096-byte limit [M]. The same transact is 1,666 bytes as a legacy transaction without
+  the compute-budget instructions, above the 1,232-byte legacy limit; a legacy fallback is not specified for Phase 1.
 
 ### 9.2 Deposit
 
@@ -981,7 +1077,7 @@ research, Aug 2026) and the reference circuit:
 | S6 | `claimed_epoch` outside the window; moved into it | `E_EPOCH_WINDOW`; `pi` mismatch |
 | S7 | `nf + r` | `E_NONCANONICAL_FIELD` |
 | S8 | nullifier record at a non-canonical bump | `E_NULLIFIER_ACCOUNT` |
-| S9 | the same transact twice | `E_NULLIFIER_SPENT` |
+| S9 | the same transact twice | `E_NULLIFIER_SPENT` for a spend; `E_PROOF_INVALID` for a deposit, whose label moved with `deposit_counter` (8.5.1) |
 | S10 | LE reading of BE bytes; hash reduced mod `r` | different elements (pinned) |
 | S11 | any one-byte change in any `ext_data` field | `E_BAD_EXT_DATA`, `E_WRONG_POOL` or `pi` mismatch |
 | S12 | both public legs | `E_BAD_PUBLIC_AMOUNT` |
@@ -1000,7 +1096,10 @@ research, Aug 2026) and the reference circuit:
 
 ## 14. Changes relative to DESIGN_2027 (this spec governs)
 
-| # | Item | DESIGN | This spec | Why |
+Rows 1-11 change DESIGN_2027. Rows 12-14 change the initial `v2.0-p1` text of this spec and come from the Phase 1 work
+packages.
+
+| # | Item | Before | This spec | Why |
 |---|---|---|---|---|
 | 1 | Channel owner | `..., expiry_epoch, chan_nonce` | `..., expiry_epoch, nk_ch` | F-NK-CH: invariant I-NK (5.2) |
 | 2 | Nullifier record bump | client-supplied in the Phase 0 spike | canonical, derived on chain | F-BUMP: double spend through a second PDA (8.6) |
@@ -1013,3 +1112,6 @@ research, Aug 2026) and the reference circuit:
 | 9 | Note ciphertext | `epk \|\| AEAD(opening \|\| memo) \|\| view_tag` | 5.7 (salt derived from the shared secret) | fits 160 bytes with asset and label |
 | 10 | Diversified addresses | unlinkable per-merchant addresses | linkable (shared `pk`); use account indices for unlinkable addresses | the fixed owner formula has no diversifier (4.3) |
 | 11 | Exact-mode refund address | in the payment memo | in the x402 payment header | 32-byte memo holds the quote binding (11.1) |
+| 12 | `PoolConfig` offset 12 | padding | `vault_auth_bump` | the layout had no vault-authority bump, so every transact would have run a PDA search for it (WP-PROGRAM) |
+| 13 | Phase 1 circuit | 23,166 constraints, C1-C8 | 23,167 constraints, C1-C9 (R1-R3) | WP-CIRCUIT review (7.5) |
+| 14 | S9 for deposits | `E_NULLIFIER_SPENT` | `E_PROOF_INVALID` | the deposit label binds `deposit_counter`, so a replayed deposit fails at the verifier (8.5.1) |

@@ -1,0 +1,24 @@
+[package]
+name = "dark-null-pool-v2-harness"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+description = "Tests for dark-null-pool-v2: native (processor) and SBF (SBF_OUT_DIR) modes on solana-program-test, V-E2E with the I1 proofs, every V2_SPEC 8.9 code, solvency fuzz, parser proptests"
+
+[lib]
+path = "src/lib.rs"
+
+[dev-dependencies]
+dark-null-pool-v2 = { path = ".." }
+dark-null-transcript = { path = "../../../crates/dark-null-transcript", features = ["light"] }
+solana-program-test = "=1.18.26"
+solana-sdk = "=1.18.26"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+serde_json = "1"
+proptest = "1"
+
+[lints.rust]
+unexpected_cfgs = { level = "allow" }
+
+[workspace]

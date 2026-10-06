@@ -1,0 +1,46 @@
+[package]
+name = "dark-null-pool-v2"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.79"
+license = "MIT"
+publish = false
+description = "Dark NULL v2 shielded pool program (docs/spec/V2_SPEC.md section 8): join-split transact with Groth16 (transact_v2, one public input), option-A nullifier records, depth-32 Poseidon tree, solvency guard"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "dark_null_pool_v2"
+
+[features]
+default = []
+# Build as a library for CPI callers and off-chain readers (no entrypoint symbol).
+no-entrypoint = []
+# Measurement builds only: `sol_log_compute_units` at the step boundaries of `transact` (V2_SPEC 8.5). Never in the
+# cluster build (8.10 allows no other program logs).
+cu-trace = []
+
+[dependencies]
+solana-program = "=1.18.26"
+groth16-solana = "=0.2.0"
+
+# Hash backends (V2_SPEC 2.3). Cluster build: sol_poseidon and sol_sha256 syscalls.
+[target.'cfg(target_os = "solana")'.dependencies]
+dark-null-transcript = { path = "../../crates/dark-null-transcript", features = ["solana"] }
+
+# Host build (native tests, clients): light-poseidon (the same parameter set as sol_poseidon Bn254X5 BE)
+# and software SHA-256.
+[target.'cfg(not(target_os = "solana"))'.dependencies]
+dark-null-transcript = { path = "../../crates/dark-null-transcript", features = ["solana", "light"] }
+
+# Tests live in `harness/` (its own workspace), so this lockfile covers only the program build.
+
+[lints.rust]
+unexpected_cfgs = { level = "allow" }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+overflow-checks = true
+
+[workspace]

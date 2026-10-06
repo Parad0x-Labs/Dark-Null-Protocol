@@ -1,0 +1,26 @@
+[package]
+name = "dark-null-vk-probe"
+version = "0.0.1"
+edition = "2021"
+license = "MIT"
+publish = false
+description = "Throwaway devnet probe: verifies transact_v2 proofs with the generated program VK (programs/dark-null-pool-v2/src/vk.rs) through groth16-solana. Devnet only; closed after the run."
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+pinocchio = "=0.9.3"
+groth16-solana = "=0.2.0"
+
+[lints.rust]
+unexpected_cfgs = { level = "allow" }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+overflow-checks = false
+panic = "abort"
+
+[workspace]

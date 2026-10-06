@@ -1,0 +1,26 @@
+[package]
+name = "dark-null-circuit-tools"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.86"
+license = "MIT"
+publish = false
+description = "transact_v2 native prover path: snarkjs zkey loader, circom witness (.wtns) reader, arkworks Groth16 prove/verify, B1 timing"
+
+[dependencies]
+ark-bn254 = "=0.5.0"
+ark-ff = "=0.5.0"
+ark-ec = "=0.5.0"
+ark-poly = "=0.5.0"
+ark-relations = "=0.5.1"
+ark-serialize = "=0.5.0"
+ark-std = { version = "=0.5.0", features = ["parallel"] }
+ark-groth16 = { version = "=0.5.0", features = ["parallel"] }
+rand = "0.8"
+rayon = "1.10"
+
+[profile.release]
+opt-level = 3
+lto = false
+
+[workspace]

@@ -11,7 +11,7 @@
 import * as crypto from "crypto";
 import * as fs from "fs";
 import * as os from "os";
-import { Connection, Keypair, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { Connection, Keypair, LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 const snarkjs = require("snarkjs");
 const { buildPoseidon } = require("circomlibjs");
@@ -25,9 +25,6 @@ const PROGRAM_ID = "33Uw9kiVRrn6wVmR439gA9QWh4MLv87N97taj2sLrkE4";
 const WASM_PATH = "./circuits/build/paradox_js/paradox.wasm";
 const ZKEY_PATH = "./circuits/build/paradox_final.zkey";
 const CLUSTER = "devnet";
-
-// BN254 field prime
-const FQ = BigInt("21888242871839275222246405745257275088696311157297823662689037894645226208583");
 
 interface TestResults {
   timestamp: string;
@@ -74,11 +71,6 @@ interface TestResults {
 // ════════════════════════════════════════════════════════════════════════════
 // HELPERS
 // ════════════════════════════════════════════════════════════════════════════
-function mod(a: bigint, m: bigint = FQ): bigint {
-  const r = a % m;
-  return r >= 0n ? r : r + m;
-}
-
 function bigIntToBytes32(bn: bigint): Buffer {
   let hex = bn.toString(16).padStart(64, "0");
   return Buffer.from(hex, "hex");
@@ -88,8 +80,36 @@ function explorerTx(sig: string): string {
   return `https://explorer.solana.com/tx/${sig}?cluster=${CLUSTER}`;
 }
 
-function explorerAddr(addr: string): string {
-  return `https://explorer.solana.com/address/${addr}?cluster=${CLUSTER}`;
+// Relayer responses are untrusted. Before anything from them is written to
+// the results file, each value is checked and rebuilt character by character
+// from a fixed alphabet, so only validated base58 strings and integers reach disk.
+const BASE58_ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+const DECIMAL_DIGITS = "0123456789";
+
+function fromAlphabet(value: unknown, alphabet: string, label: string, minLen: number, maxLen: number): string {
+  if (typeof value !== "string" || value.length < minLen || value.length > maxLen) {
+    throw new Error(`relayer returned an invalid ${label}`);
+  }
+  let out = "";
+  for (const ch of value) {
+    const idx = alphabet.indexOf(ch);
+    if (idx < 0) throw new Error(`relayer returned an invalid ${label}`);
+    out += alphabet[idx];
+  }
+  return out;
+}
+
+function relayerPubkey(value: unknown, label: string): string {
+  return fromAlphabet(value, BASE58_ALPHABET, label, 32, 44);
+}
+
+function relayerSignature(value: unknown): string {
+  return fromAlphabet(value, BASE58_ALPHABET, "transaction signature", 64, 88);
+}
+
+function relayerSlot(value: unknown): number {
+  const digits = typeof value === "number" && Number.isSafeInteger(value) ? String(value) : value;
+  return Number(fromAlphabet(digits, DECIMAL_DIGITS, "slot", 1, 16));
 }
 
 async function fetchJson(url: string, options?: RequestInit) {
@@ -226,8 +246,8 @@ async function main() {
   console.log("═══════════════════════════════════════════════════════════════\n");
 
   const info = await fetchJson(`${API_URL}/info`);
-  results.wallets.relayer = info.relayerPubkey;
-  results.wallets.treasury = info.treasury;
+  results.wallets.relayer = relayerPubkey(info.relayerPubkey, "relayer pubkey");
+  results.wallets.treasury = relayerPubkey(info.treasury, "treasury pubkey");
 
   console.log(`📋 Configuration:`);
   console.log(`   Program ID: ${info.programId}`);
@@ -302,10 +322,11 @@ async function main() {
     results.timings.shield = Date.now() - startShield;
 
     if (shieldResult.success || shieldResult.sig) {
+      const shieldSig = relayerSignature(shieldResult.sig);
       results.transactions.shield = {
-        sig: shieldResult.sig,
-        slot: shieldResult.slot,
-        explorerUrl: explorerTx(shieldResult.sig),
+        sig: shieldSig,
+        slot: relayerSlot(shieldResult.slot),
+        explorerUrl: explorerTx(shieldSig),
       };
       results.phases["shield"] = "PASS";
 

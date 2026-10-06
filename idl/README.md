@@ -14,14 +14,11 @@ The older docs-track IDL was moved to [`../historical/root-toy-prototype/idl`](.
 
 ```typescript
 import { AnchorProvider, Idl, Program } from "@coral-xyz/anchor";
-import { PublicKey } from "@solana/web3.js";
 import idl from "./paradox.json";
 
-const program = new Program(
-  idl as Idl,
-  new PublicKey("35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"),
-  provider as AnchorProvider
-);
+// Anchor >= 0.30 reads the program address from idl.address
+// (35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV).
+const program = new Program(idl as Idl, provider as AnchorProvider);
 ```
 
 ## Notes

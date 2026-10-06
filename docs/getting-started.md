@@ -83,16 +83,14 @@ const pdas = await deriveCanonicalPdas();
 
 ```typescript
 import { AnchorProvider, Idl, Program } from "@coral-xyz/anchor";
-import { Connection, PublicKey } from "@solana/web3.js";
+import { Connection } from "@solana/web3.js";
 import idl from "../idl/paradox.json";
 
 const connection = new Connection("https://api.devnet.solana.com");
 const provider = new AnchorProvider(connection, wallet, {});
-const program = new Program(
-  idl as Idl,
-  new PublicKey("35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV"),
-  provider
-);
+// Anchor >= 0.30 reads the program address from idl.address
+// (35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV).
+const program = new Program(idl as Idl, provider);
 ```
 
 ## 8. Run the Canonical Checks

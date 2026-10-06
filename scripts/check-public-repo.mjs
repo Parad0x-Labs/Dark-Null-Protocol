@@ -382,9 +382,8 @@ async function checkDocs() {
   if (!readme.includes("sh scripts/bootstrap.sh")) {
     failures.push("README.md: missing bootstrap command");
   }
-  if (!readme.includes("npm install @dark-null/protocol")) {
-    failures.push("README.md: missing published npm install command");
-  }
+  // @dark-null/protocol is not published to npm; the README documents the clone +
+  // bootstrap install path instead (checked above), so no npm install line is required.
   if (!readme.includes("npm run config:devnet")) {
     failures.push("README.md: missing canonical devnet config command");
   }

@@ -2,6 +2,8 @@
 
 **Dark Null is a Solana privacy research protocol. Its root program is a devnet prototype for proof-verified withdrawals: every payout is checked on-chain by a Groth16 proof.**
 
+**Review:** [REVIEW.md](./REVIEW.md) lists what each component does, what has been demonstrated, where it runs and what is not established (generated from [evidence/claims.json](./evidence/claims.json)).
+
 In the current construction the payout fields (amount, receiver token account, mint) and the note commitment are public, so a withdrawal is linkable to its deposit; unlinkable withdrawals are planned protocol work. What the prototype provides and what it does not is listed property by property in [`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md), next to a test that reproduces the linkage from public data; [`SECURITY_MODEL.md`](./SECURITY_MODEL.md) covers the trust model.
 
 ## At a glance
@@ -60,7 +62,7 @@ Entry points: [`sdk/index.mjs`](./sdk/index.mjs) and [`sdk/index.d.ts`](./sdk/in
 | JavaScript SDK and Python helper client | **Usable today** | From a clone; not published to the npm registry |
 | Private x402 receipt primitives | **Usable today** | [`swarm/x402.mjs`](./swarm/x402.mjs); wraps DNA x402 signed receipts with no raw URL or payment header stored |
 | Frontier prototypes (6) | **Usable today** | Prototype code with local tests; not deployed to production. See [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md) |
-| Root program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` (deposit vault, proof-verified withdrawal) | **Devnet** | Canonical devnet root and integration target; matches `declare_id!` in [`src/lib.rs`](./src/lib.rs); upgrade authority `4cTBfB8v…`; withdrawals are linkable to deposits ([`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md)) |
+| Root program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` (deposit vault, proof-verified withdrawal) | **Devnet** | Canonical devnet root and integration target (last deployed at slot 487918755, after the cited proof transaction at slot 487904628); matches `declare_id!` in [`src/lib.rs`](./src/lib.rs); upgrade authority `4cTBfB8v…`; withdrawals are linkable to deposits ([`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md)) |
 | Six integration programs | **Devnet** | silent-pay `9VYPtdr…`, payment-stream `J6oHoys…`, threshold-fed `4sMywVPL…`, fiat-oracle `AJHHpWv…`, accumulator `ByFb6xc…`, inference `6h4yKZG…`; deployed from this source tree |
 | On-chain receipt anchoring (`receipt_anchor`, in dna-x402) | **Built · redeploy pending** | Unavailable until the `receipt_anchor` program is redeployed under a fresh key |
 | Research-stage primitives (7) and one blocked primitive | **Planned** | Design and specification only; Confidential Token-2022 linkage is blocked on Token-2022 Confidential Transfer extension audit completion and SIMD stabilization |

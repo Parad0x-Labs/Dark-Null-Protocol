@@ -159,7 +159,7 @@ Where any doc differs, `MANIFEST.json` and [`PROGRAM_IDS.md`](./PROGRAM_IDS.md) 
 - a public observer links each withdrawal to its deposit by commitment equality; amount, receiver token account and mint are public (`tests/privacy_linkage.rs`, `tests/privacy-linkage.test.mjs`)
 - canonical devnet root program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` verified executable on devnet, including a Groth16 withdraw payout on devnet; `npm run check:x402:devnet` passes
 - six x402 integration programs deployed on devnet from this source tree: silent-pay (`2FvaRhp…`), payment-stream (`EduZQkG…`), threshold-fed (`CjcnLYP1…`), fiat-oracle (`3VQsCtr…`), accumulator (`FX2YSq6…`), inference (`GSkQrJ8…`); redeployed under fresh keys on 2026-10-06, Devnet (2026-10-06): 34/34 e2e checks ([evidence](../evidence/devnet-2026-10-06/README.md))
-- full six-program integration demo passes end-to-end on devnet (`node scripts/demo-x402-dark-null.mjs`)
+- each of the six programs passed its own e2e script (`scripts/e2e-*.mjs`) on devnet on 2026-10-06 at the new ids, 34/34 checks ([evidence](../evidence/devnet-2026-10-06/README.md)); the combined demo (`node scripts/demo-x402-dark-null.mjs`) was not run against the new ids
 
 ## Mainnet gates
 

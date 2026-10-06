@@ -1093,6 +1093,9 @@ research, Aug 2026) and the reference circuit:
 - Devnet: 170/170 generator Poseidon calls, 3/3 TRANSACT_CHECK, 1 TREE_CHECK (3 insertions), 6/6 canonical
   nullifier PDAs, and 5/5 negative simulations rejected with the expected codes
   [`devnet_probe_v2.json`](../../bench/results/p0/2026-10-06/devnet_probe_v2.json).
+- Program (Phase 1, WP-PROGRAM): `dark-null-pool-v2` accepts the 3 V-E2E transacts with the 6 I1 proofs and matches
+  every V-E2E root, nullifier record and balance; it rejects S1-S13 and 23 of the 24 error codes with the exact code,
+  on the `.so` and natively ([`PHASE1_RESULTS.md`](../PHASE1_RESULTS.md) WP-PROGRAM).
 
 ## 14. Changes relative to DESIGN_2027 (this spec governs)
 

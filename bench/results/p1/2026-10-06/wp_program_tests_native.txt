@@ -1,0 +1,43 @@
+     Running unittests src/lib.rs (/work/dnp2/target/debug/deps/dark_null_pool_v2_harness-ba58bd8b38a6940a)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/native.rs (/work/dnp2/target/debug/deps/native-46f62dce70446c2f)
+test layouts_discriminators_vk_and_errors ... ok
+test groth16_fixtures_and_pi_range ... ok
+test mint_allowlist_parser ... ok
+test parser_agrees_with_transcript_decode ... ok
+test parser_arbitrary_bytes ... ok
+test malformed_proof_corpus ... ok
+test pdas_match_v_e2e ... ok
+test pre_proof_pipeline_matches_v_e2e ... ok
+test token_account_parser ... ok
+test v1_transaction_size_model ... ok
+test parser_field_targeted ... ok
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.61s
+     Running tests/program.rs (/work/dnp2/target/debug/deps/program-aca538bd4f71e050)
+test cu_breakdown_trace ... ok
+test initialize_pool_checks_and_prefunded_pool_address ... ok
+test admin_cu_and_transaction_sizes ... ok
+test nullifier_records_in_a_foreign_state_are_rejected ... ok
+test paused_pool_rejects_every_transact_and_admin_is_authority_only ... ok
+test prefunded_nullifier_addresses_are_still_spendable ... ok
+test random_instruction_data_is_rejected ... ok
+test outflow_cap_supply_and_solvency_guards ... ok
+test replay_same_proof_and_rerandomized_proof_are_double_spends ... ok
+test ring_wraps_after_256_insertions ... ok
+test statement_tampering_and_wrong_amount_or_mint ... ok
+test step1_parse_rejections ... ok
+test step2_assoc_root_and_pool_binding ... ok
+test step3_account_checks ... ok
+test step4_fee_rules ... ok
+test step5_root_history ... ok
+test step6_epoch_window ... ok
+test t_mint_token_2022_allowlist ... ok
+test tampered_proofs_are_rejected ... ok
+test token_2022_transact_reaches_the_verifier ... ok
+test tree_capacity_edges ... ok
+test v_e2e_arkworks_proofs ... ok
+test v_e2e_snarkjs_proofs ... ok
+test x_relay_every_ext_data_field_mutation_fails ... ok
+test solvency_fuzz ... ok
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.81s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

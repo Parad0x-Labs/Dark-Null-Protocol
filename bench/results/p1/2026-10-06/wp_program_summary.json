@@ -1,0 +1,123 @@
+{
+  "package": "WP-PROGRAM",
+  "program": "programs/dark-null-pool-v2",
+  "date": "2026-10-06",
+  "program_id": "3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi",
+  "test_program_id": "Eo2k1Ppv5cdThjAN1vXmmciHPgVat8Kjx6ou2cFBcZVp (V-E2E vectors; the proofs bind its pool_id)",
+  "build": {
+    "sandbox": "colima VM, container dnax-sbf-build (aarch64), offline, vendored sources",
+    "sbf": "cargo-build-sbf 4.1.0, platform-tools v1.54 (rustc 1.89.0), SBPF v0, release, lto fat",
+    "host_tests": "cargo +1.89.0-sbpf-solana-v1.54 test (the lock needs rustc >= 1.88 for time 0.3.47)",
+    "solana_program": "1.18.26",
+    "solana_program_test": "1.18.26 (runtime for both modes; bundled spl-token 3.5.0, spl-token-2022 1.0.0)",
+    "groth16_solana": "0.2.0",
+    "so_size_bytes": 130568,
+    "so_sha256": "1bc08dd7cdd25145dc81b88324095e5ef3e9e920c106d07d1481e326d02c28fc",
+    "cu_trace_so_size_bytes": 130800,
+    "program_lock": "programs/dark-null-pool-v2/Cargo.lock (191 packages, program build only); a clean rebuild from it reproduced the same sha256"
+  },
+  "tests": {
+    "harness": "programs/dark-null-pool-v2/harness (own workspace; its lockfile is the dna-x402 Cargo.lock at 44a3bf5a re-resolved offline, sha256 1a379408...cc2f, not committed)",
+    "native_mode": {
+      "native_rs": 11,
+      "program_rs": 25,
+      "failed": 0
+    },
+    "sbf_mode": {
+      "native_rs": 11,
+      "program_rs": 25,
+      "failed": 0,
+      "fuzz": {
+        "cases": 40,
+        "ops_per_case": 40,
+        "ok": 95,
+        "rejected": 1505,
+        "replays": 668,
+        "tampered": 468
+      }
+    },
+    "note": "cu_breakdown_trace is a no-op unless SBF_OUT_DIR points at a cu-trace build and CU_TRACE is set; it ran separately against the cu-trace .so",
+    "proptest_cases_per_parser_property": 2048,
+    "malformed_proof_corpus_native": 288
+  },
+  "cu_release": {
+    "transact_deposit": 152362,
+    "transact_transfer": 156954,
+    "transact_withdraw": 159328,
+    "transact_deposit_prefunded_records": 157400,
+    "initialize_pool": 18217,
+    "register_mint_spl_token": 21074,
+    "set_beta_limits": 4527,
+    "set_paused": 2521,
+    "note": "whole transaction minus the 150-CU compute-unit-limit instruction; solana-program-test 1.18.26 runtime"
+  },
+  "cu_trace_steps": {
+    "columns": [
+      "deposit",
+      "transfer",
+      "withdraw"
+    ],
+    "1-4 parse, accounts, nullifier PDA search, fee": [
+      10418,
+      16425,
+      10409
+    ],
+    "5-6 root, epoch": [
+      246,
+      246,
+      246
+    ],
+    "7-9 ext_data_hash, label, pi": [
+      11851,
+      11328,
+      11328
+    ],
+    "10 groth16": [
+      78892,
+      78892,
+      78892
+    ],
+    "11 nullifier records": [
+      5936,
+      5936,
+      5936
+    ],
+    "12 tree insert, events": [
+      32954,
+      32181,
+      32178
+    ],
+    "13 public leg": [
+      8284,
+      8164,
+      16362
+    ],
+    "14 solvency": [
+      18,
+      18,
+      18
+    ],
+    "entrypoint, dispatch, return": [
+      3760,
+      3760,
+      3955
+    ]
+  },
+  "tx_bytes_v1": {
+    "transact_with_priority_fee": 1718,
+    "transact_without_priority_fee": 1710,
+    "limit": 4096,
+    "legacy_same_ix_without_compute_budget": 1666,
+    "legacy_limit": 1232
+  },
+  "deploy_devnet_exact_max_len": {
+    "rent_source": "getMinimumBalanceForRentExemption on api.devnet.solana.com, 2026-10-06",
+    "programdata_bytes": 130613,
+    "programdata_rent": 664164280,
+    "program_account_rent": 833120,
+    "total_rent": 664997400,
+    "buffer_rent_refunded": 664123640,
+    "fees_estimate_lamports": "about 670,000-700,000",
+    "peak_lamports_estimate": "about 1,329,800,000"
+  }
+}

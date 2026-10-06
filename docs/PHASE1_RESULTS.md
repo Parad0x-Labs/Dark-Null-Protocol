@@ -204,3 +204,195 @@ installed on the host, and files are streamed in and out of containers with tar.
 - The mainnet track needs a public multi-party phase 2 (D-SETUP); this key is `dev-setup` only.
 - Native witness on Windows and macOS hosts: the C++ code is portable but needs GMP. A pure-Rust witness generator
   (no GMP) is coming next for the WP-CLIENT prover.
+
+## WP-PROGRAM: `dark-null-pool-v2` program (2026-10-06)
+
+Code commit `5c8f2b3`: [`programs/dark-null-pool-v2`](../programs/dark-null-pool-v2), with tests in
+[`programs/dark-null-pool-v2/harness`](../programs/dark-null-pool-v2/harness). Raw output is in
+[`bench/results/p1/2026-10-06/`](../bench/results/p1/2026-10-06/):
+- [`wp_program_tests_native.txt`](../bench/results/p1/2026-10-06/wp_program_tests_native.txt)
+- [`wp_program_tests_sbf.txt`](../bench/results/p1/2026-10-06/wp_program_tests_sbf.txt)
+- [`wp_program_cu_trace.txt`](../bench/results/p1/2026-10-06/wp_program_cu_trace.txt)
+- [`wp_program_summary.json`](../bench/results/p1/2026-10-06/wp_program_summary.json)
+
+Every build and test ran offline in the sandbox container, never on the key-holding host.
+
+### Summary
+
+| Item | Result |
+|---|---|
+| Program | V2_SPEC 8: 5 instructions; `transact` with 13 accounts and the 14 steps of 8.5 in order; F-BUMP; F-PREFUND; solvency guard and outflow cap; Token-2022 allowlist; codes 6000-6023; events 8.10 |
+| Shared code | `dark-null-transcript` for every encoding, `ext_data_hash`, `pi` and the tree insertion. The I1 `vk.rs` is unchanged (`a74af3c7...721d`) |
+| Circuit guarantees enforced again on chain | `nf0 != nf1` (step 1, `E_DUPLICATE_NULLIFIER`) and `assoc_root == 0` (step 2, `E_ASSOC_DISABLED`); REVIEW_NOTES R1 and R3 |
+| Tests, native mode | 11 + 25 pass (`tests/native.rs`, `tests/program.rs`) [M] |
+| Tests, SBF mode (the `.so`) | 11 + 25 pass; solvency fuzz with 40 cases of 40 operations [M] |
+| V-E2E on the real proofs | deposit, relayed transfer bound to an x402 quote, relayed withdraw to a stealth address. Both proof sets (snarkjs, arkworks) pass in both modes. Roots, root head, `next_index`, nullifier records, supply, deposit counter and token balances equal the vectors [M] |
+| B2 | `transact` 152,362 / 156,954 / 159,328 CU (deposit / transfer / withdraw), gate 400k; 1,718 bytes as V1, limit 4,096 [M] |
+| Binary | `dark_null_pool_v2.so` **130,568 bytes**, SHA-256 `1bc08dd7cdd25145dc81b88324095e5ef3e9e920c106d07d1481e326d02c28fc`. A clean rebuild from the committed `Cargo.lock` gave the same hash [M] |
+| Program id | `3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi` in `declare_id!`. It is a fresh key generated in the sandbox, kept in the devnet burner folder and never committed |
+
+### Build and test environment
+
+- **solana-program version.** The worktree pins two versions: 1.18.26 in the root `Cargo.lock` (Anchor 0.30.1) and
+  2.3.0 in the `programs/` workspace. The program uses **1.18.26**, so that native and SBF tests share the
+  `solana-program-test` 1.18.26 runtime available offline in the sandbox.
+- **Toolchains and libraries.**
+  - SBF: `cargo-build-sbf` 4.1.0 with platform-tools v1.54 (rustc 1.89.0), SBPF v0, release with fat LTO.
+  - Host tests: `cargo +1.89.0-sbpf-solana-v1.54`, because `time` 0.3.47 in the lock needs rustc 1.88.
+  - groth16-solana 0.2.0, as in the WP-CIRCUIT probe.
+- **Sources.**
+  - 17 crates were missing from the sandbox registry: groth16-solana 0.2.0, solana-bn254 2.2.2,
+    solana-define-syscall 2.3.0, the arkworks 0.5 family, educe, enum-ordinalize, itertools 0.13 and allocator-api2.
+  - A throwaway networked container fetched them as sources only (no build scripts ran) and streamed them into the
+    build container. Every other crate came from the image's registry.
+  - The resolution was seeded from the dna-x402 `Cargo.lock` (commit `44a3bf5a`).
+  - The program lock (`programs/dark-null-pool-v2/Cargo.lock`, 191 packages) covers the program build only.
+  - The harness is its own workspace. Its lock is resolved from the same seed (SHA-256 `1a379408...cc2f`) and is
+    not committed.
+- **Test build versus cluster build.** Only the hash and pairing backends differ (`src/hash.rs`):
+
+  | Function | Cluster build (and SBF tests) | Native tests |
+  |---|---|---|
+  | Poseidon | `sol_poseidon` (`SolPoseidon`) | light-poseidon 0.2 (`LightPoseidon`) |
+  | SHA-256 | `sol_sha256` | the `sha2` crate |
+  | Pairing and EC operations | `alt_bn128` syscalls | the arkworks code inside solana-bn254 |
+
+  The `cu-trace` feature only adds `sol_log_compute_units` markers for the step breakdown; it is never in the cluster
+  build.
+- **Syscalls.** The 1.18.26 runtime has every syscall the program calls, so SBF tests run the cluster code path
+  unchanged and no portable substitute was needed. Three things this runtime cannot show:
+  - It has no Transaction V1, so the V1 size below is computed with the V1 layout. The model reproduces the 188- and
+    196-byte devnet cases of PHASE0_RESULTS section 1.
+  - Its default rent is 890,880 lamports for a 0-byte account; devnet charges 650,240.
+  - Its bundled spl-token-2022 1.0.0 predates `ScaledUiAmount`, so that type is tested in the allowlist parser only.
+
+### Tests against the PLAN list
+
+| PLAN item | Tests (`harness/tests/`) |
+|---|---|
+| V-E2E end to end | `v_e2e_snarkjs_proofs`, `v_e2e_arkworks_proofs`. Pool id, PDAs and bumps, asset, roots after each step, the final ring, records, supply, counter, balances, and events (SBF) all equal the vectors. No program text log is written |
+| T-SOLV | `outflow_cap_supply_and_solvency_guards`: cap per epoch and its reset, `E_SUPPLY`, `E_SOLVENCY`, `E_ARITHMETIC`; plus `solvency_fuzz` |
+| T-ROOT | `step5_root_history`: hint at another slot, zero root, stale slot, hint correction outside `pi`, on-chain root equals the vector root. `ring_wraps_after_256_insertions`: a root is still known after 255 later insertions and gone after 256 |
+| T-REPLAY, S9 | `replay_same_proof_and_rerandomized_proof_are_double_spends`: the same transaction, and the other prover's proof of the same statement |
+| T-FR-CANON, S7 | `step1_parse_rejections` (`x + r` for root, nf0, nf1, cm0, cm1; `assoc_root = r`); `groth16_fixtures_and_pi_range` (`pi` in {r, r+1, 2^256-1, pi+r}) |
+| T-BUMP, S8 | `step3_account_checks`: a lower off-curve bump for nf0, swapped records, a foreign key |
+| T-PREFUND | `prefunded_nullifier_addresses_are_still_spendable` (1 lamport, and twice the rent); `initialize_pool_checks_and_prefunded_pool_address` |
+| X-RELAY, S11, S3 | `x_relay_every_ext_data_field_mutation_fails`: each of the 10 fields, a recipient or fee account swapped together with the account list, a raised fee, and 27 single-byte flips across `ext_data` |
+| T-MINT | `t_mint_token_2022_allowlist`: 21 rejected types, `DefaultAccountState` Frozen and Uninitialized, a mixed list, truncated TLV, the 8 allowlisted types alone and together (vault 170 bytes with `ImmutableOwner`, freeze authority recorded). `mint_allowlist_parser` covers TLV framing and `ScaledUiAmount` |
+| Malformed proof corpus | `malformed_proof_corpus`: 288 corruptions of the 6 proofs; `tampered_proofs_are_rejected`: 11 at program level |
+| Instruction parsing proptests | 3 properties, 2,048 cases each. The zero-copy parser agrees with `TransactIx::decode` on mutated vectors, field-targeted values and arbitrary bytes |
+| S4, S5, S6, S12, S13 | `step5_root_history`, `step2_assoc_root_and_pool_binding`, `step6_epoch_window`, `step1_parse_rejections`, `statement_tampering_and_wrong_amount_or_mint` |
+| S1, S2, S10 | The program derives the V-E2E `pi` (`pre_proof_pipeline_matches_v_e2e`) and accepts the real proofs. Any other width, tag or byte order gives another `pi`, which the verifier rejects |
+| Wrong mint or amount | `statement_tampering_and_wrong_amount_or_mint`: deposit 1001 against the 1000 proof; the withdraw against a second registered mint |
+| Token-2022 pool | `token_2022_transact_reaches_the_verifier`: every pre-proof check passes for a Token-2022 mint |
+| Random data | `random_instruction_data_is_rejected` |
+
+**Error codes.** Tests assert 23 of the 24 codes exactly:
+
+| Codes | Reached through |
+|---|---|
+| 6000-6015, 6018, 6021, 6022 | instruction data and account lists |
+| 6016 `E_SUPPLY`, 6017 `E_SOLVENCY`, 6019 `E_TREE_FULL`, 6023 `E_ARITHMETIC` | state written into the test bank |
+| 6020 `E_DEPOSIT_DELTA` | unreachable: an allowlisted mint has no transfer fee or hook (V2_SPEC 8.5.1) |
+
+**Solvency fuzz (SBF).**
+- Setup: 40 cases of 40 operations. Each operation is one of the three V-E2E transacts with either proof set,
+  either unchanged or with a random bit flip in the proof, a random bit flip in `ext_data`, or a changed amount.
+  Clock moves and authority cap changes are mixed in.
+- Model: an unchanged transact must succeed exactly when it is not yet done, its root exists, the epoch is in the
+  window and the cap allows it. Every other operation must fail with a code in 6000-6023 and move no funds.
+- Checks after every instruction: `vault.amount >= supply`; supply and vault equal the model; `next_index` equals 2
+  per successful transact.
+- Result: 1,600 operations; 95 succeeded, 1,505 rejected (668 replays, 468 tampered); no violation [M].
+
+### Compute units
+
+Whole transaction minus the 150-CU compute-unit-limit instruction, on the `solana-program-test` 1.18.26 runtime.
+
+| Instruction | CU |
+|---|---|
+| `transact` deposit | **152,362** |
+| `transact` relayed transfer (fee 5, no recipient leg) | **156,954** |
+| `transact` relayed withdraw (recipient 590, fee 10) | **159,328** |
+| `transact` deposit, both record addresses pre-funded | 157,400 |
+| `initialize_pool` | 18,217 |
+| `register_mint` (SPL Token) | 21,074 |
+| `set_beta_limits` | 4,527 |
+| `set_paused` | 2,521 |
+
+The per-step breakdown comes from a `cu-trace` build, with 100 CU per marker removed. The verifier takes 78,892 CU
+here and took 78,822 CU on devnet in the WP-CIRCUIT probe.
+
+| Steps of V2_SPEC 8.5 | Deposit | Transfer | Withdraw |
+|---|---|---|---|
+| 1-4 parse, accounts (3 PDA checks), nullifier PDA search, fee rules | 10,418 | 16,425 | 10,409 |
+| 5-6 root, epoch | 246 | 246 | 246 |
+| 7-9 `ext_data_hash`, deposit label, `pi` | 11,851 | 11,328 | 11,328 |
+| 10 Groth16 | 78,892 | 78,892 | 78,892 |
+| 11 two nullifier records | 5,936 | 5,936 | 5,936 |
+| 12 tree insertion, events | 32,954 | 32,181 | 32,178 |
+| 13 public leg | 8,284 | 8,164 | 16,362 |
+| 14 solvency | 18 | 18 | 18 |
+| Entrypoint, dispatch, return | 3,760 | 3,760 | 3,955 |
+
+The transfer's `nf1` record has bump 251, so its PDA search makes 5 attempts. All three totals sit at the low end of
+the Phase 0 estimate of 155-185k and below 40% of the 400k B2 gate. The B2 kill rule (split above 1.0M CU) does not
+fire.
+
+### Transaction size (V1, V2_SPEC 9.1)
+
+| Transaction | Bytes |
+|---|---|
+| `transact`, 1 signature, 14 addresses, compute-unit limit, loaded-accounts-data-size limit, priority fee | **1,718** |
+| The same without the priority fee | 1,710 |
+| Limit (V1) | 4,096 |
+| The same instruction as a legacy transaction, without compute-budget instructions | 1,666 (legacy limit 1,232) |
+
+### Deploy cost on devnet
+
+These figures come from `getMinimumBalanceForRentExemption` on devnet, 2026-10-06. For an exact `--max-len 130568`
+deploy:
+
+| Item | Lamports |
+|---|---|
+| Program data rent (130,613 bytes) | 664,164,280 |
+| Program account rent | 833,120 |
+| **Total rent held** | **664,997,400 (0.665 SOL)** |
+| Transaction fees | about 670,000-700,000 |
+| Buffer rent, refunded at deploy | 664,123,640 |
+| Peak balance needed during the deploy | about 1.33 SOL |
+
+### Spec changes (V2_SPEC, same commit as the code)
+
+| Section | Change | Kind |
+|---|---|---|
+| 7.5 | 23,167 constraints with R1-R3 as C9; the reference circuit's 23,166 kept as history | sync with WP-CIRCUIT |
+| 8.1 | `PoolConfig` offset 12 is `vault_auth_bump`; it was padding | defect: the layout had no vault authority bump, so each transact would have searched for it |
+| 8.1 | Token-2022 vault is 170 bytes with `ImmutableOwner`; SPL Token vault is 165 bytes | precision |
+| 8.5.1 (new) | Loading `pool_config` before step 1; the order of the step 3 checks; writable flags; `root_hint >= 256` gives `E_UNKNOWN_ROOT`; deposit replay; `pi >= r`; `E_DEPOSIT_DELTA`; F-PREFUND for every PDA; setup and admin error codes | interpretation, now normative |
+| 8.6 | Record rent is the cluster's 0-byte minimum: 650,240 on devnet, 890,880 under the test runtime's default rent; measured record CU | precision |
+| 8.7 | Allowlist pinned to `ExtensionType` 0-27 (spl-token-2022 8.x): accepted values 6 (Initialized only), 10, 18-23 and 25; TLV framing rules | precision |
+| 8.8, 8.11 | Measured verifier and per-step CU replace estimates | measurement |
+| 9.1 | V1 size 1,718 / 1,710 bytes | measurement |
+| 13.2 S9 | A replayed deposit fails with `E_PROOF_INVALID`, because `deposit_counter` moved its label; spends give `E_NULLIFIER_SPENT` | defect in the expected code |
+| 14 | Rows 12-14 record the three changes above | |
+
+### Spec items outside this package run
+
+- `post_assoc_root` and `ragequit`: reserved for Phase 4 (V2_SPEC 8.3).
+- Devnet deploy and the devnet B2 run: the keypair is in the devnet burner folder with a ledger row, and the SOL
+  figure is above. This run did not deploy, as instructed.
+- `MANIFEST.json` row for the program binary: v2 MANIFEST rows belong to WP-CIRCUIT. The `.so` hash above is the value
+  to bind when the binary is deployed.
+
+### Reproduce
+
+All commands run in the sandbox container, with the vendored sources configured through `.cargo/config.toml`.
+
+1. Build: `cargo-build-sbf --offline` in `programs/dark-null-pool-v2`. The result should be 130,568 bytes with
+   SHA-256 `1bc08dd7...28fc`.
+2. Native tests: `cargo +1.89.0-sbpf-solana-v1.54 test` in `programs/dark-null-pool-v2/harness`.
+3. SBF tests: as step 2 with `SBF_OUT_DIR=<dir of the .so>`. Set `FUZZ_CASES=40 FUZZ_OPS=40` for the fuzz size above.
+4. CU breakdown:
+   - build with `cargo-build-sbf --offline --features cu-trace`;
+   - run `CU_TRACE=1 SBF_OUT_DIR=<that dir> cargo test --test program cu_breakdown_trace -- --nocapture`.

@@ -1,0 +1,32 @@
+CUTRACE deposit step 0 [1-4 parse, accounts, fee] = 10418
+CUTRACE deposit step 1 [5-6 root, epoch] = 246
+CUTRACE deposit step 2 [7-9 ext hash, label, pi] = 11851
+CUTRACE deposit step 3 [10 groth16] = 78892
+CUTRACE deposit step 4 [11 nullifier records] = 5936
+CUTRACE deposit step 5 [12 tree insert, event] = 32954
+CUTRACE deposit step 6 [13 public leg] = 8284
+CUTRACE deposit step 7 [14 solvency] = 18
+CUTRACE deposit outside markers (entrypoint, dispatch, return) = 3760
+CUTRACE deposit total with markers = 153259
+CUTRACE transfer step 0 [1-4 parse, accounts, fee] = 16425
+CUTRACE transfer step 1 [5-6 root, epoch] = 246
+CUTRACE transfer step 2 [7-9 ext hash, label, pi] = 11328
+CUTRACE transfer step 3 [10 groth16] = 78892
+CUTRACE transfer step 4 [11 nullifier records] = 5936
+CUTRACE transfer step 5 [12 tree insert, event] = 32181
+CUTRACE transfer step 6 [13 public leg] = 8164
+CUTRACE transfer step 7 [14 solvency] = 18
+CUTRACE transfer outside markers (entrypoint, dispatch, return) = 3760
+CUTRACE transfer total with markers = 157850
+CUTRACE withdraw step 0 [1-4 parse, accounts, fee] = 10409
+CUTRACE withdraw step 1 [5-6 root, epoch] = 246
+CUTRACE withdraw step 2 [7-9 ext hash, label, pi] = 11328
+CUTRACE withdraw step 3 [10 groth16] = 78892
+CUTRACE withdraw step 4 [11 nullifier records] = 5936
+CUTRACE withdraw step 5 [12 tree insert, event] = 32178
+CUTRACE withdraw step 6 [13 public leg] = 16362
+CUTRACE withdraw step 7 [14 solvency] = 18
+CUTRACE withdraw outside markers (entrypoint, dispatch, return) = 3955
+CUTRACE withdraw total with markers = 160224
+test cu_breakdown_trace ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 24 filtered out; finished in 0.26s

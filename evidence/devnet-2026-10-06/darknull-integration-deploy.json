@@ -1,0 +1,92 @@
+{
+ "cluster": "devnet",
+ "date": "2026-10-06",
+ "upgradeAuthority": "9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q",
+ "method": "fresh program keypair, solana program deploy with --max-len equal to the .so size (Agave CLI 4.2.1); graded from the ledger: program show (authority, dataLen, lastDeploySlot) and program dump (sha256 of the leading so_bytes bytes equals the .so; remaining bytes zero)",
+ "programs": [
+  {
+   "name": "dark_null_silent_pay",
+   "programId": "2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED",
+   "deploySignature": "3iEVAGa2JuUNmh5rgJH1ZDKo1SNYRf3P4LycwW6Eyxpq92oVmDW5ERxho1HmG6tkXNEJHa9yr8KDr129KWyEqJK2",
+   "lastDeploySlot": 508179935,
+   "authority": "9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q",
+   "dataLen": 83464,
+   "soBytes": 83464,
+   "soSha256": "c75320f2e46f22d2d7b6291cfa2ceae1bfbeeecd5bd71061d94f68f5738dc48e",
+   "dumpPrefixSha256": "c75320f2e46f22d2d7b6291cfa2ceae1bfbeeecd5bd71061d94f68f5738dc48e",
+   "dumpTailNonZeroBytes": 0,
+   "programdataLamports": 424875960,
+   "result": "PASS"
+  },
+  {
+   "name": "dark_null_payment_stream",
+   "programId": "EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP",
+   "deploySignature": "3Z5kR34eRLD1U7eB9gtHDDjJyzVg3x6Af1P9widzrxWGK6Uf1hojh4wDs6PGVAy1TLkJRT1xpvtEXx5iTwxswgva",
+   "lastDeploySlot": 508179527,
+   "authority": "9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q",
+   "dataLen": 92136,
+   "soBytes": 92136,
+   "soSha256": "af8f9a7f2c9556173dbd9e3ee1f08c88a617dff83d68daf50b4e4b547102eeb6",
+   "dumpPrefixSha256": "af8f9a7f2c9556173dbd9e3ee1f08c88a617dff83d68daf50b4e4b547102eeb6",
+   "dumpTailNonZeroBytes": 0,
+   "programdataLamports": 468929720,
+   "result": "PASS"
+  },
+  {
+   "name": "dark_null_threshold_fed",
+   "programId": "CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ",
+   "deploySignature": "3Rhy6Mfec56w7czfwM623vGWfetmwABKMKXh93Nd32EgxtYjcujzNQ8obWc8udHX8TQNM9FdpSK2XLmUKJjT6r25",
+   "lastDeploySlot": 508179676,
+   "authority": "9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q",
+   "dataLen": 85152,
+   "soBytes": 85152,
+   "soSha256": "30c449945d4a19bf47e5181700d6bda583c2ef03e0d3733b206f137b6fba54c2",
+   "dumpPrefixSha256": "30c449945d4a19bf47e5181700d6bda583c2ef03e0d3733b206f137b6fba54c2",
+   "dumpTailNonZeroBytes": 0,
+   "programdataLamports": 433451000,
+   "result": "PASS"
+  },
+  {
+   "name": "dark_null_fiat_oracle",
+   "programId": "3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw",
+   "deploySignature": "g7BZ2ht2gYDFgUH4k6Ly8oifZPaZKAkY1YUWSHMXRzyyLcevyeBrqM9X7NdbfBHGaiMSh8JiuqZhevyoCNCTc3G",
+   "lastDeploySlot": 508178279,
+   "authority": "9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q",
+   "dataLen": 93800,
+   "soBytes": 93800,
+   "soSha256": "04da30dd3b4b9cb7587a26bc51f4e60834195b1ea15ba83f0bfe9c3cc3b88d86",
+   "dumpPrefixSha256": "04da30dd3b4b9cb7587a26bc51f4e60834195b1ea15ba83f0bfe9c3cc3b88d86",
+   "dumpTailNonZeroBytes": 0,
+   "programdataLamports": 477382840,
+   "result": "PASS"
+  },
+  {
+   "name": "dark_null_accumulator",
+   "programId": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+   "deploySignature": "51TqJRFERSENDfaos3YuQL4wdAfeoeKC4k48phrXVaqA4xjNxGRwcBgrDgh4TE2ubiK2fuQVe7GV6VR4P7jxDy5v",
+   "lastDeploySlot": 508179399,
+   "authority": "9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q",
+   "dataLen": 92664,
+   "soBytes": 92664,
+   "soSha256": "71ccad8171938420a3f7923a250a17b563145a7f4e6fc707ca1d0dd499c84d1d",
+   "dumpPrefixSha256": "71ccad8171938420a3f7923a250a17b563145a7f4e6fc707ca1d0dd499c84d1d",
+   "dumpTailNonZeroBytes": 0,
+   "programdataLamports": 471611960,
+   "result": "PASS"
+  },
+  {
+   "name": "dark_null_inference",
+   "programId": "GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB",
+   "deploySignature": "2rS5edgzkTaADdGu5SXi6LyH5Pkpx5tkq4TdUsFa5oGEQqpruzPS3iZVC7uDDMA1jT4dMxLaRKbZs17a1iWpCN9v",
+   "lastDeploySlot": 508179624,
+   "authority": "9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q",
+   "dataLen": 89632,
+   "soBytes": 89632,
+   "soSha256": "839d008fd359fd16aa3f507f3a445c385afdf75889b80523a0789037f1a80b0a",
+   "dumpPrefixSha256": "839d008fd359fd16aa3f507f3a445c385afdf75889b80523a0789037f1a80b0a",
+   "dumpTailNonZeroBytes": 0,
+   "programdataLamports": 456209400,
+   "result": "PASS"
+  }
+ ]
+}

@@ -1,0 +1,275 @@
+{
+ "program": "darknull-accumulator",
+ "rpc": "private devnet RPC",
+ "started": "2026-10-06T18:37:44.347Z",
+ "source": "/work/evidence/darknull/darknull-accumulator.log",
+ "scriptExit": 0,
+ "programId": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+ "sinceSlot": "508185611",
+ "printedSignatures": 7,
+ "programSignatures": 0,
+ "steps": [
+  {
+   "label": "InitAccumulator: authority=AWGf1FGrGjHEWL9daYaGGUoae7oaF6zQj11eaSxgHuW1",
+   "signature": "2XbduKhKGwpttnYVhDnnF7UMENdPRwQdETp73JWzbXc8Y6LWgcNy8vVYUxPbixJ2QsN35B6k4vmby4gz9Cgkev14",
+   "slot": 508185619,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 6825,
+   "ixCu": [
+    {
+     "program": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+     "cu": 6825
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y invoke [1]",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: InitAccumulator: authority=AWGf1FGrGjHEWL9daYaGGUoae7oaF6zQj11eaSxgHuW1",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y consumed 6825 of 200000 compute units",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y success"
+   ]
+  },
+  {
+   "label": "Accumulated receipt #1, commitment updated",
+   "signature": "5yvjfg9k6mX6QXdtgYWv98aqVsw4DpWNCsNAKZWRkDN9ELZM5VDiGGLFmmQSo369FPxRcv1SZopapajUyoGucqCn",
+   "slot": 508185627,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 3006,
+   "ixCu": [
+    {
+     "program": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+     "cu": 3006
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y invoke [1]",
+    "Program log: Accumulated receipt #1, commitment updated",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y consumed 3006 of 200000 compute units",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y success"
+   ]
+  },
+  {
+   "label": "Accumulated receipt #2, commitment updated",
+   "signature": "2UBtMz5FR1TdNdEsiTq1jVMc7ycaZsCQHZuEPbacwE5Exoy2nZJ1RZ7L618cU6pj4bi55ymt3ZQ2kZ5Dg8zSwjra",
+   "slot": 508185631,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 3006,
+   "ixCu": [
+    {
+     "program": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+     "cu": 3006
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y invoke [1]",
+    "Program log: Accumulated receipt #2, commitment updated",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y consumed 3006 of 200000 compute units",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y success"
+   ]
+  },
+  {
+   "label": "Accumulated receipt #3, commitment updated",
+   "signature": "5aqtyxYUuDsWfxLcZeYtRtpW2gWkCnh9ZYaK7bxTzrtHUPDjKcKWr7ExDenPsTZYWRAKTsrnsNdJ7ttwMj2RcLFM",
+   "slot": 508185644,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 3006,
+   "ixCu": [
+    {
+     "program": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+     "cu": 3006
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y invoke [1]",
+    "Program log: Accumulated receipt #3, commitment updated",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y consumed 3006 of 200000 compute units",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y success"
+   ]
+  },
+  {
+   "label": "Accumulated receipt #4, commitment updated",
+   "signature": "HdyFe1uHAvh2HZzjCjcBGQ3zpKnAwjt4JSvveg5ogWVjRETu3Zg2kTDEBvLxotbvTzhw6M4SHzcGEHDaBTdEKuw",
+   "slot": 508185649,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 3006,
+   "ixCu": [
+    {
+     "program": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+     "cu": 3006
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y invoke [1]",
+    "Program log: Accumulated receipt #4, commitment updated",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y consumed 3006 of 200000 compute units",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y success"
+   ]
+  },
+  {
+   "label": "Accumulated receipt #5, commitment updated",
+   "signature": "15fb6Y751Q75ramRhcryLALgihhHeMsycD3QbksJxx1JW6sp5pzSCNzkHZb7m4HnPA8oYEKdeBFfnu75F4UK1zw",
+   "slot": 508185654,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 3006,
+   "ixCu": [
+    {
+     "program": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+     "cu": 3006
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y invoke [1]",
+    "Program log: Accumulated receipt #5, commitment updated",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y consumed 3006 of 200000 compute units",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y success"
+   ]
+  },
+  {
+   "label": "Accumulator finalized: 5 receipts, commitment=[217, 18, 122, 40]",
+   "signature": "2RvRC98Q6j6mjSxUkdCL3DFAz15WEaV9NN8Ht6RovZAtF2ZEVHEFec3zzE8ppDM6vUDQ4on7JZQG5JUt6XNjSumW",
+   "slot": 508185659,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 3704,
+   "ixCu": [
+    {
+     "program": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+     "cu": 3704
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y invoke [1]",
+    "Program log: Accumulator finalized: 5 receipts, commitment=[217, 18, 122, 40]",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y consumed 3704 of 200000 compute units",
+    "Program FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y success"
+   ]
+  }
+ ],
+ "checks": [
+  {
+   "label": "darknull-accumulator: script exited 0",
+   "pass": true,
+   "exit": "0"
+  },
+  {
+   "label": "darknull-accumulator: transactions found on the ledger",
+   "pass": true,
+   "printed": 7,
+   "program": 0
+  },
+  {
+   "label": "darknull-accumulator: 2XbduKhKGwpt (InitAccumulator: authority=AWGf1FGrGjHEWL9daYaGGUoae7oaF6zQj11eaSxgHuW1)",
+   "pass": true,
+   "cu": 6825,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-accumulator: 5yvjfg9k6mX6 (Accumulated receipt #1, commitment updated)",
+   "pass": true,
+   "cu": 3006,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-accumulator: 2UBtMz5FR1Td (Accumulated receipt #2, commitment updated)",
+   "pass": true,
+   "cu": 3006,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-accumulator: 5aqtyxYUuDsW (Accumulated receipt #3, commitment updated)",
+   "pass": true,
+   "cu": 3006,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-accumulator: HdyFe1uHAvh2 (Accumulated receipt #4, commitment updated)",
+   "pass": true,
+   "cu": 3006,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-accumulator: 15fb6Y751Q75 (Accumulated receipt #5, commitment updated)",
+   "pass": true,
+   "cu": 3006,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-accumulator: 2RvRC98Q6j6m (Accumulator finalized: 5 receipts, commitment=[217, 18, 122, 40])",
+   "pass": true,
+   "cu": 3704,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-accumulator: at least one transaction succeeded on chain",
+   "pass": true,
+   "ok": 7,
+   "failedOnChain": 0
+  }
+ ],
+ "summary": {
+  "transactions": 7,
+  "ok": 7,
+  "failedOnChain": 0
+ },
+ "cuByStep": {
+  "InitAccumulator: authority=AWGf1FGrGjHEWL9daYaGGUoae7oaF6zQj11eaSxgHuW1": [
+   6825
+  ],
+  "Accumulated receipt #1, commitment updated": [
+   3006
+  ],
+  "Accumulated receipt #2, commitment updated": [
+   3006
+  ],
+  "Accumulated receipt #3, commitment updated": [
+   3006
+  ],
+  "Accumulated receipt #4, commitment updated": [
+   3006
+  ],
+  "Accumulated receipt #5, commitment updated": [
+   3006
+  ],
+  "Accumulator finalized: 5 receipts, commitment=[217, 18, 122, 40]": [
+   3704
+  ]
+ },
+ "finished": "2026-10-06T18:37:45.753Z",
+ "result": "PASS",
+ "failures": 0
+}

@@ -11,7 +11,7 @@ use solana_program::{
 };
 use borsh::{BorshDeserialize, BorshSerialize};
 
-solana_program::declare_id!("J6oHoysM1RGs3yZPXBp9ZUgdYgGQWZf2wKisS1tJQdaQ");
+solana_program::declare_id!("EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP");
 
 /// Channel state stored in the PDA — 82 bytes total:
 ///   payer:        32

@@ -1,0 +1,114 @@
+{
+ "program": "darknull-threshold-fed",
+ "rpc": "private devnet RPC",
+ "started": "2026-10-06T18:38:15.190Z",
+ "source": "/work/evidence/darknull/darknull-threshold-fed.log",
+ "scriptExit": 0,
+ "programId": "CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ",
+ "sinceSlot": "508185769",
+ "printedSignatures": 2,
+ "programSignatures": 0,
+ "steps": [
+  {
+   "label": "Instruction: InitFederation",
+   "signature": "5Q6VTDQWKvKTx3CGj3QtsYpsxxeWgrZjZ7DmkteZwNWc5EqjuitzEw8wyUcuvjzjpzoRVJgqRRSpydfZdXqpjgn",
+   "slot": 508185776,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 18179,
+   "ixCu": [
+    {
+     "program": "CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ",
+     "cu": 18179
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ invoke [1]",
+    "Program log: Instruction: InitFederation",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: InitFederation: threshold=2/3, aggregate_pubkey=0259d070c26459218efdf6c8cbc62a12d8ca8fcce1e8a9d10c7a370afff1228031",
+    "Program CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ consumed 18179 of 200000 compute units",
+    "Program CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ success"
+   ]
+  },
+  {
+   "label": "Instruction: RecordIssuance",
+   "signature": "5Dj6cVLgqwtfbwqwYqvoUrp6Xim1bwtBbj1WYrJ55eSQhH1kREARAQLx31kP68xxMvGLdqUVeTMNAAnwsmcCijmp",
+   "slot": 508185787,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 17887,
+   "ixCu": [
+    {
+     "program": "CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ",
+     "cu": 17887
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ invoke [1]",
+    "Program log: Instruction: RecordIssuance",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: RecordIssuance: token_hash=5310bfbe9db3d015fa45f74386e8189d994e188d1b7be7afc17f374a7acf3512, issuance_count=1",
+    "Program CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ consumed 17887 of 200000 compute units",
+    "Program CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ success"
+   ]
+  }
+ ],
+ "checks": [
+  {
+   "label": "darknull-threshold-fed: script exited 0",
+   "pass": true,
+   "exit": "0"
+  },
+  {
+   "label": "darknull-threshold-fed: transactions found on the ledger",
+   "pass": true,
+   "printed": 2,
+   "program": 0
+  },
+  {
+   "label": "darknull-threshold-fed: 5Q6VTDQWKvKT (Instruction: InitFederation)",
+   "pass": true,
+   "cu": 18179,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-threshold-fed: 5Dj6cVLgqwtf (Instruction: RecordIssuance)",
+   "pass": true,
+   "cu": 17887,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-threshold-fed: at least one transaction succeeded on chain",
+   "pass": true,
+   "ok": 2,
+   "failedOnChain": 0
+  }
+ ],
+ "summary": {
+  "transactions": 2,
+  "ok": 2,
+  "failedOnChain": 0
+ },
+ "cuByStep": {
+  "Instruction: InitFederation": [
+   18179
+  ],
+  "Instruction: RecordIssuance": [
+   17887
+  ]
+ },
+ "finished": "2026-10-06T18:38:15.714Z",
+ "result": "PASS",
+ "failures": 0
+}

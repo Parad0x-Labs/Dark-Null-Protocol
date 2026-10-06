@@ -1,0 +1,114 @@
+{
+ "program": "darknull-silent-pay",
+ "rpc": "private devnet RPC",
+ "started": "2026-10-06T18:38:08.711Z",
+ "source": "/work/evidence/darknull/darknull-silent-pay.log",
+ "scriptExit": 0,
+ "programId": "2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED",
+ "sinceSlot": "508185745",
+ "printedSignatures": 2,
+ "programSignatures": 0,
+ "steps": [
+  {
+   "label": "Instruction: RegisterScanKeys",
+   "signature": "5rb6t7XJBRT2MUXSBr4ZdHK4brxa7nSP2smhhLeVHrTussgHGGM9agFCKoEWih5DfPcSPBWANXM3FTGGx25qPKpd",
+   "slot": 508185755,
+   "version": "legacy",
+   "err": null,
+   "fee": 10000,
+   "cu": 8601,
+   "ixCu": [
+    {
+     "program": "2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED",
+     "cu": 8601
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program 2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED invoke [1]",
+    "Program log: Instruction: RegisterScanKeys",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: RegisterScanKeys: PDA Hv1ipzGZ1DQ9VU5wVjZW9V1FLTVmt3fPEbMxyFFdBqqA",
+    "Program 2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED consumed 8601 of 200000 compute units",
+    "Program 2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED success"
+   ]
+  },
+  {
+   "label": "Instruction: RecordPayment",
+   "signature": "4CFT6478PcKx6UBLecFy9pjWsdP3cyutiQicLqsKU8395DzdM1Wc42puJ4eXWwuSs5Xd4k3xsKnzJgtbb45U314P",
+   "slot": 508185761,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 7040,
+   "ixCu": [
+    {
+     "program": "2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED",
+     "cu": 7040
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program 2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED invoke [1]",
+    "Program log: Instruction: RecordPayment",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: RecordPayment: PDA 25ZACeH1fT8hDE7JTNcoHWgfkNWPuwZnSZ4FxehBaP3t",
+    "Program 2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED consumed 7040 of 200000 compute units",
+    "Program 2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED success"
+   ]
+  }
+ ],
+ "checks": [
+  {
+   "label": "darknull-silent-pay: script exited 0",
+   "pass": true,
+   "exit": "0"
+  },
+  {
+   "label": "darknull-silent-pay: transactions found on the ledger",
+   "pass": true,
+   "printed": 2,
+   "program": 0
+  },
+  {
+   "label": "darknull-silent-pay: 5rb6t7XJBRT2 (Instruction: RegisterScanKeys)",
+   "pass": true,
+   "cu": 8601,
+   "fee": 10000,
+   "err": null
+  },
+  {
+   "label": "darknull-silent-pay: 4CFT6478PcKx (Instruction: RecordPayment)",
+   "pass": true,
+   "cu": 7040,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-silent-pay: at least one transaction succeeded on chain",
+   "pass": true,
+   "ok": 2,
+   "failedOnChain": 0
+  }
+ ],
+ "summary": {
+  "transactions": 2,
+  "ok": 2,
+  "failedOnChain": 0
+ },
+ "cuByStep": {
+  "Instruction: RegisterScanKeys": [
+   8601
+  ],
+  "Instruction: RecordPayment": [
+   7040
+  ]
+ },
+ "finished": "2026-10-06T18:38:09.022Z",
+ "result": "PASS",
+ "failures": 0
+}

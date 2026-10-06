@@ -1,0 +1,98 @@
+{
+ "program": "darknull-fiat-oracle",
+ "rpc": "private devnet RPC",
+ "started": "2026-10-06T18:37:50.186Z",
+ "source": "/work/evidence/darknull/darknull-fiat-oracle.log",
+ "scriptExit": 0,
+ "programId": "3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw",
+ "sinceSlot": "508185673",
+ "printedSignatures": 0,
+ "programSignatures": 2,
+ "steps": [
+  {
+   "label": "RegisterOracle: PDA ChhUkEYkZ14n43eoQcjZQsdWck9b1eZ6jm8P7xxX7Qt8 created",
+   "signature": "27poLHForKMWdTCGdfphqaHHmMYvTZECWeZyMcYiapaFtLewkUgxafRmbdNsXXE5qvPUj2v2BH1jesaWmiPdCsmF",
+   "slot": 508185679,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 6824,
+   "ixCu": [
+    {
+     "program": "3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw",
+     "cu": 6824
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": false,
+   "logs": [
+    "Program 3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw invoke [1]",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: RegisterOracle: PDA ChhUkEYkZ14n43eoQcjZQsdWck9b1eZ6jm8P7xxX7Qt8 created",
+    "Program 3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw consumed 6824 of 200000 compute units",
+    "Program 3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw success"
+   ]
+  },
+  {
+   "label": "SettleReceipt: payment_id=[157, 71, 9, 191, 75, 215, 45, 197] amount_cents=4999 ",
+   "signature": "2JoUS6zFEiLF8d9JjCN2T776oZUr9v1pDr2KjACv1McVSzUtVEDKKMFyvwR5HETxWJixjWR3CApHPruiijR6zPHN",
+   "slot": 508185685,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 37413,
+   "ixCu": [
+    {
+     "program": "3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw",
+     "cu": 37413
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": false,
+   "logs": [
+    "Program 3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw invoke [1]",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: SettleReceipt: payment_id=[157, 71, 9, 191, 75, 215, 45, 197] amount_cents=4999 receipt=4oYF163TtpWppbRDnd5AE2mGNejCwrLtieBHuMwVkntk",
+    "Program 3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw consumed 37413 of 200000 compute units",
+    "Program 3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw success"
+   ]
+  }
+ ],
+ "checks": [
+  {
+   "label": "darknull-fiat-oracle: script exited 0",
+   "pass": true,
+   "exit": "0"
+  },
+  {
+   "label": "darknull-fiat-oracle: transactions found on the ledger",
+   "pass": true,
+   "printed": 0,
+   "program": 2
+  },
+  {
+   "label": "darknull-fiat-oracle: at least one transaction succeeded on chain",
+   "pass": true,
+   "ok": 2,
+   "failedOnChain": 0
+  }
+ ],
+ "summary": {
+  "transactions": 2,
+  "ok": 2,
+  "failedOnChain": 0
+ },
+ "cuByStep": {
+  "RegisterOracle: PDA ChhUkEYkZ14n43eoQcjZQsdWck9b1eZ6jm8P7xxX7Qt8 created": [
+   6824
+  ],
+  "SettleReceipt: payment_id=[157, 71, 9, 191, 75, 215, 45, 197] amount_cents=4999 ": [
+   37413
+  ]
+ },
+ "finished": "2026-10-06T18:37:50.720Z",
+ "result": "PASS",
+ "failures": 0
+}

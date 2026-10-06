@@ -11,7 +11,7 @@ use solana_program::{
 };
 use borsh::{BorshDeserialize, BorshSerialize};
 
-solana_program::declare_id!("4sMywVPL5waxniQDs5pDuhc1E4uUWjqh1ob17fY82VQz");
+solana_program::declare_id!("CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ");
 
 // ── account layouts ──────────────────────────────────────────────────────────
 

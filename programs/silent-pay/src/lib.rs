@@ -13,7 +13,7 @@ use solana_program::{
     sysvar::Sysvar,
 };
 
-solana_program::declare_id!("9VYPtdr19RDBVTV1WJ1stkCisucre2Bvcpt91KyfYszR");
+solana_program::declare_id!("2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED");
 
 // ---------------------------------------------------------------------------
 // Instruction discriminants

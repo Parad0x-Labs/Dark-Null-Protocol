@@ -19,9 +19,69 @@
       "fail": 0,
       "txs": 1,
       "file": "evidence/devnet-2026-10-06/darknull-check-x402-devnet.json"
+    },
+    {
+      "suite": "darknull-silent-pay",
+      "result": "PASS",
+      "pass": 5,
+      "fail": 0,
+      "txs": 2,
+      "programId": "2FvaRhpwX2okeeV4fGuMo6Y3DxEXMZWJYYJBCknJbbED",
+      "programDeploySlot": 508179935,
+      "file": "evidence/devnet-2026-10-06/darknull-silent-pay.json"
+    },
+    {
+      "suite": "darknull-payment-stream",
+      "result": "PASS",
+      "pass": 6,
+      "fail": 0,
+      "txs": 2,
+      "programId": "EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP",
+      "programDeploySlot": 508179527,
+      "file": "evidence/devnet-2026-10-06/darknull-payment-stream.json"
+    },
+    {
+      "suite": "darknull-threshold-fed",
+      "result": "PASS",
+      "pass": 5,
+      "fail": 0,
+      "txs": 2,
+      "programId": "CjcnLYP1wxfgFPjcBVuEQHTb36UnjNydfngGvYjLUPPZ",
+      "programDeploySlot": 508179676,
+      "file": "evidence/devnet-2026-10-06/darknull-threshold-fed.json"
+    },
+    {
+      "suite": "darknull-fiat-oracle",
+      "result": "PASS",
+      "pass": 3,
+      "fail": 0,
+      "txs": 2,
+      "programId": "3VQsCtrq8kgdbUvSqHBqzbRqjuQuFkPYxrZTCBrNB8rw",
+      "programDeploySlot": 508178279,
+      "file": "evidence/devnet-2026-10-06/darknull-fiat-oracle.json"
+    },
+    {
+      "suite": "darknull-accumulator",
+      "result": "PASS",
+      "pass": 10,
+      "fail": 0,
+      "txs": 7,
+      "programId": "FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y",
+      "programDeploySlot": 508179399,
+      "file": "evidence/devnet-2026-10-06/darknull-accumulator.json"
+    },
+    {
+      "suite": "darknull-inference",
+      "result": "PASS",
+      "pass": 5,
+      "fail": 0,
+      "txs": 2,
+      "programId": "GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB",
+      "programDeploySlot": 508179624,
+      "file": "evidence/devnet-2026-10-06/darknull-inference.json"
     }
   ],
-  "pass": 4,
+  "pass": 38,
   "fail": 0,
-  "note": "Integration-program runs from the same day are recorded with their redeploy under a fresh key."
+  "note": "The six integration programs were redeployed under fresh program keys on 2026-10-06 (upgrade authority 9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q); deploy record in darknull-integration-deploy.json."
 }

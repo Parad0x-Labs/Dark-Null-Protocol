@@ -1,0 +1,117 @@
+{
+ "program": "darknull-payment-stream",
+ "rpc": "private devnet RPC",
+ "started": "2026-10-06T18:38:02.728Z",
+ "source": "/work/evidence/darknull/darknull-payment-stream.log",
+ "scriptExit": 0,
+ "programId": "EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP",
+ "sinceSlot": "508185715",
+ "printedSignatures": 2,
+ "programSignatures": 0,
+ "steps": [
+  {
+   "label": "Instruction: OpenChannel",
+   "signature": "4Gn94AsBJA5g6X2EKEXtDToDqVVpuiu4gaWbKroitbKSoh43cMcoLdiZesFiXFL61UWsZ7dMaT1aLEASm41vhDzQ",
+   "slot": 508185721,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 9031,
+   "ixCu": [
+    {
+     "program": "EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP",
+     "cu": 9031
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP invoke [1]",
+    "Program log: Instruction: OpenChannel",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: OpenChannel: pda=9DPTwgz7UgikKQU9dLRpVPqJL9R4UQZWH2U3pwtjw5Rp, max_lamports=5000000, nonce=[0, 0, 0, 0, 0, 0, 0, 0]",
+    "Program EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP consumed 9031 of 200000 compute units",
+    "Program EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP success"
+   ]
+  },
+  {
+   "label": "Instruction: CloseChannel",
+   "signature": "64Any4XZwYgRoJQzNTaD1wZoAuhZcTduXT5T3H18Jjsy2kiPwXvfRTx7ass91hAdLddYpxxyPjaJ46yqyKUfUWqS",
+   "slot": 508185736,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 6666,
+   "ixCu": [
+    {
+     "program": "EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP",
+     "cu": 6666
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP invoke [1]",
+    "Program log: Instruction: CloseChannel",
+    "Program log: CloseChannel: accumulated=5000000 → recipient=DnnobAsRS2zuir8ikd5HwqTKDGiqrt7QnjQddWHDRJj8, remaining=1066800 → payer=AWGf1FGrGjHEWL9daYaGGUoae7oaF6zQj11eaSxgHuW1",
+    "Program EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP consumed 6666 of 200000 compute units",
+    "Program EduZQkGvwLGXQPVNp64BPnwCkfeVJghZr2nFKTcXBMTP success"
+   ]
+  }
+ ],
+ "checks": [
+  {
+   "label": "darknull-payment-stream: script exited 0",
+   "pass": true,
+   "exit": "0"
+  },
+  {
+   "label": "darknull-payment-stream: transactions found on the ledger",
+   "pass": true,
+   "printed": 2,
+   "program": 0
+  },
+  {
+   "label": "darknull-payment-stream: 4Gn94AsBJA5g (Instruction: OpenChannel)",
+   "pass": true,
+   "cu": 9031,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-payment-stream: 64Any4XZwYgR (Instruction: CloseChannel)",
+   "pass": true,
+   "cu": 6666,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-payment-stream: account 9DPTwgz7UgikKQU9dLRpVPqJL9R4UQZWH2U3pwtjw5Rp closed",
+   "pass": true,
+   "lamports": "0"
+  },
+  {
+   "label": "darknull-payment-stream: at least one transaction succeeded on chain",
+   "pass": true,
+   "ok": 2,
+   "failedOnChain": 0
+  }
+ ],
+ "summary": {
+  "transactions": 2,
+  "ok": 2,
+  "failedOnChain": 0
+ },
+ "cuByStep": {
+  "Instruction: OpenChannel": [
+   9031
+  ],
+  "Instruction: CloseChannel": [
+   6666
+  ]
+ },
+ "finished": "2026-10-06T18:38:03.300Z",
+ "result": "PASS",
+ "failures": 0
+}

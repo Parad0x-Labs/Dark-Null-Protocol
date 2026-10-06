@@ -1,0 +1,114 @@
+{
+ "program": "darknull-inference",
+ "rpc": "private devnet RPC",
+ "started": "2026-10-06T18:37:55.782Z",
+ "source": "/work/evidence/darknull/darknull-inference.log",
+ "scriptExit": 0,
+ "programId": "GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB",
+ "sinceSlot": "508185693",
+ "printedSignatures": 2,
+ "programSignatures": 0,
+ "steps": [
+  {
+   "label": "Instruction: RegisterModel",
+   "signature": "2hB2URQsLvm4acWoTJdmiEosdxvVW8noyKa7mW7WWyFNSGGK3EXTqoZ5t4CoN8QmqZRy76mVWHfXAR9cRW2fUyfG",
+   "slot": 508185703,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 8507,
+   "ixCu": [
+    {
+     "program": "GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB",
+     "cu": 8507
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB invoke [1]",
+    "Program log: Instruction: RegisterModel",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: RegisterModel: PDA 73beif5nFEBQyrKvQ9cnqJ5G5xt49WmR25EU7K8xbYZu",
+    "Program GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB consumed 8507 of 200000 compute units",
+    "Program GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB success"
+   ]
+  },
+  {
+   "label": "Instruction: RecordInference",
+   "signature": "3FW1AB2TV1iD4f7nWT89XCRqdWEf2gZubnxaSsioVah6Q29WAzwH1kJLtpH4GHCKMe7dYEMm31Bsb74ovEJPraE5",
+   "slot": 508185708,
+   "version": "legacy",
+   "err": null,
+   "fee": 5000,
+   "cu": 35768,
+   "ixCu": [
+    {
+     "program": "GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB",
+     "cu": 35768
+    }
+   ],
+   "keepLogs": true,
+   "printedByScript": true,
+   "logs": [
+    "Program GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB invoke [1]",
+    "Program log: Instruction: RecordInference",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: RecordInference: receipt PDA DKPYpczuBesa7FjdjZhfKRrzRYBpeunv54aBa1EQM3fG",
+    "Program GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB consumed 35768 of 200000 compute units",
+    "Program GSkQrJ8hrMW6XLDh4dUv5jCFxdbczeGdm6iX7NvYPLrB success"
+   ]
+  }
+ ],
+ "checks": [
+  {
+   "label": "darknull-inference: script exited 0",
+   "pass": true,
+   "exit": "0"
+  },
+  {
+   "label": "darknull-inference: transactions found on the ledger",
+   "pass": true,
+   "printed": 2,
+   "program": 0
+  },
+  {
+   "label": "darknull-inference: 2hB2URQsLvm4 (Instruction: RegisterModel)",
+   "pass": true,
+   "cu": 8507,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-inference: 3FW1AB2TV1iD (Instruction: RecordInference)",
+   "pass": true,
+   "cu": 35768,
+   "fee": 5000,
+   "err": null
+  },
+  {
+   "label": "darknull-inference: at least one transaction succeeded on chain",
+   "pass": true,
+   "ok": 2,
+   "failedOnChain": 0
+  }
+ ],
+ "summary": {
+  "transactions": 2,
+  "ok": 2,
+  "failedOnChain": 0
+ },
+ "cuByStep": {
+  "Instruction: RegisterModel": [
+   8507
+  ],
+  "Instruction: RecordInference": [
+   35768
+  ]
+ },
+ "finished": "2026-10-06T18:37:56.064Z",
+ "result": "PASS",
+ "failures": 0
+}

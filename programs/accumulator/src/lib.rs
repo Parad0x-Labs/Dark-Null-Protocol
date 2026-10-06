@@ -13,7 +13,7 @@ use solana_program::{
     sysvar::Sysvar,
 };
 
-solana_program::declare_id!("ByFb6xcQTgG4fai31Zto7qpQve1eBo3cc2qrAJU5tN7k");
+solana_program::declare_id!("FX2YSq6jjk49m18dJpQYd7Dw9nLWYxRTDqpdodde1v2Y");
 
 // ─────────────────────────────────────────────────────────────────────────────
 // State

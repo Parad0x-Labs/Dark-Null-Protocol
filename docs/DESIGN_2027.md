@@ -2,6 +2,8 @@
 
 status: design. Branch `design/agentic-private-payments-2027`. Written 2026-10-06. Updated 2026-10-06 with the
 Phase 0 measurements in [`PHASE0_RESULTS.md`](./PHASE0_RESULTS.md) ([M] values below cite it).
+Byte-level rules are normative in [`spec/V2_SPEC.md`](./spec/V2_SPEC.md); where this document differs, the spec
+governs (V2_SPEC section 14 lists the differences).
 Companions: [`PLAN_2027.md`](./PLAN_2027.md) (build plan, gates, port plan) and
 [`CLAIMS_POLICY.md`](./CLAIMS_POLICY.md) (what may be said, when).
 
@@ -198,8 +200,9 @@ the proof-authorizing key and the spend-authorizing key.
 - All non-dummy inputs of a transact must share one owner, so one authorization signature suffices.
 
 A shielded address encodes `(owner, ivk_pub, diversifier)` as bech32m with HRP `dnull`. The `owner` field
-is described in section 5.6. Diversified addresses give unlinkable per-merchant receive addresses
-without new keys.
+is described in section 5.6. Diversified addresses share the owner key, so they separate scanning keys but are
+linkable to each other; per-merchant receive addresses that must be unlinkable use separate account indices
+(V2_SPEC 4.3).
 
 ### 4.3 Note
 
@@ -251,7 +254,9 @@ B2 measures both variants.
 | `deposit_label` | Program-assigned label for deposits (section 5.7); 0 otherwise |
 | `assoc_root` | Chosen ASP root (section 5.7); 0 when not required |
 
-`ext_data = { recipient_token_account, relayer, relayer_fee, ciphertext0, ciphertext1, ciphertext_rec, memo_binding, root_hint }`.
+`ext_data = { recipient_token_account, relayer, relayer_fee, ciphertext0, ciphertext1, ciphertext_rec, memo_binding, root_hint }`
+(final 649-byte layout in V2_SPEC 7.3: adds `version`, `pool_id` and `stealth_ephemeral`; `root_hint` moves to the
+instruction data).
 `ciphertext_rec` is a constant-size scoped disclosure record (section 5.8). Random bytes fill it when it is
 unused, so its presence leaks nothing.
 
@@ -316,7 +321,8 @@ its gate, the fallback is two circuits (plain / agent), with the leak documented
 
 Channel note owner:
 
-`owner_ch = Poseidon(DS_CHAN, merchant_owner, refund_owner, bjj_pub.x, bjj_pub.y, expiry_epoch, chan_nonce)`.
+`owner_ch = Poseidon(DS_CHAN, merchant_owner, refund_owner, bjj_pub.x, bjj_pub.y, expiry_epoch, nk_ch)`
+(final form in V2_SPEC 5.2: `nk_ch` replaces `chan_nonce` so the owner binds the nullifier key, finding F-NK-CH).
 
 Channel nullifier key: `nk_ch = Poseidon(DS_NK_CH, chan_secret)`. The agent sends `chan_secret` to the
 merchant inside the encrypted channel-note ciphertext, so both parties can compute the channel
@@ -428,7 +434,8 @@ The `accepts` entry carries:
 1. The agent requests the resource. DNA x402 returns 402 with a `Quote`
    (`quoteId, amountAtomic, mint, recipient, expiresAt, memoHash`; dna-x402 `x402/src/types.ts`).
 2. The agent computes
-   `quote_binding = sha256("dnull-x402-quote-v1" || quoteId || resourceHash || amountAtomic || mint || payTo || expiresAt)`.
+   `quote_binding = sha256("dnull-x402-quote-v1" || quoteId || resourceHash || amountAtomic || mint || payTo || expiresAt)`
+   (final encoding in V2_SPEC 11.1: tag `dark-null-x402-quote-v1`, length-prefixed strings, fixed-width integers).
    It then builds a transact: agent notes in, `out0 = (amount, merchant owner)`, `out1 =` change,
    `ext_data.memo_binding = quote_binding`, and `ciphertext0` to the merchant with memo `quoteId` plus a
    one-time refund address.
@@ -542,7 +549,7 @@ Every transact records two nullifiers, dummies included (G4).
 
 | Option | Lookup | Storage cost per nullifier | Trust / liveness | Phase |
 |---|---|---|---|---|
-| A. PDA per nullifier (`["nf", pool, nf]`, 0 data) | O(1), atomic create-fails-if-exists. [M] 1,727 CU per insert | Rent-exempt minimum for a 0-byte account: [M] 650,240 lamports (devnet and mainnet, 2026-10-06), never reclaimable | None beyond the program | P1 default |
+| A. PDA per nullifier (`["nf", pool, nf]`, 0 data; canonical bump derived on chain and pre-funded addresses handled, V2_SPEC 8.6) | O(1), atomic create-fails-if-exists. [M] 1,727 CU per insert plus 1,535 CU per bump attempt | Rent-exempt minimum for a 0-byte account: [M] 650,240 lamports (devnet and mainnet, 2026-10-06), never reclaimable | None beyond the program | P1 default |
 | B. Sharded open-addressing hash-set accounts (up to 10 MiB each, [V] account limit) | O(1) expected. [M] 111-217 CU per insert up to 90% load; average probes 6.4 at 60-90% | [M] 164,846 lamports per 32-byte slot: 2.0x cheaper than A at 50% load, 3.0x at a 75% cap (recommended), 3.5x at 90%. Pages are pre-funded and write-locked per insert | None | P3 candidate |
 | C. Light V2 address tree (height 40) as a uniqueness set | Non-inclusion via Light validity proof | Not rent-based. Light documentation (read 2026-10-06): 10,000 lamports per new address, 5,000 per state tree per instruction, ~200k CU per transaction. Not measured: devnet needs a keyed indexer endpoint | Light forester liveness; CPI into Light system program (~100k CU proof, [V] docs) | P1.5 candidate |
 | D. Evolving / epoch nullifiers (Bowe and Miers, ePrint 2025/2031) | Prunable sets | Lowest | Research | R-track |

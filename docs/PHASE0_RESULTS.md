@@ -23,6 +23,7 @@ Spike sources: [`spikes/p0/`](../spikes/p0/) (circuits, spike program, host tool
 | S-NULL | **Option A confirmed for P1; option B measured as the P3 candidate.** | A: 1,727 CU and 650,240 lamports per nullifier; B: 111-217 CU per insert and 164,846 lamports per 32-byte slot |
 | S-PROVER | **B1 met by the native Groth16 prover with margin.** | Skeleton 23,155 constraints, p50 260 ms (4 threads) / 735 ms (1 thread), 108 MB; full-size proxy 40,914 constraints, p50 433 ms / 1,291 ms, 184 MB |
 | G0.1 vectors | **Pass.** | V-POS 24/24 identical across circomlibjs, circom witness, light-poseidon and `sol_poseidon` on devnet; 10/10 derivation vectors on chain |
+| P0 completion (spec, vectors, crate) | **Pass.** | [`V2_SPEC.md`](./spec/V2_SPEC.md); V-ADDR, V-EXTDATA, V-VOUCHER, V-E2E re-derived by two implementations; `dark-null-transcript` 28/28 tests; reference circuit 3/3 `pi`, 13/13 tampered witnesses rejected; devnet probe 170/170 Poseidon calls, 3/3 `pi`, tree insertion, 6/6 canonical nullifier PDAs (section 9) |
 
 Decisions this changes are listed in section 6. SOL spent and program status are in section 7.
 
@@ -230,8 +231,8 @@ verified; the arkworks skeleton proof's public input equals V-PI.
 
 ## 5. Test vectors (G0.1) and devnet demo
 
-**Domain tags (draft).** `DS_x = int.from_bytes(ascii(tag), "big")` with tags `dark-null-<name>-v1`
-([`V-DS.json`](../vectors/v2/V-DS.json)). The P0 spec fixes them.
+**Domain tags.** `DS_x = int.from_bytes(ascii(tag), "big")` with tags `dark-null-<name>-v1`
+([`V-DS.json`](../vectors/v2/V-DS.json)). Final in V2_SPEC section 3; the Phase 0 values are unchanged.
 
 | Vector | Content | circomlibjs | circom witness | light-poseidon 0.4.0 | `sol_poseidon` (devnet) |
 |---|---|---|---|---|---|
@@ -315,5 +316,60 @@ Sequence:
 5. `cargo test --release` in `spikes/p0/program`, then `cargo-build-sbf --features <store|verify|fflonk> [--arch v3]`
 6. `solana program deploy` with the test payer; the drivers in `spikes/p0/scripts/`; `solana program close`
 
-Next: the P0 spec (`docs/spec/V2_SPEC.md`) fixes the `DS_*` registry used here, and Phase 1 starts from
-`transact_v2_skeleton` with option A nullifiers and V1 transactions.
+Next: Phase 1 starts from [`V2_SPEC.md`](./spec/V2_SPEC.md), the reference circuit `transact_v2_spec.circom`, option A
+nullifiers with on-chain canonical bumps, and V1 transactions, split into the work packages of PLAN_2027 Phase 1.
+
+## 9. Phase 0 completion: specification, vectors, transcript crate (2026-10-06, UTC 10:05-10:40)
+
+**Deliverables.**
+- [`docs/spec/V2_SPEC.md`](./spec/V2_SPEC.md): normative Phase 1 specification.
+- Vectors: [`V-ADDR`](../vectors/v2/V-ADDR.json), [`V-EXTDATA`](../vectors/v2/V-EXTDATA.json),
+  [`V-VOUCHER`](../vectors/v2/V-VOUCHER.json), [`V-E2E`](../vectors/v2/V-E2E.json), final [`V-DS`](../vectors/v2/V-DS.json).
+  Generator: [`vectors/v2/tools`](../vectors/v2/tools) (`npm ci --ignore-scripts`; two runs byte-identical).
+- [`crates/dark-null-transcript`](../crates/dark-null-transcript): `no_std`, no allocation, hash backend as a
+  parameter (light-poseidon on the host, `sol_poseidon` / `sol_sha256` on chain). Ported from the canonical-transcript
+  work of prior internal research (Aug 2026), moved from the width-5 arkworks configuration to the `sol_poseidon`
+  parameters. The in-circuit half of that work maps to the circom reference circuit (checked by witness, below).
+- Reference circuit [`transact_v2_spec.circom`](../spikes/p0/circuits/transact_v2_spec.circom) and devnet probe
+  [`spikes/p0/probe_v2`](../spikes/p0/probe_v2) with driver [`s_probe_v2.mjs`](../spikes/p0/scripts/s_probe_v2.mjs).
+
+**Cross-checks.**
+
+| Check | Implementations | Result | Evidence |
+|---|---|---|---|
+| Every value in V-ADDR, V-EXTDATA, V-VOUCHER, V-E2E (plus all Phase 0 vectors) | JS generator (circomlibjs 0.1.7, node:crypto, @noble/curves 1.9.7, @scure/base 1.2.6) vs Rust (`dark-null-transcript` with light-poseidon 0.2.0 and sha2; own HKDF, bech32m and BabyJubJub reference; curve25519-dalek 3.2.1) | 8/8 vector tests pass; every EdDSA signature reproduced byte-for-byte and verified by both circomlibjs and the Rust reference | [`crate_tests_dark_null_transcript.txt`](../bench/results/p0/2026-10-06/crate_tests_dark_null_transcript.txt) |
+| Prover-malicious scenarios S1-S13 | Rust reference model of the program checks | 14/14 tests pass (baseline accepted, every scenario rejected) | same |
+| Field arithmetic, HMAC, layouts, address codec | Rust vs num-bigint, RFC 4231 | 6/6 pass | same |
+| V-E2E witnesses in the reference circuit | circom 2.2.3 witness (WASM) | 23,166 constraints; 3/3 `pi` equal V-E2E; 13/13 tampered witnesses (labels, signature, `ext_data_hash`, conservation, public asset, membership, leaf index, second `nk`, off-curve `ak`, range) fail | [`witness_check_v2_spec.json`](../bench/results/p0/2026-10-06/witness_check_v2_spec.json) |
+| The crate on chain | `sol_poseidon`, `sol_sha256`, `sol_try_find_program_address` (devnet, SBPFv0) | 170/170 generator Poseidon calls; TRANSACT_CHECK 3/3 (`ext_data_hash` and `pi`); TREE_CHECK (3 insertions from the empty tree); NF_PDA_CHECK 6/6; 5/5 negative simulations rejected with the expected error codes | [`devnet_probe_v2.json`](../bench/results/p0/2026-10-06/devnet_probe_v2.json) |
+| `no_std` | `cargo build --no-default-features`; the same crate built for SBF inside the probe | builds; deployed binary hash equals the rebuilt one (`88486db9...`) | crate log; [`artifacts.sha256`](../bench/results/p0/2026-10-06/artifacts.sha256) |
+
+**Measured on devnet** (probe `72LkCvFe4motQfWJUsPa5X7qpFMpbs8Tx1Bf7nZxL12x`, all V1 transactions):
+
+| Operation (through `dark-null-transcript`) | CU |
+|---|---|
+| Parse a 1,131-byte transact, `ext_data_hash` (`sol_sha256`, 487 CU of it), `pi` (12-input `sol_poseidon`) | 13,056 (spend), 13,311 (deposit, adds the label hash) |
+| Tree pair insertion (32 `sol_poseidon` calls) | 32,869 / 32,878 / 32,892 |
+| Canonical nullifier PDA derivation | 1,535 per bump attempt (bumps 255 / 254 / 251: 1,535 / 3,035 / 7,535) |
+
+**Findings recorded in the spec** (V2_SPEC section 14):
+- F-NK-CH: the DESIGN channel owner did not bind `nk_ch`; fixed.
+- F-BUMP: the Phase 0 spike took the nullifier PDA bump from the client; a lower off-curve bump would give a second
+  record address for one nullifier. `dark-null-pool-v2` derives the canonical bump (scenario S8 shows a second
+  off-curve bump exists for a V-E2E nullifier).
+- F-PREFUND: a pre-funded nullifier address makes `CreateAccount` fail; the program handles that state.
+- Diversified addresses share `pk` and are linkable; unlinkable receive addresses use account indices.
+
+**SOL.** Test payer only. Probe deployed (`3FkqpPPu...`), 11 probe transactions (55,000 lamports in fees), probe
+closed (0.11556492 SOL reclaimed). Balance 495,107,760 to 494,079,640 lamports: **net 1,028,120 lamports
+(0.00103 SOL)**. No program is left deployed. Recorded in the devnet burner ledger and
+[`programs.json`](../bench/results/p0/2026-10-06/programs.json).
+
+**Reproduce.**
+1. Node container: `npm ci --ignore-scripts` in `vectors/v2/tools`; `node gen_v2_vectors.mjs <vectors> <inputs>`;
+   `circom2 transact_v2_spec.circom --O2 --r1cs --wasm -l node_modules -o build`;
+   `node check_witness.mjs build <inputs> <vectors>/V-E2E.json`.
+2. Rust container (offline registry): `cargo test --offline --features light` in `crates/dark-null-transcript`;
+   `cargo-build-sbf --offline` in `spikes/p0/probe_v2`.
+3. Host: `solana program deploy` with the test payer; `node spikes/p0/scripts/s_probe_v2.mjs <calls.json> <out.json>`
+   with `TEST_PAYER` and `PROBE_PROGRAM`; `solana program close`.

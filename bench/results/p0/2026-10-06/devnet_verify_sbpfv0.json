@@ -1,0 +1,313 @@
+{
+ "program": "fbG5hC4zLer8nQcE9T51sAcNNuXNadMdRLyqYE5aACu",
+ "mode": "verify",
+ "date": "2026-10-06T09:22:52.208Z",
+ "runs": {
+  "calibrate": {
+   "label": "cu-mark calibration",
+   "signature": "TvRfEeTzadNy3VnjoapycEY9dTDBfwtQNw4x9h19ivvPvQ9Q4bs2fEPhfJZFrfLs5NdRLJprCdNw7g6fwG9ABpv",
+   "explorer": "https://explorer.solana.com/tx/TvRfEeTzadNy3VnjoapycEY9dTDBfwtQNw4x9h19ivvPvQ9Q4bs2fEPhfJZFrfLs5NdRLJprCdNw7g6fwG9ABpv?cluster=devnet",
+   "tx_bytes": 183,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 340,
+   "cu_per_ix": [
+    340
+   ],
+   "marks": [
+    1399877,
+    1399776
+   ],
+   "log64": [
+    [
+     3,
+     0,
+     0,
+     0,
+     0
+    ]
+   ]
+  },
+  "g16_skeleton": {
+   "label": "Groth16 transact_v2_skeleton (1 public input)",
+   "signature": "tkvN5HmujEK3fMXy3bXmj6i89WYQkKSP76thaNZACBgXFHnkE4oEEwz97yLtdtZGkvFfV2i4rwYPiseZQvQHPvc",
+   "explorer": "https://explorer.solana.com/tx/tkvN5HmujEK3fMXy3bXmj6i89WYQkKSP76thaNZACBgXFHnkE4oEEwz97yLtdtZGkvFfV2i4rwYPiseZQvQHPvc?cluster=devnet",
+   "tx_bytes": 471,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 81282,
+   "cu_per_ix": [
+    81282
+   ],
+   "marks": [
+    1399871,
+    1318835
+   ],
+   "log64": [
+    [
+     48,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "verify_cu": 80935
+  },
+  "g16_pi_hash": {
+   "label": "Groth16 pi_hash circuit",
+   "signature": "5PEPe1B1g3Q6RXHmX526XFaSVwqm42o9o6qN4gHRSw2HEvNfjU3v3N6LPt6eQ8rRSb6WcvwijvEzWPgV58mDvVu3",
+   "explorer": "https://explorer.solana.com/tx/5PEPe1B1g3Q6RXHmX526XFaSVwqm42o9o6qN4gHRSw2HEvNfjU3v3N6LPt6eQ8rRSb6WcvwijvEzWPgV58mDvVu3?cluster=devnet",
+   "tx_bytes": 471,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 81277,
+   "cu_per_ix": [
+    81277
+   ],
+   "marks": [
+    1399871,
+    1318840
+   ],
+   "log64": [
+    [
+     49,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "verify_cu": 80930
+  },
+  "g16_fullsize": {
+   "label": "Groth16 transact_v2_fullsize",
+   "signature": "2wkU8DNJmKZfhm8VCmD38UYFh3LY4TYCpczxHe8ojCsKkbC8Ly1sJ1QDpNyFfVM9H5y7n4uDByMtYTjjjTojpA3P",
+   "explorer": "https://explorer.solana.com/tx/2wkU8DNJmKZfhm8VCmD38UYFh3LY4TYCpczxHe8ojCsKkbC8Ly1sJ1QDpNyFfVM9H5y7n4uDByMtYTjjjTojpA3P?cluster=devnet",
+   "tx_bytes": 471,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 81285,
+   "cu_per_ix": [
+    81285
+   ],
+   "marks": [
+    1399870,
+    1318832
+   ],
+   "log64": [
+    [
+     50,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "verify_cu": 80937
+  },
+  "g16_skeleton_legacy": {
+   "label": "Groth16 skeleton in a legacy tx",
+   "signature": "547gvJeWLm4bJhEEJFHX7UzHfbAYNvgfDrNNmx48oqDdzpMyp5q1VFXvJ817jm5TEtjRj61WDrSj6oNv3UoRWjaW",
+   "explorer": "https://explorer.solana.com/tx/547gvJeWLm4bJhEEJFHX7UzHfbAYNvgfDrNNmx48oqDdzpMyp5q1VFXvJ817jm5TEtjRj61WDrSj6oNv3UoRWjaW?cluster=devnet",
+   "tx_bytes": 459,
+   "version": "legacy",
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 81282,
+   "cu_per_ix": [
+    81282
+   ],
+   "marks": [
+    199871,
+    118835
+   ],
+   "log64": [
+    [
+     48,
+     0,
+     0,
+     0,
+     0
+    ]
+   ]
+  },
+  "plonk_pi_hash_hint": {
+   "label": "PLONK pi_hash (2^15), inverse hint",
+   "signature": "5p995ERM9x4LR9rTuXWfutqa2qvwh1hTKmW2Tr3igYgryrAefWdD2yToSfx22MxUxyEXrvLB7EgVLAEaFWKua4td",
+   "explorer": "https://explorer.solana.com/tx/5p995ERM9x4LR9rTuXWfutqa2qvwh1hTKmW2Tr3igYgryrAefWdD2yToSfx22MxUxyEXrvLB7EgVLAEaFWKua4td?cluster=devnet",
+   "tx_bytes": 1015,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 329610,
+   "cu_per_ix": [
+    329610
+   ],
+   "marks": [
+    1399847,
+    1361904,
+    1240187,
+    1119691,
+    1070520
+   ],
+   "log64": [
+    [
+     64,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "phases": {
+    "transcript": 37842,
+    "field": 121616,
+    "g1": 120395,
+    "pairing": 49070
+   }
+  },
+  "plonk_pi_hash_eea": {
+   "label": "PLONK pi_hash (2^15), on-chain binary-EEA inverse",
+   "signature": "5ZkaQ2TN3TPogAGnhYujfiT7m3ZpQXxeF3zYvoBTMnV2yJw6d1EWYrfJxRPBZ55jSworj4FdRt9r2ZJ4BQjYP8p1",
+   "explorer": "https://explorer.solana.com/tx/5ZkaQ2TN3TPogAGnhYujfiT7m3ZpQXxeF3zYvoBTMnV2yJw6d1EWYrfJxRPBZ55jSworj4FdRt9r2ZJ4BQjYP8p1?cluster=devnet",
+   "tx_bytes": 983,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 383757,
+   "cu_per_ix": [
+    383757
+   ],
+   "marks": [
+    1399851,
+    1361908,
+    1186040,
+    1065544,
+    1016373
+   ],
+   "log64": [
+    [
+     65,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "phases": {
+    "transcript": 37842,
+    "field": 175767,
+    "g1": 120395,
+    "pairing": 49070
+   }
+  },
+  "plonk_skeleton_hint": {
+   "label": "PLONK transact_v2_skeleton (2^18), inverse hint",
+   "signature": "5j6D91u5U15nYA2fBmxovK2RNYvwJKdxh31xFtPgEgEMT2wZVwKZUhsPErtad7uAW5hty7e6WjqJHg2k3mU7kPNz",
+   "explorer": "https://explorer.solana.com/tx/5j6D91u5U15nYA2fBmxovK2RNYvwJKdxh31xFtPgEgEMT2wZVwKZUhsPErtad7uAW5hty7e6WjqJHg2k3mU7kPNz?cluster=devnet",
+   "tx_bytes": 1015,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 336059,
+   "cu_per_ix": [
+    336059
+   ],
+   "marks": [
+    1399848,
+    1361730,
+    1233759,
+    1113242,
+    1064071
+   ],
+   "log64": [
+    [
+     66,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "phases": {
+    "transcript": 38017,
+    "field": 127870,
+    "g1": 120416,
+    "pairing": 49070
+   }
+  },
+  "plonk_pi_hash_legacy": {
+   "label": "PLONK pi_hash in a legacy tx with SetComputeUnitLimit",
+   "signature": "4gDrkNaADoZcoNPWboz1y75ywVa56nxGYXZdX3saR2zB6ojzMCVxEBGizWZvxYauNWrX6KngHYXmQ4Fpak5SNzBj",
+   "explorer": "https://explorer.solana.com/tx/4gDrkNaADoZcoNPWboz1y75ywVa56nxGYXZdX3saR2zB6ojzMCVxEBGizWZvxYauNWrX6KngHYXmQ4Fpak5SNzBj?cluster=devnet",
+   "tx_bytes": 1043,
+   "version": "legacy",
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 329760,
+   "cu_per_ix": [
+    329610
+   ],
+   "marks": [
+    399697,
+    361754,
+    240037,
+    119541,
+    70370
+   ],
+   "log64": [
+    [
+     64,
+     0,
+     0,
+     0,
+     0
+    ]
+   ]
+  },
+  "reject": {
+   "g16_bad_pub": {
+    "err": {
+     "InstructionError": [
+      0,
+      {
+       "Custom": 769
+      }
+     ]
+    },
+    "units": 81079,
+    "last_log": "Program fbG5hC4zLer8nQcE9T51sAcNNuXNadMdRLyqYE5aACu failed: custom program error: 0x301"
+   },
+   "plonk_bad_eval": {
+    "err": {
+     "InstructionError": [
+      0,
+      {
+       "Custom": 1028
+      }
+     ]
+    },
+    "units": 329359,
+    "last_log": "Program fbG5hC4zLer8nQcE9T51sAcNNuXNadMdRLyqYE5aACu failed: custom program error: 0x404"
+   },
+   "plonk_bad_pub": {
+    "err": {
+     "InstructionError": [
+      0,
+      {
+       "Custom": 1026
+      }
+     ]
+    },
+    "units": 86642,
+    "last_log": "Program fbG5hC4zLer8nQcE9T51sAcNNuXNadMdRLyqYE5aACu failed: custom program error: 0x402"
+   }
+  }
+ },
+ "mark_cost_cu": 101
+}

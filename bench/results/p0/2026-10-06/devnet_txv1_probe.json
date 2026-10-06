@@ -1,0 +1,55 @@
+{
+ "rpc": "https://api.devnet.solana.com",
+ "cluster_version": {
+  "feature-set": 1855282951,
+  "solana-core": "4.4.0-beta.0"
+ },
+ "cases": [
+  {
+   "name": "v1-empty-config",
+   "bytes": 188,
+   "simulate": {
+    "err": "MaxLoadedAccountsDataSizeExceeded",
+    "unitsConsumed": 0,
+    "logs": []
+   }
+  },
+  {
+   "name": "v1-cu-limit-only",
+   "bytes": 192,
+   "simulate": {
+    "err": "MaxLoadedAccountsDataSizeExceeded",
+    "unitsConsumed": 0,
+    "logs": []
+   }
+  },
+  {
+   "name": "v1-cu+loaded-data",
+   "bytes": 196,
+   "simulate": {
+    "err": null,
+    "unitsConsumed": 150,
+    "logs": [
+     "Program 11111111111111111111111111111111 invoke [1]",
+     "Program 11111111111111111111111111111111 success"
+    ]
+   }
+  }
+ ],
+ "sent": {
+  "name": "v1-cu+loaded-data",
+  "signature": "2kaoaTzQojdTEvnGSduUBJREzgjz6EX2ERNtJDYEujKxyzdfLiW8YmtNaiPcnqTPasiNtdDjDiTnMzNEuzPqKUG7",
+  "explorer": "https://explorer.solana.com/tx/2kaoaTzQojdTEvnGSduUBJREzgjz6EX2ERNtJDYEujKxyzdfLiW8YmtNaiPcnqTPasiNtdDjDiTnMzNEuzPqKUG7?cluster=devnet",
+  "bytes": 196,
+  "status": "finalized",
+  "err": null,
+  "fee": 5000,
+  "cu": 150,
+  "version": 1
+ },
+ "legacy_control": {
+  "bytes": 183,
+  "err": null,
+  "unitsConsumed": 150
+ }
+}

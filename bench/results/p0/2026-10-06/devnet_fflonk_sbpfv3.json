@@ -1,0 +1,83 @@
+{
+ "program": "GEQAGa5pcB7MBs9Q7W2MZHfTwn4vYyBWb22iLkPAHa4",
+ "mode": "fflonk",
+ "date": "2026-10-06T09:26:30.733Z",
+ "runs": {
+  "calibrate": {
+   "label": "cu-mark calibration",
+   "signature": "5TKfCBa679q87kLTmwboauZMD3Koqx3Vk3ZACe74XoFbA4XYxcwMp99qVfrpSbkqbSo7diVo8u3JNcv3rGdAtXVs",
+   "explorer": "https://explorer.solana.com/tx/5TKfCBa679q87kLTmwboauZMD3Koqx3Vk3ZACe74XoFbA4XYxcwMp99qVfrpSbkqbSo7diVo8u3JNcv3rGdAtXVs?cluster=devnet",
+   "tx_bytes": 183,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 330,
+   "cu_per_ix": [
+    330
+   ],
+   "marks": [
+    1399885,
+    1399784
+   ],
+   "log64": [
+    [
+     3,
+     0,
+     0,
+     0,
+     0
+    ]
+   ]
+  },
+  "fflonk_pi_hash": {
+   "label": "fflonk pi_hash (2^15)",
+   "signature": "4NGjiYvLZLWLGcfhtbMvTCjP5pk2itcpKSBt8zyXxGLikFdb1HGJGkCowgghJi8jj1C5C1YC97dvLtfZuUFzexBn",
+   "explorer": "https://explorer.solana.com/tx/4NGjiYvLZLWLGcfhtbMvTCjP5pk2itcpKSBt8zyXxGLikFdb1HGJGkCowgghJi8jj1C5C1YC97dvLtfZuUFzexBn?cluster=devnet",
+   "tx_bytes": 983,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 1195874,
+   "cu_per_ix": [
+    1195874
+   ],
+   "marks": [
+    1399867,
+    1338215,
+    287783,
+    253416,
+    204257
+   ],
+   "log64": [
+    [
+     80,
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "phases": {
+    "transcript": 61551,
+    "field": 1050331,
+    "g1": 34266,
+    "pairing": 49058
+   }
+  },
+  "reject": {
+   "fflonk_bad_eval": {
+    "err": {
+     "InstructionError": [
+      0,
+      {
+       "Custom": 1284
+      }
+     ]
+    },
+    "units": 1197603,
+    "last_log": "Program GEQAGa5pcB7MBs9Q7W2MZHfTwn4vYyBWb22iLkPAHa4 failed: custom program error: 0x504"
+   }
+  }
+ },
+ "mark_cost_cu": 101
+}

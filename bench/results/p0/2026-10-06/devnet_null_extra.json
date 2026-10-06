@@ -1,0 +1,129 @@
+{
+ "program": "J5qxM1v5KSaYwurJ86UtuQwbNURVZYgQdkhiuHgKFLEK",
+ "date": "2026-10-06T09:40:20.854Z",
+ "a_two_inserts": {
+  "label": "NF-A two inserts in one tx",
+  "signature": "4kETTubSkP8xnF8WRsBioAxozR4YdJgpbmdqLpi5oiNdCeXHn4SuDPLzjMwwKLdYeAnUriCqPswEjKiy1cTQetHC",
+  "explorer": "https://explorer.solana.com/tx/4kETTubSkP8xnF8WRsBioAxozR4YdJgpbmdqLpi5oiNdCeXHn4SuDPLzjMwwKLdYeAnUriCqPswEjKiy1cTQetHC?cluster=devnet",
+  "tx_bytes": 356,
+  "fee_lamports": 5000,
+  "cu_total": 3454,
+  "cu_per_ix": [
+   1727,
+   1727
+  ],
+  "log64": [
+   [
+    16,
+    0,
+    650240,
+    0,
+    0
+   ],
+   [
+    16,
+    0,
+    650240,
+    0,
+    0
+   ]
+  ]
+ },
+ "a_close": {
+  "label": "NF-A close",
+  "signature": "5CagK2J737LtzhESUm3hhBQeckq6g9xF17rtBxhkeTigWRP9tmnxuxx3gA7XFvvMMSCx2YSRGErnAfZVH7czUrXx",
+  "explorer": "https://explorer.solana.com/tx/5CagK2J737LtzhESUm3hhBQeckq6g9xF17rtBxhkeTigWRP9tmnxuxx3gA7XFvvMMSCx2YSRGErnAfZVH7czUrXx?cluster=devnet",
+  "tx_bytes": 256,
+  "fee_lamports": 5000,
+  "cu_total": 392,
+  "cu_per_ix": [
+   196,
+   196
+  ],
+  "log64": [
+   [
+    18,
+    650240,
+    0,
+    0,
+    0
+   ],
+   [
+    18,
+    650240,
+    0,
+    0,
+    0
+   ]
+  ]
+ },
+ "b_create": {
+  "label": "NF-B create small page",
+  "signature": "2hFJJqqRE4XeZymNVWvnsUKQs27btaD4MWYiZBdiSdDW5y2HX6F5rywYSqXfBzgS1gTv3EecfYeE6dg59kfJa6t7",
+  "explorer": "https://explorer.solana.com/tx/2hFJJqqRE4XeZymNVWvnsUKQs27btaD4MWYiZBdiSdDW5y2HX6F5rywYSqXfBzgS1gTv3EecfYeE6dg59kfJa6t7?cluster=devnet",
+  "tx_bytes": 332,
+  "fee_lamports": 10000,
+  "cu_total": 150,
+  "cu_per_ix": [],
+  "log64": []
+ },
+ "b_two_inserts": {
+  "label": "NF-B two inserts in one ix",
+  "signature": "4JNqSN5EWe8Xtw3CnPn52WPdQLmLZWxF8rHFw6bmXh8uP2pyqJ7UzEAbfNSXkEw6keMDsHUrrShZRdcnULKZb5Ma",
+  "explorer": "https://explorer.solana.com/tx/4JNqSN5EWe8Xtw3CnPn52WPdQLmLZWxF8rHFw6bmXh8uP2pyqJ7UzEAbfNSXkEw6keMDsHUrrShZRdcnULKZb5Ma?cluster=devnet",
+  "tx_bytes": 280,
+  "fee_lamports": 5000,
+  "cu_total": 949,
+  "cu_per_ix": [
+   949
+  ],
+  "log64": [
+   [
+    32,
+    0,
+    1,
+    1,
+    64
+   ],
+   [
+    32,
+    0,
+    1,
+    2,
+    64
+   ]
+  ]
+ },
+ "b_duplicate_sim": {
+  "err": {
+   "InstructionError": [
+    0,
+    {
+     "Custom": 514
+    }
+   ]
+  },
+  "units": 250,
+  "last_log": "Program J5qxM1v5KSaYwurJ86UtuQwbNURVZYgQdkhiuHgKFLEK failed: custom program error: 0x202"
+ },
+ "b_close": {
+  "label": "NF-B close page",
+  "signature": "36hBbAhCsFuAxcZuy8LXJxfpQrvCmpUMpX1a2rS7zJnKHuj6PpSNLWLrfqsiwzwkzuZ7VPDmLT3SQjatd4eoYAha",
+  "explorer": "https://explorer.solana.com/tx/36hBbAhCsFuAxcZuy8LXJxfpQrvCmpUMpX1a2rS7zJnKHuj6PpSNLWLrfqsiwzwkzuZ7VPDmLT3SQjatd4eoYAha?cluster=devnet",
+  "tx_bytes": 217,
+  "fee_lamports": 5000,
+  "cu_total": 196,
+  "cu_per_ix": [
+   196
+  ],
+  "log64": [
+   [
+    18,
+    11135360,
+    0,
+    0,
+    0
+   ]
+  ]
+ }
+}

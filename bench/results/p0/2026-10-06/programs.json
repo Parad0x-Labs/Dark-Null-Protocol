@@ -1,0 +1,60 @@
+{
+ "note": "Spike programs deployed to devnet with the test payer as fee payer and upgrade authority; all closed after measurement. Program accounts keep 833,120 lamports each after close (loader behaviour).",
+ "programs": [
+  {
+   "name": "spike-store",
+   "features": "store",
+   "arch": "sbpf v0",
+   "opt_level": 3,
+   "so_bytes": 21872,
+   "so_sha256": "ddd83eb05b318c7ef94d25f5623a8a56b6f5d00ed18058d2c2c90987e95d2191",
+   "program_id": "J5qxM1v5KSaYwurJ86UtuQwbNURVZYgQdkhiuHgKFLEK",
+   "deploy_signature": "5mYCiJP3CNjbQdGDbQNLccFk6SPh2kpbMWrmBY4JYovmR1sKcDrEf2DvHvdmfPaQB7MARG4NtWqgPHX3fJoJKM2Y",
+   "status": "closed"
+  },
+  {
+   "name": "spike-verify",
+   "features": "verify",
+   "arch": "sbpf v0",
+   "opt_level": 3,
+   "so_bytes": 53784,
+   "so_sha256": "5adc32f60b4cb00b67eeced4a66663173cbee4d4995a5d9b68158320c651e1ec",
+   "program_id": "fbG5hC4zLer8nQcE9T51sAcNNuXNadMdRLyqYE5aACu",
+   "deploy_signature": "G4UBc1JSmegXjquTBFdD3cw9eYr1ZW5Y7aQUi7tcKmEuMFPts78jtKDLFZxHtF2tmjtCA812PfU59eCHSyeuyVT",
+   "status": "closed"
+  },
+  {
+   "name": "spike-verify-v3",
+   "features": "verify",
+   "arch": "sbpf v3",
+   "opt_level": 3,
+   "so_bytes": 51072,
+   "so_sha256": "2a9dbd2da453c2b037d6a9840730ba310063f1a1588aa44643897c3c227bbd58",
+   "program_id": "6m7o2L5qEDAKoQvd4x3gM746g3EZcu6XQsnBo9sw8y81",
+   "deploy_signature": "4LjFjJvv4SXWcw3m9EPv3sywhW2Q4cR9qQpmBBZZ6qX1bdgi4j6DqwPgjfGfGxJj4rHMk5efb7eFcFgTgcP9Fyii",
+   "status": "closed"
+  },
+  {
+   "name": "spike-fflonk",
+   "features": "fflonk",
+   "arch": "sbpf v3",
+   "opt_level": "s",
+   "so_bytes": 43800,
+   "so_sha256": "6ac82f9a8562445a103c7ac2ff7a1c35a3e578686be41b5bcd057842bab3c3d3",
+   "program_id": "GEQAGa5pcB7MBs9Q7W2MZHfTwn4vYyBWb22iLkPAHa4",
+   "deploy_signature": "2DdmpqXxFjW1xspb4kGHSSgorcLqSv3zzXkh5GsXRfHQ4rdsqx7SVcVFPYEqX2eYfyQmLjcABB3tNKiYqeQ31LjM",
+   "status": "closed"
+  }
+ ],
+ "sol_accounting": {
+  "method": "sum of test-payer balance deltas over all 230 test-payer transactions from the first Phase 0 transaction to the last close (getTransaction pre/post balances), 2026-10-06 09:17-09:43 UTC",
+  "net_spend_lamports": 5832960,
+  "breakdown": {
+   "transaction_fees_lamports": 1200000,
+   "closed_program_account_rent_lamports": 3332480,
+   "stranded_nullifier_pda_rent_lamports": 1300480
+  },
+  "stranded_note": "An interrupted run of s_null_extra.mjs (public RPC returned 429 after sendTransaction succeeded) left two option-A nullifier PDAs (650,240 lamports each) that were not closed before the store program was closed; tx prefix 2JvHUy72. All other spike accounts were closed and their rent recovered.",
+  "external_note": "Between the first Phase 0 transaction and the first deploy the test payer balance rose by 112,144,720 lamports from activity outside this work; it is excluded from the figures above."
+ }
+}

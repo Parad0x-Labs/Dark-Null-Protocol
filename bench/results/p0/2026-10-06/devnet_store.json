@@ -1,0 +1,4381 @@
+{
+ "program": "J5qxM1v5KSaYwurJ86UtuQwbNURVZYgQdkhiuHgKFLEK",
+ "date": "2026-10-06T09:20:58.849Z",
+ "runs": {
+  "calibrate": {
+   "label": "cu-mark calibration",
+   "signature": "4HAgSK7yymUfHh21VdkZXLz1Gie2XbhaRQJxvLkFuybQYE66yjAPWmisvz61XKML3WA5MvZY5NcBJSW7MgbEfUsc",
+   "explorer": "https://explorer.solana.com/tx/4HAgSK7yymUfHh21VdkZXLz1Gie2XbhaRQJxvLkFuybQYE66yjAPWmisvz61XKML3WA5MvZY5NcBJSW7MgbEfUsc?cluster=devnet",
+   "tx_bytes": 183,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 341,
+   "cu_per_ix": [
+    341
+   ],
+   "marks": [
+    1399875,
+    1399774
+   ],
+   "log64": [
+    [
+     3,
+     0,
+     0,
+     0,
+     0
+    ]
+   ]
+  },
+  "vpos_seq": {
+   "label": "V-POS seq n=1..12",
+   "signature": "2oisRLimLAviQT8j8b8qotsMdfBqVy7rpq7QfjDXiNf5VBXxc4iTnmudH9gDN5SVdRXFMw65hFwRB5idMKSFwx9A",
+   "explorer": "https://explorer.solana.com/tx/2oisRLimLAviQT8j8b8qotsMdfBqVy7rpq7QfjDXiNf5VBXxc4iTnmudH9gDN5SVdRXFMw65hFwRB5idMKSFwx9A?cluster=devnet",
+   "tx_bytes": 3075,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 51453,
+   "cu_per_ix": [
+    51453
+   ],
+   "marks": [
+    1399818,
+    1399081,
+    1398804,
+    1397884,
+    1397601,
+    1396376,
+    1396087,
+    1394435,
+    1394140,
+    1391939,
+    1391638,
+    1388766,
+    1388459,
+    1384794,
+    1384481,
+    1379901,
+    1379582,
+    1373965,
+    1373640,
+    1366864,
+    1366533,
+    1358476,
+    1358139,
+    1348679
+   ],
+   "log64": [
+    [
+     1,
+     1,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     2,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     4,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     5,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     6,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     7,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     8,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     9,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     10,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     11,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     12,
+     0,
+     1,
+     0
+    ]
+   ],
+   "per_n": [
+    {
+     "n": 1,
+     "cu_syscall": 636,
+     "formula_61n2_542": 603,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 2,
+     "cu_syscall": 819,
+     "formula_61n2_542": 786,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 3,
+     "cu_syscall": 1124,
+     "formula_61n2_542": 1091,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 4,
+     "cu_syscall": 1551,
+     "formula_61n2_542": 1518,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 5,
+     "cu_syscall": 2100,
+     "formula_61n2_542": 2067,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 6,
+     "cu_syscall": 2771,
+     "formula_61n2_542": 2738,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 7,
+     "cu_syscall": 3564,
+     "formula_61n2_542": 3531,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 8,
+     "cu_syscall": 4479,
+     "formula_61n2_542": 4446,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 9,
+     "cu_syscall": 5516,
+     "formula_61n2_542": 5483,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 10,
+     "cu_syscall": 6675,
+     "formula_61n2_542": 6642,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 11,
+     "cu_syscall": 7956,
+     "formula_61n2_542": 7923,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 12,
+     "cu_syscall": 9359,
+     "formula_61n2_542": 9326,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    }
+   ]
+  },
+  "vpos_edge": {
+   "label": "V-POS edge n=1..12",
+   "signature": "PdWRYYQa9GqepqsFqsFdjxBkv15VsxAqbGuXT7zviHykHTXVnpk2erFgk51aHapANpP1ryVZk6PBA93yfsNPhXP",
+   "explorer": "https://explorer.solana.com/tx/PdWRYYQa9GqepqsFqsFdjxBkv15VsxAqbGuXT7zviHykHTXVnpk2erFgk51aHapANpP1ryVZk6PBA93yfsNPhXP?cluster=devnet",
+   "tx_bytes": 3075,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 51453,
+   "cu_per_ix": [
+    51453
+   ],
+   "marks": [
+    1399818,
+    1399081,
+    1398804,
+    1397884,
+    1397601,
+    1396376,
+    1396087,
+    1394435,
+    1394140,
+    1391939,
+    1391638,
+    1388766,
+    1388459,
+    1384794,
+    1384481,
+    1379901,
+    1379582,
+    1373965,
+    1373640,
+    1366864,
+    1366533,
+    1358476,
+    1358139,
+    1348679
+   ],
+   "log64": [
+    [
+     1,
+     1,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     2,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     4,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     5,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     6,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     7,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     8,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     9,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     10,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     11,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     12,
+     0,
+     1,
+     0
+    ]
+   ],
+   "per_n": [
+    {
+     "n": 1,
+     "cu_syscall": 636,
+     "formula_61n2_542": 603,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 2,
+     "cu_syscall": 819,
+     "formula_61n2_542": 786,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 3,
+     "cu_syscall": 1124,
+     "formula_61n2_542": 1091,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 4,
+     "cu_syscall": 1551,
+     "formula_61n2_542": 1518,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 5,
+     "cu_syscall": 2100,
+     "formula_61n2_542": 2067,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 6,
+     "cu_syscall": 2771,
+     "formula_61n2_542": 2738,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 7,
+     "cu_syscall": 3564,
+     "formula_61n2_542": 3531,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 8,
+     "cu_syscall": 4479,
+     "formula_61n2_542": 4446,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 9,
+     "cu_syscall": 5516,
+     "formula_61n2_542": 5483,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 10,
+     "cu_syscall": 6675,
+     "formula_61n2_542": 6642,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 11,
+     "cu_syscall": 7956,
+     "formula_61n2_542": 7923,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    },
+    {
+     "n": 12,
+     "cu_syscall": 9359,
+     "formula_61n2_542": 9326,
+     "formula_note": "agave cost = 61*n^2+542 with n = number of inputs"
+    }
+   ]
+  },
+  "derivations": {
+   "label": "V-ASSET, owner, V-NOTE x4, V-NF x2, V-SIGHASH, V-PI on sol_poseidon",
+   "signature": "cwfssAa585QaQPsYsNfGSVR3ycKSCwDVFn3yhv4iaMAvj4wR6W7AqiyZKGcYBxJLXj7riN7swLL18YP1GAfmK4w",
+   "explorer": "https://explorer.solana.com/tx/cwfssAa585QaQPsYsNfGSVR3ycKSCwDVFn3yhv4iaMAvj4wR6W7AqiyZKGcYBxJLXj7riN7swLL18YP1GAfmK4w?cluster=devnet",
+   "tx_bytes": 2433,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu_total": 35799,
+   "cu_per_ix": [
+    35799
+   ],
+   "marks": [
+    1399806,
+    1398581,
+    1398292,
+    1396640,
+    1396339,
+    1393467,
+    1393166,
+    1390294,
+    1389993,
+    1387121,
+    1386820,
+    1383948,
+    1383659,
+    1382007,
+    1381718,
+    1380066,
+    1379747,
+    1374130,
+    1373793,
+    1364333
+   ],
+   "log64": [
+    [
+     1,
+     3,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     4,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     6,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     6,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     6,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     6,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     4,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     4,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     9,
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     12,
+     0,
+     1,
+     0
+    ]
+   ]
+  },
+  "txv1_payload": {
+   "v1_at_4096": {
+    "label": "V1 tx at 4096 bytes",
+    "signature": "4Kf3Y7j57arUUBURJ4DeTAZpJ6FDGKNajR4ERaLcnBBG9P3U8mkx4w7R28WMeTR2DKCyd6LWD5eeQ79PuXqUwFwo",
+    "explorer": "https://explorer.solana.com/tx/4Kf3Y7j57arUUBURJ4DeTAZpJ6FDGKNajR4ERaLcnBBG9P3U8mkx4w7R28WMeTR2DKCyd6LWD5eeQ79PuXqUwFwo?cluster=devnet",
+    "tx_bytes": 4096,
+    "version": 1,
+    "err": null,
+    "fee_lamports": 5000,
+    "cu_total": 141,
+    "cu_per_ix": [
+     141
+    ],
+    "marks": [],
+    "log64": [
+     [
+      2,
+      3914,
+      0,
+      0,
+      0
+     ]
+    ]
+   },
+   "v1_over_bytes": 4097,
+   "v1_over_result": "sendTransaction: {\"code\":-32602,\"message\":\"decoded solana_transaction::versioned::VersionedTransaction too large: 4097 bytes (max: 4096 bytes)\"}",
+   "legacy_at_1232": {
+    "label": "legacy tx at 1232 bytes",
+    "signature": "4ioCSsRWqFZtQEa5VqKAVZhkmBKvTQVnRZzx6qrvoaJD68tjtdyE3DLCgcbLHX2RtbxRCRS3ohaTbKzmS1BbABrz",
+    "explorer": "https://explorer.solana.com/tx/4ioCSsRWqFZtQEa5VqKAVZhkmBKvTQVnRZzx6qrvoaJD68tjtdyE3DLCgcbLHX2RtbxRCRS3ohaTbKzmS1BbABrz?cluster=devnet",
+    "tx_bytes": 1232,
+    "version": "legacy",
+    "err": null,
+    "fee_lamports": 5000,
+    "cu_total": 141,
+    "cu_per_ix": [
+     141
+    ],
+    "marks": [],
+    "log64": [
+     [
+      2,
+      1062,
+      0,
+      0,
+      0
+     ]
+    ]
+   },
+   "legacy_over_bytes": 1233,
+   "legacy_over_result": "sendTransaction: {\"code\":-32602,\"message\":\"decoded solana_transaction::versioned::VersionedTransaction too large: 1233 bytes (max: 1232 bytes)\"}"
+  },
+  "null_a": {
+   "inserts": [
+    {
+     "label": "NF-A insert 0",
+     "signature": "owReT1zyE7Q4eUDPg2sruis3xzzZ4Bp3i3XXhM5YkTd6kaihddVcduk1WUBXsWqkTRwngpzsBYEVgSjRjXcHL2n",
+     "explorer": "https://explorer.solana.com/tx/owReT1zyE7Q4eUDPg2sruis3xzzZ4Bp3i3XXhM5YkTd6kaihddVcduk1WUBXsWqkTRwngpzsBYEVgSjRjXcHL2n?cluster=devnet",
+     "tx_bytes": 283,
+     "version": 1,
+     "err": null,
+     "fee_lamports": 5000,
+     "cu_total": 1727,
+     "cu_per_ix": [
+      1727
+     ],
+     "marks": [
+      1399841,
+      1398389
+     ],
+     "log64": [
+      [
+       16,
+       0,
+       650240,
+       0,
+       0
+      ]
+     ],
+     "pda_lamports": 650240,
+     "pda_data_len": 0,
+     "cpi_cu": 1351
+    },
+    {
+     "label": "NF-A insert 1",
+     "signature": "2PnVBZTDh9ivqdGfqY7cVqJ34u7h94W3SNEuPFhrtnsvunDWQTAo2eiWJAmqnqcSshqum4usNpJ5fkeQZVJqyEfu",
+     "explorer": "https://explorer.solana.com/tx/2PnVBZTDh9ivqdGfqY7cVqJ34u7h94W3SNEuPFhrtnsvunDWQTAo2eiWJAmqnqcSshqum4usNpJ5fkeQZVJqyEfu?cluster=devnet",
+     "tx_bytes": 283,
+     "version": 1,
+     "err": null,
+     "fee_lamports": 5000,
+     "cu_total": 1727,
+     "cu_per_ix": [
+      1727
+     ],
+     "marks": [
+      1399841,
+      1398389
+     ],
+     "log64": [
+      [
+       16,
+       0,
+       650240,
+       0,
+       0
+      ]
+     ],
+     "pda_lamports": 650240,
+     "pda_data_len": 0,
+     "cpi_cu": 1351
+    },
+    {
+     "label": "NF-A insert 2",
+     "signature": "3XrfUhYsfaiKa7cLY4mdUhhzmE8WQukxbW432tEEas3KjmFKnRCXMqVTCDMGcA9gFRc1X3Tpeo6PR8JzjnSkkEyv",
+     "explorer": "https://explorer.solana.com/tx/3XrfUhYsfaiKa7cLY4mdUhhzmE8WQukxbW432tEEas3KjmFKnRCXMqVTCDMGcA9gFRc1X3Tpeo6PR8JzjnSkkEyv?cluster=devnet",
+     "tx_bytes": 283,
+     "version": 1,
+     "err": null,
+     "fee_lamports": 5000,
+     "cu_total": 1727,
+     "cu_per_ix": [
+      1727
+     ],
+     "marks": [
+      1399841,
+      1398389
+     ],
+     "log64": [
+      [
+       16,
+       0,
+       650240,
+       0,
+       0
+      ]
+     ],
+     "pda_lamports": 650240,
+     "pda_data_len": 0,
+     "cpi_cu": 1351
+    }
+   ],
+   "check": {
+    "label": "NF-A check spent + unspent",
+    "signature": "4QTQyJw8SApLyeyaP6jxdhYzCbHAi6HzTnV3fmqtmfvJ9HhTigbzXd6GrcjSQFRGa5u9Nta8QPvzqQzeggA6Pguc",
+    "explorer": "https://explorer.solana.com/tx/4QTQyJw8SApLyeyaP6jxdhYzCbHAi6HzTnV3fmqtmfvJ9HhTigbzXd6GrcjSQFRGa5u9Nta8QPvzqQzeggA6Pguc?cluster=devnet",
+    "tx_bytes": 320,
+    "version": 1,
+    "err": null,
+    "fee_lamports": 5000,
+    "cu_total": 3822,
+    "cu_per_ix": [
+     1917,
+     1905
+    ],
+    "marks": [
+     1399866,
+     1398199,
+     1397949,
+     1396294
+    ],
+    "log64": [
+     [
+      17,
+      0,
+      1,
+      0,
+      0
+     ],
+     [
+      17,
+      0,
+      0,
+      0,
+      0
+     ]
+    ]
+   },
+   "double_insert_sim": {
+    "err": {
+     "InstructionError": [
+      0,
+      {
+       "Custom": 0
+      }
+     ]
+    },
+    "units": 1510
+   },
+   "rent_min_0_bytes": 650240,
+   "close": {
+    "label": "NF-A close (spike rent recovery)",
+    "signature": "65xpovDGgsXBRW5cm5LKpsgHbBSBBDWpzBPyvLS3qaZmYUJqoW4NSvRAvL9G1R6r1FhdrMtWyVLJbv5CXwdMSLUV",
+    "explorer": "https://explorer.solana.com/tx/65xpovDGgsXBRW5cm5LKpsgHbBSBBDWpzBPyvLS3qaZmYUJqoW4NSvRAvL9G1R6r1FhdrMtWyVLJbv5CXwdMSLUV?cluster=devnet",
+    "tx_bytes": 295,
+    "version": 1,
+    "err": null,
+    "fee_lamports": 5000,
+    "cu_total": 588,
+    "cu_per_ix": [
+     196,
+     196,
+     196
+    ],
+    "marks": [],
+    "log64": [
+     [
+      18,
+      650240,
+      0,
+      0,
+      0
+     ],
+     [
+      18,
+      650240,
+      0,
+      0,
+      0
+     ],
+     [
+      18,
+      650240,
+      0,
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  "null_b": {
+   "capacity": 320,
+   "page_bytes": 10256,
+   "page_rent_lamports": 52750720,
+   "created": {
+    "label": "NF-B create page",
+    "signature": "5KoT9tQVWSZ9yYzNmQm3q4gDjgUtf25PFn3pGGgJaRJVdAQZXAFF5UyfWH9ssSkvhQPYnKd4LGsJuce4cfhjjneY",
+    "explorer": "https://explorer.solana.com/tx/5KoT9tQVWSZ9yYzNmQm3q4gDjgUtf25PFn3pGGgJaRJVdAQZXAFF5UyfWH9ssSkvhQPYnKd4LGsJuce4cfhjjneY?cluster=devnet",
+    "tx_bytes": 332,
+    "version": 1,
+    "err": null,
+    "fee_lamports": 10000,
+    "cu_total": 150,
+    "cu_per_ix": [],
+    "marks": [],
+    "log64": []
+   },
+   "batches": [
+    {
+     "label": "NF-B insert 0..95",
+     "signature": "49UEf2rGSBqZtDvPRiwXhksscGxeBWYADRTTJvZUCwBhJi4DheZYJ5Ezuqeb8zUCBtuUbK6cDn9KyoPZQaFSTXfT",
+     "explorer": "https://explorer.solana.com/tx/49UEf2rGSBqZtDvPRiwXhksscGxeBWYADRTTJvZUCwBhJi4DheZYJ5Ezuqeb8zUCBtuUbK6cDn9KyoPZQaFSTXfT?cluster=devnet",
+     "tx_bytes": 3288,
+     "version": 1,
+     "err": null,
+     "fee_lamports": 5000,
+     "cu_total": 41971,
+     "cu_per_ix": [
+      41971
+     ],
+     "log64": [
+      [
+       32,
+       0,
+       1,
+       1,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       2,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       3,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       4,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       5,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       6,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       7,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       8,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       9,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       10,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       11,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       12,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       13,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       14,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       15,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       16,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       17,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       18,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       19,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       20,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       21,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       22,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       23,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       24,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       25,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       26,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       27,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       28,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       29,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       30,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       31,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       32,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       33,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       34,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       35,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       36,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       37,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       38,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       39,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       40,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       41,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       42,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       43,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       44,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       45,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       46,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       47,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       48,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       49,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       50,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       51,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       52,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       53,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       54,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       55,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       56,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       57,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       58,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       59,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       60,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       61,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       62,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       63,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       64,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       65,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       66,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       67,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       68,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       69,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       70,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       71,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       72,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       73,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       74,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       75,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       76,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       77,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       78,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       79,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       80,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       81,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       82,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       83,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       84,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       85,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       86,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       87,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       88,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       89,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       90,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       91,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       92,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       93,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       94,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       95,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       96,
+       320
+      ]
+     ],
+     "per_insert": [
+      {
+       "count_after": 1,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 2,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 3,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 4,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 5,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 6,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 7,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 8,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 9,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 10,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 11,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 12,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 13,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 14,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 15,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 16,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 17,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 18,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 19,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 20,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 21,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 22,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 23,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 24,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 25,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 26,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 27,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 28,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 29,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 30,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 31,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 32,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 33,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 34,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 35,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 36,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 37,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 38,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 39,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 40,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 41,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 42,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 43,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 44,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 45,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 46,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 47,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 48,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 49,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 50,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 51,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 52,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 53,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 54,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 55,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 56,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 57,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 58,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 59,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 60,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 61,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 62,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 63,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 64,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 65,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 66,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 67,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 68,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 69,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 70,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 71,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 72,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 73,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 74,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 75,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 76,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 77,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 78,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 79,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 80,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 81,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 82,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 83,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 84,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 85,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 86,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 87,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 88,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 89,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 90,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 91,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 92,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 93,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 94,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 95,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 96,
+       "probes": 1,
+       "cu": 108
+      }
+     ]
+    },
+    {
+     "label": "NF-B insert 96..191",
+     "signature": "RYoyaeGhgvXZDgKYkUjRw8buZg6yfKFL7TMNc2so8ERqEFLGiAgmB7XV2crV5GbDuzQR8CT9eCQrRe8zb1kxTTx",
+     "explorer": "https://explorer.solana.com/tx/RYoyaeGhgvXZDgKYkUjRw8buZg6yfKFL7TMNc2so8ERqEFLGiAgmB7XV2crV5GbDuzQR8CT9eCQrRe8zb1kxTTx?cluster=devnet",
+     "tx_bytes": 3288,
+     "version": 1,
+     "err": null,
+     "fee_lamports": 5000,
+     "cu_total": 44111,
+     "cu_per_ix": [
+      44111
+     ],
+     "log64": [
+      [
+       32,
+       0,
+       1,
+       97,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       98,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       99,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       100,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       101,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       102,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       103,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       104,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       105,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       106,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       107,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       108,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       109,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       110,
+       320
+      ],
+      [
+       32,
+       0,
+       4,
+       111,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       112,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       113,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       114,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       115,
+       320
+      ],
+      [
+       32,
+       0,
+       6,
+       116,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       117,
+       320
+      ],
+      [
+       32,
+       0,
+       6,
+       118,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       119,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       120,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       121,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       122,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       123,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       124,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       125,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       126,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       127,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       128,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       129,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       130,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       131,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       132,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       133,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       134,
+       320
+      ],
+      [
+       32,
+       0,
+       4,
+       135,
+       320
+      ],
+      [
+       32,
+       0,
+       7,
+       136,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       137,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       138,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       139,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       140,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       141,
+       320
+      ],
+      [
+       32,
+       0,
+       4,
+       142,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       143,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       144,
+       320
+      ],
+      [
+       32,
+       0,
+       6,
+       145,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       146,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       147,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       148,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       149,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       150,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       151,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       152,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       153,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       154,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       155,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       156,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       157,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       158,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       159,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       160,
+       320
+      ],
+      [
+       32,
+       0,
+       7,
+       161,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       162,
+       320
+      ],
+      [
+       32,
+       0,
+       6,
+       163,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       164,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       165,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       166,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       167,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       168,
+       320
+      ],
+      [
+       32,
+       0,
+       4,
+       169,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       170,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       171,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       172,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       173,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       174,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       175,
+       320
+      ],
+      [
+       32,
+       0,
+       12,
+       176,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       177,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       178,
+       320
+      ],
+      [
+       32,
+       0,
+       7,
+       179,
+       320
+      ],
+      [
+       32,
+       0,
+       10,
+       180,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       181,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       182,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       183,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       184,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       185,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       186,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       187,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       188,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       189,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       190,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       191,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       192,
+       320
+      ]
+     ],
+     "per_insert": [
+      {
+       "count_after": 97,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 98,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 99,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 100,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 101,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 102,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 103,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 104,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 105,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 106,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 107,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 108,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 109,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 110,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 111,
+       "probes": 4,
+       "cu": 168
+      },
+      {
+       "count_after": 112,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 113,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 114,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 115,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 116,
+       "probes": 6,
+       "cu": 208
+      },
+      {
+       "count_after": 117,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 118,
+       "probes": 6,
+       "cu": 208
+      },
+      {
+       "count_after": 119,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 120,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 121,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 122,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 123,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 124,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 125,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 126,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 127,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 128,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 129,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 130,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 131,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 132,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 133,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 134,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 135,
+       "probes": 4,
+       "cu": 168
+      },
+      {
+       "count_after": 136,
+       "probes": 7,
+       "cu": 228
+      },
+      {
+       "count_after": 137,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 138,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 139,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 140,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 141,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 142,
+       "probes": 4,
+       "cu": 168
+      },
+      {
+       "count_after": 143,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 144,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 145,
+       "probes": 6,
+       "cu": 208
+      },
+      {
+       "count_after": 146,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 147,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 148,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 149,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 150,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 151,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 152,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 153,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 154,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 155,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 156,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 157,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 158,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 159,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 160,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 161,
+       "probes": 7,
+       "cu": 228
+      },
+      {
+       "count_after": 162,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 163,
+       "probes": 6,
+       "cu": 208
+      },
+      {
+       "count_after": 164,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 165,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 166,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 167,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 168,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 169,
+       "probes": 4,
+       "cu": 168
+      },
+      {
+       "count_after": 170,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 171,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 172,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 173,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 174,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 175,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 176,
+       "probes": 12,
+       "cu": 328
+      },
+      {
+       "count_after": 177,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 178,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 179,
+       "probes": 7,
+       "cu": 228
+      },
+      {
+       "count_after": 180,
+       "probes": 10,
+       "cu": 288
+      },
+      {
+       "count_after": 181,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 182,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 183,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 184,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 185,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 186,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 187,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 188,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 189,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 190,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 191,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 192,
+       "probes": 1,
+       "cu": 108
+      }
+     ]
+    },
+    {
+     "label": "NF-B insert 192..287",
+     "signature": "5He15C9FzMrBBQkesAu8V2whJFn8YDdv548177G1fpAbxVFYr2wXyRxXASwMG2VDxnhoCiwhNhZegNoxkde8snpq",
+     "explorer": "https://explorer.solana.com/tx/5He15C9FzMrBBQkesAu8V2whJFn8YDdv548177G1fpAbxVFYr2wXyRxXASwMG2VDxnhoCiwhNhZegNoxkde8snpq?cluster=devnet",
+     "tx_bytes": 3288,
+     "version": 1,
+     "err": null,
+     "fee_lamports": 5000,
+     "cu_total": 52076,
+     "cu_per_ix": [
+      52076
+     ],
+     "log64": [
+      [
+       32,
+       0,
+       6,
+       193,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       194,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       195,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       196,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       197,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       198,
+       320
+      ],
+      [
+       32,
+       0,
+       8,
+       199,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       200,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       201,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       202,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       203,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       204,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       205,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       206,
+       320
+      ],
+      [
+       32,
+       0,
+       4,
+       207,
+       320
+      ],
+      [
+       32,
+       0,
+       7,
+       208,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       209,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       210,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       211,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       212,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       213,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       214,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       215,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       216,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       217,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       218,
+       320
+      ],
+      [
+       32,
+       0,
+       15,
+       219,
+       320
+      ],
+      [
+       32,
+       0,
+       14,
+       220,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       221,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       222,
+       320
+      ],
+      [
+       32,
+       0,
+       21,
+       223,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       224,
+       320
+      ],
+      [
+       32,
+       0,
+       4,
+       225,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       226,
+       320
+      ],
+      [
+       32,
+       0,
+       4,
+       227,
+       320
+      ],
+      [
+       32,
+       0,
+       11,
+       228,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       229,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       230,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       231,
+       320
+      ],
+      [
+       32,
+       0,
+       6,
+       232,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       233,
+       320
+      ],
+      [
+       32,
+       0,
+       7,
+       234,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       235,
+       320
+      ],
+      [
+       32,
+       0,
+       7,
+       236,
+       320
+      ],
+      [
+       32,
+       0,
+       11,
+       237,
+       320
+      ],
+      [
+       32,
+       0,
+       29,
+       238,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       239,
+       320
+      ],
+      [
+       32,
+       0,
+       10,
+       240,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       241,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       242,
+       320
+      ],
+      [
+       32,
+       0,
+       8,
+       243,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       244,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       245,
+       320
+      ],
+      [
+       32,
+       0,
+       8,
+       246,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       247,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       248,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       249,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       250,
+       320
+      ],
+      [
+       32,
+       0,
+       6,
+       251,
+       320
+      ],
+      [
+       32,
+       0,
+       6,
+       252,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       253,
+       320
+      ],
+      [
+       32,
+       0,
+       32,
+       254,
+       320
+      ],
+      [
+       32,
+       0,
+       8,
+       255,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       256,
+       320
+      ],
+      [
+       32,
+       0,
+       12,
+       257,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       258,
+       320
+      ],
+      [
+       32,
+       0,
+       12,
+       259,
+       320
+      ],
+      [
+       32,
+       0,
+       8,
+       260,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       261,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       262,
+       320
+      ],
+      [
+       32,
+       0,
+       14,
+       263,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       264,
+       320
+      ],
+      [
+       32,
+       0,
+       15,
+       265,
+       320
+      ],
+      [
+       32,
+       0,
+       8,
+       266,
+       320
+      ],
+      [
+       32,
+       0,
+       4,
+       267,
+       320
+      ],
+      [
+       32,
+       0,
+       6,
+       268,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       269,
+       320
+      ],
+      [
+       32,
+       0,
+       19,
+       270,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       271,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       272,
+       320
+      ],
+      [
+       32,
+       0,
+       8,
+       273,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       274,
+       320
+      ],
+      [
+       32,
+       0,
+       4,
+       275,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       276,
+       320
+      ],
+      [
+       32,
+       0,
+       1,
+       277,
+       320
+      ],
+      [
+       32,
+       0,
+       22,
+       278,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       279,
+       320
+      ],
+      [
+       32,
+       0,
+       2,
+       280,
+       320
+      ],
+      [
+       32,
+       0,
+       9,
+       281,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       282,
+       320
+      ],
+      [
+       32,
+       0,
+       3,
+       283,
+       320
+      ],
+      [
+       32,
+       0,
+       5,
+       284,
+       320
+      ],
+      [
+       32,
+       0,
+       45,
+       285,
+       320
+      ],
+      [
+       32,
+       0,
+       20,
+       286,
+       320
+      ],
+      [
+       32,
+       0,
+       27,
+       287,
+       320
+      ],
+      [
+       32,
+       0,
+       17,
+       288,
+       320
+      ]
+     ],
+     "per_insert": [
+      {
+       "count_after": 193,
+       "probes": 6,
+       "cu": 208
+      },
+      {
+       "count_after": 194,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 195,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 196,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 197,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 198,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 199,
+       "probes": 8,
+       "cu": 248
+      },
+      {
+       "count_after": 200,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 201,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 202,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 203,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 204,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 205,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 206,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 207,
+       "probes": 4,
+       "cu": 168
+      },
+      {
+       "count_after": 208,
+       "probes": 7,
+       "cu": 228
+      },
+      {
+       "count_after": 209,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 210,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 211,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 212,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 213,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 214,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 215,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 216,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 217,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 218,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 219,
+       "probes": 15,
+       "cu": 388
+      },
+      {
+       "count_after": 220,
+       "probes": 14,
+       "cu": 368
+      },
+      {
+       "count_after": 221,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 222,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 223,
+       "probes": 21,
+       "cu": 508
+      },
+      {
+       "count_after": 224,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 225,
+       "probes": 4,
+       "cu": 168
+      },
+      {
+       "count_after": 226,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 227,
+       "probes": 4,
+       "cu": 168
+      },
+      {
+       "count_after": 228,
+       "probes": 11,
+       "cu": 315
+      },
+      {
+       "count_after": 229,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 230,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 231,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 232,
+       "probes": 6,
+       "cu": 208
+      },
+      {
+       "count_after": 233,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 234,
+       "probes": 7,
+       "cu": 228
+      },
+      {
+       "count_after": 235,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 236,
+       "probes": 7,
+       "cu": 228
+      },
+      {
+       "count_after": 237,
+       "probes": 11,
+       "cu": 308
+      },
+      {
+       "count_after": 238,
+       "probes": 29,
+       "cu": 668
+      },
+      {
+       "count_after": 239,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 240,
+       "probes": 10,
+       "cu": 288
+      },
+      {
+       "count_after": 241,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 242,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 243,
+       "probes": 8,
+       "cu": 248
+      },
+      {
+       "count_after": 244,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 245,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 246,
+       "probes": 8,
+       "cu": 248
+      },
+      {
+       "count_after": 247,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 248,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 249,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 250,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 251,
+       "probes": 6,
+       "cu": 208
+      },
+      {
+       "count_after": 252,
+       "probes": 6,
+       "cu": 208
+      },
+      {
+       "count_after": 253,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 254,
+       "probes": 32,
+       "cu": 726
+      },
+      {
+       "count_after": 255,
+       "probes": 8,
+       "cu": 250
+      },
+      {
+       "count_after": 256,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 257,
+       "probes": 12,
+       "cu": 328
+      },
+      {
+       "count_after": 258,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 259,
+       "probes": 12,
+       "cu": 328
+      },
+      {
+       "count_after": 260,
+       "probes": 8,
+       "cu": 248
+      },
+      {
+       "count_after": 261,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 262,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 263,
+       "probes": 14,
+       "cu": 368
+      },
+      {
+       "count_after": 264,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 265,
+       "probes": 15,
+       "cu": 388
+      },
+      {
+       "count_after": 266,
+       "probes": 8,
+       "cu": 248
+      },
+      {
+       "count_after": 267,
+       "probes": 4,
+       "cu": 168
+      },
+      {
+       "count_after": 268,
+       "probes": 6,
+       "cu": 208
+      },
+      {
+       "count_after": 269,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 270,
+       "probes": 19,
+       "cu": 468
+      },
+      {
+       "count_after": 271,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 272,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 273,
+       "probes": 8,
+       "cu": 248
+      },
+      {
+       "count_after": 274,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 275,
+       "probes": 4,
+       "cu": 168
+      },
+      {
+       "count_after": 276,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 277,
+       "probes": 1,
+       "cu": 108
+      },
+      {
+       "count_after": 278,
+       "probes": 22,
+       "cu": 526
+      },
+      {
+       "count_after": 279,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 280,
+       "probes": 2,
+       "cu": 128
+      },
+      {
+       "count_after": 281,
+       "probes": 9,
+       "cu": 268
+      },
+      {
+       "count_after": 282,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 283,
+       "probes": 3,
+       "cu": 148
+      },
+      {
+       "count_after": 284,
+       "probes": 5,
+       "cu": 188
+      },
+      {
+       "count_after": 285,
+       "probes": 45,
+       "cu": 986
+      },
+      {
+       "count_after": 286,
+       "probes": 20,
+       "cu": 490
+      },
+      {
+       "count_after": 287,
+       "probes": 27,
+       "cu": 628
+      },
+      {
+       "count_after": 288,
+       "probes": 17,
+       "cu": 428
+      }
+     ]
+    }
+   ],
+   "check": {
+    "label": "NF-B check present + absent at 90% load",
+    "signature": "5h7nrXLNCb1DJ34ebPMMHj4jvtKvuVDzVFUjJcGnot1fMfJg3i93dGn28ap3s7cByjFxqQh8nQWMg86QnvhBWn92",
+    "explorer": "https://explorer.solana.com/tx/5h7nrXLNCb1DJ34ebPMMHj4jvtKvuVDzVFUjJcGnot1fMfJg3i93dGn28ap3s7cByjFxqQh8nQWMg86QnvhBWn92?cluster=devnet",
+    "tx_bytes": 286,
+    "version": 1,
+    "err": null,
+    "fee_lamports": 5000,
+    "cu_total": 1001,
+    "cu_per_ix": [
+     418,
+     583
+    ],
+    "marks": [
+     1399851,
+     1399702,
+     1399433,
+     1399119
+    ],
+    "log64": [
+     [
+      33,
+      0,
+      1,
+      1,
+      0
+     ],
+     [
+      33,
+      0,
+      7,
+      0,
+      0
+     ]
+    ],
+    "per_check": [
+     {
+      "probes": 1,
+      "found": 1,
+      "cu": 48
+     },
+     {
+      "probes": 7,
+      "found": 0,
+      "cu": 213
+     }
+    ]
+   },
+   "double_insert_sim": {
+    "err": {
+     "InstructionError": [
+      0,
+      {
+       "Custom": 513
+      }
+     ]
+    },
+    "units": 220
+   },
+   "close": {
+    "label": "NF-B close page (spike rent recovery)",
+    "signature": "54z1dD7gqJ1B2ShcWhiVzSCHDxKRAeoDsecMd3JJQRNMFG55hPqmt17pXjUhVXVV7z5TvKHxxTiey2t15gyR2cfN",
+    "explorer": "https://explorer.solana.com/tx/54z1dD7gqJ1B2ShcWhiVzSCHDxKRAeoDsecMd3JJQRNMFG55hPqmt17pXjUhVXVV7z5TvKHxxTiey2t15gyR2cfN?cluster=devnet",
+    "tx_bytes": 217,
+    "version": 1,
+    "err": null,
+    "fee_lamports": 5000,
+    "cu_total": 196,
+    "cu_per_ix": [
+     196
+    ],
+    "marks": [],
+    "log64": [
+     [
+      18,
+      52750720,
+      0,
+      0,
+      0
+     ]
+    ]
+   }
+  }
+ },
+ "mark_cost_cu": 101,
+ "notes": {
+  "log64_layout": "sol_log_64 fields are (tag, 0, a, b, c); 0x20: (tag,0,probes,count_after,capacity); 0x21: (tag,0,probes,found,0); 0x10: (tag,0,rent_lamports,0,0); 0x11: (tag,0,spent,0,0)",
+  "cu_marks": "per-step CU = difference of consecutive sol_log_compute_units checkpoints minus mark_cost_cu"
+ }
+}

@@ -4,7 +4,7 @@
 
 **Review:** [REVIEW.md](./REVIEW.md) lists what each component does, what has been demonstrated, where it runs and what is not established (generated from [evidence/claims.json](./evidence/claims.json)).
 
-In the current construction the payout fields (amount, receiver token account, mint) and the note commitment are public, so a withdrawal is linkable to its deposit; unlinkable withdrawals are planned protocol work. What the prototype provides and what it does not is listed property by property in [`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md), next to a test that reproduces the linkage from public data; [`SECURITY_MODEL.md`](./SECURITY_MODEL.md) covers the trust model.
+In the current construction the payout fields (amount, receiver token account, mint) and the note commitment are public, so a withdrawal is linkable to its deposit (reproduced read-only on devnet: [`evidence/devnet-2026-10-06/darknull-privacy-linkage.json`](./evidence/devnet-2026-10-06/darknull-privacy-linkage.json)). The v2 shielded pool on branch `design/agentic-private-payments-2027` is the design that will remove that link. What the prototype provides and what it does not is listed property by property in [`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md), next to a test that reproduces the linkage from public data; [`SECURITY_MODEL.md`](./SECURITY_MODEL.md) covers the trust model.
 
 ## At a glance
 

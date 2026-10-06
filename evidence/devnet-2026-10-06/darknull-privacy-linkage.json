@@ -1,0 +1,101 @@
+{
+  "suite": "darknull-privacy-linkage-devnet",
+  "repo": "Dark-Null-Protocol@222289b",
+  "cluster": "devnet",
+  "rpc": "DEVNET_RPC_URL (not recorded)",
+  "programId": "35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV",
+  "mode": "read-only: getSignaturesForAddress + getTransaction, no transactions sent",
+  "timestamp": "2026-10-06T19:23:40Z",
+  "signatures_scanned": 121,
+  "deposits_decoded": 10,
+  "withdrawals_v2_decoded": 3,
+  "withdrawals_linked_to_exactly_one_deposit": 3,
+  "result": "LINKABLE",
+  "observer_rule": "withdrawal public_inputs[0] == deposit instruction arg commitment",
+  "pairs": [
+    {
+      "withdrawal": {
+        "kind": "withdraw_v2",
+        "sig": "2GfxoE9rj58xTc5Qbgazj4n4g733NYQuZ3aDYbHMcNT8q2GxHDkmRb2jv2REFmi2x6asBo8yx3pi3zoQGfe5SYZc",
+        "slot": 508036706,
+        "amount": 50000000,
+        "public_inputs_0_commitment": "2c421c828abe6059eef4676687e89cd751dfdfa3dc339b60e44261f6b1d55aff",
+        "public_inputs_1_nullifier": "0fa04f173caf8b2897ef6ca704d641197cfcc94fed63233660c24606413f89b3",
+        "public_inputs_3_amount": 50000000,
+        "receiver_token_account": "2pEV7waU65twpMVyfkhUSq1gh4qVi1uXQTNBmztjt2Vr",
+        "receiver": "4cTBfB8vJK8YiCBcVrvZV4wx89AFzGEbm7LLghJsNUyD",
+        "receiver_is_tx_signer": true,
+        "mint": "So11111111111111111111111111111111111111112"
+      },
+      "candidates_by_amount": 10,
+      "candidates_by_commitment": 1,
+      "linked_deposits": [
+        {
+          "kind": "deposit",
+          "sig": "7LSFx3jQbvUwGbh71vv5PTZ8z8bjRZiXppkwGAAc4DVA3SCSVfAEy1Dn1BYzx2Am3Ge47FG4rrTcBimoCZoWFTB",
+          "slot": 508036692,
+          "amount": 50000000,
+          "commitment": "2c421c828abe6059eef4676687e89cd751dfdfa3dc339b60e44261f6b1d55aff",
+          "depositor": "4cTBfB8vJK8YiCBcVrvZV4wx89AFzGEbm7LLghJsNUyD",
+          "depositor_token_account": "2pEV7waU65twpMVyfkhUSq1gh4qVi1uXQTNBmztjt2Vr"
+        }
+      ]
+    },
+    {
+      "withdrawal": {
+        "kind": "withdraw_v2",
+        "sig": "2LFyhvGYnEj1ixiWrTr5mgr6isd6nzHxXkjJq9BeZJgpTGkAsSHh8gFeGwbrYe5BW4E3bX3YdhybMoRuDdXDybm3",
+        "slot": 487919971,
+        "amount": 50000000,
+        "public_inputs_0_commitment": "1d4cede816f172a90803cb44d044cf2fa7620bc8f82d2222a836a454f4b33ae5",
+        "public_inputs_1_nullifier": "302dacf12a62018299304678e813d4786eacbfe6581dc79e5b06272c94a14a8b",
+        "public_inputs_3_amount": 50000000,
+        "receiver_token_account": "2pEV7waU65twpMVyfkhUSq1gh4qVi1uXQTNBmztjt2Vr",
+        "receiver": "4cTBfB8vJK8YiCBcVrvZV4wx89AFzGEbm7LLghJsNUyD",
+        "receiver_is_tx_signer": true,
+        "mint": "So11111111111111111111111111111111111111112"
+      },
+      "candidates_by_amount": 10,
+      "candidates_by_commitment": 1,
+      "linked_deposits": [
+        {
+          "kind": "deposit",
+          "sig": "2tdRAKUXTVr7yq4rPL5R4uuDT8uEUtX6vEiyqB7N8UsBErZ3HfGjgaXsyaCe5DYZVsAChiRR27FURaWpuvNRGe89",
+          "slot": 487919952,
+          "amount": 50000000,
+          "commitment": "1d4cede816f172a90803cb44d044cf2fa7620bc8f82d2222a836a454f4b33ae5",
+          "depositor": "4cTBfB8vJK8YiCBcVrvZV4wx89AFzGEbm7LLghJsNUyD",
+          "depositor_token_account": "2pEV7waU65twpMVyfkhUSq1gh4qVi1uXQTNBmztjt2Vr"
+        }
+      ]
+    },
+    {
+      "withdrawal": {
+        "kind": "withdraw_v2",
+        "sig": "3wXv6wGS5t7fu2F18ZVGPiSkbJcGA16mftZec7LDHq5wTvZBc4ezb44kuUw97BPXrwYXyoSF42MPKrbuJJM6n2nU",
+        "slot": 487904628,
+        "amount": 50000000,
+        "public_inputs_0_commitment": "121358a19bed5d1ba30475c15e25393a76c4e9f55f608535b6929c21c1de4c59",
+        "public_inputs_1_nullifier": "2722871c959e296027ef7438d991d0b027ca98a63c6e342de1cd8288f6abb77c",
+        "public_inputs_3_amount": 50000000,
+        "receiver_token_account": "2pEV7waU65twpMVyfkhUSq1gh4qVi1uXQTNBmztjt2Vr",
+        "receiver": "4cTBfB8vJK8YiCBcVrvZV4wx89AFzGEbm7LLghJsNUyD",
+        "receiver_is_tx_signer": true,
+        "mint": "So11111111111111111111111111111111111111112"
+      },
+      "candidates_by_amount": 10,
+      "candidates_by_commitment": 1,
+      "linked_deposits": [
+        {
+          "kind": "deposit",
+          "sig": "HRyiDgm8P1uF7mg6Lz17gUyWnLmPXKxVE4bsmzX63BxWqNYndvtTMgDrvE9ax5nn9MWXkMa7WFU17dwUrVRiFXX",
+          "slot": 487699516,
+          "amount": 50000000,
+          "commitment": "121358a19bed5d1ba30475c15e25393a76c4e9f55f608535b6929c21c1de4c59",
+          "depositor": "4cTBfB8vJK8YiCBcVrvZV4wx89AFzGEbm7LLghJsNUyD",
+          "depositor_token_account": "2pEV7waU65twpMVyfkhUSq1gh4qVi1uXQTNBmztjt2Vr"
+        }
+      ]
+    }
+  ]
+}

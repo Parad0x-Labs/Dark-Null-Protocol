@@ -12,7 +12,7 @@ Dark Null v1.22 uses four main instructions for the privacy transfer flow.
 
 **Purpose:** Deposit funds into the privacy pool.
 
-Creates a note commitment in the anonymity set. The depositor receives a secret that can later be used to withdraw.
+Records the note commitment and the deposited amount in public program state. The depositor keeps the note secret that is later used to withdraw; the withdrawal publishes the same commitment, so it is linkable to this deposit ([`PRIVACY_PROPERTIES.md`](./PRIVACY_PROPERTIES.md)).
 
 **Effects:**
 - Transfers SOL from user to vault

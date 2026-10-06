@@ -6,7 +6,7 @@
  * and multi-proof aggregation metadata.
  */
 
-import test from "node:test";
+import test, { after } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
@@ -17,6 +17,12 @@ import { fileURLToPath } from "node:url";
 import { DarkNullBatch, loadCanonicalVk, verifyBatch, BATCH_SCHEMA, BATCH_RESULT, PUBLIC_INPUT } from "../swarm/batch.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+// snarkjs verification builds a multi-threaded bn128 curve and caches it on
+// globalThis; its worker threads keep the process alive after the last test.
+after(async () => {
+  await globalThis.curve_bn128?.terminate?.();
+});
 const snarkjsPath = path.join(repoRoot, "node_modules", "snarkjs", "build", "cli.cjs");
 const wasmPath = path.join(repoRoot, "circuits", "null_proof_js", "null_proof.wasm");
 const zkeyPath = path.join(repoRoot, "circuits", "null_proof_final.zkey");

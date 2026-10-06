@@ -1,0 +1,105 @@
+{
+ "circuit": "spikes/p0/circuits/transact_v2_spec.circom",
+ "valid": [
+  {
+   "step": "deposit",
+   "pi": "0x1f6943359e74ff14d71c4e1e35f52abfb98b9567867999f2b1fb6135e2a40d1e",
+   "expected": "0x1f6943359e74ff14d71c4e1e35f52abfb98b9567867999f2b1fb6135e2a40d1e",
+   "match": true
+  },
+  {
+   "step": "transfer",
+   "pi": "0x15c7931fa20b6bcfbe2120630b34acf93e931a090f17d13b796470c0d438e561",
+   "expected": "0x15c7931fa20b6bcfbe2120630b34acf93e931a090f17d13b796470c0d438e561",
+   "match": true
+  },
+  {
+   "step": "withdraw",
+   "pi": "0x012fa03ea670b00b841ff4bce5a35cdda279ac259cdab91aa36a75e71f9c5b60",
+   "expected": "0x012fa03ea670b00b841ff4bce5a35cdda279ac259cdab91aa36a75e71f9c5b60",
+   "match": true
+  }
+ ],
+ "tampered": [
+  {
+   "step": "transfer",
+   "what": "dummy input label differs from input 0 label (C6)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "deposit",
+   "what": "deposit output without the deposit label (C6)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "deposit",
+   "what": "deposit with a non-zero input value (C6)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "transfer",
+   "what": "output label differs from input label (C6)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "transfer",
+   "what": "signature scalar S + 1 (C7)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "transfer",
+   "what": "ext_data_hash changed after signing (C7)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "transfer",
+   "what": "output value + 1 (C4 conservation)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "withdraw",
+   "what": "public_asset = 0 on a withdraw (C5)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "transfer",
+   "what": "membership sibling tampered (C2)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "withdraw",
+   "what": "wrong leaf index for a real input (C2)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "withdraw",
+   "what": "nk not bound in owner pk: second nk (C1, F-NK)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "transfer",
+   "what": "ak off the curve (C1)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  },
+  {
+   "step": "transfer",
+   "what": "output value 2^64 (C3 range)",
+   "rejected": true,
+   "error": "Error: Assert Failed."
+  }
+ ],
+ "all_valid_match": true,
+ "all_tampered_rejected": true
+}

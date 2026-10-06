@@ -1,0 +1,45 @@
+[package]
+name = "dark-null-transcript"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.79"
+license = "MIT"
+publish = false
+description = "Dark NULL v2 canonical transcript and encoding rules (docs/spec/V2_SPEC.md): domain tags, field encodings, statement preimages, ext_data, instruction layout, tree insertion, key derivation, address encoding"
+
+[lib]
+name = "dark_null_transcript"
+
+[features]
+default = []
+# std: implements std::error::Error. Nothing else needs std; the crate builds as no_std without it.
+std = []
+# light: host Poseidon backend (light-poseidon, circom parameters; same as sol_poseidon Bn254X5)
+light = ["std", "dep:light-poseidon", "dep:ark-bn254", "dep:ark-ff"]
+# solana: on-chain Poseidon and SHA-256 backends through the sol_poseidon and sol_sha256 syscalls
+solana = []
+
+[dependencies]
+sha2 = { version = "0.10.9", default-features = false }
+light-poseidon = { version = "=0.2.0", optional = true }
+ark-bn254 = { version = "0.4.0", optional = true }
+ark-ff = { version = "0.4.2", optional = true }
+
+[dev-dependencies]
+serde_json = "1"
+hex = "0.4"
+num-bigint = "0.4"
+curve25519-dalek = { version = "=3.2.1", default-features = false, features = ["u64_backend", "alloc"] }
+
+[lints.rust]
+unexpected_cfgs = { level = "allow" }
+
+[[test]]
+name = "vectors"
+required-features = ["light"]
+
+[[test]]
+name = "prover_malicious"
+required-features = ["light"]
+
+[workspace]

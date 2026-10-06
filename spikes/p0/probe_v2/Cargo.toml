@@ -1,0 +1,25 @@
+[package]
+name = "dark-null-probe-v2"
+version = "0.0.1"
+edition = "2021"
+license = "MIT"
+publish = false
+description = "Phase 0 devnet probe: runs crates/dark-null-transcript on chain (sol_poseidon, sol_sha256, canonical PDA search) against the v2 vectors. Devnet only; closed after the run."
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+dark-null-transcript = { path = "../../../crates/dark-null-transcript", default-features = false, features = ["solana"] }
+
+[lints.rust]
+unexpected_cfgs = { level = "allow" }
+
+[profile.release]
+opt-level = "s"
+lto = "fat"
+codegen-units = 1
+overflow-checks = true
+panic = "abort"
+
+[workspace]

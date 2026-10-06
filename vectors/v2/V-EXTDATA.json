@@ -1,0 +1,157 @@
+{
+ "id": "V-EXTDATA",
+ "status": "final (docs/spec/V2_SPEC.md)",
+ "source": "vectors/v2/tools/gen_v2_vectors.mjs (circomlibjs 0.1.7, node:crypto, @noble/curves 1.9.7, @scure/base 1.2.6)",
+ "formulas": {
+  "pool_config": "PDA(['dark-null-pool', pool_nonce], program_id)",
+  "pool_id": "SHA256('dark-null-pool-id-v1' || program_id || pool_config)  (32 bytes; Fr form = first 31 bytes BE)",
+  "ext_data_hash": "first 31 bytes, big-endian, of SHA256('dark-null-extdata-v1' || ext_data[649])",
+  "quote_binding": "SHA256('dark-null-x402-quote-v1' || LP16(quoteId) || SHA256(resource) || LE64(amountAtomic) || LE64(totalAtomic) || mint[32] || LP16(payTo) || LE64i(expiresAt unix seconds))"
+ },
+ "layout": [
+  {
+   "name": "version",
+   "offset": 0,
+   "length": 1
+  },
+  {
+   "name": "pool_id",
+   "offset": 1,
+   "length": 32
+  },
+  {
+   "name": "public_token_account",
+   "offset": 33,
+   "length": 32
+  },
+  {
+   "name": "relayer_fee_account",
+   "offset": 65,
+   "length": 32
+  },
+  {
+   "name": "relayer_fee",
+   "offset": 97,
+   "length": 8
+  },
+  {
+   "name": "memo_binding",
+   "offset": 105,
+   "length": 32
+  },
+  {
+   "name": "stealth_ephemeral",
+   "offset": 137,
+   "length": 32
+  },
+  {
+   "name": "ciphertext0",
+   "offset": 169,
+   "length": 160
+  },
+  {
+   "name": "ciphertext1",
+   "offset": 329,
+   "length": 160
+  },
+  {
+   "name": "ciphertext_rec",
+   "offset": 489,
+   "length": 160
+  }
+ ],
+ "pool": {
+  "program_id": "Eo2k1Ppv5cdThjAN1vXmmciHPgVat8Kjx6ou2cFBcZVp",
+  "pool_nonce": "c8b8eff3b7d6a441bcfc5e0cadf0e7f83e3d1af222a47d7ff978a151452fb51d",
+  "pool_config": {
+   "address": "8VrRrGjCsvLQg5maxXuspZmuJVvCcJN1qYTWVuCyAPws",
+   "bump": 255
+  },
+  "pool_id": "71efad371b083e979a8a915929920c3ee030e845db5f197181ff77d76e4fe293",
+  "pool_id_fr": "0x0071efad371b083e979a8a915929920c3ee030e845db5f197181ff77d76e4fe2",
+  "vault": {
+   "address": "GLWUFaaU6MQ4jhYYMybxPn1PszugtPUdUMkXpWYxXFVz",
+   "bump": 255
+  }
+ },
+ "quote": {
+  "quoteId": "q_7f3a9c2e",
+  "resource": "https://api.example.test/v1/forecast?city=vilnius",
+  "amountAtomic": "600",
+  "totalAtomic": "600",
+  "mint": "So11111111111111111111111111111111111111112",
+  "payTo": "dnull1qyk5t9vrnsz4nflmzk8u9s7279gy2ng9ud6k2kapuxf4hrjp2a9u56qs7twzq25zyykkaq55zmrejtclk38ynuxav48qzw228phsvp2wqqqqqqq85xcsc",
+  "expiresAt": "2026-10-06T12:00:00Z",
+  "expires_at_unix": 1791288000,
+  "quote_binding": "90642bdd302615f8734a07d7e53158f81ed114121abea517966ca14cd6b53db7"
+ },
+ "example": {
+  "fields": {
+   "version": 1,
+   "pool_id": "71efad371b083e979a8a915929920c3ee030e845db5f197181ff77d76e4fe293",
+   "public_token_account": "GLWUFaaU6MQ4jhYYMybxPn1PszugtPUdUMkXpWYxXFVz",
+   "relayer_fee_account": "4P8DKU85xi1vZzscZTnCtnaUXpYwwvyxQfS7wvMwt34m",
+   "relayer_fee": "5",
+   "memo_binding": "90642bdd302615f8734a07d7e53158f81ed114121abea517966ca14cd6b53db7",
+   "stealth_ephemeral": "c0bebf92adaf400775ce511227e468eb8e959e4a045e6e41627b9a73469e6e16",
+   "ciphertext0": "fc38587e00c81d2ede23aa0f5ce551cfe62b99a409cb7128062768ba834a7497ed9155977eae7710fe06c99f98dbba73580fb4c4089351832afc1d844baeadcc31498ee2b50d46bcc890ce491de6aa58339765764ad416c51f8d1b3ee081c0c095d914be5c4157487b6f5db8253897681c6cf65e69aeb36fc151117e4aeb76e3c98c686cc202d10ca626518f3c80f674ffc349cf3ea6a97de9e6f6b5ee745643",
+   "ciphertext1": "bfcd97055240245851e909f99e2746354cdc29de64c0d52abd20a56a4a0e61aa456bd16ceb4bfc22c6e3dbf7de1dbfb704b2aeb3ef32550ce924ad534d7cc9f824e18d0928a27c419774872917e9fbf72d853c3203546e20f1e9d109ede178f94cc233689ed44e28edd746d7b07161e1891b53c6371f1d940ad22cb1f58eaf19af5366cd179b47ede28a4671c4fae4c8b353ac021d166ad6ecf798eed105bb3a",
+   "ciphertext_rec": "e04ef7f11d40b6bcaa61aff6dd63fada60910ebe27a8e971def1b75b7761f52432ee58340d6ccd28ae86260afc0c79064a5fd73944ea4f3b4ab68a8db1aa9598ed503597cd3526c047e5671b19957901faf062448bd1b62b7a379d13afac3249c19a653f4e3f3c136bc223a868ee5497d582a769ed58c67442a78fa5c88399bd687691677c5968672e3d6e3bed14ecce60a2ce9928b94310d84e94dce2e873a0"
+  },
+  "bytes": "0171efad371b083e979a8a915929920c3ee030e845db5f197181ff77d76e4fe293e3dea933012efe832222ceca83a02430ff35e5637057b0575f22d372e69be2c9323dfe5fd78f3fed54b5bc077e9d8f0992b93f4c640a0d3643fb24f0056ad53a050000000000000090642bdd302615f8734a07d7e53158f81ed114121abea517966ca14cd6b53db7c0bebf92adaf400775ce511227e468eb8e959e4a045e6e41627b9a73469e6e16fc38587e00c81d2ede23aa0f5ce551cfe62b99a409cb7128062768ba834a7497ed9155977eae7710fe06c99f98dbba73580fb4c4089351832afc1d844baeadcc31498ee2b50d46bcc890ce491de6aa58339765764ad416c51f8d1b3ee081c0c095d914be5c4157487b6f5db8253897681c6cf65e69aeb36fc151117e4aeb76e3c98c686cc202d10ca626518f3c80f674ffc349cf3ea6a97de9e6f6b5ee745643bfcd97055240245851e909f99e2746354cdc29de64c0d52abd20a56a4a0e61aa456bd16ceb4bfc22c6e3dbf7de1dbfb704b2aeb3ef32550ce924ad534d7cc9f824e18d0928a27c419774872917e9fbf72d853c3203546e20f1e9d109ede178f94cc233689ed44e28edd746d7b07161e1891b53c6371f1d940ad22cb1f58eaf19af5366cd179b47ede28a4671c4fae4c8b353ac021d166ad6ecf798eed105bb3ae04ef7f11d40b6bcaa61aff6dd63fada60910ebe27a8e971def1b75b7761f52432ee58340d6ccd28ae86260afc0c79064a5fd73944ea4f3b4ab68a8db1aa9598ed503597cd3526c047e5671b19957901faf062448bd1b62b7a379d13afac3249c19a653f4e3f3c136bc223a868ee5497d582a769ed58c67442a78fa5c88399bd687691677c5968672e3d6e3bed14ecce60a2ce9928b94310d84e94dce2e873a0",
+  "length": 649,
+  "ext_data_hash": "0x00c6774e774a86cfbaca298f796013e0de17d5326d2c15a96647b93285976ca9"
+ },
+ "mutations": [
+  {
+   "field": "version",
+   "flipped_offset": 0,
+   "ext_data_hash": "0x0097c6210482924f30feab1cbe58bf610b42235abddf0a67f3a2ad138c3c6972"
+  },
+  {
+   "field": "pool_id",
+   "flipped_offset": 32,
+   "ext_data_hash": "0x006240ca7630f6b82d9edc473416bdd3d7ea0657868feeda086ba35aed5ca134"
+  },
+  {
+   "field": "public_token_account",
+   "flipped_offset": 64,
+   "ext_data_hash": "0x00e32fda193ba313d5fd5c8540a82fae4a13975c24da1c2e42b2af32a7ac56f3"
+  },
+  {
+   "field": "relayer_fee_account",
+   "flipped_offset": 96,
+   "ext_data_hash": "0x00869389c99fd2ac2f12ea125b728719f6fb937fec597c000ca86c7930685c85"
+  },
+  {
+   "field": "relayer_fee",
+   "flipped_offset": 104,
+   "ext_data_hash": "0x00cb6ad50e675ff697d6fe282d31e009b2ddcd19239ecf4becc46337501c970c"
+  },
+  {
+   "field": "memo_binding",
+   "flipped_offset": 136,
+   "ext_data_hash": "0x00afbea009bdc2403d06b7faebf8079a8e3b7ae1d6139291d3e84825e6ad7d6a"
+  },
+  {
+   "field": "stealth_ephemeral",
+   "flipped_offset": 168,
+   "ext_data_hash": "0x004c1eb55ac4f803c8cfad9d7754f201726e317af7e82dfd05937d7587016755"
+  },
+  {
+   "field": "ciphertext0",
+   "flipped_offset": 328,
+   "ext_data_hash": "0x0004d6ffeaf1c3fcb88129b68a5f9cc8e2f2b1185880dbbac612412705dba15b"
+  },
+  {
+   "field": "ciphertext1",
+   "flipped_offset": 488,
+   "ext_data_hash": "0x000778dfa69aca3cf5590f795c1ceefe151e2dc64d5c5bc2c324b5adc44482da"
+  },
+  {
+   "field": "ciphertext_rec",
+   "flipped_offset": 648,
+   "ext_data_hash": "0x00c48b51113699a9726c46ceb12f0d6517a7e05caaf9ed52c3209976d3d91b3b"
+  }
+ ]
+}

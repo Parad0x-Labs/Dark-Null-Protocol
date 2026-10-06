@@ -1,0 +1,108 @@
+{
+ "id": "V-VOUCHER",
+ "status": "final (docs/spec/V2_SPEC.md)",
+ "source": "vectors/v2/tools/gen_v2_vectors.mjs (circomlibjs 0.1.7, node:crypto, @noble/curves 1.9.7, @scure/base 1.2.6)",
+ "scope": "Phase 3 (dark-null-batch). Fixed now so that Phase 1 note and owner encodings stay compatible.",
+ "formulas": {
+  "bjj_session": "OS2IP(HKDF(seed, info=CHAN || chan_nonce, 64)) mod l_bjj",
+  "nk_ch": "Poseidon(DS_NK_CH, chan_secret)",
+  "owner_ch": "Poseidon(DS_CHAN, merchant_owner, refund_owner, bjj_pub.x, bjj_pub.y, expiry_epoch, nk_ch)",
+  "chan_id": "cm of the channel note = Poseidon(DS_NOTE, cap, asset, owner_ch, salt, label)",
+  "voucher_msg": "Poseidon(DS_VOUCHER, chan_id, cumulative, h248(receipt_head_prev))",
+  "signature": "EdDSA-Poseidon over BabyJubJub (spec 4.4); packed = packPoint(R8) || LE32(S)",
+  "voucher_wire": "BE32(chan_id) || LE64(cumulative) || receipt_head_prev[32] || packed_sig[64]  (136 bytes)",
+  "receipt_head": "SHA256('dark-null-rcpt-chain-v1' || receipt_head_prev || BE32(voucher_msg) || dna_receipt_hash); receipt_head_0 = 32 zero bytes",
+  "epoch_anchor": "memo_binding = BE32(Poseidon(DS_RCPT, h248(receipt_head_N), salt))"
+ },
+ "channel": {
+  "payer": "alice",
+  "merchant": "bob",
+  "chan_nonce": "429e7b156f5de33d66e6363312bd926d8f38605bd0163899b1dc0893ea4ac310",
+  "bjj_session": "0x016dae27979369b1c8c25bbf405758de4ccc6bd7df4a9b61bd95e0d0c9e184ff",
+  "bjj_nonce_key": "a2ecc0537a116c86b6fbd005232f614739bd7786de94150eaaa28185b54f16d0",
+  "bjj_session_pub": [
+   "0x22c9ac1d374a2ed427bb38b7182431178f8c214f8913425ca0b5ba1595af25d6",
+   "0x269ed903bef3f8a462b8ce5f3cbcbfc80f85f0d5a88c2bb1df259539c50d8993"
+  ],
+  "bjj_session_pub_packed": "93890dc5399525dfb12b8ca8d5f0850fc8bfbc3c5fceb862a4f8f3be03d99ea6",
+  "chan_secret": "0x13342936a5c92ccfb92231fcc1b78315df74beca7dd916c0d25a857f96f58a68",
+  "nk_ch": "0x25c334575487b9880267360134bcd6cc577ed4038fd59450d8d7d4b43f017285",
+  "merchant_owner": "0x2d4595839c0559a7fb158fc2c3caf150454d05e375655ba1e1935b8e41574bca",
+  "refund_owner": "0x15ddd8284cf34f64756aa90977fea0af1618689057ea1bd0abdf6bf735261e8b",
+  "expiry_epoch": "490024",
+  "owner_ch": "0x1c7047cbddf5f48896cf70e894d0ac16a1dba9f9ddf06567c43a0318d06c5c10",
+  "cap": "1000",
+  "asset": "0x12d87a72c51ebad644cd475e6366bd10c7347fc3797d74075657396df5f1e05f",
+  "salt": "0x1f61a97285dfe8196d3dd2e001501432661fe0c80a290ad5e151e611e693a472",
+  "label": "0x1671f7558c057396b3ed085c0669f1dad9c0de7a47ab0ff52ff5fd16672cd179",
+  "label_counter": "7",
+  "chan_id": "0x15b6f7997d9f099ea42dd5284e09191e7d8ebde29bb645977a2990e871bb1700"
+ },
+ "vouchers": [
+  {
+   "k": 1,
+   "amount": "10",
+   "cumulative": "10",
+   "receipt_head_prev": "0000000000000000000000000000000000000000000000000000000000000000",
+   "voucher_msg": "0x043793f5af95e7933e978166da76c4c83eaed31b4bf7b5b0eb7d187b5aa948d1",
+   "sig": {
+    "R8": [
+     "0x1fa9cd4edbbf33b924cddbef33b28e976cb1db25b4767706334c48f547fc0fb6",
+     "0x2d844499b4b2c2f8bb5f8cd3482047af57a23c859aea14d5462dafc5c50a80ae"
+    ],
+    "S": "0x0159098f8e2c1a3c7382ced547aaadd17a848d6f13c3ad2f4264e3ce38883f1e",
+    "hm": "0x13a9ac21b904c2ff6a2f806b290850a1756d03cdfca436d7f08a4a1e168613e3",
+    "packed": "ae800ac5c5af2d46d514ea9a853ca257af472048d38c5fbbf8c2b2b4994484ad1e3f8838cee364422fadc3136f8d847ad1adaa47d5ce82733c1a2c8e8f095901"
+   },
+   "wire": "15b6f7997d9f099ea42dd5284e09191e7d8ebde29bb645977a2990e871bb17000a000000000000000000000000000000000000000000000000000000000000000000000000000000ae800ac5c5af2d46d514ea9a853ca257af472048d38c5fbbf8c2b2b4994484ad1e3f8838cee364422fadc3136f8d847ad1adaa47d5ce82733c1a2c8e8f095901",
+   "wire_length": 136,
+   "dna_receipt_hash": "e4f324a5bf8cb8b3879f975bb6c409820b1ce57ec376ba68f7e7c9417f0c4137",
+   "receipt_head": "e2ebada28c8a72944b9f3a1db911f32990297ae989c7cc702b05061e4f7faeb7"
+  },
+  {
+   "k": 2,
+   "amount": "25",
+   "cumulative": "35",
+   "receipt_head_prev": "e2ebada28c8a72944b9f3a1db911f32990297ae989c7cc702b05061e4f7faeb7",
+   "voucher_msg": "0x172c28bfda117c4106a0b4e65d04d6d827ef6a201874d9abe31a9ee47d8a17e2",
+   "sig": {
+    "R8": [
+     "0x03ace50a66df0f739b2bb6d3bc43e3ba1421608621f32f6a2b4a57ab8aadec33",
+     "0x0da8b2469065a66709f8e82c24f9b5dcdf0f18ac569666a6295a65f0280935d4"
+    ],
+    "S": "0x044d83b0a8c603de4626740ac4e65e9730af6d9e51a6de93e73031a9d03ae35d",
+    "hm": "0x068df7515fba96dd4eae82c2d9d584614057246bd71aefdec3015175ceed8a33",
+    "packed": "d4350928f0655a29a6669656ac180fdfdcb5f9242ce8f80967a6659046b2a80d5de33ad0a93130e793dea6519e6daf30975ee6c40a742646de03c6a8b0834d04"
+   },
+   "wire": "15b6f7997d9f099ea42dd5284e09191e7d8ebde29bb645977a2990e871bb17002300000000000000e2ebada28c8a72944b9f3a1db911f32990297ae989c7cc702b05061e4f7faeb7d4350928f0655a29a6669656ac180fdfdcb5f9242ce8f80967a6659046b2a80d5de33ad0a93130e793dea6519e6daf30975ee6c40a742646de03c6a8b0834d04",
+   "wire_length": 136,
+   "dna_receipt_hash": "a3176fba1070e559dd26433127095e50575d64106134075510646a8ee70109df",
+   "receipt_head": "b18ac3c6a8249e7e60a3ac432bbf1aa087811a37a4dccb0d7a429b70d2547358"
+  },
+  {
+   "k": 3,
+   "amount": "40",
+   "cumulative": "75",
+   "receipt_head_prev": "b18ac3c6a8249e7e60a3ac432bbf1aa087811a37a4dccb0d7a429b70d2547358",
+   "voucher_msg": "0x16a98d871ce457f833b32a9e413aea5e1c0df29b7c64f01a84f144240bc1bc1e",
+   "sig": {
+    "R8": [
+     "0x13d54c6dd7a5aef21a8e44d7cd39b325dbb62d7d163d80000c015359b8be5b5e",
+     "0x23ad75a4d65b0646b1f24b8fe33b67f7e92501f95be8ab025bad0bdf9c21b476"
+    ],
+    "S": "0x046cc8ce014afdd06023bbceafe82685d3c0df34c44bb4feba3a25d87ad897f4",
+    "hm": "0x1bef89e6997e893b541dc15734b7444045baece9fd742040fb92f671c8740a2f",
+    "packed": "76b4219cdf0bad5b02abe85bf90125e9f7673be38f4bf2b146065bd6a475ad23f497d87ad8253abafeb44bc434dfc0d38526e8afcebb2360d0fd4a01cec86c04"
+   },
+   "wire": "15b6f7997d9f099ea42dd5284e09191e7d8ebde29bb645977a2990e871bb17004b00000000000000b18ac3c6a8249e7e60a3ac432bbf1aa087811a37a4dccb0d7a429b70d254735876b4219cdf0bad5b02abe85bf90125e9f7673be38f4bf2b146065bd6a475ad23f497d87ad8253abafeb44bc434dfc0d38526e8afcebb2360d0fd4a01cec86c04",
+   "wire_length": 136,
+   "dna_receipt_hash": "0b15d1379fc7bd07808aaff9dd56d74b3f6ddddf7d4ff0b2c7947659b746d1ba",
+   "receipt_head": "bf106bb66d1f41f83443ab1af125da2a4b4a6381fc8ae5e9f963e02368d51ecc"
+  }
+ ],
+ "epoch_anchor": {
+  "receipt_head_final": "bf106bb66d1f41f83443ab1af125da2a4b4a6381fc8ae5e9f963e02368d51ecc",
+  "salt": "0x25c7ca43930ca3337c7e04edc88630029dc44d3c0e587ff24928fbee30c2e865",
+  "memo_binding": "0x0b9a360ede0dbf7a658995644bc3b2608248a4ea4d2e6c693a8ba0d811bb665c"
+ }
+}

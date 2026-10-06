@@ -1,0 +1,400 @@
+{
+ "program": "72LkCvFe4motQfWJUsPa5X7qpFMpbs8Tx1Bf7nZxL12x",
+ "date": "2026-10-06T10:26:19.708Z",
+ "payer": "GTs3YgDY4Aqi67wW4zr5xZdJCwBVHiwTrRdgWpFPjXD3",
+ "runs": [
+  {
+   "label": "POSEIDON_CHECK batch 1/6 (36 calls)",
+   "signature": "5PKHDqL1G6b5g67SMhnhnWjnQ6FGkGMwdhXS4dSRz4fg38b6PxXa9JdzS2dGQc31fpTZRWUnDxDUynEKCe6pFzEF",
+   "explorer": "https://explorer.solana.com/tx/5PKHDqL1G6b5g67SMhnhnWjnQ6FGkGMwdhXS4dSRz4fg38b6PxXa9JdzS2dGQc31fpTZRWUnDxDUynEKCe6pFzEF?cluster=devnet",
+   "tx_bytes": 3771,
+   "data_bytes": 3589,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 42341,
+   "marks": [],
+   "log64": [
+    [
+     1,
+     36,
+     1,
+     0,
+     0
+    ]
+   ],
+   "calls": 36
+  },
+  {
+   "label": "POSEIDON_CHECK batch 2/6 (19 calls)",
+   "signature": "4MuJQ13W2EM5v1XWyaz4MxDuGic68ADvNCnmnqx5yeGfvSUMo7q9UxJyvQ2TcKjtN1KYjmZi7RwsNDm4UNRctFYZ",
+   "explorer": "https://explorer.solana.com/tx/4MuJQ13W2EM5v1XWyaz4MxDuGic68ADvNCnmnqx5yeGfvSUMo7q9UxJyvQ2TcKjtN1KYjmZi7RwsNDm4UNRctFYZ?cluster=devnet",
+   "tx_bytes": 3594,
+   "data_bytes": 3412,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 46792,
+   "marks": [],
+   "log64": [
+    [
+     1,
+     19,
+     1,
+     0,
+     0
+    ]
+   ],
+   "calls": 19
+  },
+  {
+   "label": "POSEIDON_CHECK batch 3/6 (31 calls)",
+   "signature": "2Lr8E7cHBpY9R9G16ueAh9rzJUk4cztc5jzBTn8N1rPiq5dH8bheXRff7SSB3K7GeT82NkHkXhXUDrknuiWEC3Sq",
+   "explorer": "https://explorer.solana.com/tx/2Lr8E7cHBpY9R9G16ueAh9rzJUk4cztc5jzBTn8N1rPiq5dH8bheXRff7SSB3K7GeT82NkHkXhXUDrknuiWEC3Sq?cluster=devnet",
+   "tx_bytes": 3830,
+   "data_bytes": 3648,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 51312,
+   "marks": [],
+   "log64": [
+    [
+     1,
+     31,
+     1,
+     0,
+     0
+    ]
+   ],
+   "calls": 31
+  },
+  {
+   "label": "POSEIDON_CHECK batch 4/6 (26 calls)",
+   "signature": "56Tbyq9S8JWMp54GAzhP7yfpc6pQ8NqgZq1ZNeyTi6cMJYHdAGUUtNTjHwHqRXcECPRuJBTPYriBzznLSZrRQJid",
+   "explorer": "https://explorer.solana.com/tx/56Tbyq9S8JWMp54GAzhP7yfpc6pQ8NqgZq1ZNeyTi6cMJYHdAGUUtNTjHwHqRXcECPRuJBTPYriBzznLSZrRQJid?cluster=devnet",
+   "tx_bytes": 3857,
+   "data_bytes": 3675,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 54540,
+   "marks": [],
+   "log64": [
+    [
+     1,
+     26,
+     1,
+     0,
+     0
+    ]
+   ],
+   "calls": 26
+  },
+  {
+   "label": "POSEIDON_CHECK batch 5/6 (26 calls)",
+   "signature": "4gJCSea1a9i9w7KV5DofEtBfP2rY4B15gs45pFHPVNF7cxTqvCQpneE79hFwmhdspF2dPCRAXwC4tA923E6VtwL7",
+   "explorer": "https://explorer.solana.com/tx/4gJCSea1a9i9w7KV5DofEtBfP2rY4B15gs45pFHPVNF7cxTqvCQpneE79hFwmhdspF2dPCRAXwC4tA923E6VtwL7?cluster=devnet",
+   "tx_bytes": 3857,
+   "data_bytes": 3675,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 54549,
+   "marks": [],
+   "log64": [
+    [
+     1,
+     26,
+     1,
+     0,
+     0
+    ]
+   ],
+   "calls": 26
+  },
+  {
+   "label": "POSEIDON_CHECK batch 6/6 (32 calls)",
+   "signature": "2Z4Zt2N9R6Ko7gApjD65LggmztiD6CJL6xB47VQqhRgGWoYqfwE5dVTy7J126yXqGd18mn4bKMHCLa1njWgvWGo1",
+   "explorer": "https://explorer.solana.com/tx/2Z4Zt2N9R6Ko7gApjD65LggmztiD6CJL6xB47VQqhRgGWoYqfwE5dVTy7J126yXqGd18mn4bKMHCLa1njWgvWGo1?cluster=devnet",
+   "tx_bytes": 3287,
+   "data_bytes": 3105,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 36560,
+   "marks": [],
+   "log64": [
+    [
+     1,
+     32,
+     1,
+     0,
+     0
+    ]
+   ],
+   "calls": 32
+  },
+  {
+   "label": "TRANSACT_CHECK deposit",
+   "signature": "5DZLkfxzuHWJsi2GwxLAjDbfxdScR1pQ6ueft9gtCB26CJbJTUdkY4HWrLydsjRu782vjD81HpY4iPYu9i7yCWjs",
+   "explorer": "https://explorer.solana.com/tx/5DZLkfxzuHWJsi2GwxLAjDbfxdScR1pQ6ueft9gtCB26CJbJTUdkY4HWrLydsjRu782vjD81HpY4iPYu9i7yCWjs?cluster=devnet",
+   "tx_bytes": 1450,
+   "data_bytes": 1268,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 13311,
+   "marks": [
+    1399883,
+    1399191,
+    1398603,
+    1386830
+   ],
+   "log64": [
+    [
+     2,
+     1000,
+     0,
+     1,
+     0
+    ]
+   ],
+   "cu_ext_data_hash": 487,
+   "cu_label_and_pi": 11672
+  },
+  {
+   "label": "TRANSACT_CHECK transfer",
+   "signature": "3PkwXsVvcYEmwgi6NF39j1NJVPMiDHh12im6Ara4az5mJjcpDVV3vdoDP1tgVK9GU4GJTHuERekeb7QX1x7PQyWS",
+   "explorer": "https://explorer.solana.com/tx/3PkwXsVvcYEmwgi6NF39j1NJVPMiDHh12im6Ara4az5mJjcpDVV3vdoDP1tgVK9GU4GJTHuERekeb7QX1x7PQyWS?cluster=devnet",
+   "tx_bytes": 1450,
+   "data_bytes": 1268,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 13056,
+   "marks": [
+    1399883,
+    1399192,
+    1398604,
+    1387085
+   ],
+   "log64": [
+    [
+     2,
+     0,
+     5,
+     1,
+     0
+    ]
+   ],
+   "cu_ext_data_hash": 487,
+   "cu_label_and_pi": 11418
+  },
+  {
+   "label": "TRANSACT_CHECK withdraw",
+   "signature": "3XxHE2q8iuagsA6GbGMRkzQR1AMnpG7XyhfSyrcH7WDLKeN2Hxd5FuQAF5o8LipSrUgAwsYvvtnjEa4mfwmkHvFv",
+   "explorer": "https://explorer.solana.com/tx/3XxHE2q8iuagsA6GbGMRkzQR1AMnpG7XyhfSyrcH7WDLKeN2Hxd5FuQAF5o8LipSrUgAwsYvvtnjEa4mfwmkHvFv?cluster=devnet",
+   "tx_bytes": 1450,
+   "data_bytes": 1268,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 13056,
+   "marks": [
+    1399883,
+    1399192,
+    1398604,
+    1387085
+   ],
+   "log64": [
+    [
+     2,
+     0,
+     600,
+     1,
+     0
+    ]
+   ],
+   "cu_ext_data_hash": 487,
+   "cu_label_and_pi": 11418
+  },
+  {
+   "label": "TREE_CHECK 3 pair insertions",
+   "signature": "3n6dGGQYWJUthsdDNvEHmYQXjfzu7rcEcxNFnsC8AXQQjdwLgXhYq6jgzVXNkHBVwgQgQHWxkwxAZ4N6uM1vwJSv",
+   "explorer": "https://explorer.solana.com/tx/3n6dGGQYWJUthsdDNvEHmYQXjfzu7rcEcxNFnsC8AXQQjdwLgXhYq6jgzVXNkHBVwgQgQHWxkwxAZ4N6uM1vwJSv?cluster=devnet",
+   "tx_bytes": 472,
+   "data_bytes": 290,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 99838,
+   "marks": [
+    1399579,
+    1366586,
+    1366430,
+    1333451,
+    1333295,
+    1300325
+   ],
+   "log64": [
+    [
+     3,
+     3,
+     1,
+     6,
+     0
+    ]
+   ],
+   "cu_per_insert": [
+    32892,
+    32878,
+    32869
+   ]
+  },
+  {
+   "label": "NF_PDA_CHECK 6 nullifiers",
+   "signature": "3jte78QBDcTZUE8pSuHLa5iQpkCjWKC7KxNcV6BD72oe4aYpXRtkYDMtTouNvEzkcH3dsxBA5tPAsjqFreMkbZUj",
+   "explorer": "https://explorer.solana.com/tx/3jte78QBDcTZUE8pSuHLa5iQpkCjWKC7KxNcV6BD72oe4aYpXRtkYDMtTouNvEzkcH3dsxBA5tPAsjqFreMkbZUj?cluster=devnet",
+   "tx_bytes": 637,
+   "data_bytes": 455,
+   "version": 1,
+   "err": null,
+   "fee_lamports": 5000,
+   "cu": 21875,
+   "marks": [
+    1399841,
+    1396705,
+    1396453,
+    1394817,
+    1394565,
+    1391429,
+    1391177,
+    1383541,
+    1383289,
+    1381653,
+    1381401,
+    1378265
+   ],
+   "log64": [
+    [
+     4,
+     0,
+     254,
+     1,
+     0
+    ],
+    [
+     4,
+     1,
+     255,
+     1,
+     0
+    ],
+    [
+     4,
+     2,
+     254,
+     1,
+     0
+    ],
+    [
+     4,
+     3,
+     251,
+     1,
+     0
+    ],
+    [
+     4,
+     4,
+     255,
+     1,
+     0
+    ],
+    [
+     4,
+     5,
+     254,
+     1,
+     0
+    ]
+   ],
+   "bumps": [
+    254,
+    255,
+    254,
+    251,
+    255,
+    254
+   ],
+   "cu_per_derivation": [
+    3035,
+    1535,
+    3035,
+    7535,
+    1535,
+    3035
+   ]
+  }
+ ],
+ "negatives": [
+  {
+   "label": "TRANSACT_CHECK transfer, ext_data byte flipped",
+   "expected_custom_error": 517,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 517
+     }
+    ]
+   },
+   "rejected_as_expected": true
+  },
+  {
+   "label": "TRANSACT_CHECK transfer, pi off by one bit",
+   "expected_custom_error": 520,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 520
+     }
+    ]
+   },
+   "rejected_as_expected": true
+  },
+  {
+   "label": "TRANSACT_CHECK transfer, foreign pool id",
+   "expected_custom_error": 515,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 515
+     }
+    ]
+   },
+   "rejected_as_expected": true
+  },
+  {
+   "label": "TREE_CHECK swapped pair order",
+   "expected_custom_error": 784,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 784
+     }
+    ]
+   },
+   "rejected_as_expected": true
+  }
+ ],
+ "balance_before": 378574720,
+ "poseidon_calls_checked": 170,
+ "balance_after": 378519720,
+ "fees_lamports": 55000,
+ "all_negatives_rejected": true
+}

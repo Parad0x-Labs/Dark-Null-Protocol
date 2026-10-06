@@ -1,0 +1,52 @@
+# dark-null-transcript test run (sandbox: rust:1.86-slim-bookworm container, offline registry, --locked)
+# date: 2026-10-06T10:38:04Z
+rustc 1.86.0 (05f9846f8 2025-03-31)
+cargo 1.86.0 (adf9b6ad1 2025-02-28)
+## cargo build --offline --locked --lib --no-default-features (no_std)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
+## cargo test --offline --locked --features light
+     Running unittests src/lib.rs (/work/dnt/target/debug/deps/dark_null_transcript-cb2f21ce276ef150)
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/encoding.rs (/work/dnt/target/debug/deps/encoding-e514d39a6678946e)
+running 6 tests
+test address_rejects_wrong_hrp_case_and_padding ... ok
+test hmac_sha256_rfc4231_case2 ... ok
+test modulus_constants ... ok
+test public_amount_rules ... ok
+test layouts_and_rejections ... ok
+test reduce_add_neg_match_bigint ... ok
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/prover_malicious.rs (/work/dnt/target/debug/deps/prover_malicious-1e2c126f9827264e)
+running 14 tests
+test s10_encoding_divergence_is_pinned ... ok
+test s12_two_public_legs_rejected ... ok
+test s1_poseidon_mismatch_detected ... ok
+test s13_output_order_swap_detected ... ok
+test baseline_valid_steps_accepted ... ok
+test s2_missing_domain_separation_detected ... ok
+test s4_root_hint_swap_detected ... ok
+test s3_ext_data_hash_over_unseen_bytes_detected ... ok
+test s5_cross_pool_replay_detected ... ok
+test s7_non_canonical_field_detected ... ok
+test s6_epoch_window_detected ... ok
+test s8_non_canonical_bump_detected ... ok
+test s9_replay_detected ... ok
+test s11_relayer_mutation_of_every_field_detected ... ok
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+     Running tests/vectors.rs (/work/dnt/target/debug/deps/vectors-50fceb0ff096d88c)
+running 8 tests
+test ds_registry_matches_v_ds ... ok
+test v_extdata_pool_quote_and_mutations ... ok
+test v_pos_all_widths ... ok
+test phase0_derivation_vectors ... ok
+test v_addr_keys_and_addresses ... ok
+test zeros_match_poseidon ... ok
+test v_e2e_join_split_sequence ... ok
+test v_voucher_channel_and_signatures ... ok
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.97s
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+## cargo-build-sbf --offline (spikes/p0/probe_v2: the crate with feature solana, no_std on SBF)
+    Finished `release` profile [optimized] target(s) in 0.05s
+88486db9ddce65ec7c665d97b101679834db0816b5bf1160c79ad38aa7c1411f  /work/dnt/so/dark_null_probe_v2.so

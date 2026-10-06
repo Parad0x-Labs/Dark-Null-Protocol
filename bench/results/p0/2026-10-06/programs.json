@@ -44,6 +44,17 @@
    "program_id": "GEQAGa5pcB7MBs9Q7W2MZHfTwn4vYyBWb22iLkPAHa4",
    "deploy_signature": "2DdmpqXxFjW1xspb4kGHSSgorcLqSv3zzXkh5GsXRfHQ4rdsqx7SVcVFPYEqX2eYfyQmLjcABB3tNKiYqeQ31LjM",
    "status": "closed"
+  },
+  {
+   "name": "spike-probe-v2",
+   "features": "none (raw entrypoint; dark-null-transcript with feature solana)",
+   "arch": "sbpf v0",
+   "opt_level": "s",
+   "so_bytes": 22576,
+   "so_sha256": "88486db9ddce65ec7c665d97b101679834db0816b5bf1160c79ad38aa7c1411f",
+   "program_id": "72LkCvFe4motQfWJUsPa5X7qpFMpbs8Tx1Bf7nZxL12x",
+   "deploy_signature": "3FkqpPPuxGoV9d8ccq6ypGwm8jGxWtfE5vFsfqy531X1tEqF9wFc8gDn7DQetzKZ85hBAnapaBgPd23HKWAEA1E5",
+   "status": "closed (0.11556492 SOL reclaimed)"
   }
  ],
  "sol_accounting": {
@@ -56,5 +67,12 @@
   },
   "stranded_note": "An interrupted run of s_null_extra.mjs (public RPC returned 429 after sendTransaction succeeded) left two option-A nullifier PDAs (650,240 lamports each) that were not closed before the store program was closed; tx prefix 2JvHUy72. All other spike accounts were closed and their rent recovered.",
   "external_note": "Between the first Phase 0 transaction and the first deploy the test payer balance rose by 112,144,720 lamports from activity outside this work; it is excluded from the figures above."
+ },
+ "sol_accounting_p0_completion": {
+  "method": "test-payer balance before the probe deploy and after its close (no other test-payer activity in between: the balance equalled the reading taken at session start)",
+  "balance_before_lamports": 495107760,
+  "balance_after_lamports": 494079640,
+  "net_spend_lamports": 1028120,
+  "probe_transaction_fees_lamports": 55000
  }
 }

@@ -67,9 +67,9 @@ test("multiple ticks accumulate correctly", () => {
   const payer = generateStreamKeys();
   const recipient = generateStreamKeys();
   let ch = openChannel(payer, recipient.public, 1_000, 0);
+  ({ channel: ch } = tick(ch, payer, 100));
+  ({ channel: ch } = tick(ch, payer, 200));
   let t;
-  ({ tick: t, channel: ch } = tick(ch, payer, 100));
-  ({ tick: t, channel: ch } = tick(ch, payer, 200));
   ({ tick: t, channel: ch } = tick(ch, payer, 300));
   assert.equal(t.accumulated_lamports, 600);
   assert.equal(t.sequence, 3);
@@ -150,9 +150,8 @@ test("getSettlementAmount returns final accumulated value", () => {
   const payer = generateStreamKeys();
   const recipient = generateStreamKeys();
   let ch = openChannel(payer, recipient.public, 1_000, 0);
-  let t;
-  ({ tick: t, channel: ch } = tick(ch, payer, 300));
-  ({ tick: t, channel: ch } = tick(ch, payer, 150));
+  ({ channel: ch } = tick(ch, payer, 300));
+  const { tick: t } = tick(ch, payer, 150);
   assert.equal(getSettlementAmount(t), 450);
 });
 
@@ -164,7 +163,7 @@ test("tickSupersedes: higher sequence supersedes lower", () => {
   let ch = openChannel(payer, recipient.public, 1_000, 0);
   let t1, t2;
   ({ tick: t1, channel: ch } = tick(ch, payer, 100));
-  ({ tick: t2, channel: ch } = tick(ch, payer, 100));
+  ({ tick: t2 } = tick(ch, payer, 100));
   assert.ok(tickSupersedes(t2, t1), "t2 (seq 2) should supersede t1 (seq 1)");
   assert.ok(!tickSupersedes(t1, t2), "t1 (seq 1) should not supersede t2 (seq 2)");
 });

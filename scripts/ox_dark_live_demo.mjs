@@ -79,13 +79,6 @@ const hash2 = (a, b) => mimcSponge([a, b]);
 // ── helpers ───────────────────────────────────────────────────────────────────
 const disc = (name) => crypto.createHash("sha256").update(`global:${name}`).digest().subarray(0, 8);
 function u64le(n) { const b = Buffer.alloc(8); b.writeBigUInt64LE(BigInt(n)); return b; }
-function le32(n) {
-  const b = Buffer.alloc(32);
-  b.writeBigInt64LE ? null : null;
-  let v = BigInt(n);
-  for (let i = 0; i < 32; i++) { b[i] = Number(v & 0xffn); v >>= 8n; }
-  return b;
-}
 function be32(n) {
   const h = BigInt(n).toString(16).padStart(64, "0");
   if (h.length > 64) throw new Error("value exceeds 32 bytes");
@@ -159,7 +152,7 @@ if (stage === "setup") {
     const userWsol = m ? m[1] : (await conn.getTokenAccountsByOwner(payer.publicKey, { mint: WSOL_MINT })).value[0].pubkey.toBase58();
     patchState({ userWsol }); s = loadState();
     log("user wSOL ATA:", userWsol);
-    const wrapOut = cli(["wrap", "1"]);
+    cli(["wrap", "1"]);
     log("wrapped 1 SOL into wSOL");
   }
   if (!s.vaultWsol) {
@@ -430,8 +423,6 @@ if (stage === "matrix") {
   const nullifier = mimcSponge([BigInt(s0.attackSecret)]);
   const userWsol = new PublicKey(s0.userWsol);
   const vaultWsol = new PublicKey(s0.vaultWsol);
-  const [r0v, r1v] = pubParts(userWsol);
-  const [m0v, m1v] = pubParts(WSOL_MINT);
   const keys = [
     { pubkey: VAULT, isSigner: false, isWritable: true },
     { pubkey: WSOL_MINT, isSigner: false, isWritable: false },

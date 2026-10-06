@@ -37,7 +37,6 @@ import { secp256k1 } from "@noble/curves/secp256k1";
 export const PAYMENT_STREAM_SCHEMA = "dark-null-payment-stream-v1";
 
 const G = secp256k1.ProjectivePoint.BASE;
-const CURVE_N = secp256k1.CURVE.n;
 
 // ---------------------------------------------------------------------------
 // Helpers

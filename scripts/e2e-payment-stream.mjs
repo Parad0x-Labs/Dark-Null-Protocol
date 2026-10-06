@@ -20,11 +20,9 @@ import {
   Transaction,
   TransactionInstruction,
   sendAndConfirmTransaction,
-  LAMPORTS_PER_SOL,
 } from "@solana/web3.js";
 import fs from "fs";
 import path from "path";
-import { createHash } from "node:crypto";
 import { fileURLToPath, pathToFileURL } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

@@ -29,7 +29,6 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   Connection,
   Keypair,
-  PublicKey,
 } from "@solana/web3.js";
 import { secp256k1 } from "@noble/curves/secp256k1";
 
@@ -45,7 +44,6 @@ const { default: _h, ...hooks } = await import(
 );
 
 const {
-  PROGRAM_IDS,
   initAccumulator, accumulateReceipt, finalizeAccumulator, readAccumulator,
   registerModel, recordInference,
   openChannel, closeChannel, readChannel,
@@ -54,7 +52,7 @@ const {
   sha256,
 } = programs;
 
-const { StreamingSession, makeAccumulatorHook, makeInferenceHook, makeNullRewardHook, combineHooks } = hooks;
+const { StreamingSession } = hooks;
 
 // ── Setup ─────────────────────────────────────────────────────────────────────
 
@@ -173,7 +171,7 @@ for (const call of API_CALLS) {
   const amountAtomic = PRICE_PER_CALL.toString();
 
   // Accumulate receipt on-chain
-  const accTx = await accumulateReceipt(connection, payer, receiptId);
+  await accumulateReceipt(connection, payer, receiptId);
   const accState = await readAccumulator(connection, payer.publicKey);
   console.log(`  [accumulator] receipt #${accState.count} committed`);
   console.log(`                root: ${accState.commitment.slice(0, 32)}…`);

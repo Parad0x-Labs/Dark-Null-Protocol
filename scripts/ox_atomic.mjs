@@ -49,7 +49,6 @@ const DEP = 50000000n, ATK = DEP * 2n;
 const mkNote = (amt, sec, bl) => ({ amt, secret: BigInt(sec), blind: BigInt(bl), c: sponge([BigInt(amt), r0, r1, m0, m1, BigInt(bl), BigInt(sec)]) });
 const attackNote = mkNote(ATK, st.attackSecret, st.attackBlinding);
 let honestNote = mkNote(DEP, st.secret, st.blinding);
-const attackC = be32n(attackNote.c);
 function be32n(v) { return Buffer.from(BigInt(v).toString(16).padStart(64, "0"), "hex"); }
 let aSlot = -1, hSlot = -1;
 leafVals.forEach((v, i) => { if (v === attackNote.c) aSlot = i; if (v === honestNote.c) hSlot = i; });
@@ -90,8 +89,6 @@ function prove(note) {
 import { createRequire } from "node:module";
 function require_g16() { return createRequire(import.meta.url)("../scripts/g16_bytes.mjs"); }
 
-function beX(v) { return v; }
-function be32n2(v) { return be32n(v); }
 
 async function rereadLeaves() {
   let info = null;
@@ -149,7 +146,6 @@ if (process.argv[2] === "withdraw") {
   const pubs = []; for (let i = 0; i < 8; i++) pubs.push(take(32));
   if (o !== args.length) throw new Error("arg slicing mismatch " + o + "/" + args.length);
   const data = Buffer.concat([disc("prepare_phantom_withdraw_v2"), amount, nullifier, root, pa, pbb, pc, ...pubs]); // fixed-size array: no borsh length prefix
-  function u32le(n) { const b = Buffer.alloc(4); b.writeUInt32LE(n); return b; }
   const VAULT_WSOL = new PublicKey(st.vaultWsol);
   const tx = new Transaction().add(
     ComputeBudgetProgram.setComputeUnitLimit({ units: 400_000 }),

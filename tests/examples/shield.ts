@@ -9,8 +9,7 @@
  * ```
  */
 
-import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram } from '@solana/web3.js';
-import { Program, AnchorProvider, Wallet, BN } from '@coral-xyz/anchor';
+import { Connection, Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import * as crypto from 'crypto';
 
 // Configuration

@@ -283,7 +283,6 @@ async function main() {
   {
     // Generate a completely different oracle key.
     const wrongPriv = secp256k1.utils.randomPrivateKey();
-    const wrongSign = oracleSign(msgHash, wrongPriv);
 
     // Use different input/output so we get a fresh receipt PDA that doesn't
     // already exist — the sig check fires before the PDA creation.

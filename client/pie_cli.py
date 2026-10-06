@@ -23,16 +23,13 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import shutil
 import struct
 import subprocess
 import sys
 import tempfile
-import time
-import zlib
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional
 
 # ----------------------------
 # Config: paths to your tools
@@ -44,14 +41,6 @@ DEFAULT_NULL_VM = str(SCRIPT_DIR / "null_vm.py")
 # PDX Magic
 PDX_MAGIC = b"PDX1"
 CHUNK_DATA = 1
-
-# Try zstd
-try:
-    import zstandard as zstd
-    HAS_ZSTD = True
-except ImportError:
-    HAS_ZSTD = False
-
 
 # ==============================================================================
 # POLICY HANDLING
@@ -343,7 +332,7 @@ def pdx_pack(args: argparse.Namespace) -> None:
         f.write(data)
 
     ratio = len(data) / output_path.stat().st_size
-    print(".2f")
+    print(f"[PDX:PACK] ratio {ratio:.2f}x")
 
 
 def pdx_unpack(args: argparse.Namespace) -> None:

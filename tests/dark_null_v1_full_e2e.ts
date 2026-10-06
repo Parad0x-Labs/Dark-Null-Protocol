@@ -73,7 +73,6 @@ const selectedDenom = DENOMINATIONS.reduce((prev, curr) =>
 
 // BN254 field primes
 const FQ = BigInt("21888242871839275222246405745257275088696311157297823662689037894645226208583");
-const FR = BigInt("21888242871839275222246405745257275088548364400416034343698204186575808495617");
 
 // ════════════════════════════════════════════════════════════════════════════
 // HELPERS
@@ -375,9 +374,7 @@ async function main() {
   ]);
 
   // Public inputs
-  const rootBytes = bigIntToBytes32(BigInt(publicSignals[0]));
   const nullifierHashBytes = bigIntToBytes32(BigInt(publicSignals[1]));
-  const amountBytes = bigIntToBytes32(BigInt(publicSignals[2]));
   const blindedRecipientProofBytes = bigIntToBytes32(BigInt(publicSignals[3]));
   const salt1Bytes = bigIntToBytes32(BigInt(publicSignals[4]));
   const salt2Bytes = bigIntToBytes32(BigInt(publicSignals[5]));

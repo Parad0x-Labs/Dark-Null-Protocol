@@ -15,7 +15,6 @@
  *   });
  */
 
-import { createHash } from "node:crypto";
 import {
   accumulateReceipt,
   initAccumulator,

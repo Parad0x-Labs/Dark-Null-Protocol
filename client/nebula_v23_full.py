@@ -1446,7 +1446,9 @@ class NebulaHorizon50x:
 
                         os.remove(os.path.join(tmp_dir, fn))
 
-                    except Exception:
+                    except OSError:
+
+                        # file already removed or locked; leftover temp files are harmless
 
                         pass
 

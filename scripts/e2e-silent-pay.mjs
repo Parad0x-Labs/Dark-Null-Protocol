@@ -20,7 +20,6 @@ import {
   Transaction,
   TransactionInstruction,
   sendAndConfirmTransaction,
-  LAMPORTS_PER_SOL,
 } from "@solana/web3.js";
 import fs from "fs";
 import path from "path";

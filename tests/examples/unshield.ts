@@ -10,7 +10,7 @@
  * ```
  */
 
-import { Connection, Keypair, PublicKey } from '@solana/web3.js';
+import { Connection, Keypair } from '@solana/web3.js';
 
 // Configuration
 const CONFIG = {
@@ -30,7 +30,7 @@ async function main() {
 
   // Connect to devnet
   const connection = new Connection(CONFIG.RPC_URL, 'confirmed');
-  console.log('Connected to:', CONFIG.RPC_URL);
+  console.log('Connected to:', CONFIG.RPC_URL, '(slot', await connection.getSlot(), ')');
 
   // Example unshield params (replace with your own)
   const params: UnshieldParams = {
@@ -56,6 +56,8 @@ async function main() {
   console.log('\n📡 Via Relayer API:');
   console.log(`  POST ${CONFIG.RELAYER_URL}/unshield`);
   console.log('  Body: { commitment, secret, recipientPubkey }');
+  console.log(`  commitment: ${params.commitment}`);
+  console.log(`  recipientPubkey: ${params.recipient}`);
   console.log('  → Relayer generates proof & submits TX');
   console.log('  → Your wallet never appears as fee payer!');
 

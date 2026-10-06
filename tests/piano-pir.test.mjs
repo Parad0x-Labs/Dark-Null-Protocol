@@ -8,7 +8,7 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
-import { MerkleTree, PianoClient, PIRBenchmark, PIR_SCHEMA, MERKLE_DEPTH, TREE_SIZE } from "../swarm/piano-pir.mjs";
+import { MerkleTree, PianoClient, PIRBenchmark, MERKLE_DEPTH, TREE_SIZE } from "../swarm/piano-pir.mjs";
 import { createHash } from "node:crypto";
 
 function sha256hex(data) {

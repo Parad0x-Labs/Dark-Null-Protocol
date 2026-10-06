@@ -108,7 +108,7 @@ test("token from different mint fails verification", () => {
 
 test("DLEQ proof is structurally valid", () => {
   const mint = new BlindMint();
-  const { blindedPointHex, mintResponse } = fullFlow(mint, "dleq-test");
+  const { mintResponse } = fullFlow(mint, "dleq-test");
 
   const { dleq } = mintResponse;
   assert.ok(typeof dleq.eHex === "string");

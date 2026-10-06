@@ -1,0 +1,22 @@
+{
+ "cluster": "devnet",
+ "date": "2026-10-06",
+ "upgradeAuthority": "9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q",
+ "method": "fresh program keypair, solana program deploy with --max-len equal to the .so size (Agave CLI 4.2.1); graded from the ledger: program show (authority, dataLen, lastDeploySlot) and program dump (sha256 of the leading so_bytes bytes equals the .so; remaining bytes zero)",
+ "programs": [
+  {
+   "name": "dark_null_pool_v2",
+   "programId": "3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi",
+   "deploySignature": "2vd91HppKyCbyM749mCpyR8PPoW9PeDEusNMrQQm3kiV1rqz15WhcNWDKyQKeBJRa8y9571EHvZPi3p7jD4ARThZ",
+   "lastDeploySlot": 508180021,
+   "authority": "9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q",
+   "dataLen": 130568,
+   "soBytes": 130568,
+   "soSha256": "1bc08dd7cdd25145dc81b88324095e5ef3e9e920c106d07d1481e326d02c28fc",
+   "dumpPrefixSha256": "1bc08dd7cdd25145dc81b88324095e5ef3e9e920c106d07d1481e326d02c28fc",
+   "dumpTailNonZeroBytes": 0,
+   "programdataLamports": 664164280,
+   "result": "PASS"
+  }
+ ]
+}

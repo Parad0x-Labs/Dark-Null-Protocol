@@ -469,3 +469,43 @@ Summary:
   - withdraw: 1,710 bytes, as V2_SPEC 9.1 states;
   - deposit and transfer: 1,678 bytes, because the vault appears twice there and the duplicate address is not
     repeated.
+
+### Devnet (2026-10-06)
+
+Devnet (2026-10-06): 75/75 checks. The same cluster `.so` (`1bc08dd7...28fc`, 130,568 bytes) was deployed to devnet at
+`3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi`, then the committed e2e client
+([`scripts/devnet-e2e/dark-null-pool-v2-e2e.mjs`](../scripts/devnet-e2e/dark-null-pool-v2-e2e.mjs), commit `3359ca7`)
+ran once against it from a tmpfs container.
+
+- **Deploy.** Fresh program keypair, `solana program deploy --max-len 130568` (Agave CLI 4.2.1), upgrade authority
+  `9Jkphdpu3UQKgZToacyfDkwM3ZbzPjZYuK3sDyR8pU2q`. The deploy transaction is
+  `2vd91HppKyCb...`, in slot 508,180,021. `solana program show` returned that authority and `dataLen` 130,568, and the
+  bytes from `solana program dump` hash to `1bc08dd7...28fc`, with no trailing bytes. The program data account holds
+  664,164,280 lamports. Record:
+  [`wp_program_devnet_deploy.json`](../bench/results/p1/2026-10-06/wp_program_devnet_deploy.json).
+- **Run.** Fresh pool (random nonce), fresh 6-decimal mint, `claimed_epoch` 497,586 from devnet's Clock. V-E2E was
+  regenerated for these addresses
+  ([`wp_program_devnet.V-E2E.json`](../bench/results/p1/2026-10-06/wp_program_devnet.V-E2E.json)), and the three steps
+  were proved with the committed dev zkey. All 22 transactions are V1 and were graded from `getTransaction`. Results:
+  [`wp_program_devnet.json`](../bench/results/p1/2026-10-06/wp_program_devnet.json).
+- **Negatives.** Each was rejected on devnet with the code listed in the rehearsal table above:
+  - 6012: tampered proof x2, `ext_data` byte, fee account swapped together with the account list, deposit replay;
+  - 6013: fee account in `ext_data` only;
+  - 6007: unknown root;
+  - 6002: `nf0 + r` and `assoc_root = r`;
+  - 6008: epoch + 2;
+  - 6011: double spend x2.
+- **Payer spend.** 62,243,400 lamports, of which 115,000 are fees for 22 transactions. The rest is the rent of the pool
+  accounts, the mint, the ATAs and the nullifier records. The two ephemeral wallets were swept back in the same run.
+
+**CU and size on devnet (V1):**
+
+| Instruction | CU (devnet) | Agave 4.2.1 local (real id) | V1 bytes | CU limit set |
+|---|---:|---:|---:|---:|
+| `transact` deposit | 152,067 | 147,564 | 1,678 | 172,261 |
+| `transact` relayed transfer | 152,156 | 149,156 | 1,678 | 172,357 |
+| `transact` relayed withdraw | 148,352 | 146,846 | 1,710 | 168,172 |
+| `initialize_pool` | 15,109 | 13,609-18,109 | 330 | 21,617 |
+| `register_mint` | 17,987 | 17,987 | 430 | 24,782 |
+
+All three `transact` totals stay below 160k, against the 400k B2 gate.

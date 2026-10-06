@@ -1,0 +1,1311 @@
+{
+ "started": "2026-10-06T18:38:33.452Z",
+ "rpc": "private devnet RPC",
+ "program_id": "3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi",
+ "txs": [
+  {
+   "label": "fund ephemeral wallets",
+   "signature": "5gg59akXa6anREQ7jFzRn7g9HLxWXGy9xPyUeJo2pirwXBR7iApV1t1GAErTHcdZpxyKeHoWnQtqSfMy99Wg831M",
+   "slot": 508185912,
+   "version": 1,
+   "bytes": 278,
+   "kit_v1_layout_ok": true,
+   "err": null,
+   "code": null,
+   "cu": 300,
+   "fee": 5000,
+   "cu_limit": 5330,
+   "simulated_cu": 300,
+   "loaded_limit": 65536,
+   "logs": [
+    "Program 11111111111111111111111111111111 invoke [1]",
+    "Program 11111111111111111111111111111111 success",
+    "Program 11111111111111111111111111111111 invoke [1]",
+    "Program 11111111111111111111111111111111 success"
+   ]
+  },
+  {
+   "label": "create SPL mint (6 decimals)",
+   "signature": "2f449ak3VYLvsMgMFCDpMYZmkAbpuHZgCH7xd1LAZUczhSHPADiEVhz1BNgApTLc8t3SxfM3xxTuYRaEEQcV62Ap",
+   "slot": 508185928,
+   "version": 1,
+   "bytes": 404,
+   "kit_v1_layout_ok": true,
+   "err": null,
+   "code": null,
+   "cu": 352,
+   "fee": 10000,
+   "cu_limit": 5387,
+   "simulated_cu": 352,
+   "loaded_limit": 163840,
+   "logs": [
+    "Program 11111111111111111111111111111111 invoke [1]",
+    "Program 11111111111111111111111111111111 success",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 202 of 5237 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success"
+   ]
+  },
+  {
+   "label": "create ATAs and mint 5000 to the depositor",
+   "signature": "4Ux8rA6SqxdwLxeot6VsrYi2x6o5WGp1brRCAEjeD7FwtomS6Rbs87a3weqiQREGWeLTc485tPaMbwASs9oyFkoc",
+   "slot": 508185941,
+   "version": 1,
+   "bytes": 515,
+   "kit_v1_layout_ok": true,
+   "err": null,
+   "code": null,
+   "cu": 60165,
+   "fee": 5000,
+   "cu_limit": 71180,
+   "simulated_cu": 60165,
+   "loaded_limit": 262144,
+   "logs": [
+    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
+    "Program log: CreateIdempotent",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 179 of 56753 compute units",
+    "Program return: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA pQAAAAAAAAA=",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: Initialize the associated token account",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 37 of 51664 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 233 of 49202 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 22515 of 71180 compute units",
+    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
+    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
+    "Program log: CreateIdempotent",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 179 of 32738 compute units",
+    "Program return: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA pQAAAAAAAAA=",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: Initialize the associated token account",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 37 of 27649 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 233 of 25187 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 24015 of 48665 compute units",
+    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
+    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
+    "Program log: CreateIdempotent",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 179 of 19223 compute units",
+    "Program return: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA pQAAAAAAAAA=",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program log: Initialize the associated token account",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 37 of 14134 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 233 of 11672 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 13515 of 24650 compute units",
+    "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 120 of 11135 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success"
+   ]
+  },
+  {
+   "label": "initialize_pool",
+   "signature": "3VmryRNNvfYcVyQn8BFNv36Xk4TVNWLMkBUaMLbv2fj1yZZsiPGCjEsRE3H5Z6ifhwRnaWBE4qHKofPDSARMUt8L",
+   "slot": 508185964,
+   "version": 1,
+   "bytes": 330,
+   "kit_v1_layout_ok": true,
+   "err": null,
+   "code": null,
+   "cu": 15109,
+   "fee": 5000,
+   "cu_limit": 21617,
+   "simulated_cu": 15109,
+   "loaded_limit": 163840,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 15109 of 21617 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi success"
+   ]
+  },
+  {
+   "label": "register_mint",
+   "signature": "5Vgr78fb86iJjBrJq9Q6RWmHdE7dtT27y5Zqtq48nfxFpVYnz4j2ti9jvqRNVby6ZXPafx3R3GryRHm8htsoyuvL",
+   "slot": 508185980,
+   "version": 1,
+   "bytes": 430,
+   "kit_v1_layout_ok": true,
+   "err": null,
+   "code": null,
+   "cu": 17987,
+   "fee": 5000,
+   "cu_limit": 24782,
+   "simulated_cu": 17987,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 233 of 8850 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 17987 of 24782 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi success"
+   ]
+  },
+  {
+   "label": "NEG tampered proof (C.x flipped)",
+   "signature": "2MqdZeVz9uXTR3HuWHajm2B2DJe486hVVW4NUxvAocWpicVjMt9Fmb76a9Gw9bH6tTJzNJahZUR3JAnQ2d4rsqqj",
+   "slot": 508185998,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6012
+     }
+    ]
+   },
+   "code": 6012,
+   "cu": 111148,
+   "fee": 5000,
+   "cu_limit": 399995,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 111148 of 399995 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x177c"
+   ]
+  },
+  {
+   "label": "NEG tampered proof (A from the transfer proof)",
+   "signature": "4b7PXsNFtPBzVXb5F5zqhY3f6HUNGVpBTPn8kModeQa8bDxi5aHrYBzfUuVrp1H62xrWmJiRZAh5SGfnPRFcjJmk",
+   "slot": 508186011,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6012
+     }
+    ]
+   },
+   "code": 6012,
+   "cu": 111198,
+   "fee": 5000,
+   "cu_limit": 399994,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 111198 of 399994 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x177c"
+   ]
+  },
+  {
+   "label": "NEG ext_data tamper (ciphertext0 byte)",
+   "signature": "5U4mDvjtEU7jkmMRdaB4fJ1VRF7ZtkS47Ft5SXd2ZYsS5fVNoawcZNh1hTJjTunbfzSAnwbYGrdj9gJ81oj1nzAo",
+   "slot": 508186020,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6012
+     }
+    ]
+   },
+   "code": 6012,
+   "cu": 111198,
+   "fee": 5000,
+   "cu_limit": 399993,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 111198 of 399993 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x177c"
+   ]
+  },
+  {
+   "label": "NEG ext_data relayer_fee_account changed, account list not (step 3)",
+   "signature": "3vaoW5tjFSAmPWNiupAhdywS8sTHaTXt9gKTYnDg2ZHXhTAChcU8MLQ7F8iFVPUckCBw18jpczzs1TcP1A7sxhay",
+   "slot": 508186031,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6013
+     }
+    ]
+   },
+   "code": 6013,
+   "cu": 9174,
+   "fee": 5000,
+   "cu_limit": 399992,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 9174 of 399992 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x177d"
+   ]
+  },
+  {
+   "label": "NEG unknown root",
+   "signature": "2mpbLoXoYjiUAeNZv4YM5JtkmDVQJG62Uzr4t2b6Yf7rzFVeNF86EWcKcy9C8zJVXRL4Zk6KrHTv3ByibYgYWr3V",
+   "slot": 508186040,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6007
+     }
+    ]
+   },
+   "code": 6007,
+   "cu": 20270,
+   "fee": 5000,
+   "cu_limit": 399991,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 20270 of 399991 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x1777"
+   ]
+  },
+  {
+   "label": "NEG nf0 + r (non-canonical field, pi >= r class)",
+   "signature": "3gMXYs73secAnFXHtXgm23rcmeyJ2ePcMVy4yzFf34qCqMEDUREZoBqxMvimY8Vhmw5SQpkJzjHn9hvGS95CGKVc",
+   "slot": 508186053,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6002
+     }
+    ]
+   },
+   "code": 6002,
+   "cu": 5569,
+   "fee": 5000,
+   "cu_limit": 399990,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 5569 of 399990 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x1772"
+   ]
+  },
+  {
+   "label": "NEG assoc_root = r",
+   "signature": "2uE7Q8Fi4YHiqVmc7DsNGoyDXqchXLEhp3GWTwrcU7V39jiDP515KxHUmdHXHRptX7tLBnp3ukpXoTnhBZREy4mL",
+   "slot": 508186068,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6002
+     }
+    ]
+   },
+   "code": 6002,
+   "cu": 5720,
+   "fee": 5000,
+   "cu_limit": 399989,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 5720 of 399989 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x1772"
+   ]
+  },
+  {
+   "label": "NEG claimed_epoch + 2 (outside window)",
+   "signature": "5PezF1eUH4Y8U756pQipWyFQ9zde4jgkUNa4pmCFmPE9u9p9hpa3FQjY1fLreL2Qd3fxPYmDT6YSuv423aA2YvkD",
+   "slot": 508186083,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6008
+     }
+    ]
+   },
+   "code": 6008,
+   "cu": 20454,
+   "fee": 5000,
+   "cu_limit": 399988,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 20454 of 399988 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x1778"
+   ]
+  },
+  {
+   "label": "V-E2E deposit 1000",
+   "signature": "3Qx8HeiR98Goqbsh4xyA5iFvrXuw9exAmBJ1ch1bFAff4JPySZvia3UEXvxnuWCknF6PUwVL3rRnCGuD4APtnrid",
+   "slot": 508186102,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": null,
+   "code": null,
+   "cu": 152067,
+   "fee": 5000,
+   "cu_limit": 172261,
+   "simulated_cu": 152067,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program data: ZG51bGwtdjItdHg= AAAAAAAAAAA= AQA= HCBCrZNGOC+x1Z5qUnko/IB9xEyrakpZ0il+79iW5l0=",
+    "Program data: ZG51bGwtdjItZGVw DYrzv+61fAaQi5LH6iUBnO+CBOeXaLRBcOjBJxmipXk= vor7LI7Szk/NWyEFc6y2dQ7+aFaa2hxXH1ScoitWK/4= kHb/7+dsMCq9cKJgBg4lqTnO8zL+ZYwLKhzbKlg/qTE= 6AMAAAAAAAA=",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 105 of 20991 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 152067 of 172261 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi success"
+   ]
+  },
+  {
+   "label": "NEG ext_data relayer_fee_account swapped with the account list (relayed transfer)",
+   "signature": "3uGGbzr7bdjkpvv5AbHqyx3bjeUiGpcUZ5hU5c96ptdcir6vwEpDLsvh53VEBUX1euo2U3SinAMCsSicHSM9BzKg",
+   "slot": 508186124,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6012
+     }
+    ]
+   },
+   "code": 6012,
+   "cu": 112182,
+   "fee": 5000,
+   "cu_limit": 399986,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 112182 of 399986 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x177c"
+   ]
+  },
+  {
+   "label": "V-E2E relayed transfer 600 (x402 quote bound, fee 5)",
+   "signature": "VCBsqHRLtynHXb7o4YcE4WKPiWyykC3wH2QRJJ7UqACiM4CQKyRHLdQnUYAtdxat4hssNoTdYFMv7XBw72eHtku",
+   "slot": 508186139,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": null,
+   "code": null,
+   "cu": 152156,
+   "fee": 5000,
+   "cu_limit": 172357,
+   "simulated_cu": 152156,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program data: ZG51bGwtdjItdHg= AgAAAAAAAAA= AgA= JA+t76Qs8VUPxgQ1eh8LyJJ8LLSs5bmzK37fp9umUq8=",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 105 of 20946 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 152156 of 172357 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi success"
+   ]
+  },
+  {
+   "label": "V-E2E relayed withdraw 600 to stealth ATA (fee 10)",
+   "signature": "5amss2FtNTxTJvTqWLYihAAarhnVkp9xM1rprdXzego3nvhN59xZiTaA9a2SqFjvQ3YkTkTMQ4RRekrkKzzhppjm",
+   "slot": 508186168,
+   "version": 1,
+   "bytes": 1710,
+   "kit_v1_layout_ok": true,
+   "err": null,
+   "code": null,
+   "cu": 148352,
+   "fee": 5000,
+   "cu_limit": 168172,
+   "simulated_cu": 148352,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program 11111111111111111111111111111111 invoke [2]",
+    "Program 11111111111111111111111111111111 success",
+    "Program data: ZG51bGwtdjItdHg= BAAAAAAAAAA= AwA= En5yM+RNR7pNkYPx/M8BnG8F2t1Blq//4rmu6K0axrc=",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 105 of 22503 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 105 of 20593 compute units",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 148352 of 168172 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi success"
+   ]
+  },
+  {
+   "label": "NEG double spend: withdraw again",
+   "signature": "RndZ5ynBQyrFmn3BimD8mVweZ6fniYLH9AMsNne1Zm1P1G2JrmRrTZRbvGRViKBZkvDgoQRv7Tae6Xnf1HLDgx7",
+   "slot": 508186195,
+   "version": 1,
+   "bytes": 1710,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6011
+     }
+    ]
+   },
+   "code": 6011,
+   "cu": 106569,
+   "fee": 5000,
+   "cu_limit": 399983,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 106569 of 399983 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x177b"
+   ]
+  },
+  {
+   "label": "NEG double spend: transfer again",
+   "signature": "2z8bTiVq2QjU8AXVxB5fyGiWq6sf4Tfq4M7aa55triZ9NbJDM3Z8Lir8DQXvsDq9SPHQRHQp79i6sqCd1ebC2buc",
+   "slot": 508186208,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6011
+     }
+    ]
+   },
+   "code": 6011,
+   "cu": 112390,
+   "fee": 5000,
+   "cu_limit": 399982,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 112390 of 399982 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x177b"
+   ]
+  },
+  {
+   "label": "NEG deposit replay (label moved, V2_SPEC 13.2 S9)",
+   "signature": "5FAwYH2HJdZ9UUSiz2GM5MMJD1Y9awyiNYsN6SNQd7ccCKLaLgjY3xh8wXxSdcdtu6RVeytnRrCMDGGnNoXcTeSg",
+   "slot": 508186220,
+   "version": 1,
+   "bytes": 1678,
+   "kit_v1_layout_ok": true,
+   "err": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6012
+     }
+    ]
+   },
+   "code": 6012,
+   "cu": 111198,
+   "fee": 5000,
+   "cu_limit": 399981,
+   "simulated_cu": null,
+   "loaded_limit": 294912,
+   "logs": [
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi invoke [1]",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi consumed 111198 of 399981 compute units",
+    "Program 3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi failed: custom program error: 0x177c"
+   ]
+  },
+  {
+   "label": "sweep depositor",
+   "signature": "JkcBqiGFvKBm9rPyYJyYbebkhBMJtS21pYXUJn4jQP9T6rt3QYLsUWvnuCffhyFZcvEatNMGLQZbo9c6Z7Np2TY",
+   "slot": 508186232,
+   "version": 1,
+   "bytes": 228,
+   "kit_v1_layout_ok": true,
+   "err": null,
+   "code": null,
+   "cu": 150,
+   "fee": 5000,
+   "cu_limit": 5145,
+   "simulated_cu": 150,
+   "loaded_limit": 65536,
+   "logs": [
+    "Program 11111111111111111111111111111111 invoke [1]",
+    "Program 11111111111111111111111111111111 success"
+   ]
+  },
+  {
+   "label": "sweep relayer",
+   "signature": "2cXXpWRdKNDkQMz8MwpX5shZiMDqKd4nQTD511jLkMKZW84DA8P6a25T2kTHZvqYYRcRjVxEFSZgxCNXijq1mHT9",
+   "slot": 508186242,
+   "version": 1,
+   "bytes": 228,
+   "kit_v1_layout_ok": true,
+   "err": null,
+   "code": null,
+   "cu": 150,
+   "fee": 5000,
+   "cu_limit": 5144,
+   "simulated_cu": 150,
+   "loaded_limit": 65536,
+   "logs": [
+    "Program 11111111111111111111111111111111 invoke [1]",
+    "Program 11111111111111111111111111111111 success"
+   ]
+  }
+ ],
+ "checks": [
+  {
+   "name": "program account is executable and upgradeable",
+   "ok": true,
+   "owner": "BPFLoaderUpgradeab1e11111111111111111111111"
+  },
+  {
+   "name": "regenerated V-E2E equals the committed V-E2E in every address-independent field",
+   "ok": true
+  },
+  {
+   "name": "regenerated V-E2E is bound to this deployment",
+   "ok": true
+  },
+  {
+   "name": "proof deposit: snarkjs verifies and pi equals regenerated V-E2E pi",
+   "ok": true,
+   "pi": "0x1c69820985a71061d738d6c575ca246040a5251860a5992a190e3bc1a8d280dc",
+   "prove_ms": 1803
+  },
+  {
+   "name": "proof transfer: snarkjs verifies and pi equals regenerated V-E2E pi",
+   "ok": true,
+   "pi": "0x16a527eb2f492e72706aae506472cbbc7163865b228f433e206b514fab1d8d30",
+   "prove_ms": 1621
+  },
+  {
+   "name": "proof withdraw: snarkjs verifies and pi equals regenerated V-E2E pi",
+   "ok": true,
+   "pi": "0x20e1cbaacf81a6c6b99f1c6a72b1e804d6d7d8e6e64bdb0111fbd14617cc701d",
+   "prove_ms": 1651
+  },
+  {
+   "name": "deposit source, relayer fee account and stealth destination are the V-E2E ext_data accounts",
+   "ok": true
+  },
+  {
+   "name": "fund ephemeral wallets: success",
+   "ok": true,
+   "signature": "5gg59akXa6anREQ7jFzRn7g9HLxWXGy9xPyUeJo2pirwXBR7iApV1t1GAErTHcdZpxyKeHoWnQtqSfMy99Wg831M",
+   "cu": 300,
+   "fee": 5000,
+   "version": 1,
+   "err": null
+  },
+  {
+   "name": "fund ephemeral wallets: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 278
+  },
+  {
+   "name": "create SPL mint (6 decimals): success",
+   "ok": true,
+   "signature": "2f449ak3VYLvsMgMFCDpMYZmkAbpuHZgCH7xd1LAZUczhSHPADiEVhz1BNgApTLc8t3SxfM3xxTuYRaEEQcV62Ap",
+   "cu": 352,
+   "fee": 10000,
+   "version": 1,
+   "err": null
+  },
+  {
+   "name": "create SPL mint (6 decimals): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 404
+  },
+  {
+   "name": "create ATAs and mint 5000 to the depositor: success",
+   "ok": true,
+   "signature": "4Ux8rA6SqxdwLxeot6VsrYi2x6o5WGp1brRCAEjeD7FwtomS6Rbs87a3weqiQREGWeLTc485tPaMbwASs9oyFkoc",
+   "cu": 60165,
+   "fee": 5000,
+   "version": 1,
+   "err": null
+  },
+  {
+   "name": "create ATAs and mint 5000 to the depositor: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 515
+  },
+  {
+   "name": "initialize_pool: success",
+   "ok": true,
+   "signature": "3VmryRNNvfYcVyQn8BFNv36Xk4TVNWLMkBUaMLbv2fj1yZZsiPGCjEsRE3H5Z6ifhwRnaWBE4qHKofPDSARMUt8L",
+   "cu": 15109,
+   "fee": 5000,
+   "version": 1,
+   "err": null
+  },
+  {
+   "name": "initialize_pool: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 330
+  },
+  {
+   "name": "PoolConfig: pool_id, vk_hash, epoch_seconds, authority, deposit_counter",
+   "ok": true,
+   "pool_id": "0x963ed10f3124a5480902956b12249705b75d9758bed9ed2e98e22ca23e6a6a73"
+  },
+  {
+   "name": "Tree: next_index 0, roots[0] = empty root",
+   "ok": true
+  },
+  {
+   "name": "register_mint: success",
+   "ok": true,
+   "signature": "5Vgr78fb86iJjBrJq9Q6RWmHdE7dtT27y5Zqtq48nfxFpVYnz4j2ti9jvqRNVby6ZXPafx3R3GryRHm8htsoyuvL",
+   "cu": 17987,
+   "fee": 5000,
+   "version": 1,
+   "err": null
+  },
+  {
+   "name": "register_mint: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 430
+  },
+  {
+   "name": "MintState: mint, vault, asset, supply 0, token program kind SPL",
+   "ok": true,
+   "asset": "0x23c34ef9ec3969886840e31662cdff73a135772b2a3289da24ee1281130b0d5d",
+   "kind": 0
+  },
+  {
+   "name": "vault: SPL token account of the mint owned by vault_authority",
+   "ok": true
+  },
+  {
+   "name": "NEG tampered proof (C.x flipped): rejected with 6012",
+   "ok": true,
+   "signature": "2MqdZeVz9uXTR3HuWHajm2B2DJe486hVVW4NUxvAocWpicVjMt9Fmb76a9Gw9bH6tTJzNJahZUR3JAnQ2d4rsqqj",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6012
+     }
+    ]
+   },
+   "cu": 111148,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG tampered proof (C.x flipped): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "NEG tampered proof (A from the transfer proof): rejected with 6012",
+   "ok": true,
+   "signature": "4b7PXsNFtPBzVXb5F5zqhY3f6HUNGVpBTPn8kModeQa8bDxi5aHrYBzfUuVrp1H62xrWmJiRZAh5SGfnPRFcjJmk",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6012
+     }
+    ]
+   },
+   "cu": 111198,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG tampered proof (A from the transfer proof): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "NEG ext_data tamper (ciphertext0 byte): rejected with 6012",
+   "ok": true,
+   "signature": "5U4mDvjtEU7jkmMRdaB4fJ1VRF7ZtkS47Ft5SXd2ZYsS5fVNoawcZNh1hTJjTunbfzSAnwbYGrdj9gJ81oj1nzAo",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6012
+     }
+    ]
+   },
+   "cu": 111198,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG ext_data tamper (ciphertext0 byte): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "NEG ext_data relayer_fee_account changed, account list not (step 3): rejected with 6013",
+   "ok": true,
+   "signature": "3vaoW5tjFSAmPWNiupAhdywS8sTHaTXt9gKTYnDg2ZHXhTAChcU8MLQ7F8iFVPUckCBw18jpczzs1TcP1A7sxhay",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6013
+     }
+    ]
+   },
+   "cu": 9174,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG ext_data relayer_fee_account changed, account list not (step 3): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "NEG unknown root: rejected with 6007",
+   "ok": true,
+   "signature": "2mpbLoXoYjiUAeNZv4YM5JtkmDVQJG62Uzr4t2b6Yf7rzFVeNF86EWcKcy9C8zJVXRL4Zk6KrHTv3ByibYgYWr3V",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6007
+     }
+    ]
+   },
+   "cu": 20270,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG unknown root: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "NEG nf0 + r (non-canonical field, pi >= r class): rejected with 6002",
+   "ok": true,
+   "signature": "3gMXYs73secAnFXHtXgm23rcmeyJ2ePcMVy4yzFf34qCqMEDUREZoBqxMvimY8Vhmw5SQpkJzjHn9hvGS95CGKVc",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6002
+     }
+    ]
+   },
+   "cu": 5569,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG nf0 + r (non-canonical field, pi >= r class): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "NEG assoc_root = r: rejected with 6002",
+   "ok": true,
+   "signature": "2uE7Q8Fi4YHiqVmc7DsNGoyDXqchXLEhp3GWTwrcU7V39jiDP515KxHUmdHXHRptX7tLBnp3ukpXoTnhBZREy4mL",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6002
+     }
+    ]
+   },
+   "cu": 5720,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG assoc_root = r: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "NEG claimed_epoch + 2 (outside window): rejected with 6008",
+   "ok": true,
+   "signature": "5PezF1eUH4Y8U756pQipWyFQ9zde4jgkUNa4pmCFmPE9u9p9hpa3FQjY1fLreL2Qd3fxPYmDT6YSuv423aA2YvkD",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6008
+     }
+    ]
+   },
+   "cu": 20454,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG claimed_epoch + 2 (outside window): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "negatives moved no funds and wrote no state",
+   "ok": true
+  },
+  {
+   "name": "V-E2E deposit 1000: success",
+   "ok": true,
+   "signature": "3Qx8HeiR98Goqbsh4xyA5iFvrXuw9exAmBJ1ch1bFAff4JPySZvia3UEXvxnuWCknF6PUwVL3rRnCGuD4APtnrid",
+   "cu": 152067,
+   "fee": 5000,
+   "version": 1,
+   "err": null
+  },
+  {
+   "name": "V-E2E deposit 1000: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "deposit: tree next_index, root_head and root ring equal V-E2E",
+   "ok": true,
+   "next_index": "2",
+   "root_head": 1,
+   "root": "0x1c2042ad9346382fb1d59e6a527928fc807dc44cab6a4a59d2297eefd896e65d"
+  },
+  {
+   "name": "deposit: both nullifier records exist at the V-E2E PDAs (program-owned, 0 bytes, rent-exempt)",
+   "ok": true,
+   "pdas": [
+    "GDyrpVNWTTTmYwgFGbATgRCdH4szEc6QBWkRH1wPkGqB",
+    "GSBMz8Soi2RUhMnkYcK41NYb8mmsRTU7cs328ZZLVu6u"
+   ],
+   "rent0": "650240"
+  },
+  {
+   "name": "deposit: supply, deposit_counter and vault equal V-E2E",
+   "ok": true,
+   "supply": "1000",
+   "deposit_counter": "1",
+   "vault": "1000"
+  },
+  {
+   "name": "deposit: events equal V-E2E and the program wrote no other log",
+   "ok": true,
+   "events": [
+    "dnull-v2-tx",
+    "dnull-v2-dep"
+   ],
+   "program_log_lines": 0
+  },
+  {
+   "name": "deposit: depositor ATA 5000 -> 4000",
+   "ok": true
+  },
+  {
+   "name": "NEG ext_data relayer_fee_account swapped with the account list (relayed transfer): rejected with 6012",
+   "ok": true,
+   "signature": "3uGGbzr7bdjkpvv5AbHqyx3bjeUiGpcUZ5hU5c96ptdcir6vwEpDLsvh53VEBUX1euo2U3SinAMCsSicHSM9BzKg",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6012
+     }
+    ]
+   },
+   "cu": 112182,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG ext_data relayer_fee_account swapped with the account list (relayed transfer): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "fee redirect moved no funds",
+   "ok": true
+  },
+  {
+   "name": "V-E2E relayed transfer 600 (x402 quote bound, fee 5): success",
+   "ok": true,
+   "signature": "VCBsqHRLtynHXb7o4YcE4WKPiWyykC3wH2QRJJ7UqACiM4CQKyRHLdQnUYAtdxat4hssNoTdYFMv7XBw72eHtku",
+   "cu": 152156,
+   "fee": 5000,
+   "version": 1,
+   "err": null
+  },
+  {
+   "name": "V-E2E relayed transfer 600 (x402 quote bound, fee 5): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "transfer: tree next_index, root_head and root ring equal V-E2E",
+   "ok": true,
+   "next_index": "4",
+   "root_head": 2,
+   "root": "0x240fadefa42cf1550fc604357a1f0bc8927c2cb4ace5b9b32b7edfa7dba652af"
+  },
+  {
+   "name": "transfer: both nullifier records exist at the V-E2E PDAs (program-owned, 0 bytes, rent-exempt)",
+   "ok": true,
+   "pdas": [
+    "2fUMvqYNYcVomyGz3uRF3b6Dv3wmB3emK1AXzzJrXsSE",
+    "9HJvFzepw9SpRHia8kKdmkfGtMCQBdD7FgbF9taqrULq"
+   ],
+   "rent0": "650240"
+  },
+  {
+   "name": "transfer: supply, deposit_counter and vault equal V-E2E",
+   "ok": true,
+   "supply": "995",
+   "deposit_counter": "1",
+   "vault": "995"
+  },
+  {
+   "name": "transfer: events equal V-E2E and the program wrote no other log",
+   "ok": true,
+   "events": [
+    "dnull-v2-tx"
+   ],
+   "program_log_lines": 0
+  },
+  {
+   "name": "transfer: memo_binding is the x402 quote binding (quote mint = this mint)",
+   "ok": true,
+   "quote_id": "q_7f3a9c2e",
+   "amount": "600"
+  },
+  {
+   "name": "transfer: relayer ATA receives 5",
+   "ok": true
+  },
+  {
+   "name": "V-E2E relayed withdraw 600 to stealth ATA (fee 10): success",
+   "ok": true,
+   "signature": "5amss2FtNTxTJvTqWLYihAAarhnVkp9xM1rprdXzego3nvhN59xZiTaA9a2SqFjvQ3YkTkTMQ4RRekrkKzzhppjm",
+   "cu": 148352,
+   "fee": 5000,
+   "version": 1,
+   "err": null
+  },
+  {
+   "name": "V-E2E relayed withdraw 600 to stealth ATA (fee 10): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1710
+  },
+  {
+   "name": "withdraw: tree next_index, root_head and root ring equal V-E2E",
+   "ok": true,
+   "next_index": "6",
+   "root_head": 3,
+   "root": "0x127e7233e44d47ba4d9183f1fccf019c6f05dadd4196afffe2b9aee8ad1ac6b7"
+  },
+  {
+   "name": "withdraw: both nullifier records exist at the V-E2E PDAs (program-owned, 0 bytes, rent-exempt)",
+   "ok": true,
+   "pdas": [
+    "AufcBm4K4Hr6x171poFEgrCKkgrdbTVPmkdn2mR1uDHQ",
+    "H1cFrYLrk9KPeu5rJm8sWBtyAeFrgEhjXXHCxhoSX8L9"
+   ],
+   "rent0": "650240"
+  },
+  {
+   "name": "withdraw: supply, deposit_counter and vault equal V-E2E",
+   "ok": true,
+   "supply": "395",
+   "deposit_counter": "1",
+   "vault": "395"
+  },
+  {
+   "name": "withdraw: events equal V-E2E and the program wrote no other log",
+   "ok": true,
+   "events": [
+    "dnull-v2-tx"
+   ],
+   "program_log_lines": 0
+  },
+  {
+   "name": "withdraw: stealth ATA receives 590, relayer ATA totals 15",
+   "ok": true
+  },
+  {
+   "name": "final: next_index 6, root ring equals V-E2E final.roots, supply 395, vault 395",
+   "ok": true
+  },
+  {
+   "name": "NEG double spend: withdraw again: rejected with 6011",
+   "ok": true,
+   "signature": "RndZ5ynBQyrFmn3BimD8mVweZ6fniYLH9AMsNne1Zm1P1G2JrmRrTZRbvGRViKBZkvDgoQRv7Tae6Xnf1HLDgx7",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6011
+     }
+    ]
+   },
+   "cu": 106569,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG double spend: withdraw again: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1710
+  },
+  {
+   "name": "NEG double spend: transfer again: rejected with 6011",
+   "ok": true,
+   "signature": "2z8bTiVq2QjU8AXVxB5fyGiWq6sf4Tfq4M7aa55triZ9NbJDM3Z8Lir8DQXvsDq9SPHQRHQp79i6sqCd1ebC2buc",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6011
+     }
+    ]
+   },
+   "cu": 112390,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG double spend: transfer again: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "NEG deposit replay (label moved, V2_SPEC 13.2 S9): rejected with 6012",
+   "ok": true,
+   "signature": "5FAwYH2HJdZ9UUSiz2GM5MMJD1Y9awyiNYsN6SNQd7ccCKLaLgjY3xh8wXxSdcdtu6RVeytnRrCMDGGnNoXcTeSg",
+   "got": {
+    "InstructionError": [
+     0,
+     {
+      "Custom": 6012
+     }
+    ]
+   },
+   "cu": 111198,
+   "fee": 5000,
+   "version": 1
+  },
+  {
+   "name": "NEG deposit replay (label moved, V2_SPEC 13.2 S9): landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 1678
+  },
+  {
+   "name": "solvency after negatives: vault == supply == 395",
+   "ok": true
+  },
+  {
+   "name": "sweep depositor: success",
+   "ok": true,
+   "signature": "JkcBqiGFvKBm9rPyYJyYbebkhBMJtS21pYXUJn4jQP9T6rt3QYLsUWvnuCffhyFZcvEatNMGLQZbo9c6Z7Np2TY",
+   "cu": 150,
+   "fee": 5000,
+   "version": 1,
+   "err": null
+  },
+  {
+   "name": "sweep depositor: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 228
+  },
+  {
+   "name": "sweep relayer: success",
+   "ok": true,
+   "signature": "2cXXpWRdKNDkQMz8MwpX5shZiMDqKd4nQTD511jLkMKZW84DA8P6a25T2kTHZvqYYRcRjVxEFSZgxCNXijq1mHT9",
+   "cu": 150,
+   "fee": 5000,
+   "version": 1,
+   "err": null
+  },
+  {
+   "name": "sweep relayer: landed as Transaction V1; kit bytes decode under SIMD-0385 to the intended message",
+   "ok": true,
+   "version": 1,
+   "bytes": 228
+  }
+ ],
+ "cu": {
+  "initialize_pool": 15109,
+  "register_mint": 17987,
+  "transact_deposit": 152067,
+  "transact_transfer": 152156,
+  "transact_withdraw": 148352
+ },
+ "wallets": {
+  "payer": "GTs3YgDY4Aqi67wW4zr5xZdJCwBVHiwTrRdgWpFPjXD3",
+  "depositor": "DpoNwHjajfVFwYmMJtdzfYJY9UzH3e9yQDtgWGhBGKdP",
+  "relayer": "3LYNwaNUB8RseisE8sLnpWjx5K9yEt951MzMYL5hc6qR",
+  "mint": "AivxF66DGsyxxXLeNkEBceEhfxKJSouafJpgtrvRnFkL"
+ },
+ "pool_nonce": "683e1556ea97eda0b5e254cbabc425f2743e07b8fa0e0a88a255638b5ca26e68",
+ "epoch_seconds": "3600",
+ "programdata": {
+  "address": "HK4EvSp9xQbJ9fwfKF7JoK3VWh8HjEmVKhdEBR7DNgyS",
+  "data_len": 130568,
+  "sha256_of_data": "1bc08dd7cdd25145dc81b88324095e5ef3e9e920c106d07d1481e326d02c28fc"
+ },
+ "clock": {
+  "slot": "508185875",
+  "unix_timestamp": "1791311913",
+  "claimed_epoch": "497586"
+ },
+ "proofs": [
+  {
+   "step": "deposit",
+   "proof": "052647b19f22d3d1a1e30924d2a5be6a48afef06fa0771ea59ba911671686e9512c206a96b4bf47c50b62d11727b126f3e5637f63ce0f958daa24e0bfa32fb39080f9b5a9832a9853f995fa4b83e3f64100ca9d04f36dc1c5f19ff5b68926ade1e0abf14f7e8dde4a5dcfd8621f13843ffb9470e7a18e91a9b438f5690a2be6f0f9883bfbf51d6438245838c6b63c3010bf999f5b15b8d5a3297b7e624fe811c232601ff0961b908e025126d77be439f0156d4203c49fbfaa3b6cafb974d20d91cc1ab3933e4c47107b087026f424a00b313712667afdcada0490b158f0031b8303f05de15c17122b7dc54e61774acb167265d431221239953efbb17e9ac6395",
+   "pi": "0x1c69820985a71061d738d6c575ca246040a5251860a5992a190e3bc1a8d280dc",
+   "prove_ms": 1803
+  },
+  {
+   "step": "transfer",
+   "proof": "0237b4539ae36e99d769342e6a1fdfef6030c7032f9790932da81327636ff7781e01a5fe5147e76db47b98805e879dc31b285307a2b22311a1ea7c3572ce678e05f0766a7f77fe212b3d7af95586772ae0a50f61e3340b09ad76f5a58b35ac0d22ec2244f4e6dc37840bd135806e34d0aa0a8c0c4fa5abcdf6bad97642f5287c0aa27c7a0c1f8d3ed9da8d7312a7736b3665d16e6588af4d290dd6727fcd5b451f762a4f6cb56cb2bfe00689a96c39f76a659ec646c684bcfde84b7777e4ab791c078fa3234bbb8f0775230a891d6aea2c40fc7df7a8832bb2189322746a286824b43c51c523797e5fefae5ff8a53bcdefcf26aca65dd57518a6600ace665d9d",
+   "pi": "0x16a527eb2f492e72706aae506472cbbc7163865b228f433e206b514fab1d8d30",
+   "prove_ms": 1621
+  },
+  {
+   "step": "withdraw",
+   "proof": "282e30cbdc4b9dd86b5ad036e241bf36df3db494bc5f650e4785f4f087e27a3d0ab7b1a24210e53fffffeab755d50824ff90694fcae209bbc43f7d5bb733fe942db2be9586fd9d1177896801aa72eaf2c89f95d641596a3bc4a64e84fddd87650fd587ba234447f6102001d51383524701c1c469c2792da4444d98cd7beaf50e202155396f97d331c242dc7f5716a3d0bc9d100d80f8c1592bf39054eec0919c1335017dc5e1661779401d95a378df3096912e133c02c95e150c1906d67669132716f01bd4eb95328ec9f08bd03566ad2f637bebb0a601c4ece74c2cb30af8c32d6a4dfcf525d15d788df9330dcb16d3a25d900e206a3d93660847b1bb6c7131",
+   "pi": "0x20e1cbaacf81a6c6b99f1c6a72b1e804d6d7d8e6e64bdb0111fbd14617cc701d",
+   "prove_ms": 1651
+  }
+ ],
+ "addresses": {
+  "pool_config": {
+   "address": "EZ6Zrds75HsvKKf4VEArA2ubNsJCj1dJR7JVWJipGmEe",
+   "bump": 255
+  },
+  "tree": {
+   "address": "FnsJmibVu7A3DzmAo4fAfcjZzssQ4ijJBiMqQczgp69Y",
+   "bump": 254
+  },
+  "mint_state": {
+   "address": "CpgoEWZvViBf64YxykcuWBuuphCC2zqtuiUQAgC7sHWi",
+   "bump": 255
+  },
+  "vault": {
+   "address": "5YMhhFYSi8zKBKDYWxDRiz8iqsrMNZVFUKg8rmuHkqE9",
+   "bump": 255
+  },
+  "vault_authority": {
+   "address": "4jmKdnoXaaehqtQsadUCTwYo5NvHWAtG16J1tJNJ5eE7",
+   "bump": 254
+  },
+  "pool_id": "963ed10f3124a5480902956b12249705b75d9758bed9ed2e98e22ca23e6a6a73",
+  "asset": "0x23c34ef9ec3969886840e31662cdff73a135772b2a3289da24ee1281130b0d5d",
+  "depositor_ata": "9EKB6FpzZjHzaaKfez8AgFFhS5imyNgumHtoYPrKm5Ph",
+  "relayer_ata": "9MwcCySdxm5jzNKDwHNSkaJTs1CCaBLKRmQYp9odcJvj",
+  "stealth_P": "Hz3Yt52thdDehtGUsLzgjVSZPpcmvinXvpHLLBQJ9aSB",
+  "stealth_ata": "48QNc9HFLyAeWbg3DY2yRFRDTrH98e4961ZvCVaYN8tm"
+ },
+ "payer_start_lamports": "4277159664",
+ "payer_end_lamports": "4214916264",
+ "payer_spent_lamports": "62243400",
+ "cu_transact_v1": {
+  "deposit": 152067,
+  "transfer": 152156,
+  "withdraw": 148352,
+  "reference_1_18_26": {
+   "deposit": 152362,
+   "transfer": 156954,
+   "withdraw": 159328
+  }
+ },
+ "fees": 115000,
+ "finished": "2026-10-06T18:40:02.616Z",
+ "result": "PASS",
+ "passed": 75,
+ "total": 75
+}

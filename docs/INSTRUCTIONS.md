@@ -80,7 +80,7 @@ Completes the withdrawal and marks the nullifier as spent.
 - Marks nullifier as spent (prevents double-spend)
 - Returns commit bond to submitter
 - Transfers net amount to recipient
-- Transfers protocol fee to treasury
+- Transfers the protocol fee to treasury (0: Parad0x takes no protocol fee on Dark Null transfers)
 - Transfers relayer fee to relayer
 - Closes PendingCommit PDA
 

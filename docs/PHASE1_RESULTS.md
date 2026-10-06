@@ -396,3 +396,76 @@ All commands run in the sandbox container, with the vendored sources configured 
 4. CU breakdown:
    - build with `cargo-build-sbf --offline --features cu-trace`;
    - run `CU_TRACE=1 SBF_OUT_DIR=<that dir> cargo test --test program cu_breakdown_trace -- --nocapture`.
+
+### Agave 4.2.1 rehearsal (devnet feature set)
+
+The cluster `.so` (`1bc08dd7...28fc`, 130,568 bytes, rebuilt from the committed lock with the same hash) ran end to end
+on `solana-test-validator` 4.2.1 with `--clone-feature-set` from devnet: 285 of 285 features, no activation
+mismatch, including SIMD-0385 (Transaction V1), SIMD-0359 (Poseidon input padding) and SIMD-0334 (`alt_bn128`
+pairing length). Before this run, the pool program had called `sol_poseidon`, `sol_sha256` and the `alt_bn128`
+syscalls only under the 1.18.26 test runtime, and had never received a V1 transaction. No program change was needed.
+Summary:
+[`wp_program_agave_local.json`](../bench/results/p1/2026-10-06/wp_program_agave_local.json).
+
+- **Client.** [`scripts/devnet-e2e/dark-null-pool-v2-e2e.mjs`](../scripts/devnet-e2e/dark-null-pool-v2-e2e.mjs).
+  - Every transaction is V1, built and signed with `@solana/kit` 8.4.0. Each has the compute-unit limit and the
+    loaded-accounts-data-size limit set by the V2_SPEC 9.1 rules.
+  - The encoded message is decoded again with an independent SIMD-0385 parser and compared with the intended
+    instructions and limits.
+  - Outcomes are graded from `getTransaction`: err, logs, CU and fee.
+- **Vectors and addresses.** `pi` binds the program id (through `pool_id` and the PDAs), the mint (`asset`), the token
+  accounts in `ext_data` and `claimed_epoch`, so the fixture proofs verify only at the fixture program id and in epoch
+  490,000.
+  - `gen_v2_vectors.mjs` now takes the deploy-time program id, mint, pool nonce, epoch and wallets from the
+    environment. Unset, its output is byte-identical to the committed vectors.
+  - The e2e regenerates V-E2E for the live deployment and proves the three steps with the committed dev zkey
+    (snarkjs, about 2 s per proof).
+  - It checks that every address-independent field (keys, salts, values, leaf indices, hints, supply, counter) equals
+    the committed V-E2E.
+- **Runs.** Each run passed 75 of 75 checks:
+  - the real id, genesis-loaded and then buffer-upgraded;
+  - a fresh `solana program deploy` with an exact `--max-len`;
+  - a `cu-trace` build.
+
+  Each run covers: `initialize_pool`, `register_mint` for a fresh SPL mint, deposit, the relayed transfer bound to the
+  x402 quote, and the relayed withdraw to the stealth ATA. Roots, `root_head`, `next_index`, the root ring, the
+  nullifier records, supply, `deposit_counter`, every balance and both events equal the vectors. The program writes
+  no other log.
+- **Negatives, rejected on chain with the exact code.**
+
+  | Negative | Code |
+  |---|---|
+  | Tampered proof (C changed; A from another proof) | 6012 |
+  | `ext_data` ciphertext byte | 6012 |
+  | Fee account swapped in `ext_data` and the account list together | 6012 |
+  | Fee account changed in `ext_data` only | 6013 (step 3) |
+  | Unknown root | 6007 |
+  | `nf0 + r` | 6002 |
+  | `assoc_root = r` | 6002 |
+  | `claimed_epoch + 2` | 6008 |
+  | Double spend of the withdraw and of the transfer | 6011 |
+  | Deposit replay | 6012 |
+
+  `pi` itself is computed on chain from canonical fields, so `pi >= r` cannot be submitted to `transact`. The
+  verifier-level `pi >= r` rejection ran on devnet in the WP-CIRCUIT probe.
+
+**CU on Agave 4.2.1 (V1, no compute-budget instruction):**
+
+| Instruction | 1.18.26 (`program-test`) | Agave 4.2.1: real id / fresh deploy / `cu-trace` build (includes 900 marker CU) |
+|---|---|---|
+| `transact` deposit | 152,362 | 147,564 / 149,064 / 151,461 |
+| `transact` relayed transfer | 156,954 | 149,156 / 155,159 / 145,552 |
+| `transact` relayed withdraw | 159,328 | 146,846 / 158,846 / 146,248 |
+| Groth16 (step 10, `cu-trace`) | 78,892 | 78,892 |
+| `initialize_pool` / `register_mint` | 18,217 / 21,074 | 13,609-18,109 / 17,987 |
+
+- Steps 5-12 and 14 cost the same as under 1.18.26, within 110 CU.
+- Steps 1-4 range from 8,909 to 14,918 CU. The program searches for the two nullifier record bumps (F-BUMP), so this
+  cost moves with the addresses.
+- Step 13, the token CPI, takes 1,977-3,988 CU here against 8,164-16,362 CU under 1.18.26. The local validator ships
+  its own SPL Token build. Devnet's token program sets this number tonight.
+- All totals stay below 160k, against the 400k B2 gate.
+- V1 sizes:
+  - withdraw: 1,710 bytes, as V2_SPEC 9.1 states;
+  - deposit and transfer: 1,678 bytes, because the vault appears twice there and the duplicate address is not
+    repeated.

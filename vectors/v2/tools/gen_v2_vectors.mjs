@@ -1,5 +1,9 @@
 // Dark NULL v2: generate V-DS (final), V-ADDR, V-EXTDATA, V-VOUCHER and V-E2E (sandbox only).
 // Usage: node gen_v2_vectors.mjs <vectors_dir> <circuit_input_dir>
+// Deploy-time addresses (optional; unset = the committed fixture values, byte-identical output):
+//   V2_PROGRAM_ID, V2_MINT (base58), V2_POOL_NONCE (64 hex), V2_CLAIMED_EPOCH (u64),
+//   V2_DEPOSITOR, V2_RELAYER (base58 wallets; their ATAs of the mint become the deposit source and the relayer fee
+//   account). Used by scripts/devnet-e2e/dark-null-pool-v2-e2e.mjs to bind V-E2E to a live deployment.
 // Normative source: docs/spec/V2_SPEC.md. Every value here is re-derived independently by
 // crates/dark-null-transcript (tests/vectors.rs) and, for Poseidon, by sol_poseidon on devnet.
 import fs from "node:fs";
@@ -24,9 +28,11 @@ const pk58 = (b) => b58enc(b);
 const TOKEN_PROGRAM = b58dec("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
 const ATA_PROGRAM = b58dec("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL");
 const SYSTEM_PROGRAM = Buffer.alloc(32);
-const MINT = b58dec("So11111111111111111111111111111111111111112");
-const PROGRAM_ID = sha256(ascii("dark-null-v2-vector-program-id")); // fixture program id (never deployed)
-const POOL_NONCE = sha256(ascii("dark-null-v2-vector-pool-nonce"));
+const ENV = process.env;
+const MINT = b58dec(ENV.V2_MINT || "So11111111111111111111111111111111111111112");
+const PROGRAM_ID = ENV.V2_PROGRAM_ID ? b58dec(ENV.V2_PROGRAM_ID) : sha256(ascii("dark-null-v2-vector-program-id")); // fixture program id (never deployed)
+const POOL_NONCE = ENV.V2_POOL_NONCE ? Buffer.from(ENV.V2_POOL_NONCE, "hex") : sha256(ascii("dark-null-v2-vector-pool-nonce"));
+if (POOL_NONCE.length !== 32) throw new Error("V2_POOL_NONCE must be 32 bytes");
 const ata = (owner) => findPda([owner, TOKEN_PROGRAM, MINT], ATA_PROGRAM).address;
 
 // ---------------- V-DS (final registry) ----------------
@@ -109,7 +115,7 @@ const extJson = (e, bytes) => ({
 });
 const quote = { quoteId: "q_7f3a9c2e", resource: "https://api.example.test/v1/forecast?city=vilnius", amountAtomic: 600n, totalAtomic: 600n, mint: pk58(MINT), payTo: bob.address, expiresAt: "2026-10-06T12:00:00Z" };
 const qb = quoteBinding(quote);
-const relayerFeeAcct = b58dec("4P8DKU85xi1vZzscZTnCtnaUXpYwwvyxQfS7wvMwt34m"); // fixture pubkey (no key material)
+const relayerFeeAcct = ENV.V2_RELAYER ? ata(b58dec(ENV.V2_RELAYER)) : b58dec("4P8DKU85xi1vZzscZTnCtnaUXpYwwvyxQfS7wvMwt34m"); // fixture pubkey (no key material)
 const extExample = {
   pool_id: poolId, public_token_account: vault.address, relayer_fee_account: relayerFeeAcct, relayer_fee: 5n, memo_binding: qb,
   stealth_ephemeral: randomPoint("extdata-example-ephemeral"), ciphertext0: drbg("extdata-example-ct0", 160), ciphertext1: drbg("extdata-example-ct1", 160), ciphertext_rec: drbg("extdata-example-ctrec", 160),
@@ -183,12 +189,12 @@ write("V-VOUCHER", {
 
 // ---------------- V-E2E: deposit -> private transfer -> relayed withdraw to a stealth address ----------------
 const tree = new Tree();
-const CLAIMED_EPOCH = 490_000n;
+const CLAIMED_EPOCH = ENV.V2_CLAIMED_EPOCH ? BigInt(ENV.V2_CLAIMED_EPOCH) : 490_000n;
 const supply = { v: 0n };
 let depositCounter = 0n;
-const relayerKey = b58dec("7DwfRAymZjJsdnKFUpPsU2c6g7Y9aserV1AHnXWwvTxs"); // fixture relayer pubkey (no key material)
-const aliceTokenAcct = ata(b58dec("Br4GAsVBr1sRsPwXHXtsiXrQNxnaS6Mnpb5eFaznNp17")); // fixture depositor wallet ATA
-const aliceWallet = b58dec("Br4GAsVBr1sRsPwXHXtsiXrQNxnaS6Mnpb5eFaznNp17");
+const relayerKey = b58dec(ENV.V2_RELAYER || "7DwfRAymZjJsdnKFUpPsU2c6g7Y9aserV1AHnXWwvTxs"); // fixture relayer pubkey (no key material)
+const aliceWallet = b58dec(ENV.V2_DEPOSITOR || "Br4GAsVBr1sRsPwXHXtsiXrQNxnaS6Mnpb5eFaznNp17"); // fixture depositor wallet
+const aliceTokenAcct = ata(aliceWallet); // its ATA
 const DISC = discriminator("transact");
 
 function note(value, owner, label, saltLabel) { const salt = drbgFr(saltLabel); return { value, owner, salt, label, cm: H([DS.DS_NOTE, value, asset, owner, salt, label], "cm") }; }

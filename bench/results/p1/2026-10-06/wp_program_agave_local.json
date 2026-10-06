@@ -1,0 +1,266 @@
+{
+ "validator": "solana-test-validator 4.2.1 (Agave), --clone-feature-set from devnet, 285/285 features, 0 active mismatches vs the 15:59 devnet capture",
+ "so_sha256": "1bc08dd7cdd25145dc81b88324095e5ef3e9e920c106d07d1481e326d02c28fc",
+ "so_bytes": 130568,
+ "runs": {
+  "local-real-id.json": {
+   "desc": "real id 3WZen..., genesis-loaded then buffer-upgraded",
+   "program_id": "3WZenuUJ1dN7iWUathmmXExPYu5zh9KX9xFoWJCGy4Zi",
+   "result": "PASS",
+   "passed": 75,
+   "total": 75,
+   "cu": {
+    "initialize_pool": 18109,
+    "register_mint": 17987,
+    "transact_deposit": 147564,
+    "transact_transfer": 149156,
+    "transact_withdraw": 146846
+   },
+   "txs": 22,
+   "fees": 115000,
+   "payer_spent_lamports": "85235800",
+   "v1_bytes": {
+    "V-E2E deposit 1000": 1678,
+    "V-E2E relayed transfer": 1678,
+    "V-E2E relayed withdraw": 1710
+   },
+   "neg": {
+    "NEG tampered proof (C.x flipped)": [
+     6012,
+     106648
+    ],
+    "NEG tampered proof (A from the transfer proof)": [
+     6012,
+     106698
+    ],
+    "NEG ext_data tamper (ciphertext0 byte)": [
+     6012,
+     106698
+    ],
+    "NEG ext_data relayer_fee_account changed, account list not (step 3)": [
+     6013,
+     9174
+    ],
+    "NEG unknown root": [
+     6007,
+     15770
+    ],
+    "NEG nf0 + r (non-canonical field, pi >= r class)": [
+     6002,
+     5569
+    ],
+    "NEG assoc_root = r": [
+     6002,
+     5720
+    ],
+    "NEG claimed_epoch + 2 (outside window)": [
+     6008,
+     15954
+    ],
+    "NEG ext_data relayer_fee_account swapped with the account list (relayed transfer)": [
+     6012,
+     109182
+    ],
+    "NEG double spend: withdraw again": [
+     6011,
+     105069
+    ],
+    "NEG double spend: transfer again": [
+     6011,
+     109390
+    ],
+    "NEG deposit replay (label moved, V2_SPEC 13.2 S9)": [
+     6012,
+     106698
+    ]
+   },
+   "programdata_sha256": "1bc08dd7cdd25145dc81b88324095e5ef3e9e920c106d07d1481e326d02c28fc",
+   "cu_trace": null
+  },
+  "local-fresh.json": {
+   "desc": "fresh solana program deploy, exact --max-len",
+   "program_id": "H4PyvycWrbZrRjEot8FkTEsC2MYoTa3WNX2YvmBqVQfz",
+   "result": "PASS",
+   "passed": 75,
+   "total": 75,
+   "cu": {
+    "initialize_pool": 13609,
+    "register_mint": 17987,
+    "transact_deposit": 149064,
+    "transact_transfer": 155159,
+    "transact_withdraw": 158846
+   },
+   "txs": 22,
+   "fees": 115000,
+   "payer_spent_lamports": "85235800",
+   "v1_bytes": {
+    "V-E2E deposit 1000": 1678,
+    "V-E2E relayed transfer": 1678,
+    "V-E2E relayed withdraw": 1710
+   },
+   "neg": {
+    "NEG tampered proof (C.x flipped)": [
+     6012,
+     108148
+    ],
+    "NEG tampered proof (A from the transfer proof)": [
+     6012,
+     108198
+    ],
+    "NEG ext_data tamper (ciphertext0 byte)": [
+     6012,
+     108198
+    ],
+    "NEG ext_data relayer_fee_account changed, account list not (step 3)": [
+     6013,
+     9174
+    ],
+    "NEG unknown root": [
+     6007,
+     17270
+    ],
+    "NEG nf0 + r (non-canonical field, pi >= r class)": [
+     6002,
+     5569
+    ],
+    "NEG assoc_root = r": [
+     6002,
+     5720
+    ],
+    "NEG claimed_epoch + 2 (outside window)": [
+     6008,
+     17454
+    ],
+    "NEG ext_data relayer_fee_account swapped with the account list (relayed transfer)": [
+     6012,
+     115182
+    ],
+    "NEG double spend: withdraw again": [
+     6011,
+     117069
+    ],
+    "NEG double spend: transfer again": [
+     6011,
+     115390
+    ],
+    "NEG deposit replay (label moved, V2_SPEC 13.2 S9)": [
+     6012,
+     108198
+    ]
+   },
+   "programdata_sha256": "1bc08dd7cdd25145dc81b88324095e5ef3e9e920c106d07d1481e326d02c28fc",
+   "cu_trace": null
+  },
+  "local-cutrace.json": {
+   "desc": "cu-trace measurement build (not the cluster .so)",
+   "program_id": "A3R1u5w8tReLMD3MMyFA7nuKPjysyTrxXQe31ecqxtjC",
+   "result": "PASS",
+   "passed": 75,
+   "total": 75,
+   "cu": {
+    "initialize_pool": 16609,
+    "register_mint": 17987,
+    "transact_deposit": 151461,
+    "transact_transfer": 145552,
+    "transact_withdraw": 146248
+   },
+   "txs": 22,
+   "fees": 115000,
+   "payer_spent_lamports": "85235800",
+   "v1_bytes": {
+    "V-E2E deposit 1000": 1678,
+    "V-E2E relayed transfer": 1678,
+    "V-E2E relayed withdraw": 1710
+   },
+   "neg": {
+    "NEG tampered proof (C.x flipped)": [
+     6012,
+     110042
+    ],
+    "NEG tampered proof (A from the transfer proof)": [
+     6012,
+     110092
+    ],
+    "NEG ext_data tamper (ciphertext0 byte)": [
+     6012,
+     110092
+    ],
+    "NEG ext_data relayer_fee_account changed, account list not (step 3)": [
+     6013,
+     9268
+    ],
+    "NEG unknown root": [
+     6007,
+     18963
+    ],
+    "NEG nf0 + r (non-canonical field, pi >= r class)": [
+     6002,
+     5674
+    ],
+    "NEG assoc_root = r": [
+     6002,
+     5825
+    ],
+    "NEG claimed_epoch + 2 (outside window)": [
+     6008,
+     19146
+    ],
+    "NEG ext_data relayer_fee_account swapped with the account list (relayed transfer)": [
+     6012,
+     105076
+    ],
+    "NEG double spend: withdraw again": [
+     6011,
+     104064
+    ],
+    "NEG double spend: transfer again": [
+     6011,
+     105385
+    ],
+    "NEG deposit replay (label moved, V2_SPEC 13.2 S9)": [
+     6012,
+     110092
+    ]
+   },
+   "programdata_sha256": "67bb599363c8fe5e9061fca1a78458c04efbefa1df3af608a12a4dd188432826",
+   "cu_trace": {
+    "deposit": {
+     "1-4 parse, accounts, fee": 14918,
+     "5-6 root, epoch": 246,
+     "7-9 ext hash, label, pi": 11851,
+     "10 groth16": 78892,
+     "11 nullifier records": 5828,
+     "12 tree insert, event": 32951,
+     "13 public leg": 2097,
+     "14 solvency": 18,
+     "outside_markers": 3760,
+     "total_with_markers": 151461
+    },
+    "transfer": {
+     "1-4 parse, accounts, fee": 10425,
+     "5-6 root, epoch": 246,
+     "7-9 ext hash, label, pi": 11328,
+     "10 groth16": 78892,
+     "11 nullifier records": 5828,
+     "12 tree insert, event": 32178,
+     "13 public leg": 1977,
+     "14 solvency": 18,
+     "outside_markers": 3760,
+     "total_with_markers": 145552
+    },
+    "withdraw": {
+     "1-4 parse, accounts, fee": 8909,
+     "5-6 root, epoch": 246,
+     "7-9 ext hash, label, pi": 11328,
+     "10 groth16": 78892,
+     "11 nullifier records": 5828,
+     "12 tree insert, event": 32184,
+     "13 public leg": 3988,
+     "14 solvency": 18,
+     "outside_markers": 3955,
+     "total_with_markers": 146248
+    }
+   }
+  }
+ }
+}

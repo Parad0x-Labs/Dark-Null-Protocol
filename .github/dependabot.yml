@@ -31,6 +31,15 @@ updates:
       day: "monday"
     open-pull-requests-limit: 5
     labels: ["dependencies", "security"]
+    ignore:
+      # groth16-solana 0.2 requires solana-bn254 ^2; a 3.x direct dependency
+      # only adds a second copy (with solana-define-syscall 5.x) next to it.
+      - dependency-name: "solana-bn254"
+        versions: [">= 3"]
+      # anchor-lang 0.30.1 and solana-program 1.18 stay on base64 0.21; move
+      # together with the Anchor upgrade instead of on its own.
+      - dependency-name: "base64"
+        versions: [">= 0.22"]
 
   # GitHub Actions
   - package-ecosystem: "github-actions"

@@ -19,7 +19,7 @@ Historical note: older entries below describe devnet milestones and historical r
 
 ### Cross-repo milestone — `dna-x402` private payment rails (four rails)
 
-The sibling `dna-x402` implementation carries four privacy rails in code with tests, all merged to its `main` ([Parad0x-Labs/dna-x402](https://github.com/Parad0x-Labs/dna-x402)). Their earlier devnet deployments were retired; a devnet redeploy under a fresh key is pending.
+The sibling `dna-x402` implementation carries four privacy rails in code with tests, all merged to its `main` ([Parad0x-Labs/dna-x402](https://github.com/Parad0x-Labs/dna-x402)). Their earlier devnet deployments were retired; the programs they use (shielded pool, `null_registrar`, Fedimint redeem) were redeployed on devnet under a fresh key on 2026-10-06 (dna-x402 `evidence/devnet-programs-2026-10-06.json`).
 
 - **Dark Relay Rail** — fixed-denomination shielded pool (V3): the withdrawal proves Groth16 membership without publishing the deposit commitment, so linkage is limited to the set of deposits in the same pool; every withdrawal moves the same public denomination; the recipient address is public. In-proof relayer-fee binding (permissionless relayers; the recipient never signs) + denomination buckets.
 - **NullPay** — ed25519 stealth pay-by-`.null`-name: pays a one-time stealth address resolved from a name's on-chain meta, so the receiving address is not linked to the name (the address itself is on-chain; native ed25519 signing, no trusted setup). Pay-by-name to a one-time stealth address is implemented in code with tests; a devnet redeploy under a fresh key is pending.

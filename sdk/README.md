@@ -4,8 +4,11 @@ The root npm package now targets the **canonical promoted root track** first.
 
 ## Install
 
+Install from a clone of this repository, or from a tarball made with `npm pack`:
+
 ```bash
-npm install @dark-null/protocol
+git clone https://github.com/Parad0x-Labs/Dark-Null-Protocol.git
+npm install ./Dark-Null-Protocol
 ```
 
 If you want the Anchor helpers too:

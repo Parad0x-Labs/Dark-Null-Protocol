@@ -64,7 +64,7 @@ Entry points: [`sdk/index.mjs`](./sdk/index.mjs) and [`sdk/index.d.ts`](./sdk/in
 | Frontier prototypes (6) | **Usable today** | Prototype code with local tests; not deployed to production. See [`docs/2030_PRIMITIVES.md`](./docs/2030_PRIMITIVES.md) |
 | Root program `35GMe13ExGB1JGp1wZGrEvHfQnENKADroDQApeziKuwV` (deposit vault, proof-verified withdrawal) | **Devnet** | Canonical devnet root and integration target (last deployed at slot 487918755, after the cited proof transaction at slot 487904628); matches `declare_id!` in [`src/lib.rs`](./src/lib.rs); upgrade authority `4cTBfB8v…`; withdrawals are linkable to deposits ([`docs/PRIVACY_PROPERTIES.md`](./docs/PRIVACY_PROPERTIES.md)) |
 | Six integration programs | **Devnet** | silent-pay `9VYPtdr…`, payment-stream `J6oHoys…`, threshold-fed `4sMywVPL…`, fiat-oracle `AJHHpWv…`, accumulator `ByFb6xc…`, inference `6h4yKZG…`; deployed from this source tree |
-| On-chain receipt anchoring (`receipt_anchor`, in dna-x402) | **Built · redeploy pending** | Unavailable until the `receipt_anchor` program is redeployed under a fresh key |
+| On-chain receipt anchoring (`receipt_anchor`, in dna-x402) | **Devnet** | `HSdEQWunzPtNqdzv5HfXuA3zwPLpgTXRyfbndnGamhXs`, redeployed under a fresh key on 2026-10-06 (dna-x402 `configs/devnet.oss.json`); callers name the program, there is no default |
 | Research-stage primitives (7) and one blocked primitive | **Planned** | Design and specification only; Confidential Token-2022 linkage is blocked on Token-2022 Confidential Transfer extension audit completion and SIMD stabilization |
 | Mainnet deployment | **Planned** | No Dark Null program is deployed on mainnet today; the gates are listed in [`docs/PROJECT_DETAIL.md`](./docs/PROJECT_DETAIL.md#mainnet-gates) |
 

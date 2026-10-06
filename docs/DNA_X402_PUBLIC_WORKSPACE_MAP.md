@@ -92,7 +92,7 @@ Local validation on 2026-05-29 references DNA x402 commit `297e5844`:
 The latest sync adds these DNA-side primitives:
 
 - on-chain encrypted passkey vault storage in `dark_secp256r1_vault`
-- server-free receipt-anchor instruction callback in `null-miner-sdk` (on-chain anchoring is unavailable until the `receipt_anchor` program is redeployed under a fresh key)
+- server-free receipt-anchor instruction callback in `null-miner-sdk` (the devnet `receipt_anchor` is `HSdEQWunzPtNqdzv5HfXuA3zwPLpgTXRyfbndnGamhXs`, redeployed under a fresh key on 2026-10-06)
 - Liquefy archive storage payloads and Arweave tag helpers
 - `dark-null-mint-gate` as an on-chain NULL emission claim ledger with nullifier, per-claim, and epoch-cap checks
 - `dark-null-lottery` as a commit-reveal / root-anchored lottery primitive

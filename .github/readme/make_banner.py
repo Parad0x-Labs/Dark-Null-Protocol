@@ -31,5 +31,6 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewB
 <text x="80" y="215" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="{MUTED}">{e(sub)}</text>
 {''.join(chip_svg)}
 </svg>'''
-open(out, "w").write(svg)
+with open(out, "w") as fh:
+    fh.write(svg)
 print("wrote", out, len(svg), "bytes")
